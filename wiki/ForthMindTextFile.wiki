@@ -1,0 +1,2642 @@
+#summary AI Mind code for loading into last Tom Zimmer release of Win32Forth.
+#labels Featured
+
+=== Latest mindforth release as a loadable text file ===
+
+Drag-and-drop code into editor; save as mind.f in the C:\win32forth directory.
+
+{{{
+( 4oct08U.F [mf081004.html] -- modification of 1oct08A.F Mind.Forth )
+( This file may be named "Mind.f" or any "filename.f" you choose. )
+( Rename any occurrence of Mind.f.txt as simply Mind.f for Win32Forth. )
+( This file is to be run with Win32Forth by issuing three commands: )
+( win32for.exe [ENTER] )
+( fload Mind.f [ENTER] )
+( ALIFE [ENTER]. )
+( To halt the artificial mind, press the ESCAPE key at any time. )
+DECIMAL  ( use decimal numbers )
+variable act 0 act ! ( INSTANTIATE; OLD- & NEWCONCEPT; REIFY; etc. )
+variable actbase ( 5dec2007 For recognition discrimination in audRecog )
+variable adverbact 0 adverbact ! ( 29aug2008 Test for adverb-insertion )
+variable aud  ( enVocab; Audition; Speech: auditory recall-tag )
+variable audjuste ( 25aug2008 For nounPhrase motjuste aud to SPEECH )
+variable audme  ( 27sep2008 tag to find "ME" in auditory memory )
+variable audstop  ( 1jan2008 A flag to stop SPEECH after one word )
+variable back ( to replace "bulge" for "pre" items in spreadAct )
+variable bday ( ALIFE; HCI -- day of birth )
+variable beg  1 beg !  ( Audition; audSTM: word beginning flag )
+variable bhour ( ALIFE; HCI -- hour of birth )
+variable bias 5 bias ! ( Parser; newConcept: an expected POS )
+variable bminute ( ALIFE; HCI -- minute of birth )
+variable bmonth ( ALIFE; HCI -- month of birth )
+variable bsecond ( ALIFE; HCI -- second of birth )
+variable byear ( ALIFE; HCI -- year of birth )
+variable caller  ( 13jan2008 Debug-identifier of calling module )
+variable cns  1024 cns !  ( "central nervous system" array size )
+variable coda  128 coda !  ( span of memory to recycle in Rejuvenate )
+variable conj  ( from 16aug2002 oldConcept; Conjoin: conjunction )
+variable ctu ( continuation-flag for "Aud" array phonemes )
+variable decpsi1 ( decremend concept 1 to accelerate de-activation )
+variable decpsi2 ( decremend concept 2 for avoiding excess repetition )
+variable decpsi3 ( decremend concept 3 to keep track of most recent psi )
+variable detour  ( 17dec2007 Abort-flag in case of insufficient knowledge )
+variable dirobj  ( flag to indicate seeking of a direct object )
+variable dopsi   ( 22jan2008 direct-object-psi for calculating "thotnum" )
+variable edge  0 edge !  ( Rejuvenate: edge-of-thought flag )
+variable EEG 1 EEG ! ( for EGO safety measure if users neglect the AI )
+variable en6 ( 27aug2008 enVocab flag recall-vector "aud" in Rejuvenate )
+variable enx ( new-, oldConcept; Instantiate; Reify: x-fer Psi-En )
+variable eot ( end-of-text for use in AUDITION )
+variable fex ( new-, oldConcept; enVocab: Psi-to-English fiber-out )
+variable fin ( new-, oldConcept; enVocab: English-to-Psi fiber-in )
+variable firstword ( 13sep2008 So "DO" query triggers kbSearch )
+variable fyi 0 fyi ! ( for rotation through display modalities )
+variable ghost 0 ghost ! ( 5sep2008 Article switch from "a" to "the" )
+variable hipsi   ( 14jan2008 "high-psi" tag on wavecrest concept )
+( I = Index in loops; does not require a fetch "@" )
+variable img  ( visRecog: for future use as "image" )
+variable inert  0 inert !  ( .echo; Think; English: EGO-trigger )
+variable instnum  ( 1oct2008 "instantiation number for whatIs/Be )
+variable IQ 6 IQ ! ( an invitation to code an IQ algorithm )
+variable jdex   
+variable jolt 0 jolt ! ( 31mar2007 Being replaced with "nounval" )
+variable jrt ( "junior time" for memories moved in Rejuvenate )
+variable jux  0 jux !  ( Parser; Instantiate: a JUXtaposed word )
+variable kbpsi  ( 20jan2008 an interim knowledge-base psi )
+variable kbquiz 0 kbquiz !  ( 16sep2008 flag to call kbSearch )
+variable kbtv  1 kbtv !  ( 3sep2008 KB-traversal trigger )
+variable krt ( Knowledge Representation time "t" for future use )
+variable lastword  0 lastword !  ( 2apr2007 For zeroing "seq" tags. )
+variable len  ( length, for avoiding non-words in AUDITION )
+variable lexact  ( 4apr2007 Testing a lexical :act" for Reify )
+variable lopsi  ( 14jan2008 "low-psi" tag on just-crested concept )
+variable match  ( oldConcept; SPEECH:  end-of-word flag for control )
+variable memoire  ( 17sep2008 Instead of "motjuste" in kbSearch )
+variable midway 1 midway ! ( a backwards time-limit for searches )
+variable monopsi ( 26jul2002 For use in audRecog module )
+variable morphpsi ( 30sep2008 For audRecog recognition of morphemes )
+variable motjuste ( best word for selection as part of a thought )
+variable nen  0 nen ! ( English lexical concept number )
+variable nlt  0 nlt !  ( not-later-than, for isolating time-points )
+variable nounval 0 nounval ! ( For transfer from nounPhrase to nounAct )
+variable nphrnum 0 nphrnum ! ( 27aug2008 nounPhrase number for Article )
+variable nphrpos 0 nphrpos ! ( 29aug2008 for testing in ENGLISH )
+variable num 0 num !  ( 24aug2008 number-flag for the psi array )
+variable obstat ( 15jan2008 Lets Audition psi-damp a reentrant word. )
+variable oldact ( to show the source of spreading activations )
+variable oldpos ( for treating verb part-of-speech as a special case )
+variable oldpsi ( to show the source of spreading activations )
+variable onset 0 onset ! ( of a word stored in auditory memory )
+variable opt  ( option, for flushing out a desired part of speech )
+variable ordo 0 ordo ! ( 2apr2007 from JSAI; Audition word-order )
+variable pho  ( Listen; Audition; Speech: phoneme of input/output )
+variable pos  ( old- & newConcept; enVocab: part-of-speech )
+variable pov  ( point-of-view: 35# for internal; 42* for external )
+variable pre  ( previous concept associated with another concept )
+variable precand  ( 2apr2007 inviolate "pre" candidate from JSAI )
+variable predpos 0 predpos ! ( 29aug2008 part of speech in Predicate )
+variable preset 0 preset !  ( 2apr2007 For setting Instantiate "pre" )
+variable prevtag  ( 2apr2007 from JSAI; for use in Instantiate )
+variable psi  ( associative tag from auditory engram to Psi mindcore )
+variable psi1 ( 30mar2007 verbAct: activation-level at each node of verb )
+variable psi6 ( temporary enx for use by verbPhrase in Tutorial mode )
+variable psi7 ( 24aug2008 replacement for psi6 displaced by num )
+variable psibase ( 5dec2007 With winning actbase, a winning psibase. )
+variable questype  ( from 16aug 2002 oldConcept; Conjoin: "question-type" )
+variable quiet 1 quiet ! ( Listen; Audition: a status flag for input )
+variable recon 0 recon ! ( Eagerness to seek reconnaissance answers. )
+variable redux  ( 27jan2008 For oldest concept to be revived. )
+variable reject 0 reject ! ( For orchestration of sentence-generation. )
+variable residuum 0 residuum ! ( psiDamp -- post-thought activation )
+variable rjc  0 rjc ! ( Rejuvenate: counter of rejuvenations over life )
+variable rsvp 1000 rsvp ! ( AUDITION/LISTEN response-time counter )
+variable rv ( "recall-vector" for diagnostic display of thought processes )
+variable seq  ( subSEQuent concept associated with another concept )
+variable spike  ( 1aug2005: for potential use in spreadAct )
+variable spt  ( audSTM; AUDITION: blank space time )
+variable stemgap  ( 30sep2008 For avoiding false audRecog stems )
+variable subj     ( 15sep2005 flag to supercharge subject-nouns )
+variable subjpsi  ( 4oct2008 For Predicate to correct beVerb choice )
+variable sublen ( 30spe2008 length of audRecog subpsi word-stem )
+variable subpsi ( 30sep2008 For audRecog of sub-component stems of words )
+variable supsi  ( 22jan2008 subject-psi for calculating "thotnum" )
+variable t  0 t ! ( time as incremented during auditory memory storage )
+variable t2s    ( 1jan2008 auditory text-to-speech index for SPEECH )
+variable thot1    ( 22jan2008 for detecting repetitions )
+variable thot2    ( 22jan2008 for detecting repetitions )
+variable thot3    ( 22jan2008 for detecting repetitions )
+variable thotcyc  ( 22jan2008 for seeking repetition in a cycle )
+variable thotnum  ( 22jan2008 A numeric concatenation of psi numbers )
+variable topic  ( topic for a question to be asked )
+variable topicnum ( 1oct2008 grammatical number of question "topic" )
+variable tov 1 tov ! ( TABULARASA; REIFY; ENGLISH; .echo: time-of-voice )
+variable tsday    ( LISTEN -- for headers in transcript mode )
+variable tshour   ( LISTEN )
+variable tsminute ( LISTEN )
+variable tsmonth  ( LISTEN )
+variable tssecond ( LISTEN )
+variable tsyear   ( LISTEN )
+variable tult ( AUDITION; audSTM: t penultimate, or time-minus-one )
+variable txen ( 4apr2007 Reify: time of transfer to English lexicon )
+variable unk  ( "unknown" variable for general use )
+variable upnext  ( 29jan2008 Flag lets new input de-crest previous. )
+variable urpre ( original pre for safeguarding during function-calls )
+variable urpsi ( original German:ur psi for use in psiDamp, etc. )
+variable vault 202 vault !  ( 29mar2007 adding data from JavaScript AI )
+variable vbpsi   ( 22jan2008 verb-psi for calculating "thotnum" )
+variable verbinc ( 27apr2007 verb-increment for use in verbAct module )
+variable verbval  ( 3apr2007 For transfer from verbPhrase to verbAct.)
+variable yesorno 0 yesorno ! ( 16sep2008 in conjunction with kbSearch )
+variable zone  ( ACTIVATE; SPREADACT: time-zone for "pre" and "seq" )
+
+:  CHANNEL   ( size num -< name >- )  
+  CREATE   ( Returns address of newly named channel. )
+  OVER     ( #r #c -- #r #c #r ) 
+  ,        ( Stores number of rows from stack to array.)
+  * CELLS  ( Feeds product of columns * rows to ALLOT.)
+  ALLOT    ( Reserves given quantity of cells for array.)
+  DOES>    ( member; row col -- a-addr )
+  DUP @    ( row col pfa #rows ) 
+  ROT *    ( row pfa col-index ) 
+  ROT +    ( pfa index ) 
+  1 +      ( because the first cell has the number of rows.)
+  CELLS +  ( from number of items to number of bytes in offset )
+;  
+
+cns @  8  CHANNEL  psi{  ( Mindcore concept array "psi" )
+cns @  7  CHANNEL   en{  ( English lexicon array "en" )
+cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
+:  PSI-CLEAR  
+  1   t @  1 +  DO  
+    0 I 1 psi{ !    
+  -1 +LOOP          
+;  
+
+:  TABULARASA  
+  0 unk !  
+  1 tov !  
+  BEGIN  cns @  1  DO
+    0 I  unk @  psi{ !
+  LOOP
+  1  unk +!
+  unk @  8  <  WHILE  
+  REPEAT
+  0 unk !  
+  1 tov !  
+  BEGIN  cns @  1  DO
+    0 I  unk @   en{ !
+  LOOP
+  1  unk +!
+  unk @  6  <  WHILE   
+  REPEAT
+  0 unk !  
+  1 tov !  
+  BEGIN  cns @  1  DO
+    0 I  unk @  aud{ !
+  LOOP
+  1  unk +!
+  unk @  6  <  WHILE
+  REPEAT
+  cns @  1  DO
+    32   I  0   aud{ !  
+  LOOP
+;  
+
+:  verbClear ( remove activation from all verbs ) 
+  midway @  t @  DO     
+    I     5 psi{ @ 8 = IF  
+      0 I 1 psi{ !    
+    THEN              
+  -1  +LOOP  
+;  
+
+:  verbClip ( lower activation on all verbs ) 
+  midway @  t @  DO     
+    I     5 psi{ @ 8 = IF   
+      I   1 psi{ @ 20 > IF  
+     20 I 1 psi{ !    
+      THEN            
+    THEN              
+  -1  +LOOP  
+;  
+
+:  psiDecay ( let conceptual activations dwindle ) 
+  fyi @ 2 > IF CR  
+  ."       psiDecay called to reduce all conceptual activations." CR
+  THEN
+  midway @  t @  DO  
+    I  1  psi{ @  1 -        I  1  psi{ !       
+    I  1  psi{ @  0 < IF  0  I  1  psi{ ! THEN  
+    I  0  psi{ @ 59 = IF  0  I  1  psi{ ! THEN  
+        I  0  psi{ @ 54 = IF  0  I  1  psi{ ! THEN  
+    I  0  psi{ @  7 = IF  0  I  1  psi{ ! THEN  
+    I     0    psi{ @ 57 = IF  
+      I   1    psi{ @  8 < IF  
+        1 I 1  psi{ !          
+      THEN  
+    THEN    
+    I      0   psi{ @ 66 = IF   
+      I    1   psi{ @  8 > IF   
+         1 I 1  psi{ !          
+      THEN  
+    THEN    
+  -1  +LOOP  
+;  
+
+:  psiDamp ( reduce activation of a concept ) 
+  16 residuum ! 
+  fyi @ 2 > IF CR  
+  ."     psiDamp called for urpsi = " urpsi @ .
+  ."  by module ID #" caller @ .        
+  caller @  42 = IF ." whatAuxSDo " THEN  
+  caller @  51 = IF ." auxVerb "    THEN  
+  caller @  62 = IF ." verbPhrase " THEN  
+  caller @  66 = IF ." nounPhrase " THEN  
+  caller @ 104 = IF ." Audition "   THEN  
+  caller @ 148 = IF ." Activate "   THEN  
+  caller @ 3535 = IF ." Audition "  THEN  
+  0 caller !  
+  THEN
+  midway @  t @  DO     
+            I  0  psi{ @ urpsi @ = IF  
+ residuum @ I  1  psi{ ! THEN  
+  -1 +LOOP                     
+  0 residuum !  
+  psiDecay  
+;   
+
+:  enDamp ( deactivate English lexicon concepts ) 
+  midway @  t @  DO  
+    0 I  1  en{ !    
+  -1 +LOOP           
+;  
+
+:  audDamp ( deactivate auditory engrams ) 
+  midway @  t @  DO    
+    0 I  1 aud{ !      
+  -1 +LOOP
+;  
+
+:  .psi ( show concepts in the Psi array ) 
+  CR  ." Psi mindcore concepts"
+  CR  ." time: psi act num jux pre pos seq enx "
+  t @ 1+  midway @ DO  
+    I    0  psi{ @ 0 > IF
+      CR I . ." : "
+      I  0  psi{ @ . ." "  
+      I  1  psi{ @ . ." "  
+      I  2  psi{ @ . ." "  
+      I  3  psi{ @ . ." "  
+      I  4  psi{ @ . ." "  
+      I  5  psi{ @ . ." "  
+      I  6  psi{ @ . ." "  
+      I  7  psi{ @ enx ! enx @ .  
+      enx @ 0 > IF
+        ." to "
+        I unk !
+        0 aud !  
+        midway @ unk @  DO
+          I   0 en{ @  enx @ = IF
+          
+            I 6 en{ @  aud  !  
+            aud @ 0= NOT IF    
+              BEGIN            
+                aud @ 0 aud{ @ EMIT  
+                1 aud +!             
+                aud @ 0 aud{ @ 32 =  
+              UNTIL                  
+              ."  "                  
+            THEN  
+            0 aud !  
+          LEAVE  ( One engrammed word is enough. )
+          THEN    
+        -1  +LOOP   
+      THEN  
+    THEN    
+  LOOP  CR ." time: psi act num jux pre pos seq enx "  0 unk ! 
+  CR ." You may enter .psi .en .aud to view memory engrams, or"
+  CR ." ALIFE [ENTER] to erase all memories and restart the Mind."
+  CR
+;  
+
+:  .en ( show vocabulary in the English lexicon array ) 
+  CR ." English lexical fibers"
+  CR ." t nen act num fex pos fin aud:"
+  t @  1+  midway @  DO
+    I  0  en{ @  unk !
+    unk @  0 > IF ( display positive data )
+      CR I . unk @ . ." "
+      I 1 en{ @ . ." "
+      I 2 en{ @ . ." "
+      I 3 en{ @ . ." "
+      I 4 en{ @ . ." "
+      I 5 en{ @ . ." "  
+      I 6 en{ @ aud !  aud @ . ."  to "  
+      BEGIN
+        aud @ 0 aud{ @ EMIT  1 aud +!
+        aud @ 0 aud{ @ 32 =  
+      UNTIL
+      ."  "
+      0 aud !  
+    THEN
+  LOOP
+  0 unk !
+  CR ." t nen act num fex pos fin aud" CR
+  CR ." You may enter .psi .en .aud to view memory engrams, or"
+  CR ." ALIFE [ENTER] to erase all memories and restart the Mind."
+  CR
+;  
+
+:  .aud ( show engrams in the auditory memory array ) 
+  CR ." Auditory memory nodes"
+  CR  ."  t pho act pov beg ctu psi"
+  t @  1+  1 DO           ( Show the entire Aud channel.)
+    CR    I . ." "
+    I 2 aud{ @ 123  =  IF
+      ."     { "
+    THEN  
+    I 0 aud{ @  33  <  IF
+      ."  "  ( show a blank )
+    ELSE
+      I 0 aud{ @ EMIT ."  "
+      I 1 aud{ @ .     ." "
+      I 2 aud{ @ EMIT ."  "
+      I 3 aud{ @ .     ." "
+      I 4 aud{ @ .     ." "
+      I 5 aud{ @ .
+    THEN
+    I 2 aud{ @ 125  =  IF
+      ."     } "
+    THEN  
+  LOOP
+  CR ." You may enter .psi .en .aud to view memory engrams, or"
+  CR ." ALIFE [ENTER] to erase all memories and restart the Mind."
+  CR
+;  
+: .echo ( show what the robot just said ) 
+  ( As on Usenet, user responds _below_ what the AI has said. )
+  fyi @ 2 = IF       
+  CR ." Tutorial mode is now in effect. Enter input or wait for output."
+    EEG @ 0 = IF   
+      CR ." Duplicate thought may have been detected."
+    THEN           
+  THEN               
+  CR  ." Robot: "    
+    t @ tov @  DO  
+      I 0  aud{ @  0 =  IF   
+        ."  "                
+      ELSE                   
+        I   2 aud{ @  42 = NOT IF  
+          I 0 aud{ @ EMIT      
+        THEN           
+      THEN             
+    LOOP               
+;  
+
+: SPREADACT  ( spreading Activation )  
+  fyi @ 3 = IF   
+    CR ."  sprdAct: caller & seq = " caller @ . seq @ .  
+  THEN           
+  pre @ 0 > IF   
+    zone @ 7 -   zone @  DO   
+      I 0  psi{ @   pre @  =  IF  
+                1   I  1 psi{ +!  
+                    I  1 psi{ @  0 < IF   
+                0   I  1 psi{  !          
+                    THEN   
+        I 1 psi{ @ 63 > IF  
+          63 I 1 psi{ !     
+        THEN
+        I zone  @  6 - > IF LEAVE THEN  
+      THEN       
+    -1  +LOOP    
+  THEN           
+  seq @ 0 > IF   
+    fyi @ 3 = IF   
+      CR ." sprA pos. seq & spike = " seq @ .  spike @ . CR 
+    THEN           
+    zone @ 9 +   zone @  DO   
+      I 0  psi{ @   seq @  =  IF  
+    fyi @ 3 = IF   
+      CR ." sprA matching seq w. spike = " seq @ .  spike @ . CR 
+    THEN           
+        fyi @ 1 > IF  
+          pov @ 35 = IF  
+            0 psi7 !         
+            fyi @ 3 = IF  
+              CR CR ." sprdAct: seq = " seq @ . CR CR  
+            THEN   
+            midway @ t @ DO  
+              I   0  psi{ @   oldpsi @  =  IF  
+                I 7  psi{ @   psi7 !    
+                LEAVE                   
+              THEN       
+            -1  +LOOP    
+            midway @ t @ DO  
+              I   0  en{ @    psi7 @ = IF  
+                I 6  en{ @  rv ! 
+                LEAVE    
+              THEN
+            -1  +LOOP    
+            0 rv !  
+            midway @ t @ DO  
+              I   0  psi{ @   seq @  =  IF  
+                I 7  psi{ @   psi7 !    
+                LEAVE                   
+              THEN       
+            -1  +LOOP    
+            midway @ t @ DO  
+              I   0  en{ @    psi7 @ = IF  
+                I 6  en{ @  rv ! 
+                LEAVE    
+              THEN
+            -1  +LOOP    
+            rv @ 0 > IF  
+              BEGIN
+                rv @ 0 aud{ @ EMIT  1 rv +!
+                rv @ 0 aud{ @ 32 =  
+              UNTIL        
+            THEN
+            0 rv !  
+            ."  "  
+          THEN    
+        THEN      
+        fyi @ 2 > IF  
+          pov @ 35 = IF  
+            CR
+            0 psi7 !         
+            midway @ t @ DO  
+              I   0  psi{ @   oldpsi @  =  IF  
+                I 7  psi{ @   psi7 !    
+                LEAVE                   
+              THEN       
+            -1  +LOOP    
+            midway @ t @ DO  
+              I   0  en{ @    psi7 @ = IF  
+                I 6  en{ @  rv ! 
+                LEAVE    
+              THEN
+            -1  +LOOP    
+            rv @ 0 > IF  
+              BEGIN
+                rv @ 0 aud{ @ EMIT  1 rv +!
+                rv @ 0 aud{ @ 32 =  
+              UNTIL        
+            THEN
+            0 rv !  
+            ."  #" oldpsi @ . ." act " oldact @ .     
+            ." at i " I . ." sprA spike "   
+            spike @ . ." to seq #" seq @ .  
+            midway @ t @ DO  
+              I   0  psi{ @   seq @  =  IF  
+                I 7  psi{ @   psi7 !    
+                LEAVE                   
+              THEN       
+            -1  +LOOP    
+            midway @ t @ DO  
+              I   0  en{ @    psi7 @ = IF  
+                I 6  en{ @  rv ! 
+                LEAVE    
+              THEN
+            -1  +LOOP    
+            rv @ 0 > IF  
+              BEGIN
+                rv @ 0 aud{ @ EMIT  1 rv +!
+                rv @ 0 aud{ @ 32 =  
+              UNTIL        
+            THEN
+            0 rv !  
+            CR      
+            ."  at act " I 1 psi{ @ . ." yields "  
+          THEN    
+        THEN      
+        fyi @ 3 = IF  
+          ." sprA: spiking seq " spike @ . seq @ .  
+        THEN           
+        spike   @   I  1 psi{ +!  
+        fyi @ 2 > IF     
+          pov @ 35 = IF  
+            I 1 psi{ @ . 
+            fyi @ 2 > IF 
+              ." and zone = " zone @ .      
+            THEN         
+          THEN    
+        THEN             
+          fyi @ 3 = IF    
+            I 1 psi{ @ . ." (lim = 63) for t=" I rv !
+              BEGIN      
+                -1 rv +!             
+                rv @ 3 aud{ @ 1 =    
+              UNTIL
+              rv @ .   
+              BEGIN
+                rv @ 0 aud{ @ EMIT  1 rv +!
+                rv @ 0 aud{ @ 32 =  
+              UNTIL        
+              ."  engram; in sprA spike = " spike @ .
+              0 rv !  
+           THEN
+          I 1 psi{ @ 63 > IF  
+            63 I 1 psi{ !     
+          THEN
+        I zone  @  6 + > IF
+          fyi @ 2 > IF   
+            CR ." executing LEAVE at zone = " zone @ .
+          THEN           
+          LEAVE
+        THEN     
+      THEN       
+    LOOP         
+  THEN           
+;  
+
+:  nounAct ( re-activate all recent nodes of a concept ) 
+  fyi @ 2 > IF CR  
+  ."     Calling nounAct (not in AI4U). psi = " psi @ . CR
+  THEN  
+  psi @  0 >  IF     
+    fyi @ 2 > IF  
+      CR ."       nounAct calls spreadACT to xfer proportionate "
+      ." act. from each node of concept #" psi @ .
+    THEN          
+    midway @   t @  DO  
+      I 0 psi{ @ psi @ = IF  
+      I 1 psi{ @ psi1 !   
+  nounval @  0 > IF nounval @ psi1 ! THEN  
+     psi1 @ 63 > IF  
+     63 psi1 !       
+     THEN            
+     psi1 @ I  1 psi{ !   
+            I  0 psi{ @  54 = IF  
+          0 I  1 psi{ !   
+            THEN   
+                  12 spike !  ( 3apr2007 Aim for ample spikes.)
+          I  4 psi{ @  pre !  ( 24aug2008 for use in SPREADACT )
+          I  6 psi{ @  seq !  ( 24aug2008 for use in SPREADACT )
+          I           zone !  ( for use in SPREADACT )
+          I  1 psi{ @  0 = IF  0 spike ! THEN
+          I  1 psi{ @  5 > IF 12 spike ! THEN  
+          I  1 psi{ @ 10 > IF 14 spike ! THEN  
+          I  1 psi{ @ 15 > IF 16 spike ! THEN  
+          I  1 psi{ @ 20 > IF 18 spike ! THEN  
+          I  1 psi{ @ 25 > IF 20 spike ! THEN  
+          I  1 psi{ @ 30 > IF 22 spike ! THEN  
+          I  1 psi{ @ 35 > IF 24 spike ! THEN  
+          I  1 psi{ @ 40 > IF 26 spike ! THEN  
+          I  1 psi{ @ 45 > IF 28 spike ! THEN  
+          I  1 psi{ @ 50 > IF 30 spike ! THEN  
+          I  1 psi{ @ 55 > IF 32 spike ! THEN  
+          I  1 psi{ @ 60 > IF 34 spike ! THEN  
+        psi @ oldpsi ! 
+          I  1 psi{ @ oldact !  
+          I  5 psi{ @ oldpos !  
+        seq @  0 > IF    
+          7865 caller !  
+          SPREADACT             ( for spreading activation )
+          0 caller !     
+        THEN   
+        precand @ pre !  
+        0 oldpos !  
+        0 oldpsi !  
+        0 oldact !  
+        0  pre !              
+      THEN                    
+      I    0 psi{ @ psi @ = NOT IF  
+         I 5 psi{ @ 5 = IF  
+            I 1 psi{ @ unk !  
+              0 unk !         
+            I 1 psi{ @ < 0 IF 
+          0 I 1 psi{ !        
+           THEN   
+         THEN   
+      THEN   
+    -1  +LOOP                 
+  THEN  
+  0 spike !  
+;  
+
+:  verbAct ( re-activate all recent nodes of a verb )  
+  verbval @  33 <  IF   
+    33  verbval @ -  verbinc !  
+    ELSE  0 verbinc !  
+  THEN  
+  fyi @ 2 > IF CR  
+  ."     Calling verbAct (not in AI4U). psi = " psi @ . CR
+  THEN  
+  psi @  0 >  IF     
+    fyi @ 2 > IF  
+      CR ."       verbAct calls spreadACT to xfer proportionate "
+      ." act. from each node of concept #" psi @ .
+    THEN          
+    psi @ oldpsi !  
+    midway @   t @ DO  
+      I 0 psi{ @ psi @ = IF  
+      
+        fyi @ 2 > IF      
+          I 1 psi{ @ 8 > IF  
+            ." +"         
+          THEN            
+        THEN              
+            I  1 psi{ @  psi1 !  
+     psi1 @ I  1 psi{ !   
+            I  0 psi{ @  54 = IF  
+          0 I  1 psi{ !   
+            THEN   
+          I  1 psi{ @ 63 > IF  
+            63 I 1 psi{ !      
+          THEN  
+          I  4 psi{ @  pre !  ( 24aug2008 for use in SPREADACT )
+          I  6 psi{ @  seq !  ( 24aug2008 for use in SPREADACT )
+          I           zone !  ( for use in SPREADACT )
+          I  1 psi{ @  0 = IF  0 spike ! THEN
+          I  1 psi{ @  0 > IF  1 spike ! THEN  
+          I  1 psi{ @  5 > IF  2 spike ! THEN  
+          I  1 psi{ @ 10 > IF  8 spike ! THEN  
+          I  1 psi{ @ 15 > IF 16 spike ! THEN  
+          I  1 psi{ @ 20 > IF 20 spike ! THEN  
+          I  1 psi{ @ 25 > IF 24 spike ! THEN  
+          I  1 psi{ @ 30 > IF 28 spike ! THEN  
+          I  1 psi{ @ 35 > IF 32 spike ! THEN  
+          I  1 psi{ @ 40 > IF 36 spike ! THEN  
+          I  1 psi{ @ 45 > IF 40 spike ! THEN  
+          I  1 psi{ @ 50 > IF 44 spike ! THEN  
+          I  1 psi{ @ 55 > IF 48 spike ! THEN  
+          I  1 psi{ @ 60 > IF 52 spike ! THEN  
+        psi @ oldpsi ! 
+          I  1 psi{ @ oldact !  
+          I  5 psi{ @ oldpos !  
+        seq @  0 > IF           
+          8665 caller !  
+          SPREADACT             ( for spreading activation )
+          0 caller !     
+        THEN                    
+        0 oldpos !  
+        0 oldpsi !  
+        0 oldact !  
+        0  pre !              
+        0  seq !              
+      THEN                    
+    -1  +LOOP                 
+  THEN  
+  0 verbinc !  
+;  
+
+:  ACTIVATE ( re-activate all recent nodes of a concept )  
+  fyi @ 2 > IF CR  
+  ."     Calling ACTIVATE. psi = " psi @ . CR
+  THEN  
+  0 spike !   
+  psi @  0 >  IF     
+    fyi @ 2 > IF  
+      CR ."       ACTIVATE calls spreadACT to xfer proportionate "
+      ." act. from each node of concept #" psi @ .
+    THEN          
+    midway @   t @  DO  
+      I 0 psi{ @ psi @ = IF  
+         16 I  1 psi{ +!  
+            I  0 psi{ @  54 = IF  
+          0 I  1 psi{ !   
+            THEN   
+          I  1 psi{ @ 63 > IF  
+            63 I 1 psi{ !      
+          THEN  
+                               1 spike !       
+          I  1 psi{ @  0 = IF  0 spike ! THEN  
+          I  1 psi{ @  5 > IF  7 spike ! THEN  
+          I  1 psi{ @ 10 > IF  8 spike ! THEN  
+          I  1 psi{ @ 15 > IF  9 spike ! THEN  
+          I  1 psi{ @ 20 > IF 10 spike ! THEN  
+          I  1 psi{ @ 25 > IF 11 spike ! THEN  
+          I  1 psi{ @ 30 > IF 12 spike ! THEN  
+          I  1 psi{ @ 35 > IF 13 spike ! THEN  
+          I  1 psi{ @ 40 > IF 14 spike ! THEN  
+          I  1 psi{ @ 45 > IF 15 spike ! THEN  
+          I  1 psi{ @ 50 > IF 16 spike ! THEN  
+          I  1 psi{ @ 55 > IF 17 spike ! THEN  
+          I  1 psi{ @ 60 > IF 18 spike ! THEN  
+                psi @ oldpsi !  
+          I  1 psi{ @ oldact !  
+          I  5 psi{ @ oldpos !  
+          I  4 psi{ @  pre !  ( 24aug2008 for use in SPREADACT )
+          I  6 psi{ @  seq !  ( 24aug2008 for use in SPREADACT )
+          I           zone !  ( for use in SPREADACT )
+        148 caller !          
+        SPREADACT             ( for spreading activation )
+        0 oldpos !            
+        0 oldpsi !            
+        0 oldact !            
+        0    pre !            
+        0    seq !            
+        0   psi1 !            
+        1  spike !            
+      THEN                    
+    -1  +LOOP                 
+    0 caller !          
+    0 urpsi !     
+  THEN  
+;  
+
+:  INSTANTIATE ( create a concept-fiber node )  
+  precand @ 0 > IF precand @ pre ! THEN  
+  ordo @ 1 = IF  0 prevtag ! THEN  
+  lastword @ 1 = IF   
+    0 seq !       
+    0 lastword !  
+  THEN  
+  ( concept fiber psi )             psi @  t @  0 psi{ !
+  ( Set "act" activation level. )   act @  t @  1 psi{ +!
+  ( Set "num" number flag       )   num @  t @  2 psi{ ! 
+  ( Store JUXtaposition tags. )     jux @  t @  3 psi{ ! 
+  ( Store PREvious associand. ) prevtag @  t @  4 psi{ ! 
+  ( Store functional pos code. )    pos @  t @  5 psi{ ! 
+  ( Store the subSEQuent tag. )     seq @  t @  6 psi{ ! 
+  ( Store the EN-transfer tag. )    enx @  t @  7 psi{ ! 
+  num @ instnum !  
+  0 num !          
+  0 preset !       
+  psi @ prevtag !  
+  ordo @ 1 > IF    
+    psi @ seq !    
+    vault @  t @ 2 -  DO   
+       I 1 psi{ @  0 > IF  
+         seq @ I 6 psi{ !   
+         LEAVE         
+       THEN            
+    -1 +LOOP           
+  THEN                 
+  0 seq !  
+;  
+
+:  enVocab ( English Vocabulary node creation ) 
+  ( Number "nen" of English )       nen @  t @  0  en{ !
+  ( Do not store the activation level; it is a transient.)
+  ( Store "num" number tag. )       num @  t @  2  en{ ! 
+  ( Store mindcore EXit tag. )      fex @  t @  3  en{ ! 
+  ( Store part of speech "pos".)    pos @  t @  4  en{ ! 
+  ( Store mindcore IN tag. )        fin @  t @  5  en{ ! 
+  ( Store the auditory "aud" tag. ) aud @  t @  6  en{ ! 
+;  
+
+:  PARSER ( determine the part of speech ) 
+  5 bias !  
+  36 act !  
+  INSTANTIATE  
+  pos @ 5 = IF  8 bias !  THEN  
+  pos @ 8 = IF  5 bias !  THEN  
+  psi @  jux !  
+;  
+
+:  REIFY ( express abstract concepts as real words ) 
+  0 act !
+  midway @  t   @  DO      
+          I   1 psi{ @  0 > IF   
+          I   1 psi{ @  lexact ! 
+          I   2 psi{ @  num !    
+          I   7 psi{ @  enx !    
+          I   0  en{ @  enx @ = IF  
+ lexact @ I   1  en{ !  
+    num @ I   2  en{ !  
+            0 lexact !    
+           THEN
+         THEN         
+    0 enx !      
+    0 act !      
+    0 lexact !   
+  -1  +LOOP      
+  0 act !        
+;  
+
+:  kbSearch ( knowledge base search )  
+  ordo @ 2 = IF  
+    nounAct  
+    Reify  
+  THEN  
+  ordo @ 3 = IF  
+    0 act !  
+    midway @ t  @ DO  
+      I     4 en{ @  8 = IF  
+        I   1 en{ @  act @ > IF  ( 17sep2008 if en1 is higher )
+          I 0 en{ @  memoire !  ( 17sep2008 store psi-tag of word )
+          I 1 en{ @  act !  ( 17sep2008 to test for a higher en1 )
+        THEN  
+      THEN    
+    -1 +LOOP  
+    yesorno @ 0 > IF  
+      memoire @ psi @ = IF  
+        1 yesorno +!  
+      ELSE            
+        0 yesorno !   
+      THEN  
+    THEN  
+    verbAct  
+    Reify  
+  THEN  
+  ordo @ 4 = IF  
+    0 act !      
+    0 memoire !  
+    midway @ t  @ DO  
+      I      4 en{ @  5 = IF  
+        I    1 en{ @  act @ > IF  ( 17sep2008 if en1 is higher )
+          I  0 en{ @  memoire !  ( 17sep2008 store psi-tag of word )
+          I  1 en{ @  act !  ( 17sep2008 to test for a higher en1 )
+        THEN  
+      THEN    
+    -1 +LOOP  
+    yesorno @ 0 > IF  
+      memoire @ psi @ = IF  
+        1 yesorno +!  
+      ELSE            
+        0 yesorno !   
+      THEN  
+    THEN  
+  THEN  
+  0 kbquiz !  
+  ordo @ 4 = IF 0 ordo ! THEN 
+;  
+
+:  OLDCONCEPT ( recognize a known word ) 
+  24 act !         
+  midway @ t @ DO  
+    I 0 en{ @ psi @ = IF   
+    I 2 en{ @    0 > IF    
+    I 2 en{ @  num ! THEN  
+    I 3 en{ @    0 > IF 
+    I 3 en{ @  fex ! THEN  
+    I 4 en{ @    0 > IF 
+    I 4 en{ @  pos ! THEN 
+    I 5 en{ @    0 > IF 
+    I 5 en{ @  fin ! THEN  
+    LEAVE        
+    THEN         
+  -1 +LOOP       
+  ( "psi" as found by audRecog )    psi @  t @  0  en{ !
+  ( Store zero activation. )          0    t @  1  en{ !
+  ( Store "num" number tag. )       num @  t @  2  en{ ! 
+  ( Store mindcore EXit tag. )      fex @  t @  3  en{ ! 
+  ( Store part of speech "pos".)    pos @  t @  4  en{ ! 
+  ( Store mindcore IN tag. )        fin @  t @  5  en{ ! 
+  ( Store the auditory "aud" tag. ) aud @  t @  6  en{ ! 
+  pov @  35 = IF fex @ psi ! THEN   
+  pov @  42 = IF fin @ psi ! THEN   
+  psi @  enx !      
+  psi @ 54 = IF 8 act ! THEN  
+  psi @ 55 = IF 8 act ! THEN  
+  ordo @ 1 = IF  
+    psi @ 59 = IF  
+      1 kbquiz !   
+    THEN  
+  THEN  
+  psi @ 59 = IF 8 act ! THEN  
+  psi @  7 = IF 1 act ! THEN  
+  PARSER            
+    0 pos !         
+  fyi @ 2 > IF CR          
+  ."   from oldConcept "   
+  THEN              
+  pov @ 42 = IF       
+    pre   @  urpre !  
+    ACTIVATE          
+    urpre @    pre !  
+  THEN                
+  0 act !       
+  pov @ 35 = IF  
+    1 match !  
+  THEN  
+  kbquiz @ 0 > IF   
+    1 yesorno !     
+    kbSearch        
+  THEN  
+  yesorno @ 0 > IF  
+    kbSearch  
+  THEN  
+;  
+
+:  NEWCONCEPT ( machine learning of new concepts ) 
+  1 nen +!     
+  nen @ IQ !   
+  nen @ psi !  
+  nen @ fex !  
+  nen @ fin !  
+  bias @ pos ! 
+  enVocab ( to create an ENglish vocabulary node )
+  0 fex !       
+  0 fin !       
+  nen @  enx !  
+  PARSER        
+  0 pos !       
+  0 act !       
+;  
+
+:  audRecog ( auditory Recognition )  
+  0  psi !   
+  8 act !      
+  0 actbase !  
+  midway @  spt @ DO    
+    I 0 aud{ @ pho @ = IF  
+      I 1 aud{ @ 0 = IF    
+        I 3 aud{ @ 1 = IF  
+          I 4 aud{ @ 1 = IF   
+            8 I 1+   1 aud{ ! 
+            0 psi !  
+          ELSE       
+            len @ 1 = IF  
+              I 5 aud{ @  monopsi !  
+            THEN   
+          THEN   
+        THEN   
+      THEN   
+      I 1 aud{ @ 0 > IF  
+        0 psi !          
+        I 4 aud{ @ 1 = IF   
+          2 act +!  
+          0 psi !           
+      act @ I 1+   1 aud{ ! 
+        THEN    
+        I 4 aud{ @ 0 = IF   
+          len @ 2 = IF   
+            I 1 aud{ @ 0 > IF  
+              I 5 aud{ @ psibase !  
+            THEN               
+          THEN           
+        THEN             
+        I 1 aud{ @ 8 > IF  
+          I 4 aud{ @ 0 = IF   
+            I 1 aud{ @ actbase @ > IF  
+              I 5 aud{ @ psi ! 
+              I 5 aud{ @ subpsi ! 
+              len @ sublen !  
+              I 5 aud{ @ psibase !  
+              I 1 aud{ @ actbase !  
+            THEN   
+          ELSE
+            0 psi !  
+            monopsi @ 0 > IF   
+              monopsi @ psi !  
+              0 monopsi !      
+            THEN               
+          THEN   
+        THEN     
+      THEN     
+    THEN       
+  -1 +LOOP     
+  0 act !      
+  0 actbase !  
+  psibase @ 0 > IF      
+     psibase @  psi !   
+  THEN                  
+  psi @ 0 = IF         
+    monopsi @ 0 > IF   
+      len @ 2 < IF  
+        monopsi @ psi !  
+      THEN          
+      0 monopsi !      
+      psi @ 0 = IF   
+        psibase @ 0 > IF  
+          psibase @ psi !  
+        THEN         
+      THEN           
+    THEN             
+  THEN  
+  psi @ 0 = IF  
+      morphpsi @ psi !  
+    sublen @ 0 > IF 
+      len @ sublen @ -  stemgap !  
+    THEN   
+    stemgap @ 0 < IF 0 stemgap ! THEN  
+    stemgap @ 1 > IF 0 subpsi ! THEN 
+    stemgap @ 1 > IF 0 morphpsi ! THEN 
+    stemgap @ 1 > IF 0 psi ! THEN    
+  THEN  
+  subpsi @ morphpsi !  
+  0 psibase !  
+  0 subpsi !   
+  psi @ 0 > IF   
+    stemgap @ 2 > IF  
+      0 psi !  
+    THEN   
+    pho @ 83 = IF  
+      2 num !  
+    THEN  
+  THEN  
+;  
+
+:  audSTM ( auditory Short Term Memory ) 
+  t @ vault @ > IF  
+    pho @ 32 > IF  audRecog  THEN  ( ASCII 32 = SPACE-bar )
+  THEN  
+    t @ 1-  0 aud{ @  0 = IF  1 beg !  THEN  
+    t @ 1-  0 aud{ @ 32 = IF  1 beg !  THEN  
+    pho @  t @  0 aud{ !  
+    pov @  t @  2 aud{ !  
+    beg @  t @  3 aud{ !  
+    ctu @  t @  4 aud{ !  
+    ctu @ 0 = IF  
+      psi @  t @  5 aud{ !  
+    THEN  
+    pho @ 32 = IF t @ spt !  THEN  
+;  
+
+:  LISTEN ( preparation for Audition )  
+  rsvp @  1  DO  
+    KEY? IF      
+      KEY pho !  
+      0 quiet !  
+      pho @  8 = IF 7 EMIT THEN 
+      pho @  9 = IF  
+        1000 rsvp !  
+        pho @ 13 = IF  1 lastword !  THEN  
+        fyi @ 0 = IF CR CR 
+     TIME&DATE tsyear ! tsmonth ! tsday ! tshour ! tsminute ! tssecond !
+  ." Transcript of AI Mind interview at "
+  tshour @ . tsminute @ . tssecond @ . ." o'clock on " tsday @ .
+    tsmonth @  1 = IF ." January "   THEN
+    tsmonth @  2 = IF ." February "  THEN
+    tsmonth @  3 = IF ." March "     THEN
+    tsmonth @  4 = IF ." April "     THEN
+    tsmonth @  5 = IF ." May "       THEN
+    tsmonth @  6 = IF ." June "      THEN
+    tsmonth @  7 = IF ." July "      THEN
+    tsmonth @  8 = IF ." August "    THEN
+    tsmonth @  9 = IF ." September " THEN
+    tsmonth @ 10 = IF ." October "   THEN
+    tsmonth @ 11 = IF ." November "  THEN
+    tsmonth @ 12 = IF ." December "  THEN
+    tsyear @ . 8 EMIT 46 EMIT CR  
+        THEN
+        1 fyi +!  
+        fyi @ 3 > IF 0 fyi ! THEN 
+        fyi @ 0 = IF CR
+ ." Normal display mode. Tab 1 = Transcript; 2 = Tutorial; 3 = Diagnostic."
+          CR
+        THEN
+        fyi @ 2 = IF CR  
+ ."   Tutorial mode reveals the internal thinking of the AI Mind." CR CR
+        THEN
+        fyi @ 3 = IF CR  
+ ." Diagnostic messages - ignore during input until you press ENTER."
+        CR
+        THEN
+        0  pho !  
+      THEN         
+      pho @ 27 = IF  
+        0 nounval !               
+        0 lopsi !   0 hipsi !
+        CR
+        CR ." User Command:  halt" 0 pho ! 0 rjc ! 0 fyi !
+        CR ." You may enter .psi .en .aud to view memory engrams, or"
+        CR ." ALIFE [ENTER] to erase all memories and restart the Mind."
+        CR ." Type 'bye' to quit Forth, then EXIT to quit DOS."
+        CR
+        QUIT
+      THEN
+      pho @ 0 > IF   
+        pho @ EMIT   
+      THEN           
+      pho @ DUP 96 > IF
+        DUP 123 < IF
+          32 -
+        THEN
+      THEN  pho !    
+      LEAVE  
+      ELSE
+      ."  "  
+    THEN
+    8  EMIT  
+  LOOP
+;  
+
+:  AUDITION ( accept auditory input )  
+  0 match !  
+  0 upnext !  
+  0 urpsi !   
+  t @ nlt !
+  pov @  42 = IF   
+    fyi @ 2 = IF  
+ ."     Audition calls Listen (Tab key will slow the AI down)." CR
+    THEN
+     t @ spt !   
+     t @ 8 >  IF  .echo  THEN  ( show output of AI )
+     CR ." Human: "
+  THEN  
+  60  0  DO    
+    pov @ 35 = IF       
+      1 upnext +!       
+      upnext @ 1 = IF   
+        obstat @ 0 = IF 
+          kbpsi @ lopsi !  
+          0 kbpsi !        
+          lopsi @ urpsi !  
+         3535 caller !  
+          pho @ 64 > IF  
+            psiDamp      
+          THEN           
+          hipsi @ lopsi !  
+          0 caller !    
+          0 urpsi !     
+          1 obstat !    
+        THEN            
+      THEN              
+      EEG @ 0 = IF        
+        psi @ 0 > IF      
+           psi @ redux !  
+           fyi @ 2 = IF   
+             7 EMIT  
+             CR ."   Resurecting oldest concept #" redux @ . 
+             CR  
+           THEN  
+        THEN              
+      THEN                
+    THEN                
+    pov @ 42 = IF   
+      LISTEN     
+      pho @ 0 > IF   
+        0 kbtv !  
+        1 upnext +!  
+        upnext @ 1 = IF 
+          verbClip   
+          hipsi @ urpsi !  
+          104 caller !  
+          psiDamp  
+          hipsi @ lopsi !  
+          0 caller !    
+          0 urpsi !     
+        THEN            
+        1000 rsvp !  
+      THEN           
+      I 59 = IF  
+        pho @ 0 = IF  
+          100 rsvp !   
+        ELSE           
+          1000 rsvp !  
+        THEN  
+      THEN       
+    THEN  
+    pho @  0 > IF  
+      1 t +!       
+    THEN
+    pho @ 13 = IF  
+       1 quiet !   
+       1 beg !     
+      13 eot !     
+      32 pho !     
+      CR           
+       1 lastword ! 
+    THEN
+    pho @ 27 =  IF  
+      CR ." AUDITION: halt"  0 pho !  0 fyi !  0 nounval !
+      CR ." You may enter .psi .en .aud to view memory engrams, or"
+      CR ." ALIFE [ENTER] to erase all memories and run the AI again."
+      0 lopsi !  0 hipsi ! 
+      QUIT  
+    THEN
+    pho @ 32 = IF  
+      1 ordo +!     
+      psi @ urpsi !  
+      0 upnext !  
+      t @  spt !       
+      t @  1 - tult !  
+      0  tult @  4 aud{ !  
+      psi @  0 >  IF    
+        0 sublen !  
+        onset @ aud !   
+        0 onset !       
+        psi @  tult @  5 aud{ !  
+        psi @ hipsi !     
+        OLDCONCEPT      
+        eot @ 13 = IF  
+          35 pov !     
+        THEN   
+        0 psi !         
+        0 aud !         
+      ELSE            
+          len @ 0 > IF  
+            onset @ aud ! 
+            hipsi @ lopsi !  
+            NEWCONCEPT    
+            psi @ hipsi !    
+            nen @  tult @  5  aud{ !  
+          THEN          
+      THEN              
+      audDamp           
+      0 len !           
+      0 aud !           
+      eot @ 13 = IF     
+        5 bias !        
+      THEN              
+      0 psi !           
+    THEN  
+    1 beg !  
+    1 ctu !  
+    spt @ 1 + onset !  
+      t @  onset @  = IF  1 beg !  ELSE  0 beg !  THEN
+    pho @ 32 > IF     
+      1 len +!
+      audSTM  
+    THEN
+    eot @ 13 = IF  
+      5 bias !     
+      1 quiet !    
+    THEN
+    eot @  0 > IF  
+      eot @ 14 = IF  
+        1 quiet !    
+        0 eot !      
+        0 pho !      
+        LEAVE   
+      THEN  
+      14 eot !  
+    THEN  
+    0 pho !  
+  LOOP       
+  hipsi @ kbpsi !  
+;  
+
+:  SENSORIUM ( sensory input channels )  
+ ( SMELL  -- normal sensory stub for later implementation )
+ ( VISION -- normal sensory stub for seed AI expansion )
+ ( TOUCH  -- normal haptics stub for cybernetic organisms )
+ ( TASTE  -- normal sensory stub for cyborg alife )
+ ( SYNAESTHESIA -- an option in a multisensory AI )
+     fyi @ 2 = IF  
+ ."   Sensorium calls Audition." CR
+     THEN
+   AUDITION  ( for entry or reentry of phonemic ASCII )
+ ( COMPASS  -- exotic sensory stub for use in robots )
+ ( GEIGER   -- exotic: Geiger counter )
+ ( GPS      -- exotic: Global Positioning System )
+ ( INFRARED -- exotic )
+ ( RADAR    -- exotic: RAdio Detection And Ranging )
+ ( SONAR    -- exotic: SOund Navigation And Ranging )
+ ( VSA      -- exotic: Voice Stress Analyzer lie detector )
+ ( Wi-Fi    -- exotic: 802.11 wireless fidelity )
+;  
+
+:  enBoot ( English Bootstrap of initial concepts ) 
+  0 t !  t @  spt !  ." (clearing memory...)"
+  CR ." There is no warranty for what this software does."
+    1 t ! 89 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+    2 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+    3 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 32 psi ! audSTM 
+ 32 psi !  0 act !  0 jux !  0 pre ! 4 pos !  0 seq ! 32 enx ! INSTANTIATE
+ 32 nen !  0 act ! 32 fex !          4 pos ! 32 fin !  1 aud ! enVocab
+    5 t ! 73 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+    6 t ! 70 pho ! 35 pov !  0 beg ! 0 ctu ! 20 psi ! audSTM 
+ 20 psi !  0 act !  0 jux !  0 pre ! 3 pos !  0 seq ! 20 enx ! INSTANTIATE
+ 20 nen !  0 act ! 20 fex !          3 pos ! 20 fin !  5 aud ! enVocab
+    8 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+    9 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   10 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu !  7 psi ! audSTM 
+  7 psi !  0 act !  0 jux !  0 pre ! 1 pos !  0 seq !  7 enx ! INSTANTIATE
+  7 nen !  0 act !  7 fex !          1 pos !  7 fin !  8 aud ! enVocab
+   12 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   13 t ! 82 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   14 t ! 85 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   15 t ! 84 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   16 t ! 72 pho ! 35 pov !  0 beg ! 0 ctu ! 68 psi ! audSTM 
+ 68 psi !  1 num !  0 jux !  0 pre ! 5 pos ! 66 seq ! 68 enx ! INSTANTIATE
+ 68 nen !  0 act ! 68 fex !          5 pos ! 68 fin ! 12 aud ! enVocab
+   18 t ! 73 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   19 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 66 psi ! audSTM 
+ 66 psi !  8 act !  0 jux ! 68 pre ! 8 pos !  0 seq ! 66 enx ! INSTANTIATE
+ 66 nen !  0 act ! 66 fex !          8 pos ! 66 fin ! 18 aud ! enVocab
+   21 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   22 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   23 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   24 t ! 84 pho ! 35 pov !  0 beg ! 0 ctu ! 22 psi ! audSTM 
+ 22 psi !  0 act !  0 jux !  0 pre ! 3 pos !  0 seq ! 22 enx ! INSTANTIATE
+ 22 nen !  0 act ! 22 fex !          3 pos ! 22 fin ! 21 aud ! enVocab
+   26 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   27 t ! 76 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   28 t ! 76 pho ! 35 pov !  0 beg ! 0 ctu !  2 psi ! audSTM 
+  2 psi !  0 act !  0 jux !  0 pre ! 1 pos !  0 seq !  2 enx ! INSTANTIATE
+  2 nen !  0 act !  2 fex !          1 pos !  2 fin ! 26 aud ! enVocab
+   30 t ! 82 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   31 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   32 t ! 66 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   33 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   34 t ! 84 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   35 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 39 psi ! audSTM 
+ 39 psi !  2 num !  0 jux !  0 pre ! 5 pos !  0 seq ! 39 enx ! INSTANTIATE
+ 39 nen !  0 act ! 39 fex !          5 pos ! 39 fin ! 30 aud ! enVocab
+   37 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   38 t ! 82 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   39 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 67 psi ! audSTM 
+ 67 psi !  8 act !  0 jux ! 39 pre ! 8 pos ! 38 seq ! 67 enx ! INSTANTIATE
+ 67 nen !  0 act ! 67 fex !          8 pos ! 67 fin ! 37 aud ! enVocab
+   41 t ! 80 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   42 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   43 t ! 82 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   44 t ! 83 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   45 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   46 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   47 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 38 psi ! audSTM 
+ 38 psi !  2 num !  0 jux !  0 pre ! 5 pos !  0 seq ! 38 enx ! INSTANTIATE
+ 38 nen !  0 act ! 38 fex !          5 pos ! 38 fin ! 41 aud ! enVocab
+   49 t ! 66 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   50 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   51 t ! 67 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   52 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   53 t ! 85 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   54 t ! 83 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   55 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 18 psi ! audSTM 
+ 18 psi !  0 act !  0 jux !  0 pre ! 3 pos !  0 seq ! 18 enx ! INSTANTIATE
+ 18 nen !  0 act ! 18 fex !          3 pos ! 18 fin ! 49 aud ! enVocab
+   57 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   58 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 53 psi ! audSTM 
+ 53 psi !  0 act !  0 jux !  0 pre ! 5 pos !  0 seq ! 53 enx ! INSTANTIATE
+ 53 nen !  0 act ! 53 fex !          5 pos ! 56 fin ! 57 aud ! enVocab
+   60 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   61 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   62 t ! 73 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   63 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   64 t ! 75 pho ! 35 pov !  0 beg ! 0 ctu ! 63 psi ! audSTM 
+ 63 psi !  0 act !  0 jux !  0 pre ! 8 pos !  0 seq ! 63 enx ! INSTANTIATE
+ 63 nen !  0 act ! 63 fex !          8 pos ! 63 fin ! 60 aud ! enVocab
+   66 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   67 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   68 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   69 t ! 78 pho ! 35 pov !  0 beg ! 0 ctu ! 13 psi ! audSTM 
+ 13 psi !  0 act !  0 jux !  0 pre ! 2 pos !  0 seq ! 13 enx ! INSTANTIATE
+ 13 nen !  0 act ! 13 fex !          2 pos ! 13 fin ! 66 aud ! enVocab
+   71 t ! 78 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   72 t ! 79 pho ! 35 pov !  0 beg ! 0 ctu ! 27 psi ! audSTM 
+ 27 psi !  0 act !  0 jux !  0 pre ! 4 pos !  0 seq ! 27 enx ! INSTANTIATE
+ 27 nen !  0 act ! 27 fex !          4 pos ! 27 fin ! 71 aud ! enVocab
+   74 t ! 89 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   75 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   76 t ! 85 pho ! 35 pov !  0 beg ! 0 ctu ! 56 psi ! audSTM 
+ 56 psi !  0 act !  0 jux !  0 pre ! 5 pos ! 35 seq ! 56 enx ! INSTANTIATE
+ 56 nen !  0 act ! 56 fex !          5 pos ! 50 fin ! 74 aud ! enVocab
+   78 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   79 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   80 t ! 68 pho ! 35 pov !  0 beg ! 0 ctu ! 17 psi ! audSTM 
+ 17 psi !  0 act !  0 jux !  0 pre ! 3 pos !  0 seq ! 17 enx ! INSTANTIATE
+ 17 nen !  0 act ! 17 fex !          3 pos ! 17 fin ! 78 aud ! enVocab
+   82 t ! 73 pho ! 35 pov !  1 beg ! 0 ctu ! 50 psi ! audSTM 
+ 50 psi !  0 act !  0 jux !  0 pre ! 5 pos ! 61 seq ! 50 enx ! INSTANTIATE
+ 50 nen !  0 act ! 50 fex !          5 pos ! 56 fin ! 82 aud ! enVocab
+   84 t ! 68 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   85 t ! 79 pho ! 35 pov !  0 beg ! 0 ctu ! 59 psi ! audSTM 
+ 59 psi !  0 act !  0 jux !  0 pre ! 8 pos !  0 seq ! 59 enx ! INSTANTIATE
+ 59 nen !  0 act ! 59 fex !          8 pos ! 59 fin ! 84 aud ! enVocab
+   87 t ! 78 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   88 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   89 t ! 84 pho ! 35 pov !  0 beg ! 0 ctu ! 12 psi ! audSTM 
+ 12 psi !  0 act !  0 jux !  0 pre ! 2 pos !  0 seq ! 12 enx ! INSTANTIATE
+ 12 nen !  0 act ! 12 fex !          2 pos ! 12 fin ! 87 aud ! enVocab
+   91 t ! 75 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   92 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   93 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   94 t ! 87 pho ! 35 pov !  0 beg ! 0 ctu ! 61 psi ! audSTM 
+ 61 psi !  0 act !  0 jux ! 50 pre ! 8 pos ! 16 seq ! 61 enx ! INSTANTIATE
+ 61 nen !  0 act ! 61 fex !          8 pos ! 61 fin ! 91 aud ! enVocab
+   96 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+   97 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+   98 t ! 89 pho ! 35 pov !  0 beg ! 0 ctu ! 16 psi ! audSTM 
+ 16 psi !  0 act !  0 jux !  0 pre ! 2 pos !  0 seq ! 16 enx ! INSTANTIATE
+ 16 nen !  0 act ! 16 fex !          2 pos ! 16 fin ! 96 aud ! enVocab
+  100 t ! 83 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  101 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  102 t ! 77 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  103 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 69 psi ! audSTM 
+ 69 psi !  0 act !  0 jux !  0 pre ! 1 pos !  0 seq ! 69 enx ! INSTANTIATE
+ 69 nen !  0 act ! 69 fex !          1 pos ! 69 fin ! 100 aud ! enVocab
+  105 t ! 80 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  106 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  107 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  108 t ! 80 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  109 t ! 76 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  110 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 37 psi ! audSTM 
+ 37 psi !  2 num !  0 jux !  0 pre ! 5 pos ! 70 seq ! 37 enx ! INSTANTIATE
+ 37 nen !  0 act ! 37 fex !          5 pos ! 37 fin ! 105 aud ! enVocab
+  112 t ! 72 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  113 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  114 t ! 86 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  115 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 70 psi ! audSTM 
+ 70 psi !  0 act !  0 jux ! 37 pre ! 8 pos ! 71 seq ! 70 enx ! INSTANTIATE
+ 70 nen !  0 act ! 70 fex !          8 pos ! 70 fin ! 112 aud ! enVocab
+  117 t ! 65 pho ! 35 pov !  1 beg ! 0 ctu !  1 psi ! audSTM 
+  1 psi !  0 act !  0 jux !  0 pre ! 1 pos !  0 seq !  1 enx ! INSTANTIATE
+  1 nen !  0 act !  1 fex !          1 pos !  1 fin ! 117 aud ! enVocab
+  119 t ! 70 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  120 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  121 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  122 t ! 82 pho ! 35 pov !  0 beg ! 0 ctu ! 71 psi ! audSTM 
+ 71 psi !  1 num !  0 jux !  0 pre ! 5 pos !  0 seq ! 71 enx ! INSTANTIATE
+ 71 nen !  0 act ! 71 fex !          5 pos ! 71 fin ! 119 aud ! enVocab
+  124 t ! 79 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  125 t ! 70 pho ! 35 pov !  0 beg ! 0 ctu ! 45 psi ! audSTM 
+ 45 psi !  0 act !  0 jux !  0 pre ! 6 pos !  0 seq ! 45 enx ! INSTANTIATE
+ 45 nen !  0 act ! 45 fex !          6 pos ! 45 fin ! 124 aud ! enVocab
+  127 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  128 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  129 t ! 79 pho ! 35 pov !  0 beg ! 0 ctu ! 55 psi ! audSTM 
+ 55 psi !  0 act !  0 jux !  0 pre ! 5 pos !  0 seq ! 55 enx ! INSTANTIATE
+ 55 nen !  0 act ! 55 fex !          5 pos ! 55 fin ! 127 aud ! enVocab
+  131 t ! 73 pho ! 35 pov !  1 beg ! 0 ctu ! 50 psi ! audSTM 
+ 50 psi !  0 act !  0 jux !  0 pre ! 5 pos ! 57 seq ! 50 enx ! INSTANTIATE
+ 50 nen !  0 act ! 50 fex !          5 pos ! 56 fin ! 131 aud ! enVocab
+  133 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  134 t ! 77 pho ! 35 pov !  0 beg ! 0 ctu ! 57 psi ! audSTM 
+ 57 psi !  8 act !  0 jux !  0 pre ! 8 pos !  0 seq ! 57 enx ! INSTANTIATE
+ 57 nen !  0 act ! 57 fex !          8 pos ! 57 fin ! 133 aud ! enVocab
+  136 t ! 79 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  137 t ! 82 pho ! 35 pov !  0 beg ! 0 ctu ! 21 psi ! audSTM 
+ 21 psi !  0 act !  0 jux !  0 pre ! 3 pos !  0 seq ! 21 enx ! INSTANTIATE
+ 21 nen !  0 act ! 21 fex !          3 pos ! 21 fin ! 136 aud ! enVocab
+  139 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  140 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  141 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  142 t ! 84 pho ! 35 pov !  0 beg ! 0 ctu ! 54 psi ! audSTM 
+ 54 psi !  0 act !  0 jux !  0 pre ! 5 pos !  0 seq ! 54 enx ! INSTANTIATE
+ 54 nen !  0 act ! 54 fex !          5 pos ! 54 fin ! 139 aud ! enVocab
+  144 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  145 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  146 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  147 t ! 89 pho ! 35 pov !  0 beg ! 0 ctu ! 52 psi ! audSTM 
+ 52 psi !  0 act !  0 jux !  0 pre ! 5 pos ! 62 seq ! 52 enx ! INSTANTIATE
+ 52 nen !  0 act ! 52 fex !          5 pos ! 52 fin ! 144 aud ! enVocab
+  149 t ! 83 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  150 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  151 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 62 psi ! audSTM 
+ 62 psi !  0 act !  0 jux ! 52 pre ! 8 pos !  0 seq ! 62 enx ! INSTANTIATE
+ 62 nen !  0 act ! 62 fex !          8 pos ! 62 fin ! 149 aud ! enVocab
+  153 t ! 73 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  154 t ! 78 pho ! 35 pov !  0 beg ! 0 ctu ! 44 psi ! audSTM 
+ 44 psi !  0 act !  0 jux !  0 pre ! 6 pos !  0 seq ! 44 enx ! INSTANTIATE
+ 44 nen !  0 act ! 44 fex !          6 pos ! 44 fin ! 153 aud ! enVocab
+  156 t ! 77 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  157 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 65 psi ! audSTM 
+ 65 psi !  0 act !  0 jux !  0 pre ! 5 pos !  0 seq ! 65 enx ! INSTANTIATE
+ 65 nen !  0 act ! 65 fex !          5 pos ! 56 fin ! 156 aud ! enVocab
+  159 t ! 75 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  160 t ! 73 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  161 t ! 68 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  162 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 72 psi ! audSTM 
+ 72 psi !  2 num !  0 jux !  0 pre ! 5 pos ! 73 seq ! 72 enx ! INSTANTIATE
+ 72 nen !  0 act ! 72 fex !          5 pos ! 72 fin ! 159 aud ! enVocab
+  164 t ! 77 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  165 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  166 t ! 75 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  167 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 73 psi ! audSTM 
+ 73 psi !  0 act !  0 jux ! 72 pre ! 8 pos ! 39 seq ! 73 enx ! INSTANTIATE
+ 73 nen !  0 act ! 73 fex !          8 pos ! 73 fin ! 164 aud ! enVocab
+  169 t ! 82 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  170 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  171 t ! 66 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  172 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  173 t ! 84 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  174 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 39 psi ! audSTM 
+ 39 psi !  2 num !  0 jux ! 73 pre ! 5 pos !  0 seq ! 39 enx ! INSTANTIATE
+ 39 nen !  0 act ! 39 fex !          5 pos ! 39 fin ! 169 aud ! enVocab
+  176 t ! 82 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  177 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  178 t ! 66 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  179 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  180 t ! 84 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  181 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 39 psi ! audSTM 
+ 39 psi !  2 num !  0 jux !  0 pre ! 5 pos ! 74 seq ! 39 enx ! INSTANTIATE
+ 39 nen !  0 act ! 39 fex !          5 pos ! 39 fin ! 176 aud ! enVocab
+  183 t ! 78 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  184 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  185 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  186 t ! 68 pho ! 35 pov !  0 beg ! 0 ctu ! 74 psi ! audSTM 
+ 74 psi !  0 act !  0 jux ! 39 pre ! 8 pos ! 50 seq ! 74 enx ! INSTANTIATE
+ 74 nen !  0 act ! 74 fex !          8 pos ! 74 fin ! 183 aud ! enVocab
+  188 t ! 77 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  189 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 65 psi ! audSTM 
+ 50 psi !  0 act !  0 jux ! 74 pre ! 5 pos !  0 seq ! 65 enx ! INSTANTIATE
+ 65 nen !  0 act ! 50 fex !          5 pos ! 56 fin ! 188 aud ! enVocab
+  191 t ! 73 pho ! 35 pov !  1 beg ! 0 ctu ! 50 psi ! audSTM 
+ 50 psi !  0 act !  0 jux !  0 pre ! 5 pos ! 75 seq ! 50 enx ! INSTANTIATE
+ 50 nen !  0 act ! 50 fex !          5 pos ! 56 fin ! 191 aud ! enVocab
+  193 t ! 72 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  194 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  195 t ! 76 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  196 t ! 80 pho ! 35 pov !  0 beg ! 0 ctu ! 75 psi ! audSTM 
+ 75 psi !  0 act !  0 jux ! 50 pre ! 8 pos ! 72 seq ! 75 enx ! INSTANTIATE
+ 75 nen !  0 act ! 75 fex !          8 pos ! 75 fin ! 193 aud ! enVocab
+  198 t ! 75 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! audSTM 
+  199 t ! 73 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  200 t ! 68 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! audSTM 
+  201 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 72 psi ! audSTM 
+ 72 psi !  2 num !  0 jux ! 75 pre ! 5 pos !  0 seq ! 72 enx ! INSTANTIATE
+ 72 nen !  0 act ! 72 fex !          5 pos ! 72 fin ! 198 aud ! enVocab
+  1 t +!
+    t @  vault !  
+    t @  tov !    
+  1 t +!          
+    t @ nlt !  ( nlt may be basis for DAMP functions )
+  72 urpsi !  
+  75 nen !  
+  5 bias !  
+  0 num !  
+  0 pho !  
+  0 pre !  0 seq !  
+;  
+
+:  kbTraversal ( reactivate KB concepts )  
+    35 pov !  
+    psiDecay  
+    psiDecay  
+    psiDecay  
+    kbtv @ 4 > IF  1 kbtv !  THEN  
+    CR ." Knowledge base traversal with kbtv at " kbtv @ . 
+    kbtv @ 1 = IF  
+      56 psi !     
+      ." activating concept of YOU" CR
+      62 nounval ! 
+      nounAct      
+    THEN  
+    kbtv @ 2 = IF  
+      37 psi !     
+      ." activating concept of PEOPLE" CR
+      62 nounval ! 
+      nounAct      
+    THEN  
+    kbtv @ 3 = IF  
+      39 psi !     
+      ." activating concept of ROBOTS" CR
+      62 nounval ! 
+      nounAct      
+    THEN  
+    kbtv @ 4 = IF  
+      68 psi !     
+      ." activating concept of TRUTH" CR
+      62 nounval ! 
+      nounAct      
+    THEN  
+    42 pov !  
+;  
+
+:  REJUVENATE ( recycle oldest memory spaces ) 
+  fyi @ 2 = IF  
+    7 EMIT      
+    CLS         
+  THEN          
+  0 edge !  
+  CR 1 rjc +!  
+  ." Please wait as memories migrate in rejuvenation cycle #" rjc @ . CR
+  t @ 2 +  coda @ vault @ +  DO  
+    I  jrt !  
+    jrt @  coda @ -  jrt !  
+    edge @ 1 = IF
+      I 0 psi{ @  jrt @  0 psi{ !  0 I 0 psi{ !  
+      I 1 psi{ @  jrt @  1 psi{ !  0 I 1 psi{ !  
+      I 2 psi{ @  jrt @  2 psi{ !  0 I 2 psi{ !  
+      I 3 psi{ @  jrt @  3 psi{ !  0 I 3 psi{ !  
+      I 4 psi{ @  jrt @  4 psi{ !  0 I 4 psi{ !  
+      I 5 psi{ @  jrt @  5 psi{ !  0 I 5 psi{ !  
+      I 6 psi{ @  jrt @  6 psi{ !  0 I 6 psi{ !
+      I 7 psi{ @  jrt @  7 psi{ !  0 I 7 psi{ !  
+    THEN
+    edge @  1 =  IF
+      en6 @  1 <  IF  0 en6 !  THEN  
+      I 0 en{ @  jrt @  0 en{ !  0 I 0 en{ !  
+      I 1 en{ @  jrt @  1 en{ !  0 I 1 en{ !
+      I 2 en{ @  jrt @  2 en{ !  0 I 2 en{ !
+      I 3 en{ @  jrt @  3 en{ !  0 I 3 en{ !
+      I 4 en{ @  jrt @  4 en{ !  0 I 4 en{ !
+      I 5 en{ @  jrt @  5 en{ !  0 I 5 en{ ! 
+      I 6 en{ @  en6 !   
+          en6 @  vault @ < IF 
+          en6 @  jrt @  6 en{ !  0 I 6 en{ !  THEN 
+          en6 @  coda @  vault @ +  > IF 
+          en6 @  coda @ -  jrt @ 6 en{ ! 
+          THEN               0 I 6 en{ !  
+    THEN
+    edge @  1 = IF  
+      I 0 aud{ @  jrt @  0 aud{ !   
+      I 1 aud{ @  jrt @  1 aud{ !   
+      I 2 aud{ @  jrt @  2 aud{ !   
+      I 3 aud{ @  jrt @  3 aud{ !   
+      I 4 aud{ @  jrt @  4 aud{ !   
+      I 5 aud{ @  jrt @  5 aud{ !   
+        fyi @ 1 > IF  
+                  jrt @  0 aud{ @ EMIT  
+        THEN 
+    THEN
+    edge @ 0 = IF  
+     32 jrt @ 0 aud{ !  
+      0 jrt @ 1 aud{ !
+            I 2 aud{ @ 123 = IF  1 edge !  THEN
+      0 jrt @ 2 aud{ !
+      0 jrt @ 3 aud{ !
+      0 jrt @ 4 aud{ !
+      0 jrt @ 5 aud{ !
+      0 jrt @ 0 en{ !  
+      0 jrt @ 1 en{ !  
+      0 jrt @ 2 en{ !  
+      0 jrt @ 3 en{ !  
+      0 jrt @ 4 en{ !  
+      0 jrt @ 5 en{ !  
+      0 jrt @ 6 en{ !  
+      0 jrt @ 0 psi{ ! 
+      0 jrt @ 1 psi{ ! 
+      0 jrt @ 2 psi{ ! 
+      0 jrt @ 3 psi{ ! 
+      0 jrt @ 4 psi{ ! 
+      0 jrt @ 5 psi{ ! 
+      0 jrt @ 6 psi{ ! 
+      0 jrt @ 7 psi{ ! 
+    THEN
+  LOOP
+  jrt @  t !        
+  cns @    t @  DO  
+   32  I 0  aud{ !  
+    0  I 1  aud{ !
+    0  I 2  aud{ !
+    0  I 3  aud{ !
+    0  I 4  aud{ !
+    0  I 5  aud{ !
+    0  I 0   en{ !  
+    0  I 1   en{ !  
+    0  I 2   en{ !  
+    0  I 3   en{ !  
+    0  I 4   en{ !
+    0  I 5   en{ !
+    0  I 6   en{ !  
+    0  I 0  psi{ !  
+    0  I 1  psi{ !  
+    0  I 2  psi{ !  
+    0  I 3  psi{ !  
+    0  I 4  psi{ !  
+    0  I 5  psi{ !  
+    0  I 6  psi{ !  
+    0  I 7  psi{ !  
+  LOOP  
+  t @ 20 - tov !  
+  CR CR ." End of Rejuvenation #" rjc @ . 
+  ." in the immortal AI Mind display for science museum exhibits." CR
+  ." Tab key cycles through Normal, Transcript, Tutorial, Diagnostic."
+  CR
+  fyi @ 2 = IF   
+    1000 rsvp !  
+  THEN           
+  1 kbtv +!  
+  kbtv @ 0 > IF  
+ CR ." For lack of human input, Rejuvenate calls KB-traversal" CR 
+    kbTraversal  
+  THEN  
+; 
+
+:  SPEECH ( output of a word as text or sound ) 
+  fyi @ 2 = IF CR THEN  
+  0 audstop !   ( 1jan2008 Initially false value of flag )
+  0 pho !       ( 1jan2008 Lest pho already be at 32 )
+  aud @ onset !  ( the onset of a word is its recall-vector )
+  aud @ t2s !    
+  40  1  DO   
+    t2s @  0  aud{ @ pho !  pho @ EMIT  ( say or display "pho" )
+    pho @ 32 = IF 1 audstop ! THEN 
+    35 pov !  ( internal point-of-view ASCII 35 "#" like mindgrid )
+    AUDITION    ( for reentry of a thought back into the mind )
+    audstop @ 1 = IF LEAVE THEN  
+    t2s @  1+  t2s !  
+    t2s @  4 aud{ @ 0 = IF  32 pho !  THEN ( 1jan2008 If end of word )
+    match @ 1 = IF 
+      0 match !    
+      LEAVE        
+    THEN           
+  LOOP             
+  0 match !       
+  0 obstat !  
+;  
+
+:  Affirmative ( to utter "YES" in response )  
+  midway @  t @  DO  
+    I       0 en{ @  32 = IF  
+      I     6 en{ @  aud !  
+      LEAVE  
+    THEN  
+  -1 +LOOP  
+  SPEECH    
+  0 kbquiz !  
+  0 yesorno ! 
+;  
+
+:  EGO ( revive ego after brain-dead flatline ) 
+  fyi @ 1 > IF CR CR
+    ."   Calling EGO (AI4U Chapter 20); inert = " inert @ .
+  THEN
+  0 recon !    
+  0 psi !      
+  0 inert !    
+  0 recon !    
+  EEG @ 0 = IF    
+  fyi @ 2 = IF
+    CR ." Repetitious thought detected; EGO module steps in." 
+  THEN
+    vault @ rv !  
+      rv @ 0 > IF 
+        BEGIN     
+          rv @ 0 aud{ @ EMIT  1 rv +!
+          rv @ 0 aud{ @ 32 >  
+        UNTIL      
+        CR ." EGO Module recalls the oldest memory -- "
+        rv @ aud !  
+        SPEECH      
+      THEN
+      0 rv !  
+    fyi @ 2 > IF   
+      CR ."  EGO: EEG = " EEG @ .  ." psi = " psi @ .  
+      ." topic = " topic @ .  ." redux = " redux @ .   
+    THEN           
+    redux @ psi !  
+    40 nounval !   
+    nounAct        
+    0 redux !      
+  THEN  
+  EEG @ 0 = IF 3 EEG ! THEN  
+;  
+
+:  Article ( select "a" or "the" before a noun )  
+  nphrnum @  1 = IF    
+    motjuste @ ghost @ = NOT IF  
+      midway @  t @  DO  
+        I       0 en{ @  1 = IF  
+        I     6 en{ @  aud !  
+          LEAVE  
+        THEN  
+      -1 +LOOP  
+      SPEECH  
+    THEN  
+    motjuste @ ghost @ = IF  
+      midway @  t @  DO  
+        I       0 en{ @  7 = IF  
+          I     6 en{ @  aud !  
+          LEAVE  
+        THEN  
+      -1 +LOOP  
+      SPEECH  
+      0 nphrnum !  
+    THEN  
+  THEN    
+  nphrnum @  2 = IF    
+    midway @  t @  DO  
+      I       0 en{ @  7 = IF  
+        I     6 en{ @  aud !  
+        LEAVE  
+      THEN  
+    -1 +LOOP  
+    SPEECH  
+    0 nphrnum !  
+  THEN    
+  dirobj @ 1 = IF     
+    motjuste @ ghost !  
+  THEN  
+;  
+
+:  nounPhrase ( select part of a thought )  
+  0 reject !  
+  REIFY    ( to move abstract Psi concepts to enVocab reality )
+  0 act !
+  0 aud !  
+  0 motjuste !
+  5 opt !  
+  35 pov ! 
+  0 psi !  
+  fyi @ 1 > IF CR  
+    ."   nounPhrase preview of further associated concepts -- "
+    CR  ."     " 
+  THEN  
+  midway @  t @  DO  
+    I     4 en{ @  5 =  IF   
+      fyi @ 2 > IF  
+        I 1 en{ @ 0 > IF
+          CR ."     candidate activation = " I 1 en{ @ . ."  "
+          I 6 en{ @ unk !  
+          BEGIN
+          unk @ 0 aud{ @ EMIT  1 unk +!
+          unk @ 0 aud{ @ 32 =  
+          UNTIL
+          ."                         "  
+        THEN    
+      THEN      
+      I   0 en{ @ 65 = IF I 6 en{ @ audme ! THEN  
+      I   1 en{ @  act @ > IF  
+        I 0 en{ @  motjuste !  
+        I 0 en{ @  subjpsi !  
+        I 2 en{ @  nphrnum !   
+        I 4 en{ @  nphrpos ! 
+        I 6 en{ @  aud !  
+        I 6 en{ @  audjuste !  
+        dirobj @ 1 = IF  
+          motjuste @  50 = IF  
+            fyi @ 3 = IF       
+              CR ." nPhr: Switching dirobj I to ME"  CR 
+            THEN           
+            65 motjuste !  
+            audme @ aud !  
+            audme @ audjuste !  
+          THEN           
+        THEN             
+        fyi @ 2 > IF  
+          CR ."     nounPhrase: aud = "
+          aud @ . 
+          aud @ rv !  
+          ." urging psi concept #" motjuste @ . ."  "  
+          BEGIN       
+            rv @ 0 aud{ @ EMIT  1 rv +!
+            rv @ 0 aud{ @ 32 =  
+          UNTIL        
+          ."  "
+        0 rv !  
+        THEN    
+        I 1 en{ @  act !  
+        fyi @ 2 > IF   
+          ."  activation = " act @ . CR ."   "  
+        THEN
+        ELSE   
+      THEN     
+    THEN       
+  -1 +LOOP     
+  enDamp       
+  motjuste @  0 = IF  
+    midway @  t @  DO  
+      I       0 en{ @  54 = IF  
+        54 motjuste !  
+        I     6 en{ @  aud !  
+        LEAVE  
+      THEN  
+    -1 +LOOP  
+    SPEECH    
+    1000 rsvp !  
+    EXIT   
+  THEN     
+  act @ nounval !   
+  nounval @ 3 - nounval !  
+  act @ 2 < IF      
+    motjuste @ 0 > IF  
+      1 reject !    
+    THEN               
+  THEN              
+  motjuste @  hipsi !  
+  Article  
+  motjuste @ psi !  
+  nounAct           
+  0 nounval !       
+  audjuste @ aud !  
+  SPEECH  
+  32 EMIT            
+  fyi @ 2 > IF CR  
+  ."   from nounPhrase "
+  THEN
+  motjuste @ topic !   
+  instnum @  topicnum !  
+  0 act !              
+  0 psi  !             
+;  
+
+:  verbPhrase ( select part of a thought ) 
+  REIFY       
+  0 act !     
+  0 aud !     
+  0 detour !  
+  0 motjuste !
+  8 opt !  
+  0 psi !  
+  adverbact 32 > IF  
+  THEN  
+  fyi @ 1 > IF CR  
+ ."   verbPhrase preview with slosh-over indicated by + --"
+    CR
+ ."   Noun & verb activation must slosh over onto logical direct objects."
+    CR  ."    " 
+  THEN
+  midway @ t  @ DO  
+    I      4 en{ @  8 = IF  
+    fyi @ 3 = IF  ." vP" THEN  
+      fyi @ 2 > IF      
+        I 1 en{ @ 0 > IF
+           CR ."     cand. act = " I 1 en{ @ . ."  "
+           ." w. psi seq #"
+           I 6 psi{ @ seq ! seq @ . ."  "  
+           I 6  en{ @ unk  !  
+           BEGIN
+           unk @ 0 aud{ @ EMIT  1 unk +!
+           unk @ 0 aud{ @ 32 =  
+           UNTIL
+           ."  w. nodal dir. obj. "  
+           midway @ t @ DO  
+             I   0  psi{ @   seq @  =  IF  
+               I 1  psi{ @ . ." = act "  
+               I 7  psi{ @   psi7 !    
+               LEAVE                   
+             THEN       
+           -1  +LOOP    
+           midway @ t @ DO  
+             I   0  en{ @    psi7 @ = IF  
+               I 6  en{ @  rv ! 
+               LEAVE    
+             THEN
+           -1  +LOOP    
+           rv @ 0 > IF  
+             BEGIN
+               rv @ 0 aud{ @ EMIT  1 rv +!
+               rv @ 0 aud{ @ 32 =  
+             UNTIL        
+           THEN
+           ."  in v-Phr spike = " spike @ .    
+           0 rv !    
+           ."     "  
+        THEN    
+      THEN      
+      I    1 en{ @  act @ > IF  ( if en1 is higher )
+        I  0 en{ @  motjuste !  ( store psi-tag of verb )
+        I  6 en{ @  aud !  ( 27aug2008 auditory recall-vector )
+        fyi @ 2 > IF        
+          CR ." verbPhrase: aud = "
+          aud @ . 
+          aud @ rv !  
+          ." urging psi concept #" motjuste @ . ."  " 
+          BEGIN       
+            rv @ 0 aud{ @ EMIT  1 rv +!
+            rv @ 0 aud{ @ 32 =  
+          UNTIL        
+          ."  "
+          0 rv !       
+        THEN           
+        I  1 en{ @  act !  ( to test for a higher en1 )
+          fyi @ 3 = IF CR   
+            ."  verbPhr: act = " act @ . ."   "
+          THEN
+        ELSE  
+      THEN  
+    THEN    
+  -1 +LOOP  
+   act @  verbval !   
+   0 psi !            
+   motjuste @ 0 > IF motjuste @ vbpsi ! THEN  
+  fyi @ 2 > IF   
+    CR ." verbPhrase: motjuste = " motjuste @ . ." going into SPEECH."
+    CR ." verbPhrase: aud = " aud @ . ." going into SPEECH."
+  THEN           
+  motjuste @ 0 = IF  
+    1 detour !   
+    fyi @ 1 > IF  
+      CR ."   verbPhr: detouring when no candidate-verb is found. "
+      CR ."   verbPhr: detour value is at " detour @ .  
+    THEN          
+  THEN  
+  motjuste @ 0 > IF  
+    act @ 20 < IF  
+      1 detour !   
+      fyi @ 1 > IF  
+    CR ."       verbPhr: detour because verb-activation is only " act @ .
+      THEN          
+    THEN      
+    detour @ 0 = IF  
+    62 caller !      
+    psiDamp          
+    motjuste @  hipsi !  
+    fyi @ 2 > IF    
+      CR ."    nounPhr: lopsi @ hipsi = " lopsi @ . hipsi @ . 
+    THEN            
+    motjuste @ psi ! 
+    verbAct          
+      SPEECH         
+    THEN             
+  THEN               
+ detour @ 0 = IF     
+  10 act !  
+  fyi @ 2 > IF CR    
+  ."   in verbPhrase after SPEECH output of verb"
+  THEN
+  fyi @ 2 > IF CR    
+  ."   from verbPhrase after speaking of verb, psiDamping #" motjuste @ .
+  THEN
+  motjuste @  urpsi !  
+  22 residuum !  
+  62 caller !    
+  0 caller !     
+  2 residuum !  
+  enDamp     
+  32 EMIT        
+  15 residuum !  
+  1 dirobj ! 
+  fyi @ 2 = IF  
+  CR ."         verbPhrase calls nounPhrase for object of sentence." CR
+  THEN
+  nounPhrase     
+  motjuste @ 0 > IF motjuste @ dopsi ! THEN  
+  0 dirobj !     
+  2 residuum !   
+ THEN  
+  fyi @ 2 > IF     
+  CR ."   vPhr end: detour = " detour @ .  
+  THEN             
+;  
+
+:  Conjoin  
+  questype @  16 =  IF  
+    18     conj !       
+  ELSE  17 conj !       
+  THEN                  
+  midway @  t @  DO  
+    I       0 en{ @  conj @ = IF  
+      conj @  motjuste !  
+      I     6 en{ @  aud !  
+      LEAVE  
+    THEN  
+  -1 +LOOP  
+  SPEECH    
+  0 questype !  
+;  
+
+:  beVerb ( intransitive verbs of being )  
+  ."   beVerb: subjpsi = " subjpsi @ . CR  
+   subjpsi @ 50 = IF  
+     motjuste @ 57 = NOT IF  
+       
+       midway @  t @  DO  
+         I       0 en{ @  57 = IF  
+           57 motjuste !  
+           I     6 en{ @  aud !  
+           LEAVE  
+         THEN  
+       -1 +LOOP  
+       ."  beVerb: changing to AM " CR  
+     THEN  
+   THEN   
+     subjpsi @ 56 = IF  
+     motjuste @ 67 = NOT IF  
+       midway @  t @  DO  
+         I       0 en{ @  67 = IF  
+           67 motjuste !  
+           I     6 en{ @  aud !  
+           LEAVE  
+         THEN  
+       -1 +LOOP  
+       ."  beVerb: changing to ARE " CR  
+     THEN  
+   THEN   
+   motjuste @ psi ! 
+   verbAct          
+   SPEECH           
+   nounPhrase       
+;  
+
+:  Predicate ( supervise verb syntax ) 
+  REIFY       
+  0 act !     
+  0 aud !     
+  0 detour !  
+  0 motjuste !
+  8 opt !  
+  0 psi !  
+  adverbact 32 > IF  
+  THEN  
+  fyi @ 1 > IF CR  
+ ."   Predicate preview with slosh-over indicated by + --" 
+    CR
+ ."   Noun & verb activation must slosh over onto logical direct objects."
+    CR  ."    " 
+  THEN
+  midway @ t  @ DO  
+    I      4 en{ @  8 = IF  
+      fyi @ 3 = IF  ." Predicate" THEN  
+      fyi @ 2 > IF      
+        I 1 en{ @ 0 > IF
+           CR ."     cand. act = " I 1 en{ @ . ."  "
+           ." w. psi seq #"
+           I 6 psi{ @ seq ! seq @ . ."  "  
+           I 6  en{ @ unk  !  
+           BEGIN
+           unk @ 0 aud{ @ EMIT  1 unk +!
+           unk @ 0 aud{ @ 32 =  
+           UNTIL
+           ."  w. nodal dir. obj. "  
+           midway @ t @ DO  
+             I   0  psi{ @   seq @  =  IF  
+               I 1  psi{ @ . ." = act "  
+               I 7  psi{ @   psi7 !    
+               LEAVE                   
+             THEN       
+           -1  +LOOP    
+           midway @ t @ DO  
+             I   0  en{ @    psi7 @ = IF  
+               I 6  en{ @  rv ! 
+               LEAVE    
+             THEN
+           -1  +LOOP    
+           rv @ 0 > IF  
+             BEGIN
+               rv @ 0 aud{ @ EMIT  1 rv +!
+               rv @ 0 aud{ @ 32 =  
+             UNTIL        
+           THEN
+           ."  in Predicate spike = " spike @ .  
+           0 rv !    
+           ."     "  
+        THEN    
+      THEN      
+      I    1 en{ @  act @ > IF  ( if en1 is higher )
+        I  0 en{ @  motjuste !  ( store psi-tag of verb )
+        I  4 en{ @  predpos ! ( 29aug2008 grab winning part of speech )
+        I  6 en{ @  aud !  ( 27aug2008 auditory recall-vector )
+        fyi @ 2 > IF        
+          CR ." Predicate: aud = "  
+          aud @ . 
+          aud @ rv !  
+          ." urging psi concept #" motjuste @ . ."  " 
+          BEGIN       
+            rv @ 0 aud{ @ EMIT  1 rv +!
+            rv @ 0 aud{ @ 32 =  
+          UNTIL        
+          ."  "
+          0 rv !       
+        THEN           
+        I  1 en{ @  act !  ( to test for a higher en1 )
+          fyi @ 3 = IF CR   
+            ."  Predicate: act = " act @ . ."   "  
+          THEN
+        ELSE  
+      THEN  
+    THEN    
+  -1 +LOOP  
+  motjuste @ 57 = IF beVerb EXIT THEN  
+  motjuste @ 66 = IF beVerb EXIT THEN  
+  motjuste @ 67 = IF beVerb EXIT THEN  
+   act @  verbval !   
+   0 psi !            
+   motjuste @ 0 > IF motjuste @ vbpsi ! THEN  
+  fyi @ 2 > IF   
+    CR ."  Predicate: motjuste = " motjuste @ . ." going into SPEECH."
+    CR ."  Predicate: aud = " aud @ . ." going into SPEECH." 
+  THEN           
+  motjuste @ 0 = IF  
+    1 detour !   
+    fyi @ 1 > IF  
+      CR ."   Predicate: detouring when no candidate-verb is found. "
+      CR ."   Predicate: detour value is at " detour @ .  
+    THEN          
+  THEN  
+  motjuste @ 0 > IF  
+    act @ 20 < IF  
+      1 detour !   
+      1 recon !    
+      fyi @ 1 > IF  
+    CR ."     Predicate: detour because verb-activation is only " act @ .
+      THEN          
+    THEN      
+    detour @ 0 = IF  
+    62 caller !      
+    psiDamp          
+    motjuste @  hipsi !  
+    fyi @ 2 > IF    
+      CR ."  Predicate: lopsi @ hipsi = " lopsi @ . hipsi @ . 
+    THEN            
+    motjuste @ psi ! 
+    verbAct          
+      SPEECH         
+    THEN             
+  THEN               
+ detour @ 0 = IF     
+  10 act !  
+  fyi @ 2 > IF CR    
+  ."   in Predicate after SPEECH output of verb" 
+  THEN
+  fyi @ 2 > IF CR    
+  ."   from Predicate after speaking of verb, psiDamping #" motjuste @ .
+  THEN
+  motjuste @  urpsi !  
+  22 residuum !  
+  62 caller !    
+  0 caller !     
+  2 residuum !  
+  enDamp     
+  32 EMIT        
+  15 residuum !  
+  1 dirobj ! 
+  fyi @ 2 = IF  
+  CR ."          Predicate calls nounPhrase for object of sentence." CR
+  THEN
+  nounPhrase     
+  motjuste @ 0 > IF motjuste @ dopsi ! THEN  
+  0 dirobj !     
+  2 residuum !   
+ THEN  
+  fyi @ 2 > IF     
+  CR ."   Predicate end: detour = " detour @ .  
+  THEN             
+;  
+
+:  SVO ( Subject + Verb + Object ) 
+  CR ." Robot: "
+  123  t @  2 aud{ !  
+  1 subj !  
+  fyi @ 2 = IF  
+    CR ."       SVO calls nounPhrase for subject of sentence." CR
+  THEN
+  nounPhrase  ( finds "le mot juste" to be the subject )
+  motjuste @ 0 > IF motjuste @ supsi ! THEN  
+  motjuste @ decpsi1 @ = IF  
+    motjuste @ decpsi2 !     
+  THEN                       
+  motjuste @ decpsi1 !  
+  0 motjuste !  
+  0 subj !  
+  motjuste @ psi !  ( send the found psi-tag into AUDITION ) 
+  fyi @ 2 = IF  
+  CR ."       SVO calls verbPhrase." CR
+  THEN
+  fyi @ 2 > IF      
+  CR ."   SVO pre-vPhr -- detour value is at " detour @ . 
+  THEN              
+  verbPhrase  ( finds "le mot juste" for verb and for object )
+  fyi @ 2 > IF      
+  CR ."   SVO post-vPhr -- detour value is  " detour @ .  
+  THEN              
+  detour @ 1 = IF   
+    fyi @ 1 > IF    
+      CR  ."     SVO sets recon-flag so a question will be asked "
+    THEN        
+    1 recon !   
+  0 detour !    
+  THEN  
+  125  t @ 1+  2 aud{ ! 
+  13 pho !  ( ASCII 13 CR to trip a retroactive change )
+  AUDITION  
+  5 bias !  
+  0 reject ! 
+  fyi @ 2 > IF            
+  CR ."   SVO end: detour @ recon = " detour @ . recon @ . 
+  THEN                    
+  0 thotnum !   
+  1 thotcyc +!  
+  supsi @ 0 > IF
+    supsi @ 1000000 * supsi !  
+    supsi @ thotnum !  
+  THEN
+  0 supsi !          
+  vbpsi @ 0 > IF
+    vbpsi @ 1000 * vbpsi !  
+    vbpsi @ thotnum +!    
+  THEN
+  0 vbpsi !             
+  dopsi @ 0 > IF
+    dopsi @ thotnum +!  
+  THEN
+  0 dopsi !             
+  thotcyc @ 1 = IF thotnum @ thot1 ! THEN  
+  thotcyc @ 2 = IF thotnum @ thot2 ! THEN  
+  thotcyc @ 3 = IF
+    thotnum @ thot3 !
+    thot1 @ thot3 @ = IF
+      7 EMIT    
+      0 EEG !   
+    THEN   
+    thot2 @ thot3 @ = IF
+      7 EMIT    
+          CR  ." REPETITIOUS THOUGHTS HAVE BEEN DETECTED. " 
+  CR  ." STARTING NEW PATHWAY IN MEANDERING CHAIN OF THOUGHT " 
+      0 EEG !   
+    THEN   
+  THEN  
+  thotcyc @ 3 > IF 0 thotcyc ! THEN        
+  fyi @ 2 > IF   
+    CR ." SVO: thotcyc & thtnum = " thotcyc @ . thotnum @ .
+    CR ." SVO: thot1 = " thot1 @ .  
+    CR ." SVO: thot2 = " thot2 @ .  
+    CR ." SVO: thot3 = " thot3 @ .  
+  THEN           
+  EEG @ 0 = IF         
+    verbClip           
+    EGO                
+  THEN                 
+;  
+
+:  auxVerb ( auviliary Verb ) 
+  midway @  t @  DO  
+    I       0 en{ @  59 = IF  
+      59 motjuste !  
+      I     6 en{ @  aud !  
+      LEAVE  
+    THEN  
+  -1 +LOOP  
+  SPEECH    
+  fyi @ 2 > IF CR  
+  ."   from auxVerb after speaking of DO, psiDamping concept #59 DO"
+  THEN
+  59 urpsi !  
+  51 caller ! 
+  psiDamp     
+  0 caller !  
+;  
+
+:  negSVO ( negation of Subject + Verb + Object ) 
+  fyi @ 1 > IF CR  
+    ."     Calling negSVO (AI4U Chapter 10)." CR
+  THEN
+  123  t @  2 aud{ !  
+  nounPhrase  
+  32 pho !  
+  auxVerb   
+  midway @  t @  DO  
+    I       0 en{ @  12 = IF  
+      12 motjuste !  
+      I     6 en{ @  aud !  
+      LEAVE  
+    THEN  
+  -1 +LOOP  
+  SPEECH  
+  verbPhrase  
+  125 t @ 1+ 2 aud{ ! 
+  1   t +!  
+  1 spt +!  
+  enDamp    
+  audDamp   
+  5 bias !  
+;  
+
+
+:  whatAuxSDo ( what DO Subjects DO ) 
+  psiDecay   
+  midway @  t @  DO  
+    I       0 en{ @  54 = IF  
+      54 motjuste !  
+      I     6 en{ @  aud !  
+      LEAVE  
+    THEN  
+  -1 +LOOP  
+  SPEECH    
+  fyi @ 2 > IF CR  
+  ."   from whatAuxSDo after speaking of WHAT, psiDamping concept #54"
+  THEN
+  54 urpsi !  
+  42 caller ! 
+  psiDamp     
+  0 caller !  
+  auxVerb   
+  0 motjuste !  
+  midway @  t @  DO  
+    I       0 en{ @  topic @ = IF  
+      topic @ motjuste !   
+      I     6 en{ @ aud ! 
+      LEAVE
+    THEN     
+  -1 +LOOP  
+  motjuste @ urpsi !   
+  15 residuum !  
+  42 caller !    
+  psiDamp        
+  1 caller !     
+   2 residuum !
+  SPEECH     
+  midway @  t @  DO  
+    I       0 en{ @  59 = IF  
+      59 motjuste !  
+      I     6 en{ @  aud !  
+      LEAVE  
+    THEN  
+  -1 +LOOP  
+  SPEECH    
+  fyi @ 2 > IF CR  
+  ."   from whatAuxSDo after speaking of DO, psiDamping concept #59 DO"
+  THEN
+  59 urpsi !  
+  42 caller ! 
+  psiDamp     
+  0 caller !  
+  psiDecay    
+;  
+
+:  whatIs ( what IS Subjects ) 
+  psiDecay   
+  midway @  t @  DO  
+    I       0 en{ @  54 = IF  
+      54 motjuste !  
+      I     6 en{ @  aud !  
+      LEAVE  
+    THEN  
+  -1 +LOOP  
+  SPEECH    
+  fyi @ 2 > IF CR  
+  ."   from whatIs after speaking of WHAT, psiDamping concept #54"
+  THEN
+  54 urpsi !  
+  psiDamp     
+  0 caller !  
+  topicnum @ 2 = NOT IF   
+    midway @  t @  DO  
+      I       0 en{ @  66 = IF  
+        66 motjuste !  
+        I     6 en{ @  aud !  
+        LEAVE  
+      THEN  
+    -1 +LOOP  
+    SPEECH    
+    fyi @ 2 > IF CR  
+    ."   from whatIs after speaking of IS, psiDamping concept #66"
+    THEN
+    66 urpsi !  
+    psiDamp     
+    0 caller !  
+    0 motjuste !  
+  THEN   
+  topicnum @ 2 = IF  
+    midway @  t @  DO  
+      I       0 en{ @  67 = IF  
+        67 motjuste !  
+        I     6 en{ @  aud !  
+        LEAVE  
+      THEN  
+    -1 +LOOP  
+    SPEECH    
+    fyi @ 2 > IF CR  
+    ."   from whatIs after speaking of ARE, psiDamping concept #67"
+    THEN
+    67 urpsi !  
+    psiDamp     
+    0 caller !  
+    0 motjuste !  
+    0 topicnum !  
+  THEN  
+  midway @  t @  DO  
+    I       0 en{ @  topic @ = IF  
+      topic @ motjuste !   
+      I     6 en{ @ aud ! 
+      LEAVE
+    THEN     
+  -1 +LOOP  
+  motjuste @ urpsi !   
+  15 residuum !  
+  psiDamp        
+  1 caller !     
+   2 residuum !
+  SPEECH     
+  psiDecay    
+;  
+
+:  ASK ( selector of question formats ) 
+   fyi @ 1 > IF       
+     CR ."     Ask-module calls a question-module."
+   THEN
+   whatIs      
+   0 recon !   
+;  
+
+:  ENGLISH ( one of several possible languages ) 
+  0 morphpsi !  
+  0 psi !       
+  0 sublen !    
+  t @ tov ! 
+  fyi @ 2 > IF      
+  CR ."   ENGL start: detour @ recon = " detour @ . recon @ . CR
+  THEN              
+  yesorno @ 0 > IF  
+    Affirmative   
+    CR  
+    EXIT  
+  THEN   
+  recon @ 1 = IF    
+    fyi @ 2 = IF    
+      ."     English calls the Ask module. " CR
+    THEN            
+    ASK             
+    0 recon !       
+    ELSE            
+    jux @  12 = IF  
+      negSVO        
+      ELSE
+      fyi @ 2 = IF  
+        ."     English starts to think a sentence. " CR 
+      THEN
+      CR ." Robot: "   
+      123  t @  2 aud{ ! 
+      nounPhrase    
+      nphrpos @ 5 = IF  
+        Predicate   
+        0 nphrpos ! 
+      THEN  
+    THEN            
+  THEN              
+  recon @ 1 = IF    
+    fyi @ 2 = IF    
+      CR ."   English calls Ask to increase the AI knowledge base."
+    THEN            
+    ASK             
+    0 recon !       
+    0 detour !      
+  THEN              
+  fyi @ 2 > IF      
+  CR ."   ENGL end: detour @ recon = " detour @ . recon @ . CR  
+  THEN              
+;  
+
+:  THINK ( express spreading activation as thought ) 
+  0 ordo !     
+  35 pov !  
+  ENGLISH  
+  fyi @ 1 = IF CR THEN  
+  0 recon ! 
+  0 ordo !  
+;  
+
+:  MOTORIUM ( stub for volitional control of actuators in robots )
+   7 EMIT       
+ ( MOVE_FORWARD   ) 
+ ( MOVE_BACKWARDS ) 
+ ( STOP_MOTION    ) 
+ ( TURN_LEFT      ) 
+ ( TURN_RIGHT     ) 
+;  
+
+:  HCI ( Human-Computer Interaction )  
+  fyi @ 0 = IF CLS CR CR CR CR CR CR CR
+    t @ 300 < IF CR  
+ ." There is no warranty with Mind.Forth AI Engine for robots."
+    ELSE CR
+    THEN    
+  THEN      
+  fyi @ 1 = NOT IF CR THEN  
+  ."  "  
+  fyi @ 1 = NOT IF CR THEN  
+  fyi @ 0 = IF    
+    CR ." Artificial intelligence -- alive and thinking since "
+    bday @ .
+    bmonth @  1 = IF ." January "   THEN
+    bmonth @  2 = IF ." February "  THEN
+    bmonth @  3 = IF ." March "     THEN
+    bmonth @  4 = IF ." April "     THEN
+    bmonth @  5 = IF ." May "       THEN
+    bmonth @  6 = IF ." June "      THEN
+    bmonth @  7 = IF ." July "      THEN
+    bmonth @  8 = IF ." August "    THEN
+    bmonth @  9 = IF ." September " THEN
+    bmonth @ 10 = IF ." October "   THEN
+    bmonth @ 11 = IF ." November "  THEN
+    bmonth @ 12 = IF ." December "  THEN
+    byear @ . 8 EMIT 46 EMIT CR  
+  THEN   
+  fyi @ 1 = NOT IF  
+    ." TAB mode. ESCAPE exit. IQ = " IQ @ . 
+    8 EMIT 46 EMIT  
+    ."  Time = " t @ . 8 EMIT 46 EMIT  
+    ."  Cyc = " rjc @ . ." since "  bday @ .
+    bmonth @  1 = IF ." January "   THEN
+    bmonth @  2 = IF ." February "  THEN
+    bmonth @  3 = IF ." March "     THEN
+    bmonth @  4 = IF ." April "     THEN
+    bmonth @  5 = IF ." May "       THEN
+    bmonth @  6 = IF ." June "      THEN
+    bmonth @  7 = IF ." July "      THEN
+    bmonth @  8 = IF ." August "    THEN
+    bmonth @  9 = IF ." September " THEN
+    bmonth @ 10 = IF ." October "   THEN
+    bmonth @ 11 = IF ." November "  THEN
+    bmonth @ 12 = IF ." December "  THEN
+    byear @ . 8 EMIT 46 EMIT CR  
+ ." ENTER a positive or negative Subj-Verb-Obj unpunctuated sentence."
+    CR  
+  THEN              
+  fyi @ 0 = IF CR
+ ." Normal display-mode is in effect. Press Tab key for other modes."
+    CR
+  THEN
+  fyi @ 3 = IF CR    
+  ." Diagnostic messages - ignore during input before pressing ENTER."
+  THEN
+  42 pov !  
+; 
+
+:  SECURITY ( safety for robots and human beings ) 
+  fyi @ 2 = IF CR  
+  ."   Security module calls Human-Computer Interface (HCI)."
+  THEN
+  HCI  
+  t @ cns @ 64 - > IF  
+    fyi @ 2 = IF CR  
+    ."   Security module calls Rejuvenate."
+    THEN        
+    REJUVENATE  
+  THEN          
+  t   @  1024 > IF  
+    t @  1024 -  midway !  ( for a range limit on searches )
+    ELSE            
+    1   midway !    
+  THEN   
+  0 quiet !  
+;  
+
+:  ALIFE ( artificial Life ) 
+  TIME&DATE byear ! bmonth ! bday ! bhour ! bminute ! bsecond !
+  TABULARASA   
+  enBoot       
+  BEGIN        
+    SECURITY   
+    fyi @ 2 = IF CR  
+    ." Alife main loop calls the Sensorium mind-module." CR
+    THEN          
+    SENSORIUM  
+  ( EMOTION )  
+    fyi @ 2 = IF CR  
+    ." Alife main loop calls the Think mind-module." CR
+    THEN          
+    THINK      
+  ( VOLITION ) 
+  ( MOTORIUM ) 
+  AGAIN        
+; 
+}}}

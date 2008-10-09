@@ -1,0 +1,66 @@
+#summary Table of variables used in mindforth artificial intelligence
+#labels manual
+
+== Table of Variables ==
+
+
+==== kbtv ====
+
+The kbtv (knowledge-base traversal) variable holds a numeric 
+value that rotates through a range of integer numbers. 
+In the kbTraversal module, the rotating kbtv value 
+determines which natural-language bootstrap concept 
+will be reactivated to start a fresh chain of thought 
+going when there has recently been no user input. 
+By rotating thorugh a range of values set by the 
+AI programmer, kbtv causes the AI Mind to rotate 
+through a variety of subject-matter concepts serving 
+as points of departure for conversational gambits 
+when the AI Mind offers to interact with a human user. 
+
+==== psi ====
+
+The psi variable (from the Greek letter "psi") is a numeric 
+identifier of a concept in the conceptual Psi array. 
+The psi concepts represent neuronal fibers, or interwoven 
+gangs of fibers, in the mindgrid as theorized in the 
+AI theory of mind serving as the basis of mindforth AI. 
+
+==== subjpsi ====
+
+The subjpsi (subject psi concept) variable originates in 
+the nounPhrase module to keep track of the psi concept number 
+of any personal pronoun chosen to be the subject of a 
+sentence being generated. In the beVerb module, subjpsi 
+supports conditional logic that intervenes in the wrong 
+choice of a verb of being, causing the grammatically 
+correct verb-form to be substituted for the originally 
+wrong choice. As the mindforth AI evolves, this technique 
+of verb-form intervention is not an admission of failure 
+but rather a splendid example of the gradual improvement 
+of an AI algorithm as it performs its mission. 
+
+----
+
+===== Disclaimer =====
+
+The information on this wiki-page is subject to 
+change without notice. Since coding an AI Mind often rushes ahead 
+while documentation lags behind, the description of AI variables 
+here may fail to keep up with changes in the actual AI code. 
+All aspects of variable usage are subject to sudden change. 
+A variable may originate in one mind-module and then move 
+to one or more other mind-modules. The name of a variable 
+may change, as may the reasons for using it and the 
+purposes which it serves.
+
+==== Notice ====
+
+Attn Google Code project owners and members! This wiki-page 
+shows you how to make a Table of Variables in such a way
+that each variable has its own URL in a format such as 
+http://code.google.com/p/mindforth/wiki/var#psi and so forth.
+If you copy this format for a Table of Variables, please give 
+attribution of the however-lame-you-think-it-is idea with a 
+clickable link to http://code.google.com/p/mindforth/ 
+and please accept thanks in advance.

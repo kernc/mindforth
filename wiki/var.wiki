@@ -3,6 +3,15 @@
 
 == Table of Variables ==
 
+===== fyi =====
+
+The fyi (for your information) variable holds a single-digit 
+number that determines the display mode of the AI Mind. 
+With fyi at zero (0), the display is in normal mode. With 
+fyi at one (1), the AI is in transcript mode. With fyi at 
+two (2), tutorial mode is in effect. With fyi at three (3), 
+diagnostic mode is in effect for troubleshooting. 
+
 
 ==== kbtv ====
 
@@ -41,6 +50,94 @@ but rather a splendid example of the gradual improvement
 of an AI algorithm as it performs its mission. 
 
 ----
+
+==== Planning ====
+
+The mindforth project is contemplating a massive change of 
+module names in the AI source code in order to wikify the names 
+for the easier creation of documentation pages. The following 
+items appear briefly here in order to determine if they 
+automatically create invitational wiki-links for the editing 
+and subsequent reading of a wiki-page of documentation.
+
+AiStandards
+
+AIStandards
+
+ALife
+
+AiLife
+
+AudRecog
+
+EMotion
+
+EmotionOut
+
+EnglishCog
+
+EnVocab
+
+FreeWill
+
+GusRecog
+
+HCI
+
+IfAdjective
+
+IfArticle
+
+KbSearch
+
+KBSearch
+
+ListenIn
+
+MetEmPsychosis
+
+MotoriumOut
+
+MotorOut
+
+OlfRecog
+
+SensoriumIn
+
+SensorIn
+
+SpeechAct
+
+SpeechOut
+
+TacRecog
+
+ThInk
+
+ThinkOps
+
+ThinkDeep
+
+ThinkFast
+
+ThinkIng
+
+ThinkMode
+
+ThinkOfIt
+
+ThinkPlex
+
+ThinkSys
+
+ThinkTank
+
+ThinkThru
+
+SuperThink
+
+VisRecog
+
 
 ===== Disclaimer =====
 

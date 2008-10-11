@@ -17,7 +17,7 @@ diagnostic mode is in effect for troubleshooting.
 
 The kbtv (knowledge-base traversal) variable holds a numeric 
 value that rotates through a range of integer numbers. 
-In the kbTraversal module, the rotating kbtv value 
+In the KbTraversal module, the rotating kbtv value 
 determines which natural-language bootstrap concept 
 will be reactivated to start a fresh chain of thought 
 going when there has recently been no user input. 
@@ -35,19 +35,29 @@ The psi concepts represent neuronal fibers, or interwoven
 gangs of fibers, in the mindgrid as theorized in the 
 AI theory of mind serving as the basis of mindforth AI. 
 
+==== statuscon ====
+
+The term statuscon is not itself a variable but instead it 
+denotes a class of "condition" variables as in the popular 
+"defcon" term for "defense condition". When the statuscon 
+variables come into use, they will permit a MindModule 
+to be at or below a quiescent threshold so that the module 
+will not perform its main operational function, but will 
+remain merely ready to do so.  
+
 ==== subjpsi ====
 
 The subjpsi (subject psi concept) variable originates in 
-the nounPhrase module to keep track of the psi concept number 
+the NounPhrase module to keep track of the psi concept number 
 of any personal pronoun chosen to be the subject of a 
-sentence being generated. In the beVerb module, subjpsi 
+sentence being generated. In the BeVerb module, subjpsi 
 supports conditional logic that intervenes in the wrong 
 choice of a verb of being, causing the grammatically 
 correct verb-form to be substituted for the originally 
 wrong choice. As the mindforth AI evolves, this technique 
 of verb-form intervention is not an admission of failure 
-but rather a splendid example of the gradual improvement 
-of an AI algorithm as it performs its mission. 
+but rather an example of the gradual improvement of an AI 
+algorithm as it performs its mission. 
 
 ----
 
@@ -60,17 +70,8 @@ items appear briefly here in order to determine if they
 automatically create invitational wiki-links for the editing 
 and subsequent reading of a wiki-page of documentation.
 
-AiStandards
-
-AIStandards
-
-ALife
-
-AiLife
 
 AudRecog
-
-EMotion
 
 EmotionOut
 
@@ -82,27 +83,31 @@ FreeWill
 
 GusRecog
 
-HCI
-
 IfAdjective
 
 IfArticle
 
 KbSearch
 
-KBSearch
+LispMind
 
 ListenIn
 
+MainLoop
+
 MetEmPsychosis
 
-MotoriumOut
-
-MotorOut
+MotorOutPut
 
 OlfRecog
 
-SensoriumIn
+PythonBot
+
+RubyMind
+
+SchemeBot
+
+SensorInPut
 
 SensorIn
 
@@ -112,29 +117,9 @@ SpeechOut
 
 TacRecog
 
-ThInk
-
-ThinkOps
-
-ThinkDeep
-
-ThinkFast
-
-ThinkIng
-
 ThinkMode
 
-ThinkOfIt
-
-ThinkPlex
-
-ThinkSys
-
-ThinkTank
-
-ThinkThru
-
-SuperThink
+TuringTest
 
 VisRecog
 

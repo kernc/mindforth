@@ -1,7 +1,16 @@
 #summary AI Breakthrough News
-#labels mfpj,weblog
+#labels mfpj,weblog,Featured
 
-== Singularity == 
+== 2008oct22 == 
+
+http://brainwave.opencog.org/2008/10/22/fun-with-first-order-inference/ 
+is a graphically illustrated article by BenGoertzel on testing InFerence 
+by PLN (Probabilistic Logic Networks) in the OpenCog project.
+
+http://www.mirandasoft.net/Report/index.php/2008/10/10/what-happened-to-arthur-t-murray/ 
+is some background information of the history of the MindForth AI project.
+
+=== Singularity === 
 
 *AI Breakthrough News* is a double entendre, _mon frere_. 
 The duplicity of the idea is embedded in the fact that 
@@ -70,7 +79,7 @@ pertinent pre-linked wiki-pages when we get
 around twit. 
 
 
-== fyi == 
+=== fyi === 
 
 *AI Breakthroughs For Your Information*
 

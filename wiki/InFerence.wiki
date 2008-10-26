@@ -1,0 +1,196 @@
+#summary Creates new ideas by reasoning from old ideas
+#labels module,logic,thinking
+
+=== Diagram === 
+
+{{{
+   /^^^^^^^^^\  Reason infers semantic DarkMatter  /^^^^^^^^^\
+  / visual    \  (inferred structures are below)  / auditory  \
+ /  memory     \                                 /  memory     \
+|   _______     |                               |               |
+|  / image \----|--------- DarkMatter ----------|--- d          |
+| /  of a   \   |                               |     o         |
+| \  dog    /---|------- associative tag --+----|----- g        |
+|  \_______/    |                          |    |               |
+|               |    a|C|f|        | | + | |    |               |
+|               |    b|O|i|        + | | | |    |               |
+|               |    s|N|b|        | | | + |    |               |
+|               |    t|C|e|        | + | | |    |               |
+|               |    r|E|r|        + | | | |    |               |
+|               |    a|P|s|        | | | | +    |               |
+|   _______     |    c|T| |        | | + | |    |   ________    |
+|  /new    \    |    t|_|_|_       |_|_|_|_|    |  /        \   |
+| / percept \   |    /Psi   \-----/ English \---|-/ Auditory \  |
+| \ engram  /---|---/concepts\---/  lexicon  \--|-\ phonemes /  |
+|  \_______/    |   \________/   \___________/  |  \________/   |
+}}}
+
+=== Purpose === 
+
+MindForth does not yet include an inference module, but the time 
+is ripe to implement one. We illustrate the nature of an inference 
+module by discussing a particular inference that once launched 
+the very creation of MindForth as an artificial intelligence.
+
+In the early years of the Mentifex AI project, we could visualize 
+a MindGrid of sensory memory channels such as vision holding 
+image engrams and audition holding word-engrams. We could 
+imagine a one-to-one, two-way correspondence between an image 
+in the visual memory channel and a word to describe or name 
+the image in the auditory memory channel. Thus, for instance, 
+an image of a dog could associate to the word "dog" and vice 
+versa. At the time, it was an OpenQuestion whether the 
+sensory memory channels led to a Central Processing Unit (CPU) 
+where thinking occurred, or whether something like a 
+homunculus intervened to engender thinking about the 
+perceptions streaming through the sensory memory channels. 
+
+As we performed one GedankenExperiment after another to 
+elaborate the design of an AiMind, we came to the question 
+of how the perception of multiple images in the visual 
+memory channel would cause the AiMind to activate the 
+memory of a plural noun in the auditory memory channel. 
+For instance, if an AI-equipped robot saw not one dog 
+but two or three dogs in a field of vision, how would 
+not simply the word "dog" but the plural word "dogs" 
+come to mind? If there is a one-to-one association 
+between each image of a dog and the word "dog", 
+how do multiple associations from multiple dogs 
+add the extra phoneme "s" to make the word "dogs"?
+
+The old, pre-inference knowledge goes something like 
+the following.
+
+Each image of a dog activates the word "dog" in memory. 
+
+Multiple dog-images can not directly activate the word "dogs".
+
+Seeing multiple dogs activates something extra beyond "dog".
+
+The extra activation for noun-plurals is the "s" phoneme.
+
+Something extra is happening somewhere in the MindGrid. 
+
+The most likely venue for extra processing is in the middle 
+between the memory channels, not at a CPU destination.
+
+Inference: There is something extra in the middle of the MindGrid, 
+between the visual memory channel and the auditory memory chanel.
+
+When we made the above inference, we were stymied for several 
+months as to the implications of the inference and the 
+nature of the semantic DarkMatter that we had yet to 
+describe, but it was an unshakeable inference. 
+We positively KNEW that an abstract memory channel 
+was mediating the sensory memory channels, even 
+though we were originally dumbfounded as to what 
+was the nature of the abstract memory channel. 
+It was truly the DarkMatter of the MindGrid. 
+It had to be there, but it was invisible. 
+Only Reason could tease out the nature of the DarkMatter. 
+
+We switched from considering how multiple images 
+would cause the activation of noun-plurals to the 
+more compelling consideration of how the visual 
+observation of motion would lead to the fetching 
+of verbs of motion in the auditory memory channel.
+
+Building upon the idea of nerve fibers holding 
+traces of sensory memory, we developed the idea 
+of abstract fibers holding abstract concepts 
+apart from concrete sensory memories. We designed 
+a linguistic SuperStructure emerging not physically, 
+but logically, in the otherwise flat plane of 
+the MindGrid. Eventually we started coding software 
+to implement the artificial Mind resulting from 
+the one crucial inference of MindGrid DarkMatter.
+
+Eventually we put the software on Google Code 
+where you are reading about it now. And in 
+the immortal words of Martin Luther:
+{{{
+ Hier stehe ich. 
+ Ich kann nicht anders.
+ Gott huelfe mir.
+}}}
+
+=== Entelechy === 
+
+TBA 
+
+=== Code === 
+
+http://code.google.com/p/mindforth/wiki/ForthMindTextFile will show the AI source code of the inference module when it has been implemented, and will permit operational inspection of the inference functionality when the AI software is running. First the http://www.winzip.com compression utility for Windows must be used to extract and auto-install the http://prdownloads.sourceforge.net/win32forth/W32FOR42_671.zip?download of the Win32Forth language into which the AI source code is loaded. See the UserManual for instructions. 
+
+
+=== Operation === 
+
+In the planning phase for an inference module, we envision that 
+the module will originally operate by thinking up questions to ask. 
+It is inherent in the current functionality of the AiMind that 
+a question not answered by a human user defaults to the assumption 
+that the AiMind itself will try to answer its own questions. 
+Therefore posing a question is an early step in the reasoning 
+process that may lead to an inference. Since the first steps at 
+making inferences may be rather feeble and may involve such 
+simple-minded questions that the answers are extremely obvious, 
+it makes sense to have the AiMind throw out questions for human 
+users to answer. In the public setting of a ScienceMuseum or 
+other such venue, human visitors could take turns in answering 
+the questions put out by the AiMind. If the AI were not turned off 
+at night and could constantly add to its body of knowledge by 
+quizzing human visitors, we can imagine quite a scenario of 
+the gradual emergence of SuperIntelligence. 
+
+Since the http://AIMind-i.com offspring of MindForth has the 
+ability to go out and surf the Web, it could think up questions and 
+seek the answers not directly from human users, but from webpages. 
+
+At any rate, one method of formulating questions in automated reasoning 
+would be to switch subjects, verbs and direct objects inside the "old" 
+knowledge of the AI and try to find "new" knowledge by asking questions. 
+For instance, from "Cats eat fish" the AI could ask a questions by 
+switching from "cats" to "bears" and asking, "Do bears eat fish?" 
+A human child in a ScienceMuseum might enjoy answering dozens of 
+such questions, thus educating the AI trapped inside a computer. 
+
+The inferential questions asked by an AiMind will be more sophisticated 
+if the inference module software follows the "Is-a" pathways from 
+one subject-noun or object-noun contained in "old" knowledge to 
+candidate subject-nouns and object-nouns for the inference of 
+"new" knowledge. For instance, if the AiMind knows that "cat" 
+"Is-a" animal, the AI could substitute various other animals 
+and ask questions to learn just how similar each other animal is 
+to a cat. By sheer luck, a primitive AI might ask (and receive 
+answers to) important questions that no sensible human being 
+would even bother to ask (and stumble upon a valuable inference). 
+As the AI becomes more sophisticated, pruning of the askable 
+questions would occur as activation spreads more and more to 
+the best questions to ask, and skips fruitless lines of inquiry. 
+Since MindForth already has the mechanics of SpreadingActivation, 
+MindForth is poised for the implementation of an inference module. 
+
+
+=== Debug === 
+
+TBA 
+
+=== Links === 
+
+http://www.agiri.org/wiki/Inference_Control 
+
+http://www.mail-archive.com/agi@v2.listbox.com/msg09748.html 
+
+http://groups.google.com/group/sci.logic 
+
+*NARS (Non-Axiomatic Reasoning System)* 
+  * http://www.agiri.org/wiki/NARS 
+  * http://code.google.com/p/open-nars
+
+=== Wikipedia === 
+  * http://en.wikipedia.org/wiki/Automated_reasoning 
+  * http://en.wikipedia.org/wiki/Inference_engine 
+  * http://en.wikipedia.org/wiki/Is-a 
+  * http://en.wikipedia.org/wiki/Logic 
+  * http://en.wikipedia.org/wiki/Reasoning 
+  * http://en.wikipedia.org/wiki/Syllogism 

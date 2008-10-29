@@ -1,6 +1,15 @@
 #summary AI Breakthrough News
 #labels mfpj,weblog,Featured
 
+== 2008oct29 ==
+
+http://www.kk.org/thetechnium/archives/2008/10/evidence_of_a_g.php by Kevin Kelly is a fascinating article on "Evidence of a Global SuperOrganism".
+
+http://www.flickr.com/photos/edyson/2978988454 by Esther Dyson is a photograph of VernorVinge attending the Singularity Summit on Sat.25.OCT.2008.
+
+http://www.flickr.com/photos/jordymr/2971699331 by Jordy Mont-Reynaud is another photograph from the Singularity Summit.
+
+
 == 2008oct22 == 
 
 http://brainwave.opencog.org/2008/10/22/fun-with-first-order-inference/ 

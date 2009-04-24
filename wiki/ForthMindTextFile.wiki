@@ -6,7 +6,7 @@
 Drag-and-drop code into editor; save as mind.f in the C:\win32For directory.
 
 {{{
-( 16oct08U.F [mf081016.html] -- modification of 1oct08A.F Mind.Forth )
+( 23apr09A.F [mf090423.html] -- modification of 21apr09A.F Mind.Forth )
 ( This file may be named "Mind.f" or any "filename.f" you choose. )
 ( Rename any occurrence of Mind.f.txt as simply Mind.f for Win32Forth. )
 ( http://www.winzip.com/aboutzip.htm tells about WinZip to auto-install )
@@ -25,14 +25,15 @@ variable audjuste ( 25aug2008 For nounPhrase motjuste aud to SpeechAct )
 variable audme  ( 27sep2008 tag to find "ME" in auditory memory )
 variable audstop  ( A flag to stop SpeechAct after one word )
 variable back ( to replace "bulge" for "pre" items in spreadAct )
-variable bday ( ALIFE; HCI -- day of birth )
+variable bday ( MainLoop of alife; TuringTest HCI -- day of birth )
+variable beflag 0 beflag ! ( 23apr2009 for InStantiate )
 variable beg  1 beg !  ( AudInput; AudMem: word beginning flag )
-variable bhour ( ALIFE; HCI -- hour of birth )
+variable bhour ( MainLoop of alife; TuringTest HCI -- hour of birth )
 variable bias 5 bias ! ( Parser; newConcept: an expected POS )
-variable bminute ( ALIFE; HCI -- minute of birth )
-variable bmonth ( ALIFE; HCI -- month of birth )
-variable bsecond ( ALIFE; HCI -- second of birth )
-variable byear ( ALIFE; HCI -- year of birth )
+variable bminute ( MainLoop; TuringTest HCI -- minute of birth )
+variable bmonth ( MainLoop; TuringTest HCI -- month of birth )
+variable bsecond ( MainLoop; TuringTest HCI -- second of birth )
+variable byear ( MainLoop; TuringTest HCI -- year of birth )
 variable caller  ( 13jan2008 Debug-identifier of calling module )
 variable cns  1024 cns !  ( "central nervous system" array size )
 variable coda  128 coda !  ( span of memory to recycle in Rejuvenate )
@@ -148,6 +149,10 @@ variable vault 202 vault !  ( 29mar2007 adding data from JavaScript AI )
 variable vbpsi   ( 22jan2008 verb-psi for calculating "thotnum" )
 variable verbinc ( 27apr2007 verb-increment for use in verbAct module )
 variable verbval  ( 3apr2007 For transfer from verbPhrase to verbAct.)
+variable whatflag  0 whatflag !  ( 23apr2009 for InStantiate )
+variable whereflag 0 whereflag ! ( 23apr2009 for InStantiate )
+variable whoflag   0 whoflag !   ( 23apr2009 for InStantiate )
+variable xthe 0 xthe !  ( 20apr2009 Xfer NPhr motjuste to EnArticle queue. )
 variable yesorno 0 yesorno ! ( 16sep2008 in conjunction with kbSearch )
 variable zone  ( ReActivate; SpreadAct: time-zone for "pre" and "seq" )
 
@@ -168,7 +173,6 @@ variable zone  ( ReActivate; SpreadAct: time-zone for "pre" and "seq" )
 cns @  8  CHANNEL  psi{  ( Mindcore concept array "psi" )
 cns @  7  CHANNEL   en{  ( English lexicon array "en" )
 cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
-
 :  PSI-CLEAR  
   1   t @  1 +  DO  
     0 I 1 psi{ !    
@@ -213,6 +217,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   -1  +LOOP  
 ;  
 
+
 :  VerbClip ( lower activation on all verbs ) 
   midway @  t @  DO     
     I     5 psi{ @ 8 = IF   
@@ -222,6 +227,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     THEN              
   -1  +LOOP  
 ;  
+
 
 :  PsiDecay ( let conceptual activations dwindle ) 
   fyi @ 2 > IF CR  
@@ -233,18 +239,19 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     I  0  psi{ @ 59 = IF  0  I  1  psi{ ! THEN  
     I  0  psi{ @ 54 = IF  0  I  1  psi{ ! THEN  
     I  0  psi{ @  7 = IF  0  I  1  psi{ ! THEN  
-    I     0    psi{ @ 57 = IF  
+        I     0    psi{ @ 57 = IF  
       I   1    psi{ @  8 < IF  
         1 I 1  psi{ !          
       THEN  
     THEN    
     I      0   psi{ @ 66 = IF   
       I    1   psi{ @  8 > IF   
-         1 I 1  psi{ !          
+        1 I 1  psi{ !          
       THEN  
     THEN    
   -1  +LOOP  
 ;  
+
 
 :  PsiDamp ( reduce activation of a concept ) 
   16 residuum ! 
@@ -258,7 +265,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   caller @ 104 = IF ." AudInput "   THEN  
   caller @ 148 = IF ." Activate "   THEN  
   caller @ 3535 = IF ." AudInput "  THEN  
-  0 caller !  
+    0 caller !  
   THEN
   midway @  t @  DO     
             I  0  psi{ @ urpsi @ = IF  
@@ -268,17 +275,21 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   PsiDecay      
 ;   
 
+
 :  EnDamp ( deactivate English lexicon concepts ) 
   midway @  t @  DO  
     0 I  1  en{ !    
   -1 +LOOP           
 ;  
 
+
+
 :  AudDamp ( deactivate auditory engrams ) 
   midway @  t @  DO    
     0 I  1 aud{ !      
   -1 +LOOP
 ;  
+
 
 :  .psi ( show concepts in the Psi array ) 
   CR  ." Psi mindcore concepts"
@@ -317,7 +328,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     THEN    
   LOOP  CR ." time: psi act num jux pre pos seq enx "  0 unk ! 
   CR ." You may enter .psi .en .aud to view memory engrams, or"
-  CR ." ALIFE [ENTER] to erase all memories and restart the Mind."
+  CR ." MainLoop [ENTER] to erase all memories and restart the Mind."
   CR
 ;  
 
@@ -345,7 +356,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 unk !
   CR ." t nen act num fex pos fin aud" CR
   CR ." You may enter .psi .en .aud to view memory engrams, or"
-  CR ." ALIFE [ENTER] to erase all memories and restart the Mind."
+  CR ." MainLoop [ENTER] to erase all memories and restart the Mind."
   CR
 ;  
 
@@ -372,10 +383,9 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     THEN  
   LOOP
   CR ." You may enter .psi .en .aud to view memory engrams, or"
-  CR ." ALIFE [ENTER] to erase all memories and restart the Mind."
+  CR ." MainLoop [ENTER] to erase all memories and restart the Mind."
   CR
 ;  
-
 : .echo ( show what the robot just said ) 
   ( As on Usenet, user responds _below_ what the AI has said. )
   fyi @ 2 = IF       
@@ -395,6 +405,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
       THEN             
     LOOP               
 ;  
+
 
 : SpreadAct  ( spreading activation )  
   fyi @ 3 = IF   
@@ -553,6 +564,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   THEN           
 ;  
 
+
 :  NounAct ( re-activate all recent nodes of a concept ) 
   fyi @ 2 > IF CR  
   ."     Calling nounAct (not in AI4U). psi = " psi @ . CR
@@ -604,8 +616,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         0 oldact !  
         0  pre !              
       THEN                    
+      
       I    0 psi{ @ psi @ = NOT IF  
-         I 5 psi{ @ 5 = IF  
+       
+   I 5 psi{ @ DUP 5 = SWAP 7 = OR IF  
             I 1 psi{ @ unk !  
               0 unk !         
             I 1 psi{ @ < 0 IF 
@@ -683,6 +697,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 verbinc !  
 ;  
 
+
 :  ReActivate ( re-activate all recent nodes of a concept )  
   fyi @ 2 > IF CR  
   ."     Calling ReActivate. psi = " psi @ . CR
@@ -738,12 +753,29 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   THEN  
 ;  
 
+
 :  InStantiate ( create a concept-fiber node )  
   precand @ 0 > IF precand @ pre ! THEN  
   ordo @ 1 = IF  0 prevtag ! THEN  
   lastword @ 1 = IF   
     0 seq !       
     0 lastword !  
+  THEN  
+  t @ 201 > IF  
+    whoflag @ 1 = IF  
+      psi @ 57 = IF 57 beflag ! THEN  
+      psi @ 66 = IF 66 beflag ! THEN  
+      psi @ 67 = IF 67 beflag ! THEN  
+      pos @ 5 = pos @ 7 = OR IF 
+        beflag @ seq !  
+        0 beflag !   
+        0 whoflag !  
+      THEN  
+    THEN  
+    psi @ 55 = IF  
+      1 whoflag !  
+      0 act !      
+    THEN  
   THEN  
   ( concept fiber psi )             psi @  t @  0 psi{ !
   ( Set "act" activation level. )   act @  t @  1 psi{ +!
@@ -760,14 +792,15 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   ordo @ 1 > IF    
     psi @ seq !    
     vault @  t @ 2 -  DO   
-       I 1 psi{ @  0 > IF  
-         seq @ I 6 psi{ !   
-         LEAVE         
-       THEN            
+      I 1 psi{ @  0 > IF   
+        seq @ I 6 psi{ !   
+        LEAVE         
+      THEN            
     -1 +LOOP           
   THEN                 
   0 seq !  
 ;  
+
 
 :  EnVocab ( English Vocabulary node creation ) 
   ( Number "nen" of English )       nen @  t @  0  en{ !
@@ -779,14 +812,17 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   ( Store the auditory "aud" tag. ) aud @  t @  6  en{ ! 
 ;  
 
+
 :  EnParser ( determine the part of speech ) 
   5 bias !  
   36 act !  
   INSTANTIATE  
   pos @ 5 = IF  8 bias !  THEN  
+  pos @ 7 = IF  8 bias !  THEN  
   pos @ 8 = IF  5 bias !  THEN  
   psi @  jux !  
 ;  
+
 
 :  EnReify ( express abstract concepts as real words ) 
   0 act !
@@ -807,6 +843,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   -1  +LOOP      
   0 act !        
 ;  
+
 
 :  KbSearch ( knowledge base search )  
   ordo @ 2 = IF  
@@ -837,7 +874,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     0 act !      
     0 memoire !  
     midway @ t  @ DO  
-      I      4 en{ @  5 = IF  
+      I 4 en{ @  DUP 5 = SWAP 7 = OR IF  
         I    1 en{ @  act @ > IF  ( 17sep2008 if en1 is higher )
           I  0 en{ @  memoire !  ( 17sep2008 store psi-tag of word )
           I  1 en{ @  act !  ( 17sep2008 to test for a higher en1 )
@@ -855,6 +892,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 kbquiz !  
   ordo @ 4 = IF 0 ordo ! THEN 
 ;  
+
 
 :  OldConcept ( recognize a known word ) 
   24 act !         
@@ -913,6 +951,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   THEN  
 ;  
 
+
 :  NewConcept ( machine learning of new concepts ) 
   1 nen +!     
   nen @ IQ !   
@@ -928,6 +967,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 pos !       
   0 act !       
 ;  
+
 
 :  AudRecog ( auditory recognition )  
   0  psi !   
@@ -947,6 +987,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           THEN   
         THEN   
       THEN   
+      
+      
       I 1 aud{ @ 0 > IF  
         0 psi !          
         I 4 aud{ @ 1 = IF   
@@ -965,6 +1007,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           I 4 aud{ @ 0 = IF   
             I 1 aud{ @ actbase @ > IF  
               I 5 aud{ @ psi ! 
+              
               I 5 aud{ @ subpsi ! 
               len @ sublen !  
               I 5 aud{ @ psibase !  
@@ -999,7 +1042,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
       THEN           
     THEN             
   THEN  
-    psi @ 0 = IF  
+  psi @ 0 = IF  
       morphpsi @ psi !  
     sublen @ 0 > IF 
       len @ sublen @ -  stemgap !  
@@ -1013,7 +1056,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 psibase !  
   0 subpsi !   
   psi @ 0 > IF   
-    stemgap @ 2 > IF 
+    stemgap @ 2 > IF  
       0 psi !  
     THEN   
     pho @ 83 = IF  
@@ -1037,6 +1080,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     THEN  
     pho @ 32 = IF t @ spt !  THEN  
 ;  
+
 
 :  AudListen ( preparation for AudInput )  
   rsvp @  1  DO  
@@ -1086,7 +1130,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         CR
         CR ." User Command:  halt" 0 pho ! 0 rjc ! 0 fyi !
         CR ." You may enter .psi .en .aud to view memory engrams, or"
-        CR ." ALIFE [ENTER] to erase all memories and restart the Mind."
+        CR ." MainLoop [ENTER] to erase memories and restart the Mind."
         CR ." Type 'bye' to quit Forth, then EXIT to quit DOS."
         CR
         QUIT
@@ -1107,10 +1151,11 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   LOOP
 ;  
 
+
 :  AudInput ( accept auditory input )  
   0 match !  
   0 upnext ! 
-  0 urpsi !
+  0 urpsi !  
   t @ nlt !
   pov @  42 = IF   
     fyi @ 2 = IF  
@@ -1128,7 +1173,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           kbpsi @ lopsi !  
           0 kbpsi !        
           lopsi @ urpsi !  
-          3535 caller !
+         3535 caller !  
           pho @ 64 > IF  
             PsiDamp      
           THEN           
@@ -1137,7 +1182,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           0 urpsi !     
           1 obstat !    
         THEN            
-      THEN
+      THEN              
       EEG @ 0 = IF        
         psi @ 0 > IF      
            psi @ redux !  
@@ -1148,10 +1193,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
            THEN  
         THEN              
       THEN                
-    THEN
-   pov @ 42 = IF
+    THEN                
+    pov @ 42 = IF   
       AudListen  
-      pho @ 0 > IF
+      pho @ 0 > IF   
         0 kbtv !  
         1 upnext +!  
         upnext @ 1 = IF 
@@ -1182,12 +1227,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
       13 eot !     
       32 pho !     
       CR           
-       1 lastword ! 
+      1 lastword ! 
     THEN
     pho @ 27 =  IF  
       CR ." AudInput: halt"  0 pho !  0 fyi !  0 nounval !
       CR ." You may enter .psi .en .aud to view memory engrams, or"
-      CR ." ALIFE [ENTER] to erase all memories and run the AI again."
+      CR ." MainLoop [ENTER] to erase memories and run the AI again."
       0 lopsi !  0 hipsi ! 
       QUIT  
     THEN
@@ -1203,7 +1248,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         onset @ aud !   
         0 onset !       
         psi @  tult @  5 aud{ !  
-        psi @ hipsi !
+        psi @ hipsi !     
         OldConcept      
         eot @ 13 = IF  
           35 pov !     
@@ -1253,6 +1298,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   hipsi @ kbpsi !  
 ;  
 
+
 :  SensoryInput ( sensory input channels )  
  ( SMELL  -- normal sensory stub for later implementation )
  ( VISION -- normal sensory stub for seed AI expansion )
@@ -1273,8 +1319,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
  ( Wi-Fi    -- exotic: 802.11 wireless fidelity )
 ;  
 
-
-:  EnBoot ( English Bootstrap of initial concepts ) 
+:  EnBoot ( English bootstrap of initial concepts ) 
   0 t !  t @  spt !  ." (clearing memory...)"
   CR ." There is no warranty for what this software does."
     1 t ! 89 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
@@ -1346,8 +1391,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
  18 nen !  0 act ! 18 fex !          3 pos ! 18 fin ! 49 aud ! EnVocab
    57 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
    58 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 53 psi ! AudMem 
- 53 psi !  0 act !  0 jux !  0 pre ! 5 pos !  0 seq ! 53 enx ! InStantiate
- 53 nen !  0 act ! 53 fex !          5 pos ! 56 fin ! 57 aud ! EnVocab
+ 53 psi !  0 act !  0 jux !  0 pre ! 7 pos !  0 seq ! 53 enx ! InStantiate
+ 53 nen !  0 act ! 53 fex !          7 pos ! 56 fin ! 57 aud ! EnVocab
    60 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
    61 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
    62 t ! 73 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
@@ -1368,16 +1413,16 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
    74 t ! 89 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
    75 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
    76 t ! 85 pho ! 35 pov !  0 beg ! 0 ctu ! 56 psi ! AudMem 
- 56 psi !  0 act !  0 jux !  0 pre ! 5 pos ! 35 seq ! 56 enx ! InStantiate
- 56 nen !  0 act ! 56 fex !          5 pos ! 50 fin ! 74 aud ! EnVocab
+ 56 psi !  0 act !  0 jux !  0 pre ! 7 pos ! 35 seq ! 56 enx ! InStantiate
+ 56 nen !  0 act ! 56 fex !          7 pos ! 50 fin ! 74 aud ! EnVocab
    78 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
    79 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
    80 t ! 68 pho ! 35 pov !  0 beg ! 0 ctu ! 17 psi ! AudMem 
  17 psi !  0 act !  0 jux !  0 pre ! 3 pos !  0 seq ! 17 enx ! InStantiate
  17 nen !  0 act ! 17 fex !          3 pos ! 17 fin ! 78 aud ! EnVocab
    82 t ! 73 pho ! 35 pov !  1 beg ! 0 ctu ! 50 psi ! AudMem 
- 50 psi !  0 act !  0 jux !  0 pre ! 5 pos ! 61 seq ! 50 enx ! InStantiate
- 50 nen !  0 act ! 50 fex !          5 pos ! 56 fin ! 82 aud ! EnVocab
+ 50 psi !  0 act !  0 jux !  0 pre ! 7 pos !  0 seq ! 50 enx ! InStantiate
+ 50 nen !  0 act ! 50 fex !          7 pos ! 56 fin ! 82 aud ! EnVocab
    84 t ! 68 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
    85 t ! 79 pho ! 35 pov !  0 beg ! 0 ctu ! 59 psi ! AudMem 
  59 psi !  0 act !  0 jux !  0 pre ! 8 pos !  0 seq ! 59 enx ! InStantiate
@@ -1391,7 +1436,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
    92 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
    93 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
    94 t ! 87 pho ! 35 pov !  0 beg ! 0 ctu ! 61 psi ! AudMem 
- 61 psi !  0 act !  0 jux ! 50 pre ! 8 pos ! 16 seq ! 61 enx ! InStantiate
+ 61 psi !  0 act !  0 jux ! 50 pre ! 8 pos !  0 seq ! 61 enx ! InStantiate
  61 nen !  0 act ! 61 fex !          8 pos ! 61 fin ! 91 aud ! EnVocab
    96 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
    97 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
@@ -1437,11 +1482,11 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
  55 psi !  0 act !  0 jux !  0 pre ! 5 pos !  0 seq ! 55 enx ! InStantiate
  55 nen !  0 act ! 55 fex !          5 pos ! 55 fin ! 127 aud ! EnVocab
   131 t ! 73 pho ! 35 pov !  1 beg ! 0 ctu ! 50 psi ! AudMem 
- 50 psi !  0 act !  0 jux !  0 pre ! 5 pos ! 57 seq ! 50 enx ! InStantiate
- 50 nen !  0 act ! 50 fex !          5 pos ! 56 fin ! 131 aud ! EnVocab
+ 50 psi !  0 act !  0 jux !  0 pre ! 7 pos ! 57 seq ! 50 enx ! InStantiate
+ 50 nen !  0 act ! 50 fex !          7 pos ! 56 fin ! 131 aud ! EnVocab
   133 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
   134 t ! 77 pho ! 35 pov !  0 beg ! 0 ctu ! 57 psi ! AudMem 
- 57 psi !  8 act !  0 jux !  0 pre ! 8 pos !  0 seq ! 57 enx ! InStantiate
+ 57 psi !  8 act !  0 jux !  0 pre ! 8 pos ! 54 seq ! 57 enx ! InStantiate
  57 nen !  0 act ! 57 fex !          8 pos ! 57 fin ! 133 aud ! EnVocab
   136 t ! 79 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
   137 t ! 82 pho ! 35 pov !  0 beg ! 0 ctu ! 21 psi ! AudMem 
@@ -1457,8 +1502,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   145 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
   146 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
   147 t ! 89 pho ! 35 pov !  0 beg ! 0 ctu ! 52 psi ! AudMem 
- 52 psi !  0 act !  0 jux !  0 pre ! 5 pos ! 62 seq ! 52 enx ! InStantiate
- 52 nen !  0 act ! 52 fex !          5 pos ! 52 fin ! 144 aud ! EnVocab
+ 52 psi !  0 act !  0 jux !  0 pre ! 7 pos !  0 seq ! 52 enx ! InStantiate
+ 52 nen !  0 act ! 52 fex !          7 pos ! 52 fin ! 144 aud ! EnVocab
   149 t ! 83 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
   150 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
   151 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 62 psi ! AudMem 
@@ -1470,8 +1515,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
  44 nen !  0 act ! 44 fex !          6 pos ! 44 fin ! 153 aud ! EnVocab
   156 t ! 77 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
   157 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 65 psi ! AudMem 
- 65 psi !  0 act !  0 jux !  0 pre ! 5 pos !  0 seq ! 65 enx ! InStantiate
- 65 nen !  0 act ! 65 fex !          5 pos ! 56 fin ! 156 aud ! EnVocab
+ 65 psi !  0 act !  0 jux !  0 pre ! 7 pos !  0 seq ! 65 enx ! InStantiate
+ 65 nen !  0 act ! 65 fex !          7 pos ! 56 fin ! 156 aud ! EnVocab
   159 t ! 75 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
   160 t ! 73 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
   161 t ! 68 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
@@ -1508,11 +1553,11 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
  74 nen !  0 act ! 74 fex !          8 pos ! 74 fin ! 183 aud ! EnVocab
   188 t ! 77 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
   189 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 65 psi ! AudMem 
- 50 psi !  0 act !  0 jux ! 74 pre ! 5 pos !  0 seq ! 65 enx ! InStantiate
- 65 nen !  0 act ! 50 fex !          5 pos ! 56 fin ! 188 aud ! EnVocab
+ 50 psi !  0 act !  0 jux ! 74 pre ! 7 pos !  0 seq ! 65 enx ! InStantiate
+ 65 nen !  0 act ! 50 fex !          7 pos ! 56 fin ! 188 aud ! EnVocab
   191 t ! 73 pho ! 35 pov !  1 beg ! 0 ctu ! 50 psi ! AudMem 
- 50 psi !  0 act !  0 jux !  0 pre ! 5 pos ! 75 seq ! 50 enx ! InStantiate
- 50 nen !  0 act ! 50 fex !          5 pos ! 56 fin ! 191 aud ! EnVocab
+ 50 psi !  0 act !  0 jux !  0 pre ! 7 pos ! 75 seq ! 50 enx ! InStantiate
+ 50 nen !  0 act ! 50 fex !          7 pos ! 56 fin ! 191 aud ! EnVocab
   193 t ! 72 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
   194 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
   195 t ! 76 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
@@ -1569,8 +1614,9 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
       62 nounval ! 
       nounAct      
     THEN  
-    42 pov ! 
+    42 pov !  
 ;  
+
 
 :  ReJuvenate ( recycle oldest memory spaces )   
   fyi @ 2 = IF  
@@ -1678,10 +1724,11 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   THEN           
   1 kbtv +!  
   kbtv @ 0 > IF  
- CR ." For lack of human input, ReJuvenate calls KbTraversal" CR
+    CR ." For lack of human input, ReJuvenate calls KbTraversal" CR
     KbTraversal  
   THEN  
 ; 
+
 
 :  SpeechAct ( output of a word as text or sound ) 
   fyi @ 2 = IF CR THEN  
@@ -1706,6 +1753,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 obstat !  
 ;  
 
+
 :  SayYes ( to utter "YES" in response )  
   midway @  t @  DO  
     I       0 en{ @  32 = IF  
@@ -1718,14 +1766,17 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 yesorno ! 
 ;  
 
+
 :  EgoAct ( revive ego after brain-dead flatline )  
   fyi @ 1 > IF CR CR
     ."   Calling EgoAct (AI4U Chapter 20); inert = " inert @ .
   THEN
-  0 recon ! 
+   0 recon !    
   0 psi !      
   0 inert !    
   0 recon !    
+
+  
   EEG @ 0 = IF    
   fyi @ 2 = IF
     CR ." Repetitious thought detected; EgoAct module steps in."
@@ -1753,7 +1804,9 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   EEG @ 0 = IF 3 EEG ! THEN  
 ;  
 
-:  EnArticle ( select "a" or "the" before a noun )    
+
+:  EnArticle ( select "a" or "the" before a noun )  
+nphrpos @ 7 = NOT IF  
   nphrnum @  1 = IF    
     motjuste @ ghost @ = NOT IF  
       midway @  t @  DO  
@@ -1775,6 +1828,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
       0 nphrnum !  
     THEN  
   THEN    
+THEN 
+nphrpos @ 7 = NOT IF  
   nphrnum @  2 = IF    
     midway @  t @  DO  
       I       0 en{ @  7 = IF  
@@ -1785,6 +1840,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     SpeechAct 
     0 nphrnum !  
   THEN    
+THEN 
   dirobj @ 1 = IF     
     motjuste @ ghost !  
   THEN  
@@ -1803,10 +1859,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     ."   NounPhrase preview of further associated concepts -- "
     CR  ."     " 
   THEN  
-  midway @  t @  DO  
-    I     4 en{ @  5 =  IF   
+  midway @  t @  DO 
+    I  4 en{ @ 5 =  I 4 en{ @ 7 = OR IF  
       fyi @ 2 > IF  
-        I 1 en{ @ 0 > IF
+        I 1 en{ @ 0 > IF  
           CR ."     candidate activation = " I 1 en{ @ . ."  "
           I 6 en{ @ unk !  
           BEGIN
@@ -1820,7 +1876,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
       I   1 en{ @  act @ > IF  
         I 0 en{ @  motjuste !  
         I 0 en{ @  subjpsi !  
-        I 2 en{ @  nphrnum !   
+        I 2 en{ @  nphrnum !
         I 4 en{ @  nphrpos ! 
         I 6 en{ @  aud !  
         I 6 en{ @  audjuste !  
@@ -1855,10 +1911,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     THEN       
   -1 +LOOP     
   enDamp       
-  motjuste @  0 = IF  
+  motjuste @  0 = IF
     midway @  t @  DO  
       I       0 en{ @  54 = IF  
-        54 motjuste !  
+        54 motjuste !
         I     6 en{ @  aud !  
         LEAVE  
       THEN  
@@ -1866,12 +1922,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     SpeechAct 
     1000 rsvp !  
     EXIT   
-  THEN     
-  act @ nounval !   
-  nounval @ 3 - nounval !  
+  THEN
+  act @ nounval !
+  nounval @ 3 - nounval !
   act @ 2 < IF      
     motjuste @ 0 > IF  
-      1 reject !    
+      1 reject !
     THEN               
   THEN              
   motjuste @  hipsi !  
@@ -1891,6 +1947,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 psi  !             
 ;  
 
+
 :  ConJoin  
   questype @  16 =  IF  
     18     conj !       
@@ -1907,6 +1964,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 questype !  
 ;  
 
+
 :  BeVerb ( intransitive verbs of being )  
    subjpsi @ 50 = IF  
      motjuste @ 57 = NOT IF  
@@ -1919,7 +1977,18 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
        -1 +LOOP  
      THEN  
    THEN   
-     subjpsi @ 56 = IF  
+   subjpsi @ 56 = IF  
+     motjuste @ 67 = NOT IF  
+       midway @  t @  DO  
+         I       0 en{ @  67 = IF  
+           67 motjuste !  
+           I     6 en{ @  aud !  
+           LEAVE  
+         THEN  
+       -1 +LOOP  
+     THEN  
+   THEN   
+   subjpsi @ 52 = IF  
      motjuste @ 67 = NOT IF  
        midway @  t @  DO  
          I       0 en{ @  67 = IF  
@@ -1935,6 +2004,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
    SpeechAct        
    NounPhrase       
 ;  
+
 
 :  VerbPhrase ( supervise verb syntax ) 
   EnReify     
@@ -2080,12 +2150,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   fyi @ 2 > IF     
   CR ."   VerbPhrase end: detour = " detour @ . 
   THEN             
-; 
+;  
 
-:  AuxVerb ( auviliary Verb ) 
+:  AuxVerb ( auviliary Verb )
   midway @  t @  DO  
     I       0 en{ @  59 = IF  
-      59 motjuste !  
+      59 motjuste !
       I     6 en{ @  aud !  
       LEAVE  
     THEN  
@@ -2096,13 +2166,14 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   THEN
   59 urpsi !  
   51 caller ! 
-  psiDamp     
+  psiDamp  
   0 caller !  
 ;  
 
+
 :  NegSVO ( negation of Subject + Verb + Object )  
   fyi @ 1 > IF CR  
-    ."     Calling negSVO (AI4U Chapter 10)." CR
+    ."     Calling NegSVO (AI4U Chapter 10)." CR
   THEN
   123  t @  2 aud{ !  
   NounPhrase  
@@ -2116,17 +2187,18 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     THEN  
   -1 +LOOP  
   SpeechAct   
-  VerbPhrase  
+  VerbPhrase
   125 t @ 1+ 2 aud{ ! 
   1   t +!  
   1 spt +!  
-  enDamp    
-  audDamp   
+  enDamp   
+  audDamp
   5 bias !  
 ;  
 
-:  WhatAuxSDo ( What DO Subjects DO )   
-  PsiDecay   
+
+:  WhatAuxSDo ( What DO Subjects DO )
+  PsiDecay
   midway @  t @  DO  
     I       0 en{ @  54 = IF  
       54 motjuste !  
@@ -2141,7 +2213,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   54 urpsi !  
   42 caller ! 
   psiDamp     
-  0 caller !  
+  0 caller !
   auxVerb   
   0 motjuste !  
   midway @  t @  DO  
@@ -2176,8 +2248,9 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   psiDecay    
 ;  
 
+
 :  WhatIs ( what IS Subjects ) 
-  PsiDecay   
+  PsiDecay
   midway @  t @  DO  
     I       0 en{ @  54 = IF  
       54 motjuste !  
@@ -2186,13 +2259,13 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     THEN  
   -1 +LOOP  
   SpeechAct 
-  fyi @ 2 > IF CR  
+  fyi @ 2 > IF CR
   ."   from WhatIs after speaking of WHAT, psiDamping concept #54"
   THEN
-  54 urpsi !  
+  54 urpsi !
   psiDamp     
-  0 caller !  
-  topicnum @ 2 = NOT IF   
+  0 caller !
+  topicnum @ 2 = NOT IF
     midway @  t @  DO  
       I       0 en{ @  66 = IF  
         66 motjuste !  
@@ -2204,12 +2277,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     fyi @ 2 > IF CR  
     ."   from WhatIs after speaking of IS, psiDamping concept #66"
     THEN
-    66 urpsi !  
+    66 urpsi !
     PsiDamp     
     0 caller !  
     0 motjuste !  
   THEN   
-  topicnum @ 2 = IF  
+  topicnum @ 2 = IF
     midway @  t @  DO  
       I       0 en{ @  67 = IF  
         67 motjuste !  
@@ -2241,6 +2314,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   PsiDecay   
 ;  
 
+
 :  AskUser ( selector of question formats )  
    fyi @ 1 > IF       
      CR ."     AskUser calls a question-module." 
@@ -2249,15 +2323,16 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
    0 recon !   
 ;  
 
+
 :  EnglishCog ( one of several possible languages ) 
   0 morphpsi !  
-  0 psi !       
-  0 sublen !    
+  0 psi !   
+  0 sublen !
   t @ tov ! 
   fyi @ 2 > IF      
   CR ."   EnglishCog start: detour @ recon = " detour @ . recon @ . CR
   THEN              
-  yesorno @ 0 > IF  
+  yesorno @ 0 > IF
     SayYes        
     CR  
     EXIT  
@@ -2275,10 +2350,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
       fyi @ 2 = IF  
         ."     EnglishCog starts to think a sentence. " CR 
       THEN
-      CR ." Robot: "   
+      CR ." Robot: "
       123  t @  2 aud{ ! 
-      NounPhrase    
-      nphrpos @ 5 = IF  
+      NounPhrase     
+      nphrpos @ DUP 5 = SWAP 7 = OR IF  
         VerbPhrase  
         0 nphrpos ! 
       THEN  
@@ -2297,6 +2372,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   THEN              
 ;  
 
+
 :  CogitoErgoSum ( Cartesian wiki-name of thinking module ) 
   0 ordo !     
   35 pov !  
@@ -2305,6 +2381,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 recon ! 
   0 ordo !  
 ;  
+
 
 :  MotorOutput ( stub for volitional control of actuators in robots )
    7 EMIT       
@@ -2315,7 +2392,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
  ( TURN_RIGHT     ) 
 ;  
 
-:  TuringTest ( Human-Computer Interaction )  
+
+:  TuringTest ( Human-Computer Interaction )
   fyi @ 0 = IF CLS CR CR CR CR CR CR CR
     t @ 300 < IF CR  
  ." There is no warranty with Mind.Forth AI Engine for robots."
@@ -2328,7 +2406,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   fyi @ 0 = IF    
     CR ." Artificial intelligence -- alive and thinking since "
     bday @ .
-    bmonth @  1 = IF ." January "   THEN
+        bmonth @  1 = IF ." January "   THEN
     bmonth @  2 = IF ." February "  THEN
     bmonth @  3 = IF ." March "     THEN
     bmonth @  4 = IF ." April "     THEN
@@ -2341,11 +2419,11 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     bmonth @ 11 = IF ." November "  THEN
     bmonth @ 12 = IF ." December "  THEN
     byear @ . 8 EMIT 46 EMIT CR  
-  THEN   
-  fyi @ 1 = NOT IF  
-    ." TAB mode. ESCAPE exit. IQ = " IQ @ . 
+  THEN
+  fyi @ 1 = NOT IF
+    ." Time = " t @ . 8 EMIT 46 EMIT ."  KB-Traversal ID = " kbtv @ .
     8 EMIT 46 EMIT  
-    ."  Time = " t @ . 8 EMIT 46 EMIT  
+    ."  IQ = " IQ @ . 8 EMIT 46 EMIT  
     ."  Cyc = " rjc @ . ." since "  bday @ .
     bmonth @  1 = IF ." January "   THEN
     bmonth @  2 = IF ." February "  THEN
@@ -2364,8 +2442,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     CR  
   THEN              
   fyi @ 0 = IF CR
- ." Normal display-mode is in effect. Press Tab key for other modes."
-    CR
+ ." Display-mode is normal. Press Tab for other modes; ESC to exit."
+    CR  
   THEN
   fyi @ 3 = IF CR    
   ." Diagnostic messages - ignore during input before pressing ENTER."
@@ -2373,22 +2451,23 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   42 pov !  
 ; 
 
-:  SuperEgo ( new wiki-page name for SECURITY module ) 
+
+:  SeCurity ( new wiki-page name for SECURITY module ) 
   fyi @ 2 = IF CR  
-  ."   SuperEgo calls HCI TuringTest module." 
+  ."   SeCurity calls HCI TuringTest module." 
   THEN
   TuringTest  
   t @ cns @ 64 - > IF  
-    fyi @ 2 = IF CR  
-     ."   SuperEgo module calls ReJuvenate." 
+    fyi @ 2 = IF CR
+    ."   SeCurity module calls ReJuvenate." 
     THEN        
     ReJuvenate  
   THEN          
   t   @  1024 > IF  
     t @  1024 -  midway !  ( for a range limit on searches )
-    ELSE            
+    ELSE
     1   midway !    
-  THEN   
+  THEN 
   0 quiet !  
 ;  
 
@@ -2397,7 +2476,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   TabulaRasa   
   enBoot       
   BEGIN        
-    SuperEgo   
+    SeCurity   
     fyi @ 2 = IF CR  
     ." MainLoop calls the SensoryInput module." CR  
     THEN          
@@ -2410,9 +2489,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   ( FreeWill ) 
   ( MotorOutput ) 
   AGAIN        
+;
 
-; 
+ 
 :  ALIFE  ( Call MainLoop if user does not know to enter MainLoop )
   MainLoop  
-;  
+;
 }}}

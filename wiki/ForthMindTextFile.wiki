@@ -3,10 +3,10 @@
 
 === Latest mindforth release as a loadable text file ===
 
-Drag-and-drop code into editor; save as mind.f in the C:\win32For directory.
+Drag-and-drop code into editor; save C:\Win32For\Mind.F (not as Mind.F.txt).
 
 {{{
-( 23apr09A.F [mf090423.html] -- modification of 21apr09A.F Mind.Forth )
+( 7may09A.F [mf090507.html] -- modification of 6may09A.F Mind.Forth )
 ( This file may be named "Mind.f" or any "filename.f" you choose. )
 ( Rename any occurrence of Mind.f.txt as simply Mind.f for Win32Forth. )
 ( http://www.winzip.com/aboutzip.htm tells about WinZip to auto-install )
@@ -23,8 +23,10 @@ variable adverbact 0 adverbact ! ( 29aug2008 Test for adverb-insertion )
 variable aud  ( enVocab; AudInput; SpeechAct: auditory recall-tag )
 variable audjuste ( 25aug2008 For nounPhrase motjuste aud to SpeechAct )
 variable audme  ( 27sep2008 tag to find "ME" in auditory memory )
+variable audpsi  ( 6may2009 de-globalizing the "psi" variable )
+variable audrec  ( 6may2009 replacing "psi" in AudRecog )
 variable audstop  ( A flag to stop SpeechAct after one word )
-variable back ( to replace "bulge" for "pre" items in spreadAct )
+variable back ( to replace "bulge" for "pre" items in SpreadAct )
 variable bday ( MainLoop of alife; TuringTest HCI -- day of birth )
 variable beflag 0 beflag ! ( 23apr2009 for InStantiate )
 variable beg  1 beg !  ( AudInput; AudMem: word beginning flag )
@@ -55,6 +57,8 @@ variable fin ( new-, oldConcept; enVocab: English-to-Psi fiber-in )
 variable firstword ( 13sep2008 So "DO" query triggers kbSearch )
 variable fyi 0 fyi ! ( for rotation through display modalities )
 variable ghost 0 ghost ! ( 5sep2008 Article switch from "a" to "the" )
+variable guspsi  (  6may2009 concept-tag attached to taste-memories )
+variable gusrec  (  6may2009 for external recognition by GusRecog )
 variable hipsi   ( 14jan2008 "high-psi" tag on wavecrest concept )
 ( I = Index in loops; does not require a fetch "@" )
 variable img  ( visRecog: for future use as "image" )
@@ -89,6 +93,8 @@ variable obstat ( 15jan2008 Lets AudInput psi-damp a reentrant word. )
 variable oldact ( to show the source of spreading activations )
 variable oldpos ( for treating verb part-of-speech as a special case )
 variable oldpsi ( to show the source of spreading activations )
+variable olfpsi ( 6may2009 concept-tag attached to smells in memory )
+variable olfrec ( 6may2009 for external recognition by OlfRecog )
 variable onset 0 onset ! ( of a word stored in auditory memory )
 variable opt  ( option, for flushing out a desired part of speech )
 variable ordo 0 ordo ! ( 2apr2007 from JSAI; AudInput word-order )
@@ -99,6 +105,7 @@ variable pre  ( previous concept associated with another concept )
 variable precand  ( 2apr2007 inviolate "pre" candidate from JSAI )
 variable predpos 0 predpos ! ( 29aug2008 part of speech in Predicate )
 variable preset 0 preset !  ( 2apr2007 For setting Instantiate "pre" )
+variable presyn  ( 7may2009 synaptic deglobalized "pre" in SpreadAct )
 variable prevtag  ( 2apr2007 from JSAI; for use in Instantiate )
 variable psi  ( associative tag from auditory engram to Psi mindcore )
 variable psi1 ( 30mar2007 verbAct: activation-level at each node of verb )
@@ -115,7 +122,8 @@ variable rjc  0 rjc ! ( ReJuvenate: counter of rejuvenations over life )
 variable rsvp 1000 rsvp ! ( AudInput/AudListen response-time counter )
 variable rv ( "recall-vector" for diagnostic display of thought processes )
 variable seq  ( subSEQuent concept associated with another concept )
-variable spike  ( 1aug2005: for potential use in spreadAct )
+variable seqsyn  ( 7may2009 synaptic deglobalized "seq" in SpreadAct )
+variable spike  ( 1aug2005: for potential use in SpreadAct )
 variable spt  ( AudMem; AudInput: blank space time )
 variable stemgap  ( 30sep2008 For avoiding false audRecog stems )
 variable subj     ( 15sep2005 flag to supercharge subject-nouns )
@@ -125,6 +133,8 @@ variable subpsi ( 30sep2008 For audRecog of sub-component stems of words )
 variable supsi  ( 22jan2008 subject-psi for calculating "thotnum" )
 variable t  0 t ! ( time as incremented during auditory memory storage )
 variable t2s    ( auditory text-to-speech index for SpeechAct )
+variable tacpsi   ( 6may2009 concept-tag attached to tactile engrams )
+variable tacrec   ( 6may2009 for external recognition by TacRecog )
 variable thot1    ( 22jan2008 for detecting repetitions )
 variable thot2    ( 22jan2008 for detecting repetitions )
 variable thot3    ( 22jan2008 for detecting repetitions )
@@ -148,13 +158,17 @@ variable urpsi ( original German:ur psi for use in psiDamp, etc. )
 variable vault 202 vault !  ( 29mar2007 adding data from JavaScript AI )
 variable vbpsi   ( 22jan2008 verb-psi for calculating "thotnum" )
 variable verbinc ( 27apr2007 verb-increment for use in verbAct module )
-variable verbval  ( 3apr2007 For transfer from verbPhrase to verbAct.)
+variable verbval  ( 3apr2007 For transfer from verbPhrase to verbAct. )
+variable vispsi   ( 6may2009 concept-tag attached to images in memory )
+variable visrec   ( 6may2009 for external recognition by VisRecog )
 variable whatflag  0 whatflag !  ( 23apr2009 for InStantiate )
 variable whereflag 0 whereflag ! ( 23apr2009 for InStantiate )
 variable whoflag   0 whoflag !   ( 23apr2009 for InStantiate )
-variable xthe 0 xthe !  ( 20apr2009 Xfer NPhr motjuste to EnArticle queue. )
+variable xthe 0 xthe !  ( 20apr2009 Xfer NPhr motjuste to EnArticle 
+queue. )
 variable yesorno 0 yesorno ! ( 16sep2008 in conjunction with kbSearch )
 variable zone  ( ReActivate; SpreadAct: time-zone for "pre" and "seq" )
+
 
 :  CHANNEL   ( size num -< name >- )  
   CREATE   ( Returns address of newly named channel. )
@@ -169,7 +183,6 @@ variable zone  ( ReActivate; SpreadAct: time-zone for "pre" and "seq" )
   1 +      ( because the first cell has the number of rows.)
   CELLS +  ( from number of items to number of bytes in offset )
 ;  
-
 cns @  8  CHANNEL  psi{  ( Mindcore concept array "psi" )
 cns @  7  CHANNEL   en{  ( English lexicon array "en" )
 cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
@@ -178,6 +191,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     0 I 1 psi{ !    
   -1 +LOOP          
 ;  
+
 
 :  TabulaRasa  
   0 unk !  
@@ -209,6 +223,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   LOOP
 ;  
 
+
 :  VerbClear ( remove activation from all verbs ) 
   midway @  t @  DO     
     I     5 psi{ @ 8 = IF  
@@ -239,14 +254,14 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     I  0  psi{ @ 59 = IF  0  I  1  psi{ ! THEN  
     I  0  psi{ @ 54 = IF  0  I  1  psi{ ! THEN  
     I  0  psi{ @  7 = IF  0  I  1  psi{ ! THEN  
-        I     0    psi{ @ 57 = IF  
+    I     0    psi{ @ 57 = IF  
       I   1    psi{ @  8 < IF  
         1 I 1  psi{ !          
       THEN  
     THEN    
     I      0   psi{ @ 66 = IF   
       I    1   psi{ @  8 > IF   
-        1 I 1  psi{ !          
+         1 I 1  psi{ !          
       THEN  
     THEN    
   -1  +LOOP  
@@ -257,6 +272,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   16 residuum ! 
   fyi @ 2 > IF CR  
   ."     PsiDamp called for urpsi = " urpsi @ .
+
   ."  by module ID #" caller @ .        
   caller @  42 = IF ." whatAuxSDo " THEN  
   caller @  51 = IF ." auxVerb "    THEN  
@@ -265,7 +281,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   caller @ 104 = IF ." AudInput "   THEN  
   caller @ 148 = IF ." Activate "   THEN  
   caller @ 3535 = IF ." AudInput "  THEN  
-    0 caller !  
+  0 caller !  
   THEN
   midway @  t @  DO     
             I  0  psi{ @ urpsi @ = IF  
@@ -281,7 +297,6 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     0 I  1  en{ !    
   -1 +LOOP           
 ;  
-
 
 
 :  AudDamp ( deactivate auditory engrams ) 
@@ -332,6 +347,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   CR
 ;  
 
+
 :  .en ( show vocabulary in the English lexicon array ) 
   CR ." English lexical fibers"
   CR ." t nen act num fex pos fin aud:"
@@ -360,9 +376,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   CR
 ;  
 
+
 :  .aud ( show engrams in the auditory memory array ) 
   CR ." Auditory memory nodes"
-  CR  ."  t pho act pov beg ctu psi"
+  CR  ."  t pho act pov beg ctu audpsi"
   t @  1+  1 DO           ( Show the entire Aud channel.)
     CR    I . ." "
     I 2 aud{ @ 123  =  IF
@@ -386,6 +403,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   CR ." MainLoop [ENTER] to erase all memories and restart the Mind."
   CR
 ;  
+
+
 : .echo ( show what the robot just said ) 
   ( As on Usenet, user responds _below_ what the AI has said. )
   fyi @ 2 = IF       
@@ -410,10 +429,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
 : SpreadAct  ( spreading activation )  
   fyi @ 3 = IF   
     CR ."  sprdAct: caller & seq = " caller @ . seq @ .  
-  THEN           
-  pre @ 0 > IF   
+  THEN   
+  pre @ 0 > IF
     zone @ 7 -   zone @  DO   
-      I 0  psi{ @   pre @  =  IF  
+      I 0  psi{ @   presyn @  =  IF  
                 1   I  1 psi{ +!  
                     I  1 psi{ @  0 < IF   
                 0   I  1 psi{  !          
@@ -424,13 +443,13 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         I zone  @  6 - > IF LEAVE THEN  
       THEN       
     -1  +LOOP    
-  THEN           
-  seq @ 0 > IF   
+  THEN
+  seqsyn @ 0 > IF  
     fyi @ 3 = IF   
       CR ." sprA pos. seq & spike = " seq @ .  spike @ . CR 
     THEN           
     zone @ 9 +   zone @  DO   
-      I 0  psi{ @   seq @  =  IF  
+      I 0  psi{ @  seqsyn @  =  IF 
     fyi @ 3 = IF   
       CR ." SprA matching seq w. spike = " seq @ .  spike @ . CR
     THEN           
@@ -454,7 +473,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
             -1  +LOOP    
             0 rv !  
             midway @ t @ DO  
-              I   0  psi{ @   seq @  =  IF  
+              I   0  psi{ @  seqsyn @ = IF  
                 I 7  psi{ @   psi7 !    
                 LEAVE                   
               THEN       
@@ -502,7 +521,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
             ." at i " I . ." sprA spike "   
             spike @ . ." to seq #" seq @ .  
             midway @ t @ DO  
-              I   0  psi{ @   seq @  =  IF  
+              I   0  psi{ @  seqsyn @ = IF  
                 I 7  psi{ @   psi7 !    
                 LEAVE                   
               THEN       
@@ -571,7 +590,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   THEN  
   psi @  0 >  IF     
     fyi @ 2 > IF  
-      CR ."       nounAct calls spreadACT to xfer proportionate "
+      CR ."       nounAct calls SpreadAct to xfer proportionate "
       ." act. from each node of concept #" psi @ .
     THEN          
     midway @   t @  DO  
@@ -586,9 +605,9 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           0 I  1 psi{ !   
             THEN   
                   12 spike !  ( 3apr2007 Aim for ample spikes.)
-          I  4 psi{ @  pre !  ( 24aug2008 for use in SPREADACT )
-          I  6 psi{ @  seq !  ( 24aug2008 for use in SPREADACT )
-          I           zone !  ( for use in SPREADACT )
+          I  4 psi{ @  presyn !  (  7may2009 for use in SpreadAct )
+          I  6 psi{ @  seqsyn !  (  7may2009 for use in SpreadAct )
+          I           zone !     ( for use in SpreadAct )
           I  1 psi{ @  0 = IF  0 spike ! THEN
           I  1 psi{ @  5 > IF 12 spike ! THEN  
           I  1 psi{ @ 10 > IF 14 spike ! THEN  
@@ -605,10 +624,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         psi @ oldpsi ! 
           I  1 psi{ @ oldact !  
           I  5 psi{ @ oldpos !  
-        seq @  0 > IF    
+     seqsyn @  0 > IF    
           7865 caller !  
           SpreadAct             ( for spreading activation )
           0 caller !     
+          0 presyn !     
+          0 seqsyn !     
         THEN   
         precand @ pre !  
         0 oldpos !  
@@ -616,9 +637,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         0 oldact !  
         0  pre !              
       THEN                    
-      
       I    0 psi{ @ psi @ = NOT IF  
-       
    I 5 psi{ @ DUP 5 = SWAP 7 = OR IF  
             I 1 psi{ @ unk !  
               0 unk !         
@@ -632,6 +651,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 spike !  
 ;  
 
+
 :  VerbAct ( re-activate all recent nodes of a verb )  
   verbval @  33 <  IF   
     33  verbval @ -  verbinc !  
@@ -642,7 +662,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   THEN  
   psi @  0 >  IF     
     fyi @ 2 > IF  
-      CR ."       verbAct calls spreadACT to xfer proportionate "
+      CR ."       verbAct calls SpreadAct to xfer proportionate "
       ." act. from each node of concept #" psi @ .
     THEN          
     psi @ oldpsi !  
@@ -661,9 +681,9 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           I  1 psi{ @ 63 > IF  
             63 I 1 psi{ !      
           THEN  
-          I  4 psi{ @  pre !  ( 24aug2008 for use in SPREADACT )
-          I  6 psi{ @  seq !  ( 24aug2008 for use in SPREADACT )
-          I           zone !  ( for use in SPREADACT )
+          I  4 psi{ @  presyn !  (  7may2009 for use in SpreadAct )
+          I  6 psi{ @  seqsyn !  (  7may2009 for use in SpreadAct )
+          I           zone !     ( for use in SpreadAct )
           I  1 psi{ @  0 = IF  0 spike ! THEN
           I  1 psi{ @  0 > IF  1 spike ! THEN  
           I  1 psi{ @  5 > IF  2 spike ! THEN  
@@ -681,10 +701,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         psi @ oldpsi ! 
           I  1 psi{ @ oldact !  
           I  5 psi{ @ oldpos !  
-        seq @  0 > IF           
+        seqsyn @  0 > IF  
           8665 caller !  
-          SPREADACT             ( for spreading activation )
+          SpreadAct             ( for spreading activation )
           0 caller !     
+          0 presyn !     
+          0 seqsyn !     
         THEN                    
         0 oldpos !  
         0 oldpsi !  
@@ -705,7 +727,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 spike !   
   psi @  0 >  IF     
     fyi @ 2 > IF  
-      CR ."       ReActivate calls spreadACT to xfer proportionate "
+      CR ."       ReActivate calls SpreadAct to xfer proportionate "
       ." act. from each node of concept #" psi @ .
     THEN          
     midway @   t @  DO  
@@ -734,16 +756,18 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
                 psi @ oldpsi !  
           I  1 psi{ @ oldact !  
           I  5 psi{ @ oldpos !  
-          I  4 psi{ @  pre !  ( 24aug2008 for use in SPREADACT )
-          I  6 psi{ @  seq !  ( 24aug2008 for use in SPREADACT )
-          I           zone !  ( for use in SPREADACT )
+          I  4 psi{ @  presyn !  (  7may2009 for use in SpreadAct )
+          I  6 psi{ @  seqsyn !  (  7may2009 for use in SpreadAct )
+          I           zone !     ( for use in SpreadAct )
         148 caller !          
         SpreadAct             ( for spreading activation )
         0 oldpos !            
         0 oldpsi !            
         0 oldact !            
         0    pre !            
+        0 presyn !            
         0    seq !            
+        0 seqsyn !            
         0   psi1 !            
         1  spike !            
       THEN                    
@@ -777,11 +801,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
       0 act !      
     THEN  
   THEN  
+  prevtag @ pre !  
   ( concept fiber psi )             psi @  t @  0 psi{ !
   ( Set "act" activation level. )   act @  t @  1 psi{ +!
   ( Set "num" number flag       )   num @  t @  2 psi{ ! 
   ( Store JUXtaposition tags. )     jux @  t @  3 psi{ ! 
-  ( Store PREvious associand. ) prevtag @  t @  4 psi{ ! 
+  ( Store PREvious associand. )     pre @  t @  4 psi{ ! 
   ( Store functional pos code. )    pos @  t @  5 psi{ ! 
   ( Store the subSEQuent tag. )     seq @  t @  6 psi{ ! 
   ( Store the EN-transfer tag. )    enx @  t @  7 psi{ ! 
@@ -921,7 +946,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   psi @  enx !      
   psi @ 54 = IF 8 act ! THEN  
   psi @ 55 = IF 8 act ! THEN  
-  ordo @ 1 = IF  
+  ordo @ 1 = IF
     psi @ 59 = IF  
       1 kbquiz !   
     THEN  
@@ -970,7 +995,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
 
 
 :  AudRecog ( auditory recognition )  
-  0  psi !   
+  0 audrec !  
+  0 psi !   
   8 act !      
   0 actbase !  
   midway @  spt @ DO    
@@ -980,6 +1006,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           I 4 aud{ @ 1 = IF   
             8 I 1+   1 aud{ ! 
             0 psi !  
+            0 audrec !  
           ELSE       
             len @ 1 = IF  
               I 5 aud{ @  monopsi !  
@@ -987,13 +1014,13 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           THEN   
         THEN   
       THEN   
-      
-      
       I 1 aud{ @ 0 > IF  
         0 psi !          
+        0 audrec !  
         I 4 aud{ @ 1 = IF   
           2 act +!  
           0 psi !           
+          0 audrec !  
       act @ I 1+   1 aud{ ! 
         THEN    
         I 4 aud{ @ 0 = IF   
@@ -1006,8 +1033,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         I 1 aud{ @ 8 > IF  
           I 4 aud{ @ 0 = IF   
             I 1 aud{ @ actbase @ > IF  
-              I 5 aud{ @ psi ! 
-              
+              I 5 aud{ @ audrec ! 
               I 5 aud{ @ subpsi ! 
               len @ sublen !  
               I 5 aud{ @ psibase !  
@@ -1015,8 +1041,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
             THEN   
           ELSE
             0 psi !  
+            0 audrec !  
             monopsi @ 0 > IF   
               monopsi @ psi !  
+              monopsi @ audrec !  
               0 monopsi !      
             THEN               
           THEN   
@@ -1028,22 +1056,24 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 actbase !  
   psibase @ 0 > IF      
      psibase @  psi !   
+     psibase @  audrec !   
   THEN                  
-  psi @ 0 = IF         
+  audrec @ 0 = IF  
     monopsi @ 0 > IF   
       len @ 2 < IF  
         monopsi @ psi !  
+        monopsi @ audrec !  
       THEN          
       0 monopsi !      
-      psi @ 0 = IF   
+   audrec @ 0 = IF   
         psibase @ 0 > IF  
-          psibase @ psi !  
+          psibase @ audrec !
         THEN         
       THEN           
     THEN             
   THEN  
-  psi @ 0 = IF  
-      morphpsi @ psi !  
+  audrec @ 0 = IF  
+      morphpsi @ audrec !  
     sublen @ 0 > IF 
       len @ sublen @ -  stemgap !  
     THEN   
@@ -1051,19 +1081,23 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     stemgap @ 1 > IF 0 subpsi ! THEN 
     stemgap @ 1 > IF 0 morphpsi ! THEN 
     stemgap @ 1 > IF 0 psi ! THEN    
-  THEN  
+    stemgap @ 1 > IF 0 audrec ! THEN 
+   THEN  
   subpsi @ morphpsi !  
   0 psibase !  
-  0 subpsi !   
-  psi @ 0 > IF   
+  0 subpsi !
+  audrec @ 0 > IF   
     stemgap @ 2 > IF  
-      0 psi !  
+      0 psi !    
+      0 audrec ! 
     THEN   
     pho @ 83 = IF  
       2 num !  
     THEN  
   THEN  
+  audrec @ audpsi !  
 ;  
+
 
 :  AudMem ( auditory memory channel ) 
   t @ vault @ > IF  
@@ -1076,7 +1110,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     beg @  t @  3 aud{ !  
     ctu @  t @  4 aud{ !  
     ctu @ 0 = IF  
-      psi @  t @  5 aud{ !  
+   audpsi @  t @  5 aud{ !  
     THEN  
     pho @ 32 = IF t @ spt !  THEN  
 ;  
@@ -1086,6 +1120,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   rsvp @  1  DO  
     KEY? IF      
       KEY pho !  
+      
       0 quiet !  
       pho @  8 = IF 7 EMIT THEN 
       pho @  9 = IF  
@@ -1107,7 +1142,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     tsmonth @ 10 = IF ." October "   THEN
     tsmonth @ 11 = IF ." November "  THEN
     tsmonth @ 12 = IF ." December "  THEN
-    tsyear @ . 8 EMIT 46 EMIT CR  
+    tsyear @ . 8 EMIT 46 EMIT CR
         THEN
         1 fyi +!  
         fyi @ 3 > IF 0 fyi ! THEN 
@@ -1137,7 +1172,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
       THEN
       pho @ 0 > IF   
         pho @ EMIT   
-      THEN           
+      THEN
       pho @ DUP 96 > IF
         DUP 123 < IF
           32 -
@@ -1151,11 +1186,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   LOOP
 ;  
 
-
 :  AudInput ( accept auditory input )  
   0 match !  
   0 upnext ! 
-  0 urpsi !  
+  0 urpsi !
   t @ nlt !
   pov @  42 = IF   
     fyi @ 2 = IF  
@@ -1193,7 +1227,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
            THEN  
         THEN              
       THEN                
-    THEN                
+    THEN
     pov @ 42 = IF   
       AudListen  
       pho @ 0 > IF   
@@ -1207,7 +1241,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           hipsi @ lopsi !  
           0 caller !    
           0 urpsi !     
-        THEN            
+        THEN
         1000 rsvp !  
       THEN           
       I 59 = IF  
@@ -1227,7 +1261,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
       13 eot !     
       32 pho !     
       CR           
-      1 lastword ! 
+       1 lastword ! 
     THEN
     pho @ 27 =  IF  
       CR ." AudInput: halt"  0 pho !  0 fyi !  0 nounval !
@@ -1248,7 +1282,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         onset @ aud !   
         0 onset !       
         psi @  tult @  5 aud{ !  
-        psi @ hipsi !     
+        psi @ hipsi ! 
         OldConcept      
         eot @ 13 = IF  
           35 pov !     
@@ -1281,7 +1315,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
       AudMem  
     THEN
     eot @ 13 = IF  
-      5 bias !     
+      5 bias ! 
       1 quiet !    
     THEN
     eot @  0 > IF  
@@ -1319,255 +1353,256 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
  ( Wi-Fi    -- exotic: 802.11 wireless fidelity )
 ;  
 
+
 :  EnBoot ( English bootstrap of initial concepts ) 
   0 t !  t @  spt !  ." (clearing memory...)"
   CR ." There is no warranty for what this software does."
-    1 t ! 89 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-    2 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-    3 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 32 psi ! AudMem 
+    1 t ! 89 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+    2 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+    3 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 32 audpsi ! AudMem 
  32 psi !  0 act !  0 jux !  0 pre ! 4 pos !  0 seq ! 32 enx ! InStantiate
  32 nen !  0 act ! 32 fex !          4 pos ! 32 fin !  1 aud ! EnVocab
-    5 t ! 73 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-    6 t ! 70 pho ! 35 pov !  0 beg ! 0 ctu ! 20 psi ! AudMem 
+    5 t ! 73 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+    6 t ! 70 pho ! 35 pov !  0 beg ! 0 ctu ! 20 audpsi ! AudMem 
  20 psi !  0 act !  0 jux !  0 pre ! 3 pos !  0 seq ! 20 enx ! InStantiate
  20 nen !  0 act ! 20 fex !          3 pos ! 20 fin !  5 aud ! EnVocab
-    8 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-    9 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   10 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu !  7 psi ! AudMem 
+    8 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+    9 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   10 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu !  7 audpsi ! AudMem 
   7 psi !  0 act !  0 jux !  0 pre ! 1 pos !  0 seq !  7 enx ! InStantiate
   7 nen !  0 act !  7 fex !          1 pos !  7 fin !  8 aud ! EnVocab
-   12 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   13 t ! 82 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   14 t ! 85 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   15 t ! 84 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   16 t ! 72 pho ! 35 pov !  0 beg ! 0 ctu ! 68 psi ! AudMem 
+   12 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   13 t ! 82 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   14 t ! 85 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   15 t ! 84 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   16 t ! 72 pho ! 35 pov !  0 beg ! 0 ctu ! 68 audpsi ! AudMem 
  68 psi !  1 num !  0 jux !  0 pre ! 5 pos ! 66 seq ! 68 enx ! InStantiate
  68 nen !  0 act ! 68 fex !          5 pos ! 68 fin ! 12 aud ! EnVocab
-   18 t ! 73 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   19 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 66 psi ! AudMem 
+   18 t ! 73 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   19 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 66 audpsi ! AudMem 
  66 psi !  8 act !  0 jux ! 68 pre ! 8 pos !  0 seq ! 66 enx ! InStantiate
  66 nen !  0 act ! 66 fex !          8 pos ! 66 fin ! 18 aud ! EnVocab
-   21 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   22 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   23 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   24 t ! 84 pho ! 35 pov !  0 beg ! 0 ctu ! 22 psi ! AudMem 
+   21 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   22 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   23 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   24 t ! 84 pho ! 35 pov !  0 beg ! 0 ctu ! 22 audpsi ! AudMem 
  22 psi !  0 act !  0 jux !  0 pre ! 3 pos !  0 seq ! 22 enx ! InStantiate
  22 nen !  0 act ! 22 fex !          3 pos ! 22 fin ! 21 aud ! EnVocab
-   26 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   27 t ! 76 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   28 t ! 76 pho ! 35 pov !  0 beg ! 0 ctu !  2 psi ! AudMem 
+   26 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   27 t ! 76 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   28 t ! 76 pho ! 35 pov !  0 beg ! 0 ctu !  2 audpsi ! AudMem 
   2 psi !  0 act !  0 jux !  0 pre ! 1 pos !  0 seq !  2 enx ! InStantiate
   2 nen !  0 act !  2 fex !          1 pos !  2 fin ! 26 aud ! EnVocab
-   30 t ! 82 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   31 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   32 t ! 66 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   33 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   34 t ! 84 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   35 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 39 psi ! AudMem 
+   30 t ! 82 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   31 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   32 t ! 66 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   33 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   34 t ! 84 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   35 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 39 audpsi ! AudMem 
  39 psi !  2 num !  0 jux !  0 pre ! 5 pos !  0 seq ! 39 enx ! InStantiate
  39 nen !  0 act ! 39 fex !          5 pos ! 39 fin ! 30 aud ! EnVocab
-   37 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   38 t ! 82 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   39 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 67 psi ! AudMem 
+   37 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   38 t ! 82 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   39 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 67 audpsi ! AudMem 
  67 psi !  8 act !  0 jux ! 39 pre ! 8 pos ! 38 seq ! 67 enx ! InStantiate
  67 nen !  0 act ! 67 fex !          8 pos ! 67 fin ! 37 aud ! EnVocab
-   41 t ! 80 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   42 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   43 t ! 82 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   44 t ! 83 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   45 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   46 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   47 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 38 psi ! AudMem 
+   41 t ! 80 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   42 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   43 t ! 82 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   44 t ! 83 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   45 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   46 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   47 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 38 audpsi ! AudMem 
  38 psi !  2 num !  0 jux !  0 pre ! 5 pos !  0 seq ! 38 enx ! InStantiate
  38 nen !  0 act ! 38 fex !          5 pos ! 38 fin ! 41 aud ! EnVocab
-   49 t ! 66 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   50 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   51 t ! 67 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   52 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   53 t ! 85 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   54 t ! 83 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   55 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 18 psi ! AudMem 
+   49 t ! 66 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   50 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   51 t ! 67 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   52 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   53 t ! 85 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   54 t ! 83 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   55 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 18 audpsi ! AudMem 
  18 psi !  0 act !  0 jux !  0 pre ! 3 pos !  0 seq ! 18 enx ! InStantiate
  18 nen !  0 act ! 18 fex !          3 pos ! 18 fin ! 49 aud ! EnVocab
-   57 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   58 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 53 psi ! AudMem 
+   57 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   58 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 53 audpsi ! AudMem 
  53 psi !  0 act !  0 jux !  0 pre ! 7 pos !  0 seq ! 53 enx ! InStantiate
  53 nen !  0 act ! 53 fex !          7 pos ! 56 fin ! 57 aud ! EnVocab
-   60 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   61 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   62 t ! 73 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   63 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   64 t ! 75 pho ! 35 pov !  0 beg ! 0 ctu ! 63 psi ! AudMem 
+   60 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   61 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   62 t ! 73 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   63 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   64 t ! 75 pho ! 35 pov !  0 beg ! 0 ctu ! 63 audpsi ! AudMem 
  63 psi !  0 act !  0 jux !  0 pre ! 8 pos !  0 seq ! 63 enx ! InStantiate
  63 nen !  0 act ! 63 fex !          8 pos ! 63 fin ! 60 aud ! EnVocab
-   66 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   67 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   68 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   69 t ! 78 pho ! 35 pov !  0 beg ! 0 ctu ! 13 psi ! AudMem 
+   66 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   67 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   68 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   69 t ! 78 pho ! 35 pov !  0 beg ! 0 ctu ! 13 audpsi ! AudMem 
  13 psi !  0 act !  0 jux !  0 pre ! 2 pos !  0 seq ! 13 enx ! InStantiate
  13 nen !  0 act ! 13 fex !          2 pos ! 13 fin ! 66 aud ! EnVocab
-   71 t ! 78 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   72 t ! 79 pho ! 35 pov !  0 beg ! 0 ctu ! 27 psi ! AudMem 
+   71 t ! 78 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   72 t ! 79 pho ! 35 pov !  0 beg ! 0 ctu ! 27 audpsi ! AudMem 
  27 psi !  0 act !  0 jux !  0 pre ! 4 pos !  0 seq ! 27 enx ! InStantiate
  27 nen !  0 act ! 27 fex !          4 pos ! 27 fin ! 71 aud ! EnVocab
-   74 t ! 89 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   75 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   76 t ! 85 pho ! 35 pov !  0 beg ! 0 ctu ! 56 psi ! AudMem 
+   74 t ! 89 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   75 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   76 t ! 85 pho ! 35 pov !  0 beg ! 0 ctu ! 56 audpsi ! AudMem 
  56 psi !  0 act !  0 jux !  0 pre ! 7 pos ! 35 seq ! 56 enx ! InStantiate
  56 nen !  0 act ! 56 fex !          7 pos ! 50 fin ! 74 aud ! EnVocab
-   78 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   79 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   80 t ! 68 pho ! 35 pov !  0 beg ! 0 ctu ! 17 psi ! AudMem 
+   78 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   79 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   80 t ! 68 pho ! 35 pov !  0 beg ! 0 ctu ! 17 audpsi ! AudMem 
  17 psi !  0 act !  0 jux !  0 pre ! 3 pos !  0 seq ! 17 enx ! InStantiate
  17 nen !  0 act ! 17 fex !          3 pos ! 17 fin ! 78 aud ! EnVocab
-   82 t ! 73 pho ! 35 pov !  1 beg ! 0 ctu ! 50 psi ! AudMem 
+   82 t ! 73 pho ! 35 pov !  1 beg ! 0 ctu ! 50 audpsi ! AudMem 
  50 psi !  0 act !  0 jux !  0 pre ! 7 pos !  0 seq ! 50 enx ! InStantiate
  50 nen !  0 act ! 50 fex !          7 pos ! 56 fin ! 82 aud ! EnVocab
-   84 t ! 68 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   85 t ! 79 pho ! 35 pov !  0 beg ! 0 ctu ! 59 psi ! AudMem 
+   84 t ! 68 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   85 t ! 79 pho ! 35 pov !  0 beg ! 0 ctu ! 59 audpsi ! AudMem 
  59 psi !  0 act !  0 jux !  0 pre ! 8 pos !  0 seq ! 59 enx ! InStantiate
  59 nen !  0 act ! 59 fex !          8 pos ! 59 fin ! 84 aud ! EnVocab
-   87 t ! 78 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   88 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   89 t ! 84 pho ! 35 pov !  0 beg ! 0 ctu ! 12 psi ! AudMem 
+   87 t ! 78 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   88 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   89 t ! 84 pho ! 35 pov !  0 beg ! 0 ctu ! 12 audpsi ! AudMem 
  12 psi !  0 act !  0 jux !  0 pre ! 2 pos !  0 seq ! 12 enx ! InStantiate
  12 nen !  0 act ! 12 fex !          2 pos ! 12 fin ! 87 aud ! EnVocab
-   91 t ! 75 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   92 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   93 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   94 t ! 87 pho ! 35 pov !  0 beg ! 0 ctu ! 61 psi ! AudMem 
+   91 t ! 75 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   92 t ! 78 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   93 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   94 t ! 87 pho ! 35 pov !  0 beg ! 0 ctu ! 61 audpsi ! AudMem 
  61 psi !  0 act !  0 jux ! 50 pre ! 8 pos !  0 seq ! 61 enx ! InStantiate
  61 nen !  0 act ! 61 fex !          8 pos ! 61 fin ! 91 aud ! EnVocab
-   96 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-   97 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-   98 t ! 89 pho ! 35 pov !  0 beg ! 0 ctu ! 16 psi ! AudMem 
+   96 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+   97 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+   98 t ! 89 pho ! 35 pov !  0 beg ! 0 ctu ! 16 audpsi ! AudMem 
  16 psi !  0 act !  0 jux !  0 pre ! 2 pos !  0 seq ! 16 enx ! InStantiate
  16 nen !  0 act ! 16 fex !          2 pos ! 16 fin ! 96 aud ! EnVocab
-  100 t ! 83 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  101 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  102 t ! 77 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  103 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 69 psi ! AudMem 
+  100 t ! 83 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  101 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  102 t ! 77 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  103 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 69 audpsi ! AudMem 
  69 psi !  0 act !  0 jux !  0 pre ! 1 pos !  0 seq ! 69 enx ! InStantiate
  69 nen !  0 act ! 69 fex !          1 pos ! 69 fin ! 100 aud ! EnVocab
-  105 t ! 80 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  106 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  107 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  108 t ! 80 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  109 t ! 76 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  110 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 37 psi ! AudMem 
+  105 t ! 80 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  106 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  107 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  108 t ! 80 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  109 t ! 76 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  110 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 37 audpsi ! AudMem 
  37 psi !  2 num !  0 jux !  0 pre ! 5 pos ! 70 seq ! 37 enx ! InStantiate
  37 nen !  0 act ! 37 fex !          5 pos ! 37 fin ! 105 aud ! EnVocab
-  112 t ! 72 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  113 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  114 t ! 86 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  115 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 70 psi ! AudMem 
+  112 t ! 72 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  113 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  114 t ! 86 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  115 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 70 audpsi ! AudMem 
  70 psi !  0 act !  0 jux ! 37 pre ! 8 pos ! 71 seq ! 70 enx ! InStantiate
  70 nen !  0 act ! 70 fex !          8 pos ! 70 fin ! 112 aud ! EnVocab
-  117 t ! 65 pho ! 35 pov !  1 beg ! 0 ctu !  1 psi ! AudMem 
+  117 t ! 65 pho ! 35 pov !  1 beg ! 0 ctu !  1 audpsi ! AudMem 
   1 psi !  0 act !  0 jux !  0 pre ! 1 pos !  0 seq !  1 enx ! InStantiate
   1 nen !  0 act !  1 fex !          1 pos !  1 fin ! 117 aud ! EnVocab
-  119 t ! 70 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  120 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  121 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  122 t ! 82 pho ! 35 pov !  0 beg ! 0 ctu ! 71 psi ! AudMem 
+  119 t ! 70 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  120 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  121 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  122 t ! 82 pho ! 35 pov !  0 beg ! 0 ctu ! 71 audpsi ! AudMem 
  71 psi !  1 num !  0 jux !  0 pre ! 5 pos !  0 seq ! 71 enx ! InStantiate
  71 nen !  0 act ! 71 fex !          5 pos ! 71 fin ! 119 aud ! EnVocab
-  124 t ! 79 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  125 t ! 70 pho ! 35 pov !  0 beg ! 0 ctu ! 45 psi ! AudMem 
+  124 t ! 79 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  125 t ! 70 pho ! 35 pov !  0 beg ! 0 ctu ! 45 audpsi ! AudMem 
  45 psi !  0 act !  0 jux !  0 pre ! 6 pos !  0 seq ! 45 enx ! InStantiate
  45 nen !  0 act ! 45 fex !          6 pos ! 45 fin ! 124 aud ! EnVocab
-  127 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  128 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  129 t ! 79 pho ! 35 pov !  0 beg ! 0 ctu ! 55 psi ! AudMem 
+  127 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  128 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  129 t ! 79 pho ! 35 pov !  0 beg ! 0 ctu ! 55 audpsi ! AudMem 
  55 psi !  0 act !  0 jux !  0 pre ! 5 pos !  0 seq ! 55 enx ! InStantiate
  55 nen !  0 act ! 55 fex !          5 pos ! 55 fin ! 127 aud ! EnVocab
-  131 t ! 73 pho ! 35 pov !  1 beg ! 0 ctu ! 50 psi ! AudMem 
+  131 t ! 73 pho ! 35 pov !  1 beg ! 0 ctu ! 50 audpsi ! AudMem 
  50 psi !  0 act !  0 jux !  0 pre ! 7 pos ! 57 seq ! 50 enx ! InStantiate
  50 nen !  0 act ! 50 fex !          7 pos ! 56 fin ! 131 aud ! EnVocab
-  133 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  134 t ! 77 pho ! 35 pov !  0 beg ! 0 ctu ! 57 psi ! AudMem 
+  133 t ! 65 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  134 t ! 77 pho ! 35 pov !  0 beg ! 0 ctu ! 57 audpsi ! AudMem 
  57 psi !  8 act !  0 jux !  0 pre ! 8 pos ! 54 seq ! 57 enx ! InStantiate
  57 nen !  0 act ! 57 fex !          8 pos ! 57 fin ! 133 aud ! EnVocab
-  136 t ! 79 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  137 t ! 82 pho ! 35 pov !  0 beg ! 0 ctu ! 21 psi ! AudMem 
+  136 t ! 79 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  137 t ! 82 pho ! 35 pov !  0 beg ! 0 ctu ! 21 audpsi ! AudMem 
  21 psi !  0 act !  0 jux !  0 pre ! 3 pos !  0 seq ! 21 enx ! InStantiate
  21 nen !  0 act ! 21 fex !          3 pos ! 21 fin ! 136 aud ! EnVocab
-  139 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  140 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  141 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  142 t ! 84 pho ! 35 pov !  0 beg ! 0 ctu ! 54 psi ! AudMem 
+  139 t ! 87 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  140 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  141 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  142 t ! 84 pho ! 35 pov !  0 beg ! 0 ctu ! 54 audpsi ! AudMem 
  54 psi !  0 act !  0 jux !  0 pre ! 5 pos !  0 seq ! 54 enx ! InStantiate
  54 nen !  0 act ! 54 fex !          5 pos ! 54 fin ! 139 aud ! EnVocab
-  144 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  145 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  146 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  147 t ! 89 pho ! 35 pov !  0 beg ! 0 ctu ! 52 psi ! AudMem 
+  144 t ! 84 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  145 t ! 72 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  146 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  147 t ! 89 pho ! 35 pov !  0 beg ! 0 ctu ! 52 audpsi ! AudMem 
  52 psi !  0 act !  0 jux !  0 pre ! 7 pos !  0 seq ! 52 enx ! InStantiate
  52 nen !  0 act ! 52 fex !          7 pos ! 52 fin ! 144 aud ! EnVocab
-  149 t ! 83 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  150 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  151 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 62 psi ! AudMem 
+  149 t ! 83 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  150 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  151 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 62 audpsi ! AudMem 
  62 psi !  0 act !  0 jux ! 52 pre ! 8 pos !  0 seq ! 62 enx ! InStantiate
  62 nen !  0 act ! 62 fex !          8 pos ! 62 fin ! 149 aud ! EnVocab
-  153 t ! 73 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  154 t ! 78 pho ! 35 pov !  0 beg ! 0 ctu ! 44 psi ! AudMem 
+  153 t ! 73 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  154 t ! 78 pho ! 35 pov !  0 beg ! 0 ctu ! 44 audpsi ! AudMem 
  44 psi !  0 act !  0 jux !  0 pre ! 6 pos !  0 seq ! 44 enx ! InStantiate
  44 nen !  0 act ! 44 fex !          6 pos ! 44 fin ! 153 aud ! EnVocab
-  156 t ! 77 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  157 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 65 psi ! AudMem 
+  156 t ! 77 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  157 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 65 audpsi ! AudMem 
  65 psi !  0 act !  0 jux !  0 pre ! 7 pos !  0 seq ! 65 enx ! InStantiate
  65 nen !  0 act ! 65 fex !          7 pos ! 56 fin ! 156 aud ! EnVocab
-  159 t ! 75 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  160 t ! 73 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  161 t ! 68 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  162 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 72 psi ! AudMem 
+  159 t ! 75 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  160 t ! 73 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  161 t ! 68 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  162 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 72 audpsi ! AudMem 
  72 psi !  2 num !  0 jux !  0 pre ! 5 pos ! 73 seq ! 72 enx ! InStantiate
  72 nen !  0 act ! 72 fex !          5 pos ! 72 fin ! 159 aud ! EnVocab
-  164 t ! 77 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  165 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  166 t ! 75 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  167 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 73 psi ! AudMem 
+  164 t ! 77 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  165 t ! 65 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  166 t ! 75 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  167 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 73 audpsi ! AudMem 
  73 psi !  0 act !  0 jux ! 72 pre ! 8 pos ! 39 seq ! 73 enx ! InStantiate
  73 nen !  0 act ! 73 fex !          8 pos ! 73 fin ! 164 aud ! EnVocab
-  169 t ! 82 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  170 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  171 t ! 66 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  172 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  173 t ! 84 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  174 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 39 psi ! AudMem 
+  169 t ! 82 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  170 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  171 t ! 66 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  172 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  173 t ! 84 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  174 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 39 audpsi ! AudMem 
  39 psi !  2 num !  0 jux ! 73 pre ! 5 pos !  0 seq ! 39 enx ! InStantiate
  39 nen !  0 act ! 39 fex !          5 pos ! 39 fin ! 169 aud ! EnVocab
-  176 t ! 82 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  177 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  178 t ! 66 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  179 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  180 t ! 84 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  181 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 39 psi ! AudMem 
+  176 t ! 82 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  177 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  178 t ! 66 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  179 t ! 79 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  180 t ! 84 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  181 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 39 audpsi ! AudMem 
  39 psi !  2 num !  0 jux !  0 pre ! 5 pos ! 74 seq ! 39 enx ! InStantiate
  39 nen !  0 act ! 39 fex !          5 pos ! 39 fin ! 176 aud ! EnVocab
-  183 t ! 78 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  184 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  185 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  186 t ! 68 pho ! 35 pov !  0 beg ! 0 ctu ! 74 psi ! AudMem 
+  183 t ! 78 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  184 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  185 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  186 t ! 68 pho ! 35 pov !  0 beg ! 0 ctu ! 74 audpsi ! AudMem 
  74 psi !  0 act !  0 jux ! 39 pre ! 8 pos ! 50 seq ! 74 enx ! InStantiate
  74 nen !  0 act ! 74 fex !          8 pos ! 74 fin ! 183 aud ! EnVocab
-  188 t ! 77 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  189 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 65 psi ! AudMem 
+  188 t ! 77 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  189 t ! 69 pho ! 35 pov !  0 beg ! 0 ctu ! 65 audpsi ! AudMem 
  50 psi !  0 act !  0 jux ! 74 pre ! 7 pos !  0 seq ! 65 enx ! InStantiate
  65 nen !  0 act ! 50 fex !          7 pos ! 56 fin ! 188 aud ! EnVocab
-  191 t ! 73 pho ! 35 pov !  1 beg ! 0 ctu ! 50 psi ! AudMem 
+  191 t ! 73 pho ! 35 pov !  1 beg ! 0 ctu ! 50 audpsi ! AudMem 
  50 psi !  0 act !  0 jux !  0 pre ! 7 pos ! 75 seq ! 50 enx ! InStantiate
  50 nen !  0 act ! 50 fex !          7 pos ! 56 fin ! 191 aud ! EnVocab
-  193 t ! 72 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  194 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  195 t ! 76 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  196 t ! 80 pho ! 35 pov !  0 beg ! 0 ctu ! 75 psi ! AudMem 
+  193 t ! 72 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  194 t ! 69 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  195 t ! 76 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  196 t ! 80 pho ! 35 pov !  0 beg ! 0 ctu ! 75 audpsi ! AudMem 
  75 psi !  0 act !  0 jux ! 50 pre ! 8 pos ! 72 seq ! 75 enx ! InStantiate
  75 nen !  0 act ! 75 fex !          8 pos ! 75 fin ! 193 aud ! EnVocab
-  198 t ! 75 pho ! 35 pov !  1 beg ! 1 ctu !  0 psi ! AudMem 
-  199 t ! 73 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  200 t ! 68 pho ! 35 pov !  0 beg ! 1 ctu !  0 psi ! AudMem 
-  201 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 72 psi ! AudMem 
+  198 t ! 75 pho ! 35 pov !  1 beg ! 1 ctu !  0 audpsi ! AudMem 
+  199 t ! 73 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  200 t ! 68 pho ! 35 pov !  0 beg ! 1 ctu !  0 audpsi ! AudMem 
+  201 t ! 83 pho ! 35 pov !  0 beg ! 0 ctu ! 72 audpsi ! AudMem 
  72 psi !  2 num !  0 jux ! 75 pre ! 5 pos !  0 seq ! 72 enx ! InStantiate
  72 nen !  0 act ! 72 fex !          5 pos ! 72 fin ! 198 aud ! EnVocab
   1 t +!
@@ -1582,6 +1617,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 pho !  
   0 pre !  0 seq !  
 ;  
+
 
 :  KbTraversal ( reactivate KB concepts )  
     35 pov !  
@@ -1724,7 +1760,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   THEN           
   1 kbtv +!  
   kbtv @ 0 > IF  
-    CR ." For lack of human input, ReJuvenate calls KbTraversal" CR
+ CR ." For lack of human input, ReJuvenate calls KbTraversal" CR
     KbTraversal  
   THEN  
 ; 
@@ -1771,12 +1807,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   fyi @ 1 > IF CR CR
     ."   Calling EgoAct (AI4U Chapter 20); inert = " inert @ .
   THEN
-   0 recon !    
+  0 recon !    
   0 psi !      
   0 inert !    
   0 recon !    
-
-  
   EEG @ 0 = IF    
   fyi @ 2 = IF
     CR ." Repetitious thought detected; EgoAct module steps in."
@@ -1846,6 +1880,7 @@ THEN
   THEN  
 ;  
 
+
 :  NounPhrase ( select part of a thought )    
   0 reject !  
   EnReify  ( to move abstract Psi concepts to EnVocab reality )
@@ -1859,7 +1894,7 @@ THEN
     ."   NounPhrase preview of further associated concepts -- "
     CR  ."     " 
   THEN  
-  midway @  t @  DO 
+  midway @  t @  DO  
     I  4 en{ @ 5 =  I 4 en{ @ 7 = OR IF  
       fyi @ 2 > IF  
         I 1 en{ @ 0 > IF  
@@ -1876,7 +1911,7 @@ THEN
       I   1 en{ @  act @ > IF  
         I 0 en{ @  motjuste !  
         I 0 en{ @  subjpsi !  
-        I 2 en{ @  nphrnum !
+        I 2 en{ @  nphrnum !   
         I 4 en{ @  nphrpos ! 
         I 6 en{ @  aud !  
         I 6 en{ @  audjuste !  
@@ -1911,10 +1946,10 @@ THEN
     THEN       
   -1 +LOOP     
   enDamp       
-  motjuste @  0 = IF
+  motjuste @  0 = IF  
     midway @  t @  DO  
       I       0 en{ @  54 = IF  
-        54 motjuste !
+        54 motjuste !  
         I     6 en{ @  aud !  
         LEAVE  
       THEN  
@@ -1923,11 +1958,11 @@ THEN
     1000 rsvp !  
     EXIT   
   THEN
-  act @ nounval !
-  nounval @ 3 - nounval !
+  act @ nounval !   
+  nounval @ 3 - nounval !  
   act @ 2 < IF      
     motjuste @ 0 > IF  
-      1 reject !
+      1 reject !    
     THEN               
   THEN              
   motjuste @  hipsi !  
@@ -2102,7 +2137,7 @@ THEN
       CR ."   VerbPhrase: detour value is at " detour @ . 
     THEN          
   THEN  
-  motjuste @ 0 > IF  
+  motjuste @ 0 > IF
     act @ 20 < IF  
       1 detour !   
       1 recon !    
@@ -2152,10 +2187,11 @@ THEN
   THEN             
 ;  
 
-:  AuxVerb ( auviliary Verb )
+
+:  AuxVerb ( auviliary Verb ) 
   midway @  t @  DO  
     I       0 en{ @  59 = IF  
-      59 motjuste !
+      59 motjuste !  
       I     6 en{ @  aud !  
       LEAVE  
     THEN  
@@ -2166,7 +2202,7 @@ THEN
   THEN
   59 urpsi !  
   51 caller ! 
-  psiDamp  
+  psiDamp     
   0 caller !  
 ;  
 
@@ -2187,18 +2223,18 @@ THEN
     THEN  
   -1 +LOOP  
   SpeechAct   
-  VerbPhrase
+  VerbPhrase  
   125 t @ 1+ 2 aud{ ! 
   1   t +!  
   1 spt +!  
-  enDamp   
-  audDamp
+  enDamp    
+  audDamp   
   5 bias !  
 ;  
 
 
-:  WhatAuxSDo ( What DO Subjects DO )
-  PsiDecay
+:  WhatAuxSDo ( What DO Subjects DO )   
+  PsiDecay   
   midway @  t @  DO  
     I       0 en{ @  54 = IF  
       54 motjuste !  
@@ -2213,7 +2249,7 @@ THEN
   54 urpsi !  
   42 caller ! 
   psiDamp     
-  0 caller !
+  0 caller !  
   auxVerb   
   0 motjuste !  
   midway @  t @  DO  
@@ -2250,7 +2286,7 @@ THEN
 
 
 :  WhatIs ( what IS Subjects ) 
-  PsiDecay
+  PsiDecay   
   midway @  t @  DO  
     I       0 en{ @  54 = IF  
       54 motjuste !  
@@ -2259,13 +2295,13 @@ THEN
     THEN  
   -1 +LOOP  
   SpeechAct 
-  fyi @ 2 > IF CR
+  fyi @ 2 > IF CR  
   ."   from WhatIs after speaking of WHAT, psiDamping concept #54"
   THEN
-  54 urpsi !
+  54 urpsi !  
   psiDamp     
-  0 caller !
-  topicnum @ 2 = NOT IF
+  0 caller !  
+  topicnum @ 2 = NOT IF   
     midway @  t @  DO  
       I       0 en{ @  66 = IF  
         66 motjuste !  
@@ -2277,12 +2313,12 @@ THEN
     fyi @ 2 > IF CR  
     ."   from WhatIs after speaking of IS, psiDamping concept #66"
     THEN
-    66 urpsi !
+    66 urpsi !  
     PsiDamp     
     0 caller !  
     0 motjuste !  
   THEN   
-  topicnum @ 2 = IF
+  topicnum @ 2 = IF  
     midway @  t @  DO  
       I       0 en{ @  67 = IF  
         67 motjuste !  
@@ -2326,13 +2362,13 @@ THEN
 
 :  EnglishCog ( one of several possible languages ) 
   0 morphpsi !  
-  0 psi !   
-  0 sublen !
+  0 psi !       
+  0 sublen !    
   t @ tov ! 
   fyi @ 2 > IF      
   CR ."   EnglishCog start: detour @ recon = " detour @ . recon @ . CR
   THEN              
-  yesorno @ 0 > IF
+  yesorno @ 0 > IF  
     SayYes        
     CR  
     EXIT  
@@ -2350,9 +2386,9 @@ THEN
       fyi @ 2 = IF  
         ."     EnglishCog starts to think a sentence. " CR 
       THEN
-      CR ." Robot: "
+      CR ." Robot: "   
       123  t @  2 aud{ ! 
-      NounPhrase     
+      NounPhrase    
       nphrpos @ DUP 5 = SWAP 7 = OR IF  
         VerbPhrase  
         0 nphrpos ! 
@@ -2370,6 +2406,7 @@ THEN
   fyi @ 2 > IF      
   CR ."   ENGCOG end: detour @ recon = " detour @ . recon @ . CR 
   THEN              
+  5 bias !  
 ;  
 
 
@@ -2393,7 +2430,7 @@ THEN
 ;  
 
 
-:  TuringTest ( Human-Computer Interaction )
+:  TuringTest ( Human-Computer Interaction )  
   fyi @ 0 = IF CLS CR CR CR CR CR CR CR
     t @ 300 < IF CR  
  ." There is no warranty with Mind.Forth AI Engine for robots."
@@ -2419,7 +2456,7 @@ THEN
     bmonth @ 11 = IF ." November "  THEN
     bmonth @ 12 = IF ." December "  THEN
     byear @ . 8 EMIT 46 EMIT CR  
-  THEN
+  THEN   
   fyi @ 1 = NOT IF
     ." Time = " t @ . 8 EMIT 46 EMIT ."  KB-Traversal ID = " kbtv @ .
     8 EMIT 46 EMIT  
@@ -2458,16 +2495,16 @@ THEN
   THEN
   TuringTest  
   t @ cns @ 64 - > IF  
-    fyi @ 2 = IF CR
+    fyi @ 2 = IF CR  
     ."   SeCurity module calls ReJuvenate." 
     THEN        
     ReJuvenate  
   THEN          
   t   @  1024 > IF  
     t @  1024 -  midway !  ( for a range limit on searches )
-    ELSE
+    ELSE            
     1   midway !    
-  THEN 
+  THEN   
   0 quiet !  
 ;  
 
@@ -2489,9 +2526,9 @@ THEN
   ( FreeWill ) 
   ( MotorOutput ) 
   AGAIN        
-;
+; 
 
- 
+
 :  ALIFE  ( Call MainLoop if user does not know to enter MainLoop )
   MainLoop  
 ;

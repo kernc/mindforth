@@ -6,7 +6,7 @@
 Drag-and-drop code into editor; save C:\Win32For\Mind.F (not as Mind.F.txt).
 
 {{{
-( 7may09A.F [mf090507.html] -- modification of 6may09A.F Mind.Forth )
+( 17may09B.F [mf090517.html] -- modification of 10may09A.F Mind.Forth )
 ( This file may be named "Mind.f" or any "filename.f" you choose. )
 ( Rename any occurrence of Mind.f.txt as simply Mind.f for Win32Forth. )
 ( http://www.winzip.com/aboutzip.htm tells about WinZip to auto-install )
@@ -17,7 +17,7 @@ Drag-and-drop code into editor; save C:\Win32For\Mind.F (not as Mind.F.txt).
 ( MainLoop [ENTER]. )
 ( To halt the artificial mind, press the ESCAPE key at any time. )
 DECIMAL  ( use decimal numbers )
-variable act 0 act ! ( INSTANTIATE; OLD- & NEWCONCEPT; EnReify; etc. )
+variable act 0 act ! ( InStantiate; Old- & NewConcept; EnReify; etc. )
 variable actbase ( 5dec2007 For recognition discrimination in audRecog )
 variable adverbact 0 adverbact ! ( 29aug2008 Test for adverb-insertion )
 variable aud  ( enVocab; AudInput; SpeechAct: auditory recall-tag )
@@ -39,6 +39,7 @@ variable byear ( MainLoop; TuringTest HCI -- year of birth )
 variable caller  ( 13jan2008 Debug-identifier of calling module )
 variable cns  1024 cns !  ( "central nervous system" array size )
 variable coda  128 coda !  ( span of memory to recycle in Rejuvenate )
+variable cogpsi  ( 9may2009 cognition psi source-node in SpreadAct )
 variable conj  ( from 16aug2002 oldConcept; Conjoin: conjunction )
 variable ctu ( continuation-flag for "Aud" array phonemes )
 variable decpsi1 ( decremend concept 1 to accelerate de-activation )
@@ -83,27 +84,32 @@ variable midway 1 midway ! ( a backwards time-limit for searches )
 variable monopsi ( 26jul2002 For use in audRecog module )
 variable morphpsi ( 30sep2008 For audRecog recognition of morphemes )
 variable motjuste ( best word for selection as part of a thought )
+variable nacpsi   ( 9may2009 de-globalized psi for NounAct )
 variable nen  0 nen ! ( English lexical concept number )
+variable newpsi   ( 12may2009 for singular-nounstem assignments )
 variable nlt  0 nlt !  ( not-later-than, for isolating time-points )
 variable nounval 0 nounval ! ( For transfer from NounPhrase to MounAct )
 variable nphrnum 0 nphrnum ! ( 27aug2008 NounPhrase number for Article )
 variable nphrpos 0 nphrpos ! ( 29aug2008 for testing in ENGLISH )
 variable num 0 num !  ( 24aug2008 number-flag for the psi array )
+variable nwc    ( 15may2009 new-word-count for noun-stem recog )
 variable obstat ( 15jan2008 Lets AudInput psi-damp a reentrant word. )
 variable oldact ( to show the source of spreading activations )
 variable oldpos ( for treating verb part-of-speech as a special case )
-variable oldpsi ( to show the source of spreading activations )
+variable oldpsi ( 9may2009 used in OldConcept to de-globalize "psi" )
 variable olfpsi ( 6may2009 concept-tag attached to smells in memory )
 variable olfrec ( 6may2009 for external recognition by OlfRecog )
 variable onset 0 onset ! ( of a word stored in auditory memory )
 variable opt  ( option, for flushing out a desired part of speech )
 variable ordo 0 ordo ! ( 2apr2007 from JSAI; AudInput word-order )
+variable penultpho  ( 17may2009   )
 variable pho  ( AudListen; AudInput; SpeechAct: phoneme of input/output )
 variable pos  ( old- & newConcept; enVocab: part-of-speech )
 variable pov  ( point-of-view: 35# for internal; 42* for external )
 variable pre  ( previous concept associated with another concept )
 variable precand  ( 2apr2007 inviolate "pre" candidate from JSAI )
 variable predpos 0 predpos ! ( 29aug2008 part of speech in Predicate )
+variable prepho   ( 17may2009  )
 variable preset 0 preset !  ( 2apr2007 For setting Instantiate "pre" )
 variable presyn  ( 7may2009 synaptic deglobalized "pre" in SpreadAct )
 variable prevtag  ( 2apr2007 from JSAI; for use in Instantiate )
@@ -117,6 +123,7 @@ variable quiet 1 quiet ! ( AudListen; AudInput: status flag for input )
 variable recon 0 recon ! ( Eagerness to seek reconnaissance answers. )
 variable redux  ( 27jan2008 For oldest concept to be revived. )
 variable reject 0 reject ! ( For orchestration of sentence-generation. )
+variable retropsi   ( 15may2009 For AudInput and Audmem noun-stems )
 variable residuum 0 residuum ! ( psiDamp -- post-thought activation )
 variable rjc  0 rjc ! ( ReJuvenate: counter of rejuvenations over life )
 variable rsvp 1000 rsvp ! ( AudInput/AudListen response-time counter )
@@ -126,6 +133,7 @@ variable seqsyn  ( 7may2009 synaptic deglobalized "seq" in SpreadAct )
 variable spike  ( 1aug2005: for potential use in SpreadAct )
 variable spt  ( AudMem; AudInput: blank space time )
 variable stemgap  ( 30sep2008 For avoiding false audRecog stems )
+variable stempsi  ( 14may2009 for singular noun-stem recognition )
 variable subj     ( 15sep2005 flag to supercharge subject-nouns )
 variable subjpsi  ( 4oct2008 For Predicate to correct beVerb choice )
 variable sublen ( 30spe2008 length of audRecog subpsi word-stem )
@@ -151,6 +159,7 @@ variable tssecond ( AudListen )
 variable tsyear   ( AudListen )
 variable tult ( AudInput; AudMem: t penultimate, or time-minus-one )
 variable txen ( 4apr2007 Reify: time of transfer to English lexicon )
+variable ultpho  ( 17may2009   )
 variable unk  ( "unknown" variable for general use )
 variable upnext  ( 29jan2008 Flag lets new input de-crest previous. )
 variable urpre ( original pre for safeguarding during function-calls )
@@ -159,16 +168,17 @@ variable vault 202 vault !  ( 29mar2007 adding data from JavaScript AI )
 variable vbpsi   ( 22jan2008 verb-psi for calculating "thotnum" )
 variable verbinc ( 27apr2007 verb-increment for use in verbAct module )
 variable verbval  ( 3apr2007 For transfer from verbPhrase to verbAct. )
+variable version 20090515 version !  ( for troubleshooting )
 variable vispsi   ( 6may2009 concept-tag attached to images in memory )
 variable visrec   ( 6may2009 for external recognition by VisRecog )
 variable whatflag  0 whatflag !  ( 23apr2009 for InStantiate )
 variable whereflag 0 whereflag ! ( 23apr2009 for InStantiate )
 variable whoflag   0 whoflag !   ( 23apr2009 for InStantiate )
+variable wordend  ( 13may2009 for singular noun-stem assignments )
 variable xthe 0 xthe !  ( 20apr2009 Xfer NPhr motjuste to EnArticle 
 queue. )
 variable yesorno 0 yesorno ! ( 16sep2008 in conjunction with kbSearch )
 variable zone  ( ReActivate; SpreadAct: time-zone for "pre" and "seq" )
-
 
 :  CHANNEL   ( size num -< name >- )  
   CREATE   ( Returns address of newly named channel. )
@@ -183,6 +193,8 @@ variable zone  ( ReActivate; SpreadAct: time-zone for "pre" and "seq" )
   1 +      ( because the first cell has the number of rows.)
   CELLS +  ( from number of items to number of bytes in offset )
 ;  
+
+
 cns @  8  CHANNEL  psi{  ( Mindcore concept array "psi" )
 cns @  7  CHANNEL   en{  ( English lexicon array "en" )
 cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
@@ -259,7 +271,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         1 I 1  psi{ !          
       THEN  
     THEN    
-    I      0   psi{ @ 66 = IF   
+    I      0   psi{ @ 66 = IF
       I    1   psi{ @  8 > IF   
          1 I 1  psi{ !          
       THEN  
@@ -272,7 +284,6 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   16 residuum ! 
   fyi @ 2 > IF CR  
   ."     PsiDamp called for urpsi = " urpsi @ .
-
   ."  by module ID #" caller @ .        
   caller @  42 = IF ." whatAuxSDo " THEN  
   caller @  51 = IF ." auxVerb "    THEN  
@@ -411,9 +422,9 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   CR ." Tutorial mode is now in effect. Enter input or wait for output."
     EEG @ 0 = IF   
       CR ." Duplicate thought may have been detected."
-    THEN           
-  THEN               
-  CR  ." Robot: "    
+    THEN
+  THEN
+  CR  ." Robot: "
     t @ tov @  DO  
       I 0  aud{ @  0 =  IF   
         ."  "                
@@ -429,9 +440,9 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
 : SpreadAct  ( spreading activation )  
   fyi @ 3 = IF   
     CR ."  sprdAct: caller & seq = " caller @ . seq @ .  
-  THEN   
-  pre @ 0 > IF
-    zone @ 7 -   zone @  DO   
+  THEN           
+  pre @ 0 > IF   
+    zone @ 7 -   zone @  DO
       I 0  psi{ @   presyn @  =  IF  
                 1   I  1 psi{ +!  
                     I  1 psi{ @  0 < IF   
@@ -443,7 +454,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         I zone  @  6 - > IF LEAVE THEN  
       THEN       
     -1  +LOOP    
-  THEN
+  THEN           
   seqsyn @ 0 > IF  
     fyi @ 3 = IF   
       CR ." sprA pos. seq & spike = " seq @ .  spike @ . CR 
@@ -460,11 +471,11 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
               CR CR ." sprdAct: seq = " seq @ . CR CR  
             THEN   
             midway @ t @ DO  
-              I   0  psi{ @   oldpsi @  =  IF  
+              I   0  psi{ @ cogpsi @ = IF 
                 I 7  psi{ @   psi7 !    
                 LEAVE                   
-              THEN       
-            -1  +LOOP    
+              THEN    
+            -1  +LOOP 
             midway @ t @ DO  
               I   0  en{ @    psi7 @ = IF  
                 I 6  en{ @  rv ! 
@@ -499,7 +510,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
             CR
             0 psi7 !         
             midway @ t @ DO  
-              I   0  psi{ @   oldpsi @  =  IF  
+              I   0  psi{ @   cogpsi @  =  IF  
                 I 7  psi{ @   psi7 !    
                 LEAVE                   
               THEN       
@@ -517,7 +528,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
               UNTIL        
             THEN
             0 rv !  
-            ."  #" oldpsi @ . ." act " oldact @ .     
+            ."  #" cogpsi @ . ." act " oldact @ . 
             ." at i " I . ." sprA spike "   
             spike @ . ." to seq #" seq @ .  
             midway @ t @ DO  
@@ -587,14 +598,14 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
 :  NounAct ( re-activate all recent nodes of a concept ) 
   fyi @ 2 > IF CR  
   ."     Calling nounAct (not in AI4U). psi = " psi @ . CR
-  THEN  
-  psi @  0 >  IF     
+  THEN
+  nacpsi @  0 >  IF  
     fyi @ 2 > IF  
       CR ."       nounAct calls SpreadAct to xfer proportionate "
       ." act. from each node of concept #" psi @ .
-    THEN          
-    midway @   t @  DO  
-      I 0 psi{ @ psi @ = IF  
+    THEN
+    midway @   t @  DO
+      I 0 psi{ @ nacpsi @ = IF  
       I 1 psi{ @ psi1 !   
   nounval @  0 > IF nounval @ psi1 ! THEN  
      psi1 @ 63 > IF  
@@ -609,7 +620,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           I  6 psi{ @  seqsyn !  (  7may2009 for use in SpreadAct )
           I           zone !     ( for use in SpreadAct )
           I  1 psi{ @  0 = IF  0 spike ! THEN
-          I  1 psi{ @  5 > IF 12 spike ! THEN  
+          I  1 psi{ @  5 > IF 12 spike ! THEN
           I  1 psi{ @ 10 > IF 14 spike ! THEN  
           I  1 psi{ @ 15 > IF 16 spike ! THEN  
           I  1 psi{ @ 20 > IF 18 spike ! THEN  
@@ -620,10 +631,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           I  1 psi{ @ 45 > IF 28 spike ! THEN  
           I  1 psi{ @ 50 > IF 30 spike ! THEN  
           I  1 psi{ @ 55 > IF 32 spike ! THEN  
-          I  1 psi{ @ 60 > IF 34 spike ! THEN  
-        psi @ oldpsi ! 
+          I  1 psi{ @ 60 > IF 34 spike ! THEN
+     nacpsi @ cogpsi ! 
           I  1 psi{ @ oldact !  
-          I  5 psi{ @ oldpos !  
+          I  5 psi{ @ oldpos !
      seqsyn @  0 > IF    
           7865 caller !  
           SpreadAct             ( for spreading activation )
@@ -632,12 +643,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           0 seqsyn !     
         THEN   
         precand @ pre !  
-        0 oldpos !  
-        0 oldpsi !  
+        0 oldpos !
+        0 cogpsi !  
         0 oldact !  
         0  pre !              
-      THEN                    
-      I    0 psi{ @ psi @ = NOT IF  
+      THEN
+      I    0 psi{ @ nacpsi @ = NOT IF
    I 5 psi{ @ DUP 5 = SWAP 7 = OR IF  
             I 1 psi{ @ unk !  
               0 unk !         
@@ -664,16 +675,16 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     fyi @ 2 > IF  
       CR ."       verbAct calls SpreadAct to xfer proportionate "
       ." act. from each node of concept #" psi @ .
-    THEN          
-    psi @ oldpsi !  
+    THEN
+    psi @ cogpsi !  
     midway @   t @ DO  
-      I 0 psi{ @ psi @ = IF  
-        fyi @ 2 > IF      
-          I 1 psi{ @ 8 > IF  
+      I 0 psi{ @ psi @ = IF
+        fyi @ 2 > IF
+          I 1 psi{ @ 8 > IF
             ." +"         
-          THEN            
-        THEN              
-            I  1 psi{ @  psi1 !  
+          THEN
+        THEN
+            I  1 psi{ @  psi1 !              
      psi1 @ I  1 psi{ !   
             I  0 psi{ @  54 = IF  
           0 I  1 psi{ !   
@@ -698,7 +709,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           I  1 psi{ @ 50 > IF 44 spike ! THEN  
           I  1 psi{ @ 55 > IF 48 spike ! THEN  
           I  1 psi{ @ 60 > IF 52 spike ! THEN  
-        psi @ oldpsi ! 
+        psi @ cogpsi ! 
           I  1 psi{ @ oldact !  
           I  5 psi{ @ oldpos !  
         seqsyn @  0 > IF  
@@ -709,7 +720,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           0 seqsyn !     
         THEN                    
         0 oldpos !  
-        0 oldpsi !  
+        0 cogpsi !  
         0 oldact !  
         0  pre !              
         0  seq !              
@@ -752,17 +763,17 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           I  1 psi{ @ 45 > IF 15 spike ! THEN  
           I  1 psi{ @ 50 > IF 16 spike ! THEN  
           I  1 psi{ @ 55 > IF 17 spike ! THEN  
-          I  1 psi{ @ 60 > IF 18 spike ! THEN  
-                psi @ oldpsi !  
+          I  1 psi{ @ 60 > IF 18 spike ! THEN
+                psi @ cogpsi !  
           I  1 psi{ @ oldact !  
-          I  5 psi{ @ oldpos !  
+          I  5 psi{ @ oldpos !
           I  4 psi{ @  presyn !  (  7may2009 for use in SpreadAct )
           I  6 psi{ @  seqsyn !  (  7may2009 for use in SpreadAct )
           I           zone !     ( for use in SpreadAct )
         148 caller !          
         SpreadAct             ( for spreading activation )
         0 oldpos !            
-        0 oldpsi !            
+        0 cogpsi !            
         0 oldact !            
         0    pre !            
         0 presyn !            
@@ -799,7 +810,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     psi @ 55 = IF  
       1 whoflag !  
       0 act !      
-    THEN  
+    THEN
   THEN  
   prevtag @ pre !  
   ( concept fiber psi )             psi @  t @  0 psi{ !
@@ -813,7 +824,9 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   num @ instnum !  
   0 num !          
   0 preset !       
-  psi @ prevtag !  
+  pos @ 5 = pos @ 7 = OR IF
+    psi @ prevtag !  
+  THEN  
   ordo @ 1 > IF    
     psi @ seq !    
     vault @  t @ 2 -  DO   
@@ -838,10 +851,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
 ;  
 
 
-:  EnParser ( determine the part of speech ) 
+:  EnParser ( determine the part of speech )
   5 bias !  
   36 act !  
-  INSTANTIATE  
+  INSTANTIATE
   pos @ 5 = IF  8 bias !  THEN  
   pos @ 7 = IF  8 bias !  THEN  
   pos @ 8 = IF  5 bias !  THEN  
@@ -866,17 +879,17 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     0 act !      
     0 lexact !   
   -1  +LOOP      
-  0 act !        
+  0 act !
 ;  
 
 
-:  KbSearch ( knowledge base search )  
-  ordo @ 2 = IF  
+:  KbSearch ( knowledge base search )
+  ordo @ 2 = IF
     NounAct  
     EnReify  
-  THEN  
-  ordo @ 3 = IF  
-    0 act !  
+  THEN
+  ordo @ 3 = IF
+    0 act !
     midway @ t  @ DO  
       I     4 en{ @  8 = IF  
         I   1 en{ @  act @ > IF  ( 17sep2008 if en1 is higher )
@@ -890,15 +903,15 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         1 yesorno +!  
       ELSE            
         0 yesorno !   
-      THEN  
-    THEN  
+      THEN
+    THEN
     verbAct  
     EnReify  
-  THEN  
-  ordo @ 4 = IF  
-    0 act !      
-    0 memoire !  
-    midway @ t  @ DO  
+  THEN
+  ordo @ 4 = IF
+    0 act !  
+    0 memoire !
+    midway @ t  @ DO
       I 4 en{ @  DUP 5 = SWAP 7 = OR IF  
         I    1 en{ @  act @ > IF  ( 17sep2008 if en1 is higher )
           I  0 en{ @  memoire !  ( 17sep2008 store psi-tag of word )
@@ -911,18 +924,18 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         1 yesorno +!  
       ELSE            
         0 yesorno !   
-      THEN  
-    THEN  
-  THEN  
-  0 kbquiz !  
-  ordo @ 4 = IF 0 ordo ! THEN 
+      THEN
+    THEN
+  THEN
+  0 kbquiz !
+  ordo @ 4 = IF 0 ordo ! THEN
 ;  
 
 
 :  OldConcept ( recognize a known word ) 
-  24 act !         
-  midway @ t @ DO  
-    I 0 en{ @ psi @ = IF   
+  24 act !
+  midway @ t @ DO
+    I 0 en{ @ oldpsi @ = IF 
     I 2 en{ @    0 > IF    
     I 2 en{ @  num ! THEN  
     I 3 en{ @    0 > IF 
@@ -934,25 +947,28 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     LEAVE        
     THEN         
   -1 +LOOP       
-  ( "psi" as found by audRecog )    psi @  t @  0  en{ !
+ 
+
+  ( oldpsi found by audRecog )   oldpsi @  t @  0  en{ ! 
   ( Store zero activation. )          0    t @  1  en{ !
   ( Store "num" number tag. )       num @  t @  2  en{ ! 
   ( Store mindcore EXit tag. )      fex @  t @  3  en{ ! 
   ( Store part of speech "pos".)    pos @  t @  4  en{ ! 
   ( Store mindcore IN tag. )        fin @  t @  5  en{ ! 
   ( Store the auditory "aud" tag. ) aud @  t @  6  en{ ! 
-  pov @  35 = IF fex @ psi ! THEN   
-  pov @  42 = IF fin @ psi ! THEN   
-  psi @  enx !      
-  psi @ 54 = IF 8 act ! THEN  
-  psi @ 55 = IF 8 act ! THEN  
+  pov @  35 = IF fex @ oldpsi ! THEN
+  pov @  42 = IF fin @ oldpsi ! THEN
+  oldpsi @  enx !
+  oldpsi @ 54 = IF 8 act ! THEN
+  oldpsi @ 55 = IF 8 act ! THEN  
   ordo @ 1 = IF
-    psi @ 59 = IF  
+    oldpsi @ 59 = IF
       1 kbquiz !   
-    THEN  
-  THEN  
-  psi @ 59 = IF 8 act ! THEN  
-  psi @  7 = IF 1 act ! THEN  
+    THEN
+  THEN
+  oldpsi @ 59 = IF 8 act ! THEN
+  oldpsi @  7 = IF 1 act ! THEN  
+  oldpsi @ psi !    
   EnParser          
     0 pos !         
   fyi @ 2 > IF CR          
@@ -962,12 +978,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     pre   @  urpre !  
     ReActivate        
     urpre @    pre !  
-  THEN                
-  0 act !       
+  THEN             
+  0 act !
   pov @ 35 = IF  
     1 match !  
-  THEN  
-  kbquiz @ 0 > IF   
+  THEN
+  kbquiz @ 0 > IF
     1 yesorno !     
     KbSearch        
   THEN  
@@ -978,8 +994,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
 
 
 :  NewConcept ( machine learning of new concepts ) 
+  0 newpsi !   
   1 nen +!     
+  1 nwc +!     
   nen @ IQ !   
+  nen @ newpsi !  
+  nen @ stempsi ! 
   nen @ psi !  
   nen @ fex !  
   nen @ fin !  
@@ -1001,94 +1021,85 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 actbase !  
   midway @  spt @ DO    
     I 0 aud{ @ pho @ = IF  
-      I 1 aud{ @ 0 = IF    
-        I 3 aud{ @ 1 = IF  
-          I 4 aud{ @ 1 = IF   
-            8 I 1+   1 aud{ ! 
-            0 psi !  
-            0 audrec !  
-          ELSE       
-            len @ 1 = IF  
-              I 5 aud{ @  monopsi !  
-            THEN   
-          THEN   
-        THEN   
-      THEN   
-      I 1 aud{ @ 0 > IF  
-        0 psi !          
-        0 audrec !  
+      I 1 aud{ @ 0 = IF  
+        I 3 aud{ @ 1 = IF
+          I 4 aud{ @ 1 = IF 
+            8 I 1+   1 aud{ !
+            0 audrec !
+          ELSE
+            len @ 1 = IF
+              I 5 aud{ @  monopsi !
+            THEN
+          THEN
+        THEN
+      THEN
+      I 1 aud{ @ 0 > IF
+        0 audrec !
         I 4 aud{ @ 1 = IF   
-          2 act +!  
-          0 psi !           
-          0 audrec !  
+          2 act +!
+          0 audrec !
       act @ I 1+   1 aud{ ! 
-        THEN    
+        THEN
         I 4 aud{ @ 0 = IF   
-          len @ 2 = IF   
-            I 1 aud{ @ 0 > IF  
-              I 5 aud{ @ psibase !  
-            THEN               
-          THEN           
-        THEN             
-        I 1 aud{ @ 8 > IF  
-          I 4 aud{ @ 0 = IF   
-            I 1 aud{ @ actbase @ > IF  
-              I 5 aud{ @ audrec ! 
+          len @ 2 = IF
+            I 1 aud{ @ 0 > IF
+              I 5 aud{ @ psibase !
+            THEN
+          THEN
+        THEN
+        I 1 aud{ @ 8 > IF
+          I 4 aud{ @ 0 = IF
+            I 1 aud{ @ actbase @ > IF
+              I 5 aud{ @ audrec !
               I 5 aud{ @ subpsi ! 
               len @ sublen !  
               I 5 aud{ @ psibase !  
               I 1 aud{ @ actbase !  
-            THEN   
+            THEN
           ELSE
-            0 psi !  
-            0 audrec !  
-            monopsi @ 0 > IF   
-              monopsi @ psi !  
+            0 audrec !
+            monopsi @ 0 > IF
               monopsi @ audrec !  
               0 monopsi !      
-            THEN               
-          THEN   
-        THEN     
-      THEN     
-    THEN       
+            THEN
+          THEN
+        THEN
+      THEN
+    THEN
   -1 +LOOP     
-  0 act !      
-  0 actbase !  
-  psibase @ 0 > IF      
-     psibase @  psi !   
-     psibase @  audrec !   
-  THEN                  
+  0 act !  
+  0 actbase !
+  psibase @ 0 > IF
+     psibase @  audrec !
+  THEN
   audrec @ 0 = IF  
     monopsi @ 0 > IF   
-      len @ 2 < IF  
-        monopsi @ psi !  
+      len @ 2 < IF
         monopsi @ audrec !  
       THEN          
       0 monopsi !      
-   audrec @ 0 = IF   
-        psibase @ 0 > IF  
+   audrec @ 0 = IF
+        psibase @ 0 > IF
           psibase @ audrec !
-        THEN         
-      THEN           
-    THEN             
-  THEN  
-  audrec @ 0 = IF  
-      morphpsi @ audrec !  
+        THEN
+      THEN
+    THEN
+  THEN
+  audrec @ 0 = IF
+      morphpsi @ audrec !
     sublen @ 0 > IF 
       len @ sublen @ -  stemgap !  
-    THEN   
+    THEN
     stemgap @ 0 < IF 0 stemgap ! THEN  
     stemgap @ 1 > IF 0 subpsi ! THEN 
-    stemgap @ 1 > IF 0 morphpsi ! THEN 
-    stemgap @ 1 > IF 0 psi ! THEN    
-    stemgap @ 1 > IF 0 audrec ! THEN 
-   THEN  
+    stemgap @ 1 > IF 0 morphpsi ! THEN
+    stemgap @ 1 > IF 0 audrec ! THEN
+  THEN  
   subpsi @ morphpsi !  
-  0 psibase !  
+  0 psibase !
   0 subpsi !
-  audrec @ 0 > IF   
-    stemgap @ 2 > IF  
-      0 psi !    
+  audrec @ 0 > IF
+    stemgap @ 2 > IF
       0 audrec ! 
     THEN   
     pho @ 83 = IF  
@@ -1099,32 +1110,43 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
 ;  
 
 
-:  AudMem ( auditory memory channel ) 
+:  AudMem ( auditory memory channel )
   t @ vault @ > IF  
     pho @ 32 > IF  AudRecog  THEN  ( ASCII 32 = SPACE-bar )
-  THEN  
+  THEN
     t @ 1-  0 aud{ @  0 = IF  1 beg !  THEN  
     t @ 1-  0 aud{ @ 32 = IF  1 beg !  THEN  
-    pho @  t @  0 aud{ !  
+    pho @  t @  0 aud{ !
     pov @  t @  2 aud{ !  
     beg @  t @  3 aud{ !  
     ctu @  t @  4 aud{ !  
     ctu @ 0 = IF  
-   audpsi @  t @  5 aud{ !  
-    THEN  
+      audpsi @ 0 > IF  
+        audpsi @  t @  5 aud{ !  
+      THEN
+      0 audpsi !  
+    THEN
+    pov @ 42 = IF
+      pho @ 83 = IF  
+        0 stempsi !
+        wordend @ 1 = IF
+            0 t @ 1- 4 aud{ !
+        THEN
+        0 newpsi !  
+      THEN
+    THEN
     pho @ 32 = IF t @ spt !  THEN  
 ;  
 
 
 :  AudListen ( preparation for AudInput )  
-  rsvp @  1  DO  
-    KEY? IF      
-      KEY pho !  
-      
+  rsvp @  1  DO
+    KEY? IF  
+      KEY pho !
       0 quiet !  
       pho @  8 = IF 7 EMIT THEN 
-      pho @  9 = IF  
-        1000 rsvp !  
+      pho @  9 = IF
+         200 rsvp !  
         pho @ 13 = IF  1 lastword !  THEN  
         fyi @ 0 = IF CR CR 
      TIME&DATE tsyear ! tsmonth ! tsday ! tshour ! tsminute ! tssecond !
@@ -1168,11 +1190,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         CR ." MainLoop [ENTER] to erase memories and restart the Mind."
         CR ." Type 'bye' to quit Forth, then EXIT to quit DOS."
         CR
+        0 audpsi ! 0 newpsi ! 0 oldpsi ! 0 stempsi !  
         QUIT
       THEN
       pho @ 0 > IF   
         pho @ EMIT   
-      THEN
+      THEN      
       pho @ DUP 96 > IF
         DUP 123 < IF
           32 -
@@ -1186,10 +1209,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   LOOP
 ;  
 
+
+
 :  AudInput ( accept auditory input )  
   0 match !  
   0 upnext ! 
-  0 urpsi !
+  0 urpsi !  
   t @ nlt !
   pov @  42 = IF   
     fyi @ 2 = IF  
@@ -1198,8 +1223,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
      t @ spt !   
      t @ 8 >  IF  .echo  THEN  ( show output of AI )
      CR ." Human: "
-  THEN  
-  60  0  DO    
+  THEN
+  140 0  DO ( Accept a tweet of 140 characters from Twitter ) 
     pov @ 35 = IF       
       1 upnext +!       
       upnext @ 1 = IF   
@@ -1207,33 +1232,33 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           kbpsi @ lopsi !  
           0 kbpsi !        
           lopsi @ urpsi !  
-         3535 caller !  
+          3535 caller !  
           pho @ 64 > IF  
             PsiDamp      
-          THEN           
+          THEN
           hipsi @ lopsi !  
           0 caller !    
           0 urpsi !     
           1 obstat !    
-        THEN            
-      THEN              
-      EEG @ 0 = IF        
-        psi @ 0 > IF      
+        THEN
+      THEN
+      EEG @ 0 = IF
+        psi @ 0 > IF
            psi @ redux !  
-           fyi @ 2 = IF   
-             7 EMIT  
+           fyi @ 2 = IF
+             7 EMIT
              CR ."   Resurrecting oldest concept #" redux @ . 
              CR  
-           THEN  
-        THEN              
-      THEN                
+           THEN
+        THEN
+      THEN
     THEN
     pov @ 42 = IF   
-      AudListen  
-      pho @ 0 > IF   
+      AudListen
+      pho @ 0 > IF
         0 kbtv !  
         1 upnext +!  
-        upnext @ 1 = IF 
+        upnext @ 1 = IF
           VerbClip   
           hipsi @ urpsi !  
           104 caller !  
@@ -1242,61 +1267,88 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
           0 caller !    
           0 urpsi !     
         THEN
-        1000 rsvp !  
-      THEN           
-      I 59 = IF  
+         300 rsvp !  
+      THEN
+      I 138 = IF 
+        rsvp @ 250 > IF 60 rsvp ! THEN
+      THEN
+      I 139 = IF 
         pho @ 0 = IF  
-          100 rsvp !   
-        ELSE           
-          1000 rsvp !  
-        THEN  
-      THEN       
-    THEN  
+          rsvp @ 1 - rsvp !  
+          rsvp @ 2 < IF 2 rsvp ! THEN
+        ELSE
+            32 rsvp !  
+        THEN
+      THEN
+      pho @ 32 = pho @ 13 = OR IF 
+        pho @ 13 = IF 10 EMIT THEN
+        prepho @ 83 = IF
+          0 t @ 1 - 4 aud{ !  
+          0 prepho !  
+        THEN
+      THEN
+    THEN
     pho @  0 > IF  
       1 t +!       
     THEN
-    pho @ 13 = IF  
+    pho @ 13 = IF
        1 quiet !   
        1 beg !     
       13 eot !     
       32 pho !     
+      10 EMIT      
       CR           
-       1 lastword ! 
-    THEN
+       1 lastword !
+    THEN  
     pho @ 27 =  IF  
       CR ." AudInput: halt"  0 pho !  0 fyi !  0 nounval !
       CR ." You may enter .psi .en .aud to view memory engrams, or"
       CR ." MainLoop [ENTER] to erase memories and run the AI again."
       0 lopsi !  0 hipsi ! 
+      0 audpsi ! 0 newpsi ! 0 oldpsi ! 0 stempsi !  
       QUIT  
     THEN
     pho @ 32 = IF  
+      prepho @ penultpho !
       1 ordo +!     
-      psi @ urpsi !  
+      audpsi @ urpsi !  
       0 upnext !  
       t @  spt !       
       t @  1 - tult !  
       0  tult @  4 aud{ !  
-      psi @  0 >  IF    
+      audpsi @  0 >  IF  
         0 sublen !  
         onset @ aud !   
         0 onset !       
-        psi @  tult @  5 aud{ !  
-        psi @ hipsi ! 
+  audpsi @  tult @  5 aud{ !
+        pov @ 42 = IF   
+          tult @ 0 aud{ @ 83 = IF 
+       tult @ 1- 5 aud{ @ audpsi @ = NOT IF  
+              0  tult @ 1- 4 aud{ !  
+            THEN  
+   audpsi @  tult @ 1- 5 aud{ !  
+          THEN   
+        THEN  
+        audpsi @ hipsi !  
+        audpsi @ oldpsi ! 
         OldConcept      
         eot @ 13 = IF  
           35 pov !     
         THEN   
         0 psi !         
+        0 audpsi !      
         0 aud !         
-      ELSE            
-          len @ 0 > IF  
-            onset @ aud ! 
-            hipsi @ lopsi !  
-            NewConcept    
-            psi @ hipsi !    
-            nen @  tult @  5  aud{ !  
-          THEN          
+      ELSE  
+        len @ 0 > IF  
+          onset @ aud ! 
+          hipsi @ lopsi !  
+          1 wordend !  
+          NewConcept    
+          psi @ hipsi !    
+            nen @  tult @  5 aud{ !  
+     nen @  tult @ 1- 5 aud{ !  
+            nen @ retropsi !  
+        THEN          
       THEN              
       AudDamp           
       0 len !           
@@ -1308,14 +1360,15 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     THEN  
     1 beg !  
     1 ctu !  
-    spt @ 1 + onset !  
+    spt @ 1 + onset !
       t @  onset @  = IF  1 beg !  ELSE  0 beg !  THEN
     pho @ 32 > IF     
       1 len +!
       AudMem  
     THEN
     eot @ 13 = IF  
-      5 bias ! 
+      5 bias !     
+      
       1 quiet !    
     THEN
     eot @  0 > IF  
@@ -1327,13 +1380,18 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
       THEN  
       14 eot !  
     THEN  
+    pho @ 0 > IF  
+      pho @ prepho !  
+    THEN  
     0 pho !  
   LOOP       
   hipsi @ kbpsi !  
+  0 newpsi !   
+  0 wordend !  
 ;  
 
 
-:  SensoryInput ( sensory input channels )  
+:  SensoryInput ( sensory input channels ) 
  ( SMELL  -- normal sensory stub for later implementation )
  ( VISION -- normal sensory stub for seed AI expansion )
  ( TOUCH  -- normal haptics stub for cybernetic organisms )
@@ -1607,16 +1665,17 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
  72 nen !  0 act ! 72 fex !          5 pos ! 72 fin ! 198 aud ! EnVocab
   1 t +!
     t @  vault !  
-    t @  tov !    
-  1 t +!          
-    t @ nlt !  ( nlt may be basis for DAMP functions )
+    t @  tov !
+  1 t +!
+    t @ nlt !  ( nlt may be basis for DAMP functions )  
   72 urpsi !  
   75 nen !  
   5 bias !  
   0 num !  
+  0 nwc !  
   0 pho !  
   0 pre !  0 seq !  
-;  
+;
 
 
 :  KbTraversal ( reactivate KB concepts )  
@@ -1626,35 +1685,39 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     psiDecay  
     kbtv @ 4 > IF  1 kbtv !  THEN  
     CR ." Knowledge base traversal with kbtv at " kbtv @ . 
-    kbtv @ 1 = IF  
-      56 psi !     
+    kbtv @ 1 = IF
+      56 nacpsi !  
       ." activating concept of YOU" CR
       62 nounval ! 
       nounAct      
-    THEN  
-    kbtv @ 2 = IF  
-      37 psi !     
+      0 nacpsi !   
+    THEN
+    kbtv @ 2 = IF
+      37 nacpsi !  
       ." activating concept of PEOPLE" CR
       62 nounval ! 
       nounAct      
-    THEN  
-    kbtv @ 3 = IF  
-      39 psi !     
+      0 nacpsi !   
+    THEN
+    kbtv @ 3 = IF
+      39 nacpsi !  
       ." activating concept of ROBOTS" CR
       62 nounval ! 
       nounAct      
-    THEN  
-    kbtv @ 4 = IF  
-      68 psi !     
+      0 nacpsi !   
+    THEN
+    kbtv @ 4 = IF
+      68 nacpsi !  
       ." activating concept of TRUTH" CR
       62 nounval ! 
       nounAct      
+      0 nacpsi !   
     THEN  
     42 pov !  
 ;  
 
 
-:  ReJuvenate ( recycle oldest memory spaces )   
+:  ReJuvenate ( recycle oldest memory spaces )
   fyi @ 2 = IF  
     7 EMIT      
     CLS         
@@ -1662,7 +1725,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   0 edge !  
   CR 1 rjc +!  
   ." Please wait as memories migrate in ReJuvenate cycle #" rjc @ . CR
-  t @ 2 +  coda @ vault @ +  DO  
+  t @ 2 +  coda @ vault @ +  DO
     I  jrt !  
     jrt @  coda @ -  jrt !  
     edge @ 1 = IF
@@ -1699,7 +1762,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
       I 5 aud{ @  jrt @  5 aud{ !   
         fyi @ 1 > IF  
                   jrt @  0 aud{ @ EMIT  
-        THEN 
+        THEN
     THEN
     edge @ 0 = IF  
      32 jrt @ 0 aud{ !  
@@ -1749,20 +1812,22 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     0  I 5  psi{ !  
     0  I 6  psi{ !  
     0  I 7  psi{ !  
-  LOOP  
+  LOOP
   t @ 20 - tov !  
   CR CR ." End of ReJuvenate #" rjc @ . 
   ." in the immortal AI Mind display for science museum exhibits." CR
   ." Tab key cycles through Normal, Transcript, Tutorial, Diagnostic."
   CR
-  fyi @ 2 = IF   
-    1000 rsvp !  
-  THEN           
-  1 kbtv +!  
-  kbtv @ 0 > IF  
+  fyi @ 2 = IF
+     200 rsvp !  
+  THEN      
+  1 kbtv +!
+  kbtv @ 0 > IF
  CR ." For lack of human input, ReJuvenate calls KbTraversal" CR
     KbTraversal  
-  THEN  
+  THEN
+  rsvp @ rjc @ - rsvp !  
+  rsvp @ 2 < IF 60 rsvp ! THEN  
 ; 
 
 
@@ -1780,6 +1845,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
     audstop @ 1 = IF LEAVE THEN  
     t2s @  1+  t2s !  
     t2s @  4 aud{ @ 0 = IF  32 pho !  THEN ( 1jan2008 If end of word )
+
     match @ 1 = IF 
       0 match !    
       LEAVE        
@@ -1807,10 +1873,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
   fyi @ 1 > IF CR CR
     ."   Calling EgoAct (AI4U Chapter 20); inert = " inert @ .
   THEN
-  0 recon !    
+   0 recon ! 
   0 psi !      
   0 inert !    
-  0 recon !    
+  0 recon !
   EEG @ 0 = IF    
   fyi @ 2 = IF
     CR ." Repetitious thought detected; EgoAct module steps in."
@@ -1820,26 +1886,26 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel array "aud" )
         BEGIN     
           rv @ 0 aud{ @ EMIT  1 rv +!
           rv @ 0 aud{ @ 32 >  
-        UNTIL      
+        UNTIL
         CR ." EgoAct module recalls the oldest memory -- "
         rv @ aud !  
         SpeechAct   
       THEN
-      0 rv !  
+      0 rv !
      fyi @ 2 > IF   
        CR ."  EGO: EEG = " EEG @ .  ." psi = " psi @ .  
        ." topic = " topic @ .  ." redux = " redux @ .   
-     THEN           
+     THEN
      redux @ psi !  
      40 nounval !   
-     nounAct        
-     0 redux !      
-  THEN  
+     nounAct      
+     0 redux !
+  THEN
   EEG @ 0 = IF 3 EEG ! THEN  
-;  
+;
 
 
-:  EnArticle ( select "a" or "the" before a noun )  
+:  EnArticle ( select "a" or "the" before a noun )
 nphrpos @ 7 = NOT IF  
   nphrnum @  1 = IF    
     motjuste @ ghost @ = NOT IF  
@@ -1873,11 +1939,11 @@ nphrpos @ 7 = NOT IF
     -1 +LOOP  
     SpeechAct 
     0 nphrnum !  
-  THEN    
-THEN 
+  THEN
+THEN
   dirobj @ 1 = IF     
     motjuste @ ghost !  
-  THEN  
+  THEN
 ;  
 
 
@@ -1893,8 +1959,8 @@ THEN
   fyi @ 1 > IF CR  
     ."   NounPhrase preview of further associated concepts -- "
     CR  ."     " 
-  THEN  
-  midway @  t @  DO  
+  THEN
+  midway @  t @  DO
     I  4 en{ @ 5 =  I 4 en{ @ 7 = OR IF  
       fyi @ 2 > IF  
         I 1 en{ @ 0 > IF  
@@ -1911,7 +1977,7 @@ THEN
       I   1 en{ @  act @ > IF  
         I 0 en{ @  motjuste !  
         I 0 en{ @  subjpsi !  
-        I 2 en{ @  nphrnum !   
+        I 2 en{ @  nphrnum !      
         I 4 en{ @  nphrpos ! 
         I 6 en{ @  aud !  
         I 6 en{ @  audjuste !  
@@ -1945,39 +2011,40 @@ THEN
       THEN     
     THEN       
   -1 +LOOP     
-  enDamp       
-  motjuste @  0 = IF  
+  enDamp
+  motjuste @  0 = IF
     midway @  t @  DO  
       I       0 en{ @  54 = IF  
-        54 motjuste !  
+        54 motjuste !
         I     6 en{ @  aud !  
-        LEAVE  
-      THEN  
+        LEAVE
+      THEN
     -1 +LOOP  
-    SpeechAct 
-    1000 rsvp !  
-    EXIT   
+    SpeechAct
+     300 rsvp !  
+    EXIT
   THEN
-  act @ nounval !   
-  nounval @ 3 - nounval !  
+  act @ nounval !
+  nounval @ 3 - nounval !
   act @ 2 < IF      
     motjuste @ 0 > IF  
-      1 reject !    
-    THEN               
-  THEN              
-  motjuste @  hipsi !  
-  EnArticle  
-  motjuste @ psi !  
+      1 reject !
+    THEN
+  THEN
+  motjuste @  hipsi !
+  EnArticle
+  motjuste @ nacpsi !  
   nounAct           
+  0 nacpsi !        
   0 nounval !       
-  audjuste @ aud !  
+  audjuste @ aud !
   SpeechAct   
   32 EMIT     
   fyi @ 2 > IF CR  
   ."   from NounPhrase "
   THEN
   motjuste @ topic !   
-  instnum @  topicnum !  
+  instnum @  topicnum !
   0 act !              
   0 psi  !             
 ;  
@@ -1987,10 +2054,10 @@ THEN
   questype @  16 =  IF  
     18     conj !       
   ELSE  17 conj !       
-  THEN                  
+  THEN
   midway @  t @  DO  
     I       0 en{ @  conj @ = IF  
-      conj @  motjuste !  
+      conj @  motjuste !
       I     6 en{ @  aud !  
       LEAVE  
     THEN  
@@ -2000,56 +2067,56 @@ THEN
 ;  
 
 
-:  BeVerb ( intransitive verbs of being )  
-   subjpsi @ 50 = IF  
-     motjuste @ 57 = NOT IF  
+:  BeVerb ( intransitive verbs of being )
+   subjpsi @ 50 = IF
+     motjuste @ 57 = NOT IF
        midway @  t @  DO  
          I       0 en{ @  57 = IF  
            57 motjuste !  
            I     6 en{ @  aud !  
            LEAVE  
-         THEN  
-       -1 +LOOP  
-     THEN  
-   THEN   
-   subjpsi @ 56 = IF  
-     motjuste @ 67 = NOT IF  
+         THEN
+       -1 +LOOP
+     THEN
+   THEN
+   subjpsi @ 56 = IF
+     motjuste @ 67 = NOT IF
+       midway @  t @  DO  
+         I       0 en{ @  67 = IF  
+           67 motjuste !  
+           I     6 en{ @  aud !  
+           LEAVE
+         THEN
+       -1 +LOOP
+     THEN
+   THEN
+   subjpsi @ 52 = IF
+     motjuste @ 67 = NOT IF
        midway @  t @  DO  
          I       0 en{ @  67 = IF  
            67 motjuste !  
            I     6 en{ @  aud !  
            LEAVE  
-         THEN  
-       -1 +LOOP  
-     THEN  
-   THEN   
-   subjpsi @ 52 = IF  
-     motjuste @ 67 = NOT IF  
-       midway @  t @  DO  
-         I       0 en{ @  67 = IF  
-           67 motjuste !  
-           I     6 en{ @  aud !  
-           LEAVE  
-         THEN  
-       -1 +LOOP  
+         THEN
+       -1 +LOOP
      THEN  
    THEN   
    motjuste @ psi ! 
-   verbAct          
-   SpeechAct        
+   verbAct        
+   SpeechAct   
    NounPhrase       
 ;  
 
 
-:  VerbPhrase ( supervise verb syntax ) 
+:  VerbPhrase ( supervise verb syntax )
   EnReify     
   0 act !     
   0 aud !     
   0 detour !  
   0 motjuste !
   8 opt !  
-  0 psi !  
-  adverbact 32 > IF  
+  0 psi !
+  adverbact 32 > IF
     ( EnAdverb )     
   THEN  
   fyi @ 1 > IF CR  
@@ -2111,44 +2178,44 @@ THEN
           UNTIL        
           ."  "
           0 rv !       
-        THEN           
+        THEN
         I  1 en{ @  act !  ( to test for a higher en1 )
           fyi @ 3 = IF CR   
             ."  VerbPhrase: act = " act @ . ."   "  
           THEN
-        ELSE  
-      THEN  
-    THEN    
-  -1 +LOOP  
+        ELSE
+      THEN
+    THEN  
+  -1 +LOOP
   motjuste @ 57 = IF BeVerb EXIT THEN  
   motjuste @ 66 = IF BeVerb EXIT THEN  
   motjuste @ 67 = IF BeVerb EXIT THEN  
    act @  verbval !   
-   0 psi !  
+   0 psi !
    motjuste @ 0 > IF motjuste @ vbpsi ! THEN  
   fyi @ 2 > IF   
     CR ."  VerbPhrase: motjuste = " motjuste @ . ." going into SPEECH."
     CR ."  VerbPhrase: aud = " aud @ . ." going into SPEECH." 
-  THEN           
+  THEN         
   motjuste @ 0 = IF  
     1 detour !   
     fyi @ 1 > IF  
       CR ."   VerbPhrase: detouring when no candidate-verb is found. "
       CR ."   VerbPhrase: detour value is at " detour @ . 
-    THEN          
-  THEN  
+    THEN
+  THEN
   motjuste @ 0 > IF
     act @ 20 < IF  
       1 detour !   
       1 recon !    
       fyi @ 1 > IF  
     CR ."     VerbPhrase: detour because verb-activation is only " act @ .
-      THEN          
-    THEN      
-    detour @ 0 = IF  
+      THEN
+    THEN
+    detour @ 0 = IF
     62 caller !      
-    psiDamp          
-    motjuste @  hipsi !  
+    psiDamp
+    motjuste @  hipsi !
     fyi @ 2 > IF    
       CR ."  VerbPhrase: lopsi @ hipsi = " lopsi @ . hipsi @ . 
     THEN            
@@ -2162,36 +2229,36 @@ THEN
   fyi @ 2 > IF CR    
   ."   in VerbPhrase after SpeechAct output of verb" 
   THEN
-  fyi @ 2 > IF CR    
+  fyi @ 2 > IF CR
   ."   from VerbPhrase after speaking of verb, psiDamping #" motjuste @ .
   THEN
   motjuste @  urpsi !  
   22 residuum !  
-  62 caller !    
+  62 caller !
   0 caller !     
    2 residuum !  
   enDamp     
   32 EMIT        
   15 residuum !  
   1 dirobj ! 
-  fyi @ 2 = IF  
+  fyi @ 2 = IF
   CR ."          VerbPhrase calls NounPhrase for object of sentence." CR
   THEN
-  NounPhrase     
+  NounPhrase
   motjuste @ 0 > IF motjuste @ dopsi ! THEN  
   0 dirobj !     
   2 residuum !   
- THEN  
+ THEN
   fyi @ 2 > IF     
   CR ."   VerbPhrase end: detour = " detour @ . 
-  THEN             
+  THEN
 ;  
 
 
-:  AuxVerb ( auviliary Verb ) 
+:  AuxVerb ( auviliary Verb )
   midway @  t @  DO  
     I       0 en{ @  59 = IF  
-      59 motjuste !  
+      59 motjuste !
       I     6 en{ @  aud !  
       LEAVE  
     THEN  
@@ -2202,8 +2269,8 @@ THEN
   THEN
   59 urpsi !  
   51 caller ! 
-  psiDamp     
-  0 caller !  
+  psiDamp  
+  0 caller !
 ;  
 
 
@@ -2220,21 +2287,21 @@ THEN
       12 motjuste !  
       I     6 en{ @  aud !  
       LEAVE  
-    THEN  
-  -1 +LOOP  
-  SpeechAct   
-  VerbPhrase  
+    THEN
+  -1 +LOOP 
+  SpeechAct  
+  VerbPhrase
   125 t @ 1+ 2 aud{ ! 
   1   t +!  
   1 spt +!  
-  enDamp    
-  audDamp   
+  enDamp
+  audDamp
   5 bias !  
-;  
+;
 
 
-:  WhatAuxSDo ( What DO Subjects DO )   
-  PsiDecay   
+:  WhatAuxSDo ( What DO Subjects DO )
+  PsiDecay
   midway @  t @  DO  
     I       0 en{ @  54 = IF  
       54 motjuste !  
@@ -2248,8 +2315,8 @@ THEN
   THEN
   54 urpsi !  
   42 caller ! 
-  psiDamp     
-  0 caller !  
+  psiDamp  
+  0 caller !
   auxVerb   
   0 motjuste !  
   midway @  t @  DO  
@@ -2280,28 +2347,28 @@ THEN
   59 urpsi !  
   42 caller ! 
   psiDamp     
-  0 caller !  
+  0 caller !
   psiDecay    
 ;  
 
 
-:  WhatIs ( what IS Subjects ) 
-  PsiDecay   
+:  WhatIs ( what IS Subjects )
+  PsiDecay
   midway @  t @  DO  
     I       0 en{ @  54 = IF  
       54 motjuste !  
       I     6 en{ @  aud !  
       LEAVE  
-    THEN  
+    THEN
   -1 +LOOP  
   SpeechAct 
-  fyi @ 2 > IF CR  
+  fyi @ 2 > IF CR
   ."   from WhatIs after speaking of WHAT, psiDamping concept #54"
   THEN
-  54 urpsi !  
+  54 urpsi !
   psiDamp     
-  0 caller !  
-  topicnum @ 2 = NOT IF   
+  0 caller !
+  topicnum @ 2 = NOT IF
     midway @  t @  DO  
       I       0 en{ @  66 = IF  
         66 motjuste !  
@@ -2313,12 +2380,12 @@ THEN
     fyi @ 2 > IF CR  
     ."   from WhatIs after speaking of IS, psiDamping concept #66"
     THEN
-    66 urpsi !  
+    66 urpsi !
     PsiDamp     
     0 caller !  
     0 motjuste !  
-  THEN   
-  topicnum @ 2 = IF  
+  THEN
+  topicnum @ 2 = IF
     midway @  t @  DO  
       I       0 en{ @  67 = IF  
         67 motjuste !  
@@ -2357,18 +2424,18 @@ THEN
    THEN 
    WhatIs      
    0 recon !   
-;  
+;
 
 
 :  EnglishCog ( one of several possible languages ) 
   0 morphpsi !  
-  0 psi !       
-  0 sublen !    
+  0 psi !    
+  0 sublen !
   t @ tov ! 
   fyi @ 2 > IF      
   CR ."   EnglishCog start: detour @ recon = " detour @ . recon @ . CR
-  THEN              
-  yesorno @ 0 > IF  
+  THEN  
+  yesorno @ 0 > IF
     SayYes        
     CR  
     EXIT  
@@ -2386,9 +2453,9 @@ THEN
       fyi @ 2 = IF  
         ."     EnglishCog starts to think a sentence. " CR 
       THEN
-      CR ." Robot: "   
+      CR ." Robot: "
       123  t @  2 aud{ ! 
-      NounPhrase    
+      NounPhrase
       nphrpos @ DUP 5 = SWAP 7 = OR IF  
         VerbPhrase  
         0 nphrpos ! 
@@ -2405,18 +2472,18 @@ THEN
   THEN              
   fyi @ 2 > IF      
   CR ."   ENGCOG end: detour @ recon = " detour @ . recon @ . CR 
-  THEN              
-  5 bias !  
+  THEN          
+  5 bias !
 ;  
 
 
-:  CogitoErgoSum ( Cartesian wiki-name of thinking module ) 
-  0 ordo !     
+:  ThInk ( 8may2009 wiki-page form of module name )
+  0 ordo !
   35 pov !  
   EnglishCog  
   fyi @ 1 = IF CR THEN  
   0 recon ! 
-  0 ordo !  
+  0 ordo !
 ;  
 
 
@@ -2430,7 +2497,7 @@ THEN
 ;  
 
 
-:  TuringTest ( Human-Computer Interaction )  
+:  TuringTest ( Human-Computer Interaction )
   fyi @ 0 = IF CLS CR CR CR CR CR CR CR
     t @ 300 < IF CR  
  ." There is no warranty with Mind.Forth AI Engine for robots."
@@ -2456,25 +2523,12 @@ THEN
     bmonth @ 11 = IF ." November "  THEN
     bmonth @ 12 = IF ." December "  THEN
     byear @ . 8 EMIT 46 EMIT CR  
-  THEN   
+  THEN
   fyi @ 1 = NOT IF
     ." Time = " t @ . 8 EMIT 46 EMIT ."  KB-Traversal ID = " kbtv @ .
     8 EMIT 46 EMIT  
     ."  IQ = " IQ @ . 8 EMIT 46 EMIT  
-    ."  Cyc = " rjc @ . ." since "  bday @ .
-    bmonth @  1 = IF ." January "   THEN
-    bmonth @  2 = IF ." February "  THEN
-    bmonth @  3 = IF ." March "     THEN
-    bmonth @  4 = IF ." April "     THEN
-    bmonth @  5 = IF ." May "       THEN
-    bmonth @  6 = IF ." June "      THEN
-    bmonth @  7 = IF ." July "      THEN
-    bmonth @  8 = IF ." August "    THEN
-    bmonth @  9 = IF ." September " THEN
-    bmonth @ 10 = IF ." October "   THEN
-    bmonth @ 11 = IF ." November "  THEN
-    bmonth @ 12 = IF ." December "  THEN
-    byear @ . 8 EMIT 46 EMIT CR  
+    ."  Cyc = " rjc @ . ." rsvp = " rsvp @ . 8 EMIT 46 EMIT CR 
  ." ENTER a positive or negative Subj-Verb-Obj unpunctuated sentence."
     CR  
   THEN              
@@ -2495,34 +2549,36 @@ THEN
   THEN
   TuringTest  
   t @ cns @ 64 - > IF  
-    fyi @ 2 = IF CR  
+    fyi @ 2 = IF CR
     ."   SeCurity module calls ReJuvenate." 
-    THEN        
+    THEN
+    61 rsvp !   
     ReJuvenate  
-  THEN          
+  THEN
   t   @  1024 > IF  
     t @  1024 -  midway !  ( for a range limit on searches )
-    ELSE            
+    ELSE
     1   midway !    
-  THEN   
+  THEN
   0 quiet !  
 ;  
+
 
 :  MainLoop  ( changed from ALIFE to MainLoop for wiki doc page )
   TIME&DATE byear ! bmonth ! bday ! bhour ! bminute ! bsecond !
   TabulaRasa   
-  enBoot       
+  EnBoot       
   BEGIN        
     SeCurity   
     fyi @ 2 = IF CR  
     ." MainLoop calls the SensoryInput module." CR  
     THEN          
-    SensoryInput  
-  ( EmoFlux )  
+    SensoryInput
+  ( EmotiOn )  
     fyi @ 2 = IF CR  
     ." MainLoop calls the CogitoErgoSum mind-module." CR  
-    THEN          
-    CogitoErgoSum  
+    THEN
+    ThInk          
   ( FreeWill ) 
   ( MotorOutput ) 
   AGAIN        

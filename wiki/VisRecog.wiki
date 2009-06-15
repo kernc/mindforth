@@ -12,7 +12,7 @@ please follow the SeeAlso links below to older page versions.
 
 http://mind.sourceforge.net/visrecog.html 
 
-http://mentifex.virtualentity.com/visrecog.html.html 
+http://mentifex.virtualentity.com/visrecog.html 
 
 === AI For You === 
 

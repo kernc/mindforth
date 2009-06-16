@@ -1,5 +1,5 @@
 #summary Stages of development already achieved and yet to be achieved by MindForth
-#labels future,overview,roadmap
+#labels Featured,overview,roadmap
 
 AiEvolution  AiHasBeenSolved RoadMap TimeLine 
 

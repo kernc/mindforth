@@ -1,5 +1,5 @@
 #summary Enter here for Artificial Intelligence
-#labels Featured,Phase-Support,policy
+#labels Phase-Support,policy
 
 
 === Welcome === 
@@ -31,8 +31,6 @@ Do not join the mindforth project; co-exist instead. Open a Google Code AI proje
 === Documentation === 
 
 AiComplete AiFunding AiMind BugIssues ComPutationalization ConSciousness CyberSpace CybOrg EnTelEchy ExTropy FailSafe HelpWanted InFerence JavaScript JunkDna LikeMind MasPar MeetUp MentiFex MindFaq MindGrid MindRexx MissionStatement OmegaPoint OutReach OverMind ProgLang ProsperityEngine PsychoSurgery ReadMe RoBot SeedAi SloshOver SubConscious SuperComputer SuperIntelligence SuperStructure TechnologicalSingularity TimeLine ToDo TransHumanism UseNet VentureCapital WebCyc WebLog WiFi WikiPedia Win32Forth WinDoze WinZip WotNot 
-
-
 
 
 

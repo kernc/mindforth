@@ -1,5 +1,5 @@
 #summary AI Breakthrough News
-#labels mfpj,weblog,Featured
+#labels mfpj,weblog
 NextBigThing RumorMill TimeLine
 
 == 2008nov02 ==

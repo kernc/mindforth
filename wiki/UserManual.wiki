@@ -1,5 +1,5 @@
 #summary How to initiate and communicate with the AI Mind
-#labels manual
+#labels manual,Featured
 
 
 === Operation === 
@@ -69,5 +69,3 @@ http://mentifex.virtualentity.com/m4thuser.html
 === MemeSpace === 
 
 AdminisTrivia AiEvolution AutoInstall CodeBase DeBug DiaSpora DownLoad FlowChart ForthMindTextFile FreeWare HardTakeoff ImMortality InPut IntelligenceQuotient KnowledgeBase LifeQuaScienceFiction MasPar MindForth MindGrid MindMeld MindModule OldestLivingAiMind OpenSource OutPut ProofOfConcept PsychoSurgery RoadMap RoBot ScienceMuseums SeedAi ShareWare SubConscious SuperIntelligence TechnologicalSingularity TelePresence 
-
-

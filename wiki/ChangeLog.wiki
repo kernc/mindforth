@@ -1,0 +1,261 @@
+#summary significant details about each new version of MindForth artificial intelligence
+#labels archive,coding,history
+
+AiEvolution MileStones MindForth TimeLine 
+
+
+=== NotaBene === 
+
+This MindForth changelog archive shows the development of the AI 
+Mind over time. Each entry begins with a version identifier 
+consisting of the calendar date and a letter of the alphabet 
+to indicate any multiple versions created on the same date. 
+Each version ends in ".f" or ".F" for loading into Win32Forth. 
+Only changes deemed significant at the time were 
+recorded in the changelog. Individual releases of MindForth may 
+include a changelog with only recent entries. Any fork or bifurcation 
+in the development of MindForth may cause the splitting of the 
+changelog into two divergent channels through time. 
+
+
+=== Entries === 
+
+{{{
+\ 25jun01A.f transposes "fin" and "fex" in en{ array for clarity;
+\ eliminates HCI pause; adopts JavaScript AI Troubleshoot labels;
+\ begins to phase out Tutorial and Troubleshoot in favor of jsaimind.
+\ 27jun01A.f eliminates most use of the "spy" variable; makes more
+\ Mind.Forth functions similar to the JavaScript Artificial Mind.
+\ 25jan02A.f changes ATTACH to enVocab; changes BOOTSTRAP to enBoot;
+\ replaces "meme" with "urpsi"; articulates THINK/ ENGLISH/ SVO;
+\ reintroduces psiDecay; 
+\ 29jan02A.f implements Rejuvenate;
+\ 31jan02A.f adopts JavaScript AI Mind way of "spreading activation."
+\  4feb02A.f uses "attn" values similar to those in JavaScript AI.
+\  5feb02A.f made the AI display more interesting but was buggy.
+\  7feb02A.f implements EGO; displays data-transfer of Rejuvenate.
+\  8feb02A.f debugs AUDITION timing problems; uses "isolation".
+\ 10feb02A.f uses "inert" not "isolation"; fixes .echo display.
+\ 11feb02A.f eliminates STRING-EFFECT by inclusion in COMPARATOR.
+\ 12feb02A.f fits revised COMPARATOR together with other modules.
+\ 14feb02A.f corrects minor errors.
+\ 16feb02A.f introduces LTM (Long Term Memory) for bootstrap use.
+\ 17feb02A.f begins to rationalize the Comparator module.
+\ 18feb02B.f shows improvement in recognizing old concepts.
+\ 20feb02A.f prevents THINK mode from calling LISTEN module.
+\ 22feb02C.f stabilizes word-recognitions in the COMPARATOR.
+\ 24feb02A.f encourages programmers to Web-host AI evolutions.
+\ 25feb02A.f removes ACTIVATE bug that impeded pre & seq tags.
+\ 25feb02B.f puts higher residual activation on direct objects.
+\ 26feb02A.f stubs in MOTORIUM as a challenge for roboticists.
+\ 27feb02A.f eliminates RETRO by moving its code into AUDITION.
+\  4mar02A.f changes STM to audSTM and COMPARATOR to audRecog.
+\ 13mar02A.f removes excess variables from audRecog module.
+\ 15apr02A.f uses "pho" instead of "unk" for quasi-phonemes;
+\ uses audRecog "LEAVE" to accept first recognition of a word;
+\ uses "psi" to replace "f"; "mt"; and "utg" variables;
+\ replaces grammar variable "g" with part-of-speech "pos".
+\ 21apr02A.f changes "blankt" to space-time "spt";
+\ replaces recall-vector "rv" with "aud" for "auditory".
+\ 11may02A.f removes "attn" flag in favor of "quiet";
+\ streamlines aLife with AI namespace function calls.
+\ 23may02A.f renames PREDICATE module as "verbPhrase" module;
+\ eliminates SUBJECT module in favor of code in SVO module;
+\ changes FLUSHVECTOR to REIFY for ontological reification.
+\ 21jul02A.f increases the mindcore Psi array from 6 to 7 columns;
+\ uses "jux" variable instead of "mod" reserved word in Win32Forth.
+\ 22jul02A.f dismantles the primitive SVO parsing mechanism in favor
+\ of an initially primitive but most evolvable Parser module.
+\ 23jul02A.f eliminates audLTM by protecting "vault" in audSTM.
+\ 24jul02A.f experiments with problems in the Audition module.
+\ 25jul02A.f has a new test for terminating the Audition module.
+\ 26jul02A.f makes AUDITION serve SENSORIUM and SPEECH equally.
+\ 26jul02B.f integrates AUDITION and SPEECH during reentry.
+\ 27jul02A.f makes minor corrections in audRecog and elsewhere.
+\ 28jul02A.f greatly expands the English bootstrap enBoot.
+\ 29jul02A.f introduces auxVerb and negSVO for negative reasoning.
+\  3aug02A.f makes minor corrections to previous source code;
+\ introduces the asking of questions by the AI about new concepts.
+\ 16aug02A.f introduces Conjoin module for selecting conjunctions.
+\  9mar05A.f sets tov in ENGLISH so as to clear up .echo bug that
+\ was causing the AI Mind to crash after a period of no human input.
+\ 11mar05A.f announces, for bragging rights, when the AI came to life.
+\ 12mar05A.f lets the user enter TEST or ALIFE to start the AI.
+\ 13mar05A.f prevents screen-clearing, for better TEST observations.
+\ 14mar05A.f seems to generate an endless stream of thoughts.
+\ 14mar05B.f rearranges HCI presentation; uses "anxiety" not "inert".
+\ 16mar05A.f offers choice of ALIFE, DIAGNOSTIC or TUTORIAL mode.
+\ 28apr05C.f shall be a commented version of the AI source code.
+\ 29apr05C.F sets an activation-limit of 63 in spreadAct.
+\ 30apr05C.F uses Tab key to cycle among display modalities.
+\  1may05C.F removes add-on modules obsoleted by Tab functionality.
+\  4may05C.F replaces display-mode flags with fyi variable.
+\ 31may05C.F uses terse display to prevent blur of scrolling diagnostics.
+\  2jun05C.F combines tutorial messages with diagnostics; asks IQ of AI.
+\  3jun05C.F initiates the diagnostic display of AI thought processes.
+\  4jun05C.F maximizes diagnostic display by minimizing HCI messages.
+\  5jun05C.F shows hidden diagnostic details of spreading activation..
+\ 30jun05C.F reapportions constituent activations within limitation range.
+\  4jul05C.F lets THINK invoke EGO if ENGLISH does not generate thoughts.
+\ 12jul05C.F prevents .echo from spuriously repeating robot output.
+\ 15jul05C.F enhances interactive messages in Tab-selectable Tutorial mode.
+\ 22jul05C.F prevents the Tab-key from haphazardly instantiating concepts.
+\ 23jul05C.F removes unwarranted linkages among concepts from enBoot.
+\ 28jul05C.F separates the activation tracks of parsing and NLP generation.
+\ 31jul05C.F adds deep diagnostics for debugging spurious SVO associations.
+\  2aug05C.F uses variable "spike" to carry bulge of spreading activation.
+\  3aug05C.F clears the screen to remove scrolling at start of Rejuvenate.
+\  4aug05C.F eliminates "actfan" variable; updates psiDecay module.
+\  5aug05C.F clarifies diagnostics; removes unnecessary calls to Activate.
+\  6aug05C.F uses psiDamp to prevent the inappropriate asking of questions.
+\  7aug05C.F encounters unresolved activations after asking of questions.
+\ 21aug05C.F explores calls to psiDecay as a fix of unresolved activations.
+\ 23aug05C.F streamlines psiDecay module by removing commented-out code.
+\ 26aug05C.F moves toward looping chains of thought for AI normalcy tests.
+\ 28aug05C.f introduces psiDamp variable "lump" to enable chains of thought.
+\ 29aug05C.F has Think module check for active nouns instead of verbs;
+\ switches listing-order of psiDamp and psiDecay so psiDamp calls psiDecay;
+\ achieves a looping chain of thought that breaks down after rejuvenations.
+\ 30aug05C.F speeds up the thinking of the AI Mind if no input is detected.
+\ 31aug05C.F substitutes the question word "what" for low-activation nouns.
+\  3sep05C.F enhances Tutorial mode by showing generation of thoughts.
+\  5sep05C.F deactivates WHAT; displays spreading activation in Tutorial mode.
+\  6sep05C.F uses oldpsi and oldact to show source of spreading activations.
+\  9sep05C.F begins fix of spreadAct "zone" that was sending too many spikes.
+\ 12sep05C.F moves diagnostics from Tutorial display into Diagnostic display.
+\ 13sep05C.F shows pathway of spreading activation in Tutorial display mode.
+\ 14sep05C.F restores initiation of chains of thought but has "YES" bug.
+\ 17sep05C.F solves the YES bug as a problem of spurious "motjuste" signals.
+\ 18sep05C.F has single activations move like a wave through the mindgrid.
+\ 21sep05C.F uses psiDamp and psiDecay to make "crest" concepts preponderate.
+\ 23sep05C.F uses quiescent intervals in the Moving Wave Algorithm psychonomy.
+\ 24sep05C.F makes Tutorial mode more informative, as requested by user base.
+\  6oct05C.F again lets whatAuxSDo use psiDecay on unresolved activations;
+\ parentheticalizes Comments for only ZIP files having backslash Comments.
+\  8oct05C.F lets user inputs cause higher activations than internal thought.
+\ 13oct05C.F introduces a Transcript display mode to record AI Mind behavior.
+\ 14oct05C.F gives expanded names of mind-modules in parenthesis comments.
+\ 15oct05C.F revives a flatline AI by recalling oldest memories and by
+\ asking users to enter information for meandering chains of thought.
+\ 31oct05C.F reduces risk of word-wrap problems and improves Tutorial mode.
+\  9nov05C.F consolidates Tutorial messages horizontally to avoid scrolling.
+\ 22jan06C.F starts in Tutorial mode until user presses Tab for other modes.
+\ 23jan06C.F engenders an upper tier of conceptual activation for a moving
+\ wave of consciousness and thought, and a lower tier of residual activation.
+\ 27feb06C.F makes new concepts have an activation at top of lower tier.
+\ 20apr06C.F uses decpsi1 and decpsi2 to avoid endless repetition of output.
+\ 23may06C.F in transcript mode shows activation-levels of selected words.
+\ 25may06C.F enhances transcript mode with date, time and explanation.
+\ 29may06C.F maintains thought-chains by removing ACTIVATE call to psiDecay.
+\ 31may06C.F uses nPhr activation threshold to prevent spurious associations.
+\  1jun06C.F splits calling of Activate between internal POV and external POV.
+\  2jun06C.F aims for subconscious lower tier and upper consciousness tier.
+\  5jun06C.F splits ACTIVATE mind-module into subAct and superAct modules.
+\  7jun06C.F uses nounAct and verbAct for SVO activation slosh-over effect.
+\  9jun06C.F indicates potential +slosh-over direct objects in Tutorial mode.
+\ 10jun06C.F leaves nounAct, verbAct and ACTIVATE after clean-up of modules.
+\ 13jun06C.F enhances slosh-over in a try to eliminate spurious associations.
+\ 18jun06C.F overhauls Tutorial for a better display of deep thought process.
+\ 29mar07A.F introduces add-on ontology from JavaScript AI for sake of EGO.
+\ 30mar07A.F makes verbAct module conform with JavaScript AI Mind algorithm.
+\ 31mar07A.F updates nounAct, psiDamp and psiDecay in accordance with JSAI.
+\  2apr07A.F corrects problem of associative tags not being assigned.
+\  3apr07A.F fixes "pre" and "seq" assignments by replicating JSAI code.
+\  4apr07A.F uses a nested BEGIN (flag) UNTIL loop in the Reify module.
+\  7apr07A.F cleans up commented-out code and fixes Transcript display bug.
+\  9apr07A.F fixes nounAct ACCESS_VIOLATION with help of Jos van de Ven.
+\ 27apr07A.F in verbAct augments verb-nodes only up to consciousness tier.
+\ 30nov07A.F displays AI thought processes more clearly in Tutorial mode.
+\  2dec07A.F makes only cosmetic changes in messages of the Tutorial mode.
+\  5dec07B.F solves an aboriginal major audRecog bug of false recognitions.
+\ 14dec07A.F increases spreadAct zone of search for "seq" direct objects.
+\ 17dec07A.F introduces "detour" as abort-flag for insufficient knowledge.
+\ 19dec07A.F flushes out verb-activation-too-high and BIRDS-as-IS bugs.
+\ 23dec07B.F solves aboriginal audRecog false-positive recognition bug.
+\ 27dec07A.F causes verbPhrase to LEAVE when a detour-condition is met.
+\ 28dec07A.F reveals a deeply hidden YES-bug in the SPEECH mind-module.
+\  1jan08A.F fixes SPEECH YES-bug by isolating fetch of auditory engrams.
+\  3jan08A.F asks a question if the "detour" flag is set to true.
+\  4jan08A.F explores the role of activational "actset" settings.
+\  6jan08A.F prevents spurious detours by raising psiDamp "residuum".
+\  7jan08A.F is a general clean-up of commented-out "junk DNA" code.
+\  9jan08A.F fixes audRecog bug of failure to recognize two-char words.
+\ 10jan08A.F uses "psicrest" and "trough" for Moving Wave Algorithm (MWA).
+\ 11jan08A.F prevents rejected verbs from spreading spurious activation.
+\ 12jan08B.F troubleshoots why post-thought activations are too high.
+\ 13jan08A.F introduces code to deactivate known words at MWA crest.
+\ 13jan08B.F uses AI4U page numbers to identify modules calling psiDamp.
+\ 14jan08A.F uses "lopsi" and "hipsi" for only one wave crest at a time.
+\ 14jan08B.F comments out diagnostic messages of Moving Wave Algorithm.
+\ 15jan08A.F lets Audition psi-damp only at the start of a reentrant word.
+\ 16jan08A.F eliminates a one-word delay in the psi-damping of input words.
+\ 18jan08B.F solves too-many-questions bug by simplifying the REIFY module.
+\ 20jan08A.F fixes topic-jumping bug and attains cognitive chain reaction.
+\ 20jan08B.F leaves in but comments out diagnostics for further debugging.
+\ 22jan08A.F tightens up activation-settings to prevent spurious thoughts.
+\ 22jan08B.F calls EGO resuscitation upon detection of repetitious thought.
+\ 24jan08A.F changes verbClear into verbClip to merely reduce activations.
+\ 27jan08A.F uses "EEG" and "redux" to revive oldest concept during lull.
+\ 29jan08A.F comments out "actset" because Moving Wave sets one activation.
+\ 30jan08A.F removes "trough"; comments out "uract"; fixes verbClip module.
+\  1feb08A.F removes "actset" and "uract"; improves activation settings.
+\ 24aug08A.F adds a "num" (number) flag to the flag-panel of the psi array.
+\ 25aug08A.F tests new Article module by inserting "the" before all nouns.
+\ 27aug08A.F adds "num" to English array with value-transfer in Reify.
+\ 29aug08A.F avoids SVO in preparation for thinking with verbs of being.
+\ 30aug08A.F inaugurates practice of stating entelechy goals for modules.
+\ 31aug08A.F uses psiDecay to keep verbs of being at a default activation.
+\  1sep08A.F converts whatAuxSDo into whatIs to initiate verbs of being.
+\  2sep08A.F reintroduces Conjoin module from 16aug02A.F source code.
+\  3sep08A.F introduces knowledge-base traversal module kbTraversal.
+\ 12sep08A.F solves "pov" bug of "YOU" input not activating "I" concept.
+\ 17sep08A.F uses kbSearch and Affirmative to answer YES to DO-queries.
+\ 25sep08A.F introduces beVerb module to think with intransitive verbs.
+\ 27sep08A.F has nounPhrase switch from "I" to "ME" for direct objects.
+\ 30sep08A.F has audRecog detect noun-stems close to end of plurals.
+\  1oct08A.F asks "what is" or "what are" after input of unknown words.
+\  4oct08A.F intervenes in beVerb to choose correct form of "to be".
+\ 14oct08A.F begins the renaming of modules as links to wiki-page docs.
+\ 15oct08A.F eliminates SVO module; changes Predicate to VerbPhrase.
+\ 16oct08A.F renames Activate ReActivate; Listen AudListen; audSTM AudMem.
+\ 18oct08A.F minor changes, including durable comments in parentheses.
+\ 20apr09A.F updates Normal display; installs JSAI who-are-you code.
+\ 23apr09A.F answers "who are you" with "I AM..." statements.
+\  6may09A.F begins de-globalizing variables with audpsi and audrec.
+\  7may09A.F uses non-global "presyn" and "seqsyn" in SpreadAct.
+\  8may09A.F lets InStantiate declare only a noun or pronoun as "pre".
+\  9may09A.F de-globalizes the OldConcept module with "oldpsi".
+\ 10may09A.F restores KbTraversal, who-are-you and stem-recognition.
+\ 16may09A.F changes EnBoot to regard all words as ending with a space.
+\ 17may09A.F fails to get auditory memory working right with ASCII 32.
+\ 17may09B.F reverts to 15may09B.F cleaned-up code with old EnBoot.
+\ 19may09A.F upon entry of article "a" sets next noun to singular.
+\ 20may09A.F adds "S" to an English verb in third-person singular.
+\ 23may09A.F reformats the EnBoot sequence to fit within 60 characters.
+\ 24may09A.F prevents "S" from accumulating on verbs; uses 60 char width.
+}}}
+
+
+=== CyberSpace === 
+
+http://aimind-i.com 
+
+http://en.wikipedia.org/wiki/Changelog 
+
+http://en.wikipedia.org/wiki/Internet_Archive 
+
+http://agi-roadmap.org/Milestones 
+
+
+=== MemeSpace === 
+
+AdminisTrivia AiEvolution AiTree CodeBase CodeComplete DailyMiracle DeBug EnTelEchy ForthMindTextFile FreeWare MainLoop MfPj MileStones MindForth MindGrid MindModule MindRexx OldestLivingAiMind OpenSource OutReach PortingOfCode RoadMap RoBot SeedAi TextBook TimeLine ToDo TwItter UseNet UserManual WebLog 
+
+
+=== AI For You === 
+
+Click to run 
+
+[http://www.scn.org/~mentifex/Mind.html http://farm1.static.flickr.com/51/179758367_f283f0d6e0_s.jpg] 
+
+AI For You 

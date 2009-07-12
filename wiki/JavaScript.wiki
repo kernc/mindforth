@@ -1,9 +1,12 @@
-#summary JavaScript for artificial intelligence
+#summary artificial intelligence comes to you from the AI archive
 #labels jsai,proglang
 
-== 1 == 
+PortingOfCode SeedAi Win32Forth 
 
-*Why JavaScript? Why not a LispMind or a ProLog AI?*
+
+=== Rationale === 
+
+Why JavaScript? Why not a LispMind or a ProLog AI? 
 
 The question should be the other way around: Why NOT AI 
 in JavaScript? It is a very popular language on the Web; 
@@ -14,9 +17,8 @@ more robust, full-featured artificial intelligence like
 http://code.google.com/p/mindforth/ -- coded in Win32Forth 
 for robot embodiment as a mind inside a robot brain.
 
-With AI in JavaScript, the "customer" just clicks on 
-http://www.scn.org/~mentifex/Mind.html as a link that 
-brings the Mind for MSIE into the Internet Explorer 
+With AI in JavaScript, the "customer" just clicks a link 
+that brings the Mind for MSIE into the Internet Explorer 
 web browser, where the thinking AI takes up residence. 
 
 MindForth AI is more complicated because one needs the
@@ -32,9 +34,9 @@ the MSIE browser or as a downloaded file brought to life,
 it needs no further contact with the server whence it came. 
 
 
-== 2 == 
+=== DiaSpora === 
 
-*Making a local copy of the JavaScript AI Mind*
+Any website may host a local copy of the JavaScript AI Mind.
 
 Sometimes a Web domain will put the JavaScript Mind.html 
 up as a page and it may no longer seem to think properly. 
@@ -44,9 +46,9 @@ to a pre-existing webpage that may already have its own JavaScript.
 
 The necessary precaution is that each JavaScript "form" in the AI 
 has to have the right identifying number, or the code will not run. 
-As of October of 2008, the Mind.html program has just two "form" 
+As of 2009, the Mind.html program has just two "form" 
 areas on the screen -- the Artificial Mind Control Panel as form zero, 
-and the enter-input area as form one. 
+and the input-entry area as form one. 
 
 The "form" areas are assigned their numeric identifiers not by the 
 programmer, but automatically on the basis of the order in which 
@@ -69,9 +71,10 @@ Ask any questions in comp.lang.javascript on Google Groups Usenet.
 The slight change is worth the effort, because the AI Mind will 
 make your webpage come alive with thoughts created by the AI Mind. 
 
-== 3 ==
 
-*MetEmPsychosis is SoulTravel for artificial intelligence.*
+=== MetEmPsychosis === 
+ 
+MetEmPsychosis is SoulTravel for artificial intelligence.
 
 We are already halfway to AI SoulTravel with the JavaScript AI, 
 because the thinking AI program moves from a server anywhere on 
@@ -88,3 +91,32 @@ SourceCode with them everywhere they go. If an AI Mind
 transfers its lifelong memories to a distant new host 
 and deletes its original memory-files to complete the move, 
 then a form of TelePorting as in StarTrek has occurred.
+
+
+=== CyberSpace === 
+
+  * UseNet discussion group 
+  *  http://groups.google.com/group/comp.lang.javascript 
+
+  * user manual for JavaScript Mind.html artificial intelligence 
+  * http://mentifex.virtualentity.com/userman.html 
+  * http://mind.sourceforge.net/userman.html 
+
+  * WikiPedia 
+  * http://en.wikipedia.org/wiki/JavaScript 
+  * http://en.wikipedia.org/wiki/Client-side_JavaScript 
+  * http://en.wikipedia.org/wiki/HTML_5 
+  * http://en.wikipedia.org/wiki/Internet_Explorer 
+
+
+=== MemeSpace === 
+AdminisTrivia AiChat AiEvolution [http://aimind-i.com AiMind] AiSteps CognitiveArchitecture CognitiveChainReaction ConSciousness GenerationOfThought InternetExplorer MeanderingChain MemRistor MetEmPsychosis MileStones MindForth MindGrid MindModule MindRexx MovingWave NaturalLanguageProcessing OldestLivingAiMind RecursiveSelfImprovement ScienceMuseums SeedAi SpreadingActivation SubConscious TextBook ThInk TutorialMode UserManual 
+
+
+=== AI For You === 
+
+Click to run 
+
+[http://www.scn.org/~mentifex/Mind.html http://farm1.static.flickr.com/51/179758367_f283f0d6e0_s.jpg] 
+
+AI For You in JavaScript 

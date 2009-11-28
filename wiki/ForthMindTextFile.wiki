@@ -6,7 +6,7 @@
 Drag-and-drop code into editor; save C:\Win32For\Mind.F (not as Mind.F.txt).
 
 {{{
-( 27nov09A.F -- modification of 26nov09A.F Mind.Forth )
+( 28nov09A.F -- modification of 27nov09A.F Mind.Forth )
 ( May be named "Mind.F" or any "Filename.F" you choose. )
 ( Rename any Mind.F.txt as simply Mind.F for Win32Forth. )
 ( http://www.winzip.com/aboutzip.htm tells about WinZip. )
@@ -16,11 +16,14 @@ Drag-and-drop code into editor; save C:\Win32For\Mind.F (not as Mind.F.txt).
 ( fload Mind.f [ENTER] )
 ( MainLoop [ENTER]. )
 ( To halt the AI Mind, press the ESCAPE key at any time. )
+( http://www.scn.org/~mentifex/mindforth.txt Win32Forth )
+( http://www,scn.org/~mentifex/mind.frt 32/64-bit iForth )
 ( http://code.google.com/p/mindforth/wiki/ChangeLog data )
 \ 24may09A.F prevents "S" from accumulating on verbs.
 \ 25nov09A.F begins expansion of EnBoot to 64 concepts.
 \ 26nov09A.F adds missing PsiDamp call to NounPhrase. 
 \ 27nov09A.F completes expansion of EnBoot to 64 concepts.
+\ 28nov09A.F reinstates ability to answer "who are you".
 DECIMAL  ( use decimal numbers )
 variable act 0 act ! ( activation level  )
 variable actbase ( audRecog discrimination activation base)
@@ -324,6 +327,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
     0 I  1 aud{ !
   -1 +LOOP
 ;
+
 
 :  .psi ( show concepts in the Psi array )
   CR  ." Psi mindcore concepts"
@@ -1177,7 +1181,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
       0 quiet !
       pho @  8 = IF 7 EMIT THEN
       pho @  9 = IF
-         200 rsvp !
+       \ 200 rsvp !
+         500 rsvp !  ( 28nov2009 give more time )
         pho @ 13 = IF  1 lastword !  THEN
         fyi @ 0 = IF CR CR
           TIME&DATE  tsyear ! tsmonth ! tsday !
@@ -1302,7 +1307,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
           0 caller !
           0 urpsi !
         THEN
-         300 rsvp !
+       \ 300 rsvp !
+         400 rsvp !  ( 28nov2009 give more time )
       THEN
       I 138 = IF
         rsvp @ 250 > IF 60 rsvp ! THEN
@@ -1615,6 +1621,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
  93 nen ! 93 fex !   1 pos ! 93 fin ! 94 aud    ! EnVocab
  93 psi !  0 num !   0 pre !  0 seq ! 93 enx ! InStantiate
 
+
  ( HOW -- adverb for EnAdverb module )
    98 t ! 72 pho !   1 beg !  1 ctu !  0 audpsi ! AudMem \ H
    99 t ! 79 pho !   0 beg !  1 ctu !  0 audpsi ! AudMem \ O
@@ -1659,7 +1666,6 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
   120 t ! 79 pho !   0 beg !  0 ctu ! 27 audpsi ! AudMem \ O
  27 nen ! 27 fex !   4 pos ! 27 fin ! 119 aud    ! EnVocab
  27 psi !  0 num !   0 pre !  0 seq ! 27 enx ! InStantiate
-
 
  ( NOT -- for machine reasoning logic )
   122 t ! 78 pho !   1 beg !  1 ctu !  0 audpsi ! AudMem \ N
@@ -1838,6 +1844,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
  48 nen ! 48 fex !   6 pos ! 48 fin ! 225 aud    ! EnVocab
  48 psi !  0 num !   0 pre !  0 seq ! 48 enx ! InStantiate
 
+
  ( YES -- for human-computer interaction )
   230 t !  89 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ Y
   231 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
@@ -1868,7 +1875,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
   245 t ! 65 pho !   1 beg !  1 ctu !  0 audpsi ! AudMem \ A
   246 t ! 77 pho !   0 beg !  0 ctu ! 57 audpsi ! AudMem \ M
  57 nen ! 57 fex !   8 pos ! 57 fin ! 245 aud   ! EnVocab
- 57 psi !  0 num !   0 pre ! 54 seq ! 57 enx ! InStantiate
+ 57 psi !  0 num !   0 pre ! 33 seq ! 57 enx ! InStantiate
  ( ANDRU -- for SelfReferentialThought )
   248 t ! 65 pho !   1 beg !  1 ctu !  0 audpsi ! AudMem \ A
   249 t ! 78 pho !   0 beg !  1 ctu !  0 audpsi ! AudMem \ N
@@ -1936,12 +1943,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
   292 t ! 69 pho !   0 beg !  1 ctu !  0 audpsi ! AudMem \ E
   293 t ! 68 pho !   0 beg !  0 ctu ! 74 audpsi ! AudMem \ D
  74 nen ! 74 fex !   8 pos ! 74 fin ! 290 aud    ! EnVocab
- 74 psi !  0 num !  39 pre ! 50 seq ! 74 enx ! InStantiate
+ 74 psi !  0 num !  39 pre ! 65 seq ! 74 enx ! InStantiate
  ( ME -- for SelfReferentialThought )
   295 t ! 77 pho !   1 beg !  1 ctu !  0 audpsi ! AudMem \ M
   296 t ! 69 pho !   0 beg !  0 ctu ! 50 audpsi ! AudMem \ E
- 65 nen ! 50 fex !   7 pos ! 56 fin ! 295 aud    ! EnVocab
- 50 psi !  1 num !  74 pre ! 57 seq ! 65 enx ! InStantiate
+ 65 nen ! 65 fex !   7 pos ! 56 fin ! 295 aud    ! EnVocab
+ 65 psi !  1 num !  74 pre !  0 seq ! 65 enx ! InStantiate
 
 ( Declaration of "vault" must reflect final EnBoot "t".)
   1 t +!
@@ -2006,6 +2013,10 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
   0 nwc !
   0 pho !
   0 pre !  0 seq !
+\ PsiDecay ( 28nov2009 debugging who-are-you )
+\ PsiDecay ( 28nov2009 debugging who-are-you )
+\ PsiDecay ( 28nov2009 debugging who-are-you )
+\ PsiDecay ( 28nov2009 debugging who-are-you )
 ;
 
 

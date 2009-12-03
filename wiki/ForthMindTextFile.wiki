@@ -6,7 +6,7 @@
 Drag-and-drop code into editor; save C:\Win32For\Mind.F (not as Mind.F.txt).
 
 {{{
-( 2dec09A.F -- modification of 28nov09A.F Mind.Forth )
+( 3dec09A.F -- modification of 2dec09A.F Mind.Forth )
 ( May be named "Mind.F" or any "Filename.F" you choose. )
 ( Rename any Mind.F.txt as simply Mind.F for Win32Forth. )
 ( http://www.winzip.com/aboutzip.htm tells about WinZip. )
@@ -26,10 +26,12 @@ Drag-and-drop code into editor; save C:\Win32For\Mind.F (not as Mind.F.txt).
 \ 27nov09A.F completes expansion of EnBoot to 64 concepts.
 \ 28nov09A.F reinstates ability to answer "who are you".
 \  2dec09A.F adds HE SHE IT WE as BeVerb subject pronouns.
+\  3dec09A.F inserts "AN" instead of "A" before a vowel.
 DECIMAL  ( use decimal numbers )
 variable act 0 act ! ( activation level  )
 variable actbase ( audRecog discrimination activation base)
 variable adverbact 0 adverbact ! ( 29aug2008 adverb test )
+variable anset  ( 3dec2009 Before vowel set AN insertion )
 variable aud  ( auditory recall-tag for activating engrams)
 variable audjuste ( nounPhrase motjuste aud to SpeechAct )
 variable audme  ( tag to find "ME" in auditory memory )
@@ -176,9 +178,7 @@ variable ultpho  ( 17may2009   )
 variable unk  ( "unknown" variable for general use )
 variable upnext  ( Flag lets new input de-crest previous. )
 variable urpre ( original pre during call to other module )
-variable urpsi ( original psi for use in psiDamp, etc. )
-\ variable vault 202 vault ! ( vault size of EnBoot sequence)
-\ variable vault 297 vault ! ( vault size of EnBoot sequence)
+variable urpsi ( original psi for use in psiDamp, etc. ) 
 variable vault 300 vault ! ( vault size of EnBoot sequence)
 variable vbpsi   ( verb-psi for calculating "thotnum" )
 variable verbinc ( verb-increment to use in verbAct module)
@@ -375,6 +375,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
   ." and restart the Mind."
   CR
 ;
+
 
 :  .en ( show vocabulary in the English lexicon array )
   CR ." English lexical fibers"
@@ -2292,12 +2293,22 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
 nphrpos @ 7 = NOT IF
   nphrnum @  1 = IF
     motjuste @ ghost @ = NOT IF
-      midway @  t @  DO
-        I       0 en{ @  1 = IF
-        I     6 en{ @  aud !
-          LEAVE
-        THEN
-      -1 +LOOP
+      anset @ 0 = IF (  3dec2009 If no vowel is next )
+        midway @  t @  DO
+          I       0 en{ @  1 = IF  \ 3dec2009 If #1 "A" is found,
+          I     6 en{ @  aud !
+            LEAVE
+          THEN
+        -1 +LOOP
+      THEN  (  3dec2009 End of test for absence of a vowel )
+      anset @ 0 > IF  (  3dec2009 If anset-flag is positive )
+        midway @  t @  DO
+          I       0 en{ @ 83 = IF  \ 3dec2009 If #83 "AN" is found,
+          I     6 en{ @  aud !
+            LEAVE
+          THEN
+        -1 +LOOP
+      THEN  (  3dec2009 End of test for a vowel coming next )
       SpeechAct
     THEN
     motjuste @ ghost @ = IF
@@ -2415,6 +2426,12 @@ THEN
     THEN
   THEN
   motjuste @  hipsi !
+  0 anset !  ( 3dec2009 Safety measure reset to zero )
+  aud @  0  aud{ @ 65 = IF 65 anset ! THEN  ( if vowel A )
+  aud @  0  aud{ @ 69 = IF 69 anset ! THEN  ( if vowel E )
+  aud @  0  aud{ @ 73 = IF 73 anset ! THEN  ( if vowel I )
+  aud @  0  aud{ @ 79 = IF 79 anset ! THEN  ( if vowel O )
+  aud @  0  aud{ @ 85 = IF 85 anset ! THEN  ( if vowel U )
   EnArticle
   motjuste @ nacpsi !
   nounAct
@@ -2453,8 +2470,8 @@ THEN
 
 
 :  BeVerb ( intransitive verbs of being )
-   subjpsi @ 50 = IF
-     motjuste @ 57 = NOT IF
+   subjpsi @ 50 = IF  ( I )
+     motjuste @ 57 = NOT IF  ( AM )
        midway @  t @  DO
          I       0 en{ @  57 = IF
            57 motjuste !
@@ -2464,8 +2481,52 @@ THEN
        -1 +LOOP
      THEN
    THEN
-   subjpsi @ 56 = IF
-     motjuste @ 67 = NOT IF
+   subjpsi @ 56 = IF  ( YOU )
+     motjuste @ 67 = NOT IF   ( ARE )
+       midway @  t @  DO
+         I       0 en{ @  67 = IF
+           67 motjuste !
+           I     6 en{ @  aud !
+           LEAVE
+         THEN
+       -1 +LOOP
+     THEN
+   THEN 
+   subjpsi @ 49 = IF  ( HE )
+     motjuste @ 66 = NOT IF  ( IS )
+       midway @  t @  DO
+         I       0 en{ @  66 = IF
+           66 motjuste !
+           I     6 en{ @  aud !
+           LEAVE
+         THEN
+       -1 +LOOP
+     THEN
+   THEN
+   subjpsi @ 80 = IF  ( SHE )
+     motjuste @ 66 = NOT IF   ( IS )
+       midway @  t @  DO
+         I       0 en{ @  66 = IF
+           66 motjuste !
+           I     6 en{ @  aud !
+           LEAVE
+         THEN
+       -1 +LOOP
+     THEN
+   THEN
+   subjpsi @ 95 = IF  ( IT )
+     motjuste @ 66 = NOT IF  ( IS )
+       midway @  t @  DO
+         I       0 en{ @  66 = IF
+           66 motjuste !
+           I     6 en{ @  aud !
+           LEAVE
+         THEN
+       -1 +LOOP
+     THEN
+   THEN
+   subjpsi @ 53 = IF  ( WE )
+     motjuste @ 67 = NOT IF  ( ARE )
        midway @  t @  DO
          I       0 en{ @  67 = IF
            67 motjuste !
@@ -2475,61 +2536,8 @@ THEN
        -1 +LOOP
      THEN
    THEN
-
-   subjpsi @ 49 = IF  \  2dec2009 If the subject is psi #49 "HE"
-     motjuste @ 66 = NOT IF  \  2dec2009 If not already using "IS"
-       \ Activate auditory engram of verb-form "IS":
-       midway @  t @  DO  \ Look backwards for 66=IS.
-         I       0 en{ @  66 = IF  \ If #66 "IS" is found,
-           66 motjuste !  \ "nen" concept #66 for "IS".
-           I     6 en{ @  aud !  \  2dec2009 Recall-vector for "IS".
-           LEAVE  \ Use the most recent engram of "IS".
-         THEN  \ End of search for #66 "IS".
-       -1 +LOOP  \ End of loop finding verb-form "IS".
-     THEN  \ 2dec2009 End of test for choice other than "IS"
-   THEN   \  2dec2009 End of test to intervene and change verb-form.
-
-   subjpsi @ 80 = IF  \  2dec2009 If the subject is psi #80 "SHE"
-     motjuste @ 66 = NOT IF  \  2dec2009 If not already using "IS"
-       \ Activate auditory engram of verb-form "IS":
-       midway @  t @  DO  \ Look backwards for 66=IS.
-         I       0 en{ @  66 = IF  \ If #66 "IS" is found,
-           66 motjuste !  \ "nen" concept #66 for "IS".
-           I     6 en{ @  aud !  \  2dec2009 Recall-vector for "IS".
-           LEAVE  \ Use the most recent engram of "IS".
-         THEN  \ End of search for #66 "IS".
-       -1 +LOOP  \ End of loop finding verb-form "IS".
-     THEN  \ 2dec2009 End of test for choice other than "IS"
-   THEN   \  2dec2009 End of test to intervene and change verb-form.
-
-   subjpsi @ 95 = IF  \  2dec2009 If the subject is psi #95 "IT"
-     motjuste @ 66 = NOT IF  \  2dec2009 If not already using "IS"
-       \ Activate auditory engram of verb-form "IS":
-       midway @  t @  DO  \ Look backwards for 66=IS.
-         I       0 en{ @  66 = IF  \ If #66 "IS" is found,
-           66 motjuste !  \ "nen" concept #66 for "IS".
-           I     6 en{ @  aud !  \  2dec2009 Recall-vector for "IS".
-           LEAVE  \ Use the most recent engram of "IS".
-         THEN  \ End of search for #66 "IS".
-       -1 +LOOP  \ End of loop finding verb-form "IS".
-     THEN  \ 2dec2009 End of test for choice other than "IS"
-   THEN   \  2dec2009 End of test to intervene and change verb-form.
-
-   subjpsi @ 53 = IF  \  2dec2009 If the subject is psi #53 "WE"
-     motjuste @ 67 = NOT IF  \  2dec2009 If not already using ARE
-       \ Activate auditory engram of verb-form "ARE":
-       midway @  t @  DO  \ Look backwards for 67=ARE.
-         I       0 en{ @  67 = IF  \ If #67 "ARE" is found,
-           67 motjuste !  \ "nen" concept #67 for "ARE".
-           I     6 en{ @  aud !  \  2dec2009 Recall-vector for ARE
-           LEAVE  \ Use the most recent engram of "ARE".
-         THEN  \ End of search for #67 "ARE".
-       -1 +LOOP  \ End of loop finding verb-form "ARE".
-     THEN  \ 2dec2009 End of test for choice other than "ARE"
-   THEN   \  2dec2009 End of test to intervene and change verb-form.
-
-   subjpsi @ 52 = IF
-     motjuste @ 67 = NOT IF
+   subjpsi @ 52 = IF  ( THEY )
+     motjuste @ 67 = NOT IF    ( ARE)
        midway @  t @  DO
          I       0 en{ @  67 = IF
            67 motjuste !
@@ -2542,6 +2550,7 @@ THEN
    motjuste @ psi !
    verbAct
    SpeechAct
+ ( EnAdjective -- a possibility here )
    NounPhrase
 ;
 

@@ -6,7 +6,7 @@
 Drag-and-drop code into editor; save C:\Win32For\Mind.F (not as Mind.F.txt).
 
 {{{
-( 3dec09A.F -- modification of 2dec09A.F Mind.Forth )
+( 4dec09A.F -- modification of 3dec09B.F Mind.Forth )
 ( May be named "Mind.F" or any "Filename.F" you choose. )
 ( Rename any Mind.F.txt as simply Mind.F for Win32Forth. )
 ( http://www.winzip.com/aboutzip.htm tells about WinZip. )
@@ -27,6 +27,8 @@ Drag-and-drop code into editor; save C:\Win32For\Mind.F (not as Mind.F.txt).
 \ 28nov09A.F reinstates ability to answer "who are you".
 \  2dec09A.F adds HE SHE IT WE as BeVerb subject pronouns.
 \  3dec09A.F inserts "AN" instead of "A" before a vowel.
+\  3dec09B.F SelfRef governs usage of personal pronouns.
+\  4dec09A.F has BeVerb use num(ber) to select verb-forms.
 DECIMAL  ( use decimal numbers )
 variable act 0 act ! ( activation level  )
 variable actbase ( audRecog discrimination activation base)
@@ -105,6 +107,7 @@ variable nounval 0 nounval ! ( from NounPhrase to MounAct )
 variable nphrnum 0 nphrnum ! ( NounPhrase number )
 variable nphrpos 0 nphrpos ! ( for testing in EnglishCog )
 variable num 0 num !  ( number-flag for the psi array )
+variable numflag ( 4dec2009 for selection of verb-forms )
 variable nwc    ( new-word-count for noun-stem recog )
 variable obstat ( Lets AudInput psi-damp a reentrant word.)
 variable oldact ( show the source of spreading activations)
@@ -150,6 +153,7 @@ variable spt  ( AudMem; AudInput: blank space time )
 variable stemgap  ( for avoiding false audRecog stems )
 variable stempsi  ( for singular noun-stem recognition )
 variable subj     ( flag to supercharge subject-nouns )
+variable subjectflag  ( 3dec2009 a default for NounPhrase )
 variable subjpsi  ( For Predicate to correct beVerb choice)
 variable sublen   ( length of audRecog subpsi word-stem )
 variable subpsi ( for AudRecog of sub-component wordstems )
@@ -1956,7 +1960,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
  74 psi !  0 num !  39 pre ! 65 seq ! 74 enx ! InStantiate
  ( ME -- for SelfReferentialThought )
   298 t ! 77 pho !   1 beg !  1 ctu !  0 audpsi ! AudMem \ M
-  299 t ! 69 pho !   0 beg !  0 ctu ! 50 audpsi ! AudMem \ E
+  299 t ! 69 pho !   0 beg !  0 ctu ! 65 audpsi ! AudMem \ E
  65 nen ! 65 fex !   7 pos ! 56 fin ! 298 aud    ! EnVocab
  65 psi !  1 num !  74 pre !  0 seq ! 65 enx ! InStantiate
 
@@ -2040,29 +2044,29 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
     kbtv @ 4 > IF  1 kbtv !  THEN
     CR ." Knowledge base traversal with kbtv at " kbtv @ .
     kbtv @ 1 = IF
-      56 nacpsi !
-      ." activating concept of YOU" CR
+      50 nacpsi !   ( 32dec2009 changing from 56=YOU to 50=I )
+      ." activating concept of I" CR
       62 nounval !
       nounAct
       0 nacpsi !
     THEN
     kbtv @ 2 = IF
-      37 nacpsi !
-      ." activating concept of PEOPLE" CR
+      56 nacpsi !  ( 3dec2009 changing from 37=PEOPLE to 56=you )
+      ." activating concept of YOU" CR
       62 nounval !
       nounAct
       0 nacpsi !
     THEN
     kbtv @ 3 = IF
-      39 nacpsi !
-      ." activating concept of ROBOTS" CR
+      50 nacpsi !  ( 3dec2009 changing from 39=ROBOTS to 50=I )
+      ." activating concept of I" CR
       62 nounval !
       nounAct
       0 nacpsi !
     THEN
     kbtv @ 4 = IF
-      55 nacpsi !  ( 26nov2009 change of concept )
-      ." activating concept of WHO" CR
+      39 nacpsi !  ( 3dec2009 changing from 55=WHO to 39=ROBOTS )
+      ." activating concept of ROBOTS" CR
       62 nounval !
       nounAct
       0 nacpsi !
@@ -2309,6 +2313,7 @@ nphrpos @ 7 = NOT IF
           THEN
         -1 +LOOP
       THEN  (  3dec2009 End of test for a vowel coming next )
+      1 numflag !  \  3dec2009 With "A" assume singular number. 
       SpeechAct
     THEN
     motjuste @ ghost @ = IF
@@ -2341,6 +2346,34 @@ THEN
 ;
 
 
+\ The SelfRef module aims for the following entelechy goals:
+\ [ ] It shall enable the AI to think of "you and I" as "we".
+\ [ ] It shall decide correctly the use of "I" or "ME".
+:  SelfRef  ( 3dec2009 self-reference with pronouns )
+\ CR ." SelfRef1: subjectflag = " subjectflag @ .   \ 3dec2009 Test
+\ CR ." SelfRef1: motjuste = " motjuste @ . CR  \ 3dec2009 Test
+  subjectflag @ 1 = IF  ( 3dec2009 NounPhrase seeks a subject )
+    motjuste @ 65 = IF  ( 3dec2009 If candidate is 65=ME )
+      50 motjuste !  ( 32dec2009 Change 65=ME to 50=I )
+      \ Activate auditory engram of pronoun "I":
+      midway @  t @  DO  \ Look backwards for 50=I.
+        I       0 en{ @  50 = IF  \ If #50 "I" is found,
+          50 motjuste !  \ "nen" concept #50 for "I".
+          I     6 en{ @  aud !  \  3dec2009 Recall-vector for "I".
+          LEAVE  \ Use the most recent engram of "I".
+        THEN  \ End of search for #50 "I".
+      -1 +LOOP  \ End of loop finding pronoun "I".
+\ CR ." SelfRef2: subjectflag = " subjectflag @ .   \ 3dec2009 Test
+\ CR ." SelfRef2: motjuste = " motjuste @ . CR  \ 3dec2009 Test 
+\ CR ." SelfRef2: aud = " aud @ . CR            \ 3dec2009 Test
+      motjuste @ psi ! \  3dec2009 For use in NounAct module.
+      NounAct          \  3dec2009 For slosh-over to any related concept.
+      SpeechAct        \  3dec2009 To say or display the pronoun
+    THEN  ( 3dec2009 End of test for candidate 65=ME )
+  THEN  ( 3dec2009 End of test for NounPhrase seeking a subject )
+;  \  3dec2009 End of SelfRef; return to NounPhrase module.
+
+
 :  NounPhrase ( select part of a thought )
   0 reject !
   EnReify ( move abstract Psi concepts to EnVocab reality )
@@ -2349,6 +2382,8 @@ THEN
   0 motjuste !
   5 opt !
   35 pov !
+  1 subjectflag !  ( 3dec2009 A default until countermanded )
+  dirobj @ 1 = IF 0 subjectflag ! THEN  ( 3dec2009 anti-default )
   0 psi !
   fyi @ 1 > IF CR
     ."   NounPhrase preview of associated concepts -- "
@@ -2406,6 +2441,10 @@ THEN
     THEN
   -1 +LOOP
   enDamp
+  subjectflag @ 1 = IF  \ 3dec2009 If seeking a subject...
+  \ motjuste @ 50 = IF SelfRef       THEN  \  3dec2009 Pronoun "I"
+    motjuste @ 65 = IF SelfRef EXIT  THEN  \  3dec2009 Pronoun "ME"
+  THEN   \ 3dec2009 End of test for positive subjectflag
   motjuste @  0 = IF
     midway @  t @  DO
       I       0 en{ @  54 = IF
@@ -2470,6 +2509,33 @@ THEN
 
 
 :  BeVerb ( intransitive verbs of being )
+   num @ 1 = IF  ( 4dec2009 If number is singular )
+       midway @  t @  DO
+         I       0 en{ @  66 = IF
+           66 motjuste !  ( 4dec2009 Set verbform to "IS" )
+           I     6 en{ @  aud ! ( 4dec2009 Start of IS-engram )
+           LEAVE
+         THEN
+       -1 +LOOP
+   THEN  ( 4dec2009 Pronoun-tests below may override these values. )
+   num @ 2 = IF  ( 4dec2009 if number is plural )
+       midway @  t @  DO
+         I       0 en{ @  67 = IF
+           67 motjuste !  ( 4dec2009 Set verbform to "ARE" )
+           I     6 en{ @  aud !  ( 4dec2009 Start of ARE-engram )
+           LEAVE
+         THEN
+       -1 +LOOP
+   THEN  ( 4dec2009 Pronoun-tests below may override these values. )
+   numflag @ 1 = IF  ( 4dec2009 If EnArticle "A" has set singular )
+       midway @  t @  DO
+         I       0 en{ @  66 = IF
+           66 motjuste !
+           I     6 en{ @  aud !
+           LEAVE
+         THEN
+       -1 +LOOP
+   THEN
    subjpsi @ 50 = IF  ( I )
      motjuste @ 57 = NOT IF  ( AM )
        midway @  t @  DO
@@ -2552,6 +2618,7 @@ THEN
    SpeechAct
  ( EnAdjective -- a possibility here )
    NounPhrase
+  0 numflag !  \  3dec2009 VerbPhrase also resets numflag.
 ;
 
 
@@ -2713,6 +2780,7 @@ THEN
   fyi @ 2 > IF
   CR ."   VerbPhrase end: detour = " detour @ .
   THEN
+  0 numflag !  \  3dec2009 Whether used here or in BeVerb.
 ;
 
 

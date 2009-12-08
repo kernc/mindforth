@@ -6,7 +6,7 @@
 Drag-and-drop code into editor; save C:\Win32For\Mind.F (not as Mind.F.txt).
 
 {{{
-( 4dec09A.F -- modification of 3dec09B.F Mind.Forth )
+( 7dec09A.F -- modification of 4dec09A.F Mind.Forth )
 ( May be named "Mind.F" or any "Filename.F" you choose. )
 ( Rename any Mind.F.txt as simply Mind.F for Win32Forth. )
 ( http://www.winzip.com/aboutzip.htm tells about WinZip. )
@@ -29,6 +29,7 @@ Drag-and-drop code into editor; save C:\Win32For\Mind.F (not as Mind.F.txt).
 \  3dec09A.F inserts "AN" instead of "A" before a vowel.
 \  3dec09B.F SelfRef governs usage of personal pronouns.
 \  4dec09A.F has BeVerb use num(ber) to select verb-forms.
+\  7dec09A.F answers "I DO NOT KNOW" if warranted.
 DECIMAL  ( use decimal numbers )
 variable act 0 act ! ( activation level  )
 variable actbase ( audRecog discrimination activation base)
@@ -81,6 +82,7 @@ variable inert  0 inert ! ( trigger of Ego resuscitation )
 variable inflex1  ( inflection for use in SpeechAct )
 variable instnum  ( instantiation number for whatIs/Be )
 variable IQ 6 IQ ! ( an invitation to code an IQ algorithm)
+variable isflag   ( 7dec2009 To detect input of "IS" )
 variable jdex   ( Testing a Reify subordinate loop index )
 variable jrt ( ReJuvenate "junior time" for memories moved)
 variable jux  0 jux ! ( holds Psi # of a JUXtaposed word )
@@ -105,7 +107,7 @@ variable newpsi   ( for singular-nounstem assignments )
 variable nlt  0 nlt !  ( not-later-than among time-points )
 variable nounval 0 nounval ! ( from NounPhrase to MounAct )
 variable nphrnum 0 nphrnum ! ( NounPhrase number )
-variable nphrpos 0 nphrpos ! ( for testing in EnglishCog )
+variable nphrpos 0 nphrpos ! ( for testing in EnCog )
 variable num 0 num !  ( number-flag for the psi array )
 variable numflag ( 4dec2009 for selection of verb-forms )
 variable nwc    ( new-word-count for noun-stem recog )
@@ -180,6 +182,7 @@ variable tult     ( t penultimate, or time-minus-one )
 variable txen ( Reify: time of transfer to English lexicon)
 variable ultpho  ( 17may2009   )
 variable unk  ( "unknown" variable for general use )
+variable unkflag  ( 7dec2009 for NewConcept to pass to SelfRef )
 variable upnext  ( Flag lets new input de-crest previous. )
 variable urpre ( original pre during call to other module )
 variable urpsi ( original psi for use in psiDamp, etc. ) 
@@ -827,25 +830,36 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
   lastword @ 1 = IF
     0 seq !
     0 lastword !
-  THEN
-\ t @ 201 > IF   \ 23apr2009 Avoid the EnBoot stretch.
-\ t @ 297 > IF   \ 25nov2009 Avoid the EnBoot stretch.
-\ t @ 298 > IF   \ 27nov2009 Avoid the EnBoot stretch.
+  THEN 
   t @ 301 > IF   \  2dec2009 Avoid the EnBoot stretch.
     whoflag @ 1 = IF
-      psi @ 57 = IF 57 beflag ! THEN
-      psi @ 66 = IF 66 beflag ! THEN
-      psi @ 67 = IF 67 beflag ! THEN
+      psi @ 57 = IF 57 beflag ! THEN  ( AM )
+      psi @ 66 = IF 66 beflag ! THEN  ( IS )
+      psi @ 67 = IF 67 beflag ! THEN  ( ARE )
       pos @ 5 = pos @ 7 = OR IF
         beflag @ seq !
         0 beflag !
         0 whoflag !
       THEN
     THEN
+
+    psi @ 54 = IF  \  7dec2009 Special handling of psi #54 "WHAT"
+      1 whatflag !
+      0 act !      \  7dec2009 To suppress "WHAT" during answer.
+    THEN           \  7dec2009 End of test for input of "WHAT"
+
     psi @ 55 = IF
       1 whoflag !
       0 act !
     THEN
+
+    whatflag @ 1 = IF  \ 7dec2009 If preceded by WHAT
+      psi @ 66 = IF    \ 7dec2009 If psi = "IS"
+        1 isflag !
+        0 act !
+      THEN            \ 7dec2009 End of test for 66=IS.
+    THEN     \ 7dec2009 End of test for positive whatflag
+
     singflag @ 1 = IF
       pos @ 5 = IF
         1 num !
@@ -1038,6 +1052,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
 
 :  NewConcept ( machine learning of new concepts )
   0 newpsi !
+  1 unkflag !  \  7dec2009 for SelfRef NOT-KNOW response.
   1 nen +!
   1 nwc +!
   nen @ IQ !
@@ -1238,6 +1253,9 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
         CR ." Type 'bye' to quit Forth, EXIT to quit DOS."
         CR
         0 audpsi ! 0 newpsi ! 0 oldpsi ! 0 stempsi !
+        0 isflag !    \  7dec2009 In case AI is run again.
+        0 unkflag !   \  7dec2009 In case AI is run again.
+        0 whatflag !  \ 7dec2009 In case AI is run again.
         QUIT
       THEN
       pho @ 0 > IF
@@ -1471,7 +1489,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
     3 t !  82 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ R
     4 t !  79 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ O
     5 t !  82 pho !  0 beg !  0 ctu ! 82 audpsi ! AudMem \ R
- 82 nen !  82 fex !  5 pos ! 32 fin !  1 aud    ! EnVocab
+ 82 nen !  82 fex !  5 pos ! 82 fin !  1 aud    ! EnVocab
  82 psi !   1 num !  0 pre !  0 seq ! 82 enx ! InStantiate
 
  ( A -- for EnArticle module )
@@ -1652,7 +1670,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
   108 t ! 73 pho !   1 beg !  1 ctu !  0 audpsi ! AudMem \ I
   109 t ! 83 pho !   0 beg !  0 ctu ! 66 audpsi ! AudMem \ S
  66 nen ! 66 fex !   8 pos ! 66 fin ! 108 aud    ! EnVocab
- 66 psi !  1 num !  68 pre !  0 seq ! 66 enx ! InStantiate
+ 66 psi !  1 num !   0 pre !  0 seq ! 66 enx ! InStantiate
 
 
  ( IT -- high word-frequency pronoun )
@@ -2002,37 +2020,14 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
   \ Concept #94 is "MY".        Added on 27nov2009
   \ Concept #95 is "IT"         Added on  2dec2009
 \ 72 urpsi ! \ As if "KIDS" were the cresting concept.
-  50 urpsi ! \ As if "I" were the cresting concept.
-\ 75 nen !
-\ 76 nen !  \ 25nov2009 After adding concept #76.
-\ 77 nen !  \ 25nov2009 After adding concept #77.
-\ 78 nen !  \ 25nov2009 After adding concept #78.
-\ 79 nen !  \ 25nov2009 After adding concept #79.
-\ 80 nen !  \ 26nov2009 After adding concept #80.
-\ 81 nen !  \ 26nov2009 After adding concept #81.
-\ 82 nen !  \ 26nov2009 After adding concept #82.
-\ 83 nen !  \ 27nov2009 After adding concept #83.
-\ 84 nen !  \ 27nov2009 After adding concept #84.
-\ 85 nen !  \ 27nov2009 After adding concept #85.
-\ 86 nen !  \ 27nov2009 After adding concept #86.
-\ 87 nen !  \ 27nov2009 After adding concept #87.
-\ 88 nen !  \ 27nov2009 After adding concept #88.
-\ 89 nen !  \ 27nov2009 After adding concept #89.
-\ 90 nen !  \ 27nov2009 After adding concept #90.
-\ 91 nen !  \ 27nov2009 After adding concept #91.
-\ 92 nen !  \ 27nov2009 After adding concept #92.
-\ 93 nen !  \ 27nov2009 After adding concept #93.
-\ 94 nen !  \ 27nov2009 After adding concept #94.
-  95 nen !  \ 27nov2009 After adding concept #95.
+\ 50 urpsi ! \ As if "I" were the cresting concept.
+  72 urpsi ! \ 7dec2009 As if "KIDS" were the cresting concept.
+  95 nen !
   5 bias !
   0 num !
   0 nwc !
   0 pho !
   0 pre !  0 seq !
-\ PsiDecay ( 28nov2009 debugging who-are-you )
-\ PsiDecay ( 28nov2009 debugging who-are-you )
-\ PsiDecay ( 28nov2009 debugging who-are-you )
-\ PsiDecay ( 28nov2009 debugging who-are-you )
 ;
 
 
@@ -2346,10 +2341,71 @@ THEN
 ;
 
 
+:  AuxVerb ( auviliary Verb )
+  midway @  t @  DO
+    I       0 en{ @  59 = IF
+      59 motjuste !
+      I     6 en{ @  aud !
+      LEAVE
+    THEN
+  -1 +LOOP
+  SpeechAct
+  fyi @ 2 > IF CR
+    ."   from AuxVerb after speaking of DO, "
+    ." psiDamping concept #59 DO"
+  THEN
+  59 urpsi !
+  51 caller !
+  psiDamp
+  0 caller !
+;
+
+
 \ The SelfRef module aims for the following entelechy goals:
 \ [ ] It shall enable the AI to think of "you and I" as "we".
 \ [ ] It shall decide correctly the use of "I" or "ME".
 :  SelfRef  ( 3dec2009 self-reference with pronouns )
+
+  isflag @ 1 = IF  \ 7dec2009 test for isflag from EnCog
+  \ CR ." SelfRef: entering NOT-KNOW operation "
+
+    \ We insert a "{" for the sake of Rejuvenate.
+    123  t @  2 aud{ !  \  123 is ASCII bracket "{"
+
+    midway @  t @  DO  \ Look backwards for 50=I.
+      I       0 en{ @  50 = IF  \ If #50 "I" is found,
+        50 motjuste !  \ "nen" concept #50 for "I".
+        I     6 en{ @  aud !  \  7dec2009 Recall-vector for "I".
+        LEAVE  \ Use the most recent engram of "I".
+      THEN  \ End of search for #50 "I".
+    -1 +LOOP  \ End of loop finding the word "I".
+    SpeechAct   \ 7dec2009 Speak or display the word "I".
+
+    AuxVerb   \ Fetch a form of auxiliary verb "do".
+
+    midway @  t @  DO  \ Look backwards for 12=not.
+      I       0 en{ @  12 = IF  \ If #12 "not" is found,
+        12 motjuste !  \ "nen" concept #12 for "not".
+        I     6 en{ @  aud !  \ Recall-vector for "not".
+        LEAVE  \ Use the most recent engram of "not".
+      THEN  \ End of search for #12 "not".
+    -1 +LOOP  \ End of loop finding the word "not".
+    SpeechAct   \ 7dec2009 Speak or display the word "not".
+
+
+    midway @  t @  DO  \ Look backwards for 61=KNOW.
+      I       0 en{ @  61 = IF  \ If #61 "KNOW" is found,
+        61 motjuste !  \ "nen" concept #61 for "KNOW".
+        I     6 en{ @  aud !  \ Recall-vector for "KNOW".
+        LEAVE  \ Use the most recent engram of "not".
+      THEN  \ End of search for #61 "KNOW".
+    -1 +LOOP  \ End of loop finding the word "KNOW".
+    SpeechAct   \ 7dec2009 Speak or display the word "KNOW".
+
+
+
+  THEN    \ 7dec2009 End of test for isflag from EnCog
+
 \ CR ." SelfRef1: subjectflag = " subjectflag @ .   \ 3dec2009 Test
 \ CR ." SelfRef1: motjuste = " motjuste @ . CR  \ 3dec2009 Test
   subjectflag @ 1 = IF  ( 3dec2009 NounPhrase seeks a subject )
@@ -2371,6 +2427,11 @@ THEN
       SpeechAct        \  3dec2009 To say or display the pronoun
     THEN  ( 3dec2009 End of test for candidate 65=ME )
   THEN  ( 3dec2009 End of test for NounPhrase seeking a subject )
+\ whatflag @ 1 = IF  \ 7dec2009 If passed on from BeVerb
+\   unkflag @ 1 = IF  \ 7dec2009 from NewConcept via BeVerb
+\      CR ." SelfRef: NOT-KNOW operation "
+\   THEN  \ 7dec2009 End of test for positive unkflag
+\ THEN  \ 7dec2009 End of test of whatflag
 ;  \  3dec2009 End of SelfRef; return to NounPhrase module.
 
 
@@ -2509,6 +2570,15 @@ THEN
 
 
 :  BeVerb ( intransitive verbs of being )
+   whatflag @ 1 = IF  \ 7dec2009 If "WHAT" positive
+     unkflag @ 1 = IF  \ 7dec2009 from NewConCept
+       SelfRef   \ 7dec2009 For special NOT-KNOW action.
+       0 unkflag !  \ 7dec2009 Reset unkflag.
+       EXIT  \ 7dec2009 Having let SelfRef take over.
+     THEN  \  7dec2009 End of test for positive unkflag
+     \ 7dec2009 Also let activation-too-low work with whatflag
+   THEN   \ 7dec2009 End of test for positive whatflag
+
    num @ 1 = IF  ( 4dec2009 If number is singular )
        midway @  t @  DO
          I       0 en{ @  66 = IF
@@ -2619,9 +2689,16 @@ THEN
  ( EnAdjective -- a possibility here )
    NounPhrase
   0 numflag !  \  3dec2009 VerbPhrase also resets numflag.
-;
+;  \ 7dec2009  BeVerb returns to VerbPhrase or...
 
 
+\ The VerbPhrase module aims for the following entelechy goals.
+\ [ ] If no predicate nominative is known, detour into a question.
+\ [ ] If no transitive verb is most active, default to a verb of being.
+\ [ ] If no direct object is found, detour into asking a question.
+\ 7dec2009 If no verb is found for a noun, defer to SelfRef NOT-KNOW.
+\ [ ] If a transitive verb is most active, try to find a direct object.
+\ [X] Find whatever verb is most active after a noun-phrase.
 :  VerbPhrase ( supervise verb syntax )
   EnReify
   0 act !
@@ -2702,9 +2779,13 @@ THEN
       THEN
     THEN
   -1 +LOOP
-  motjuste @ 57 = IF BeVerb EXIT THEN
-  motjuste @ 66 = IF BeVerb EXIT THEN
-  motjuste @ 67 = IF BeVerb EXIT THEN
+
+  whatflag @ 0 = IF  \  7dec2009 If no "what is?" question
+    motjuste @ 57 = IF BeVerb EXIT THEN  ( AM )
+    motjuste @ 66 = IF BeVerb EXIT THEN  ( IS )
+    motjuste @ 67 = IF BeVerb EXIT THEN  ( ARE )
+  THEN
+
    act @  verbval !
    0 psi !
    motjuste @ 0 > IF motjuste @ vbpsi ! THEN
@@ -2724,12 +2805,18 @@ THEN
   THEN
   motjuste @ 0 > IF
     act @ 20 < IF
-      1 detour !
-      1 recon !
-      fyi @ 1 > IF
-        CR ."     VerbPhrase: detour because "
-        ." verb-activation is only " act @ .
-      THEN
+      whatflag @ 1 = IF  \  7dec2009 If whatflag is positive
+        CR ." WHAT? question asked; unkflag = " unkflag @ .
+
+      THEN  \  7dec2009 End of test for a positive whatflag.
+      whatflag @ 0 = IF  \  7dec2009 If no "what" is being asked
+        1 detour !
+        1 recon !
+        fyi @ 1 > IF
+          CR ."     VerbPhrase: detour because "
+          ." verb-activation is only " act @ .
+        THEN
+      THEN  \  7dec2009 End of test for absence of whatflag,
     THEN
     detour @ 0 = IF
       nphrnum @ 1 = IF
@@ -2784,24 +2871,7 @@ THEN
 ;
 
 
-:  AuxVerb ( auviliary Verb )
-  midway @  t @  DO
-    I       0 en{ @  59 = IF
-      59 motjuste !
-      I     6 en{ @  aud !
-      LEAVE
-    THEN
-  -1 +LOOP
-  SpeechAct
-  fyi @ 2 > IF CR
-    ."   from AuxVerb after speaking of DO, "
-    ." psiDamping concept #59 DO"
-  THEN
-  59 urpsi !
-  51 caller !
-  psiDamp
-  0 caller !
-;
+( 7dec2009 Moving AuxVerb up ahead of SelfRef )
 
 
 :  NegSVO ( negation of Subject + Verb + Object )
@@ -2962,15 +3032,27 @@ THEN
 ;
 
 
-:  EnglishCog ( one of several possible languages )
+:  EnCog ( one of several possible languages )
   0 morphpsi !
   0 psi !
   0 sublen !
   t @ tov !
   fyi @ 2 > IF
-    CR ."   EnglishCog start: detour @ recon = "
+    CR ."   EnCog start: detour @ recon = "
     detour @ . recon @ . CR
   THEN
+
+  isflag @ 1 = IF  \ 7dec2009 If "WHAT IS" comes in
+    unkflag @ 1 = IF  \ 7dec2009 if WHAT IS unkflag
+    \ CR ." EnCog: Call SelfRef for NOT-KNOW possibility "
+      SelfRef   \ 7dec2009 For self-admission of ignorance.
+      0 isflag !  \ 7dec2009 Reset after use.
+      0 whatflag !  \ 7dec2009 Reset.
+      0 unkflag !   \ 7dec2009 Reset
+      EXIT   \  7dec2009 Turn thought over to SelfRef.
+    THEN  \ 7dec2009 End of test for unkflag.
+  THEN   \ 7dec2009 End of test for positive isflag
+
   yesorno @ 0 > IF
     SayYes
     CR
@@ -2978,7 +3060,7 @@ THEN
   THEN
   recon @ 1 = IF
     fyi @ 2 = IF
-      ."     EnglishCog calls the AskUser module. " CR
+      ."     EnCog calls the AskUser module. " CR
     THEN
     AskUser
     0 recon !
@@ -2987,7 +3069,7 @@ THEN
       negSVO
       ELSE
       fyi @ 2 = IF
-        ."     EnglishCog starts to think a sentence. " CR
+        ."     EnCog starts to think a sentence. " CR
       THEN
       CR ." Robot: "
       123  t @  2 aud{ !
@@ -3000,7 +3082,7 @@ THEN
   THEN
   recon @ 1 = IF
     fyi @ 2 = IF
-      CR ."   EnglisCogh calls Ask to increase the "
+      CR ."   EnCog calls AskUser to increase the "
       ." AI knowledge base."
     THEN
     AskUser
@@ -3008,7 +3090,7 @@ THEN
     0 detour !
   THEN
   fyi @ 2 > IF
-    CR ."   ENGCOG end: detour @ recon = "
+    CR ."   EnCog end: detour @ recon = "
     detour @ . recon @ . CR
   THEN
   5 bias !
@@ -3018,7 +3100,7 @@ THEN
 :  ThInk ( 8may2009 wiki-page form of module name )
   0 ordo !
   35 pov !
-  EnglishCog
+  EnCog  ( 7dec2009 wiki-page form of module name )
   fyi @ 1 = IF CR THEN
   0 recon !
   0 ordo !
@@ -3130,5 +3212,5 @@ THEN
 
 :  ALIFE  ( Call MainLoop if not called by user. )
   MainLoop
-; 
+;
 }}}

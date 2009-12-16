@@ -6,7 +6,7 @@
 Drag-and-drop code into editor; save C:\Win32For\Mind.F (not as Mind.F.txt).
 
 {{{
-( 11dec09A.F -- modification of 10dec09A.F Mind.Forth )
+( 16dec09A.F -- modification of 13dec09A.F Mind.Forth )
 ( May be named "Mind.F" or any "Filename.F" you choose. )
 ( Rename any Mind.F.txt as simply Mind.F for Win32Forth. )
 ( http://www.winzip.com/aboutzip.htm tells about WinZip. )
@@ -32,6 +32,9 @@ Drag-and-drop code into editor; save C:\Win32For\Mind.F (not as Mind.F.txt).
 \  7dec09A.F SelfRef answers "I DO NOT KNOW" if warranted.
 \ 10dec09A.F answers "dunno" if verb-activation is too low.
 \ 11dec09A.F can answer what-is or what-are with NOT-KNOW.
+\ 12dec09A.F increases SpreadAct "zone" search space.
+\ 13dec09A.F answers what-do with NOT-KNOW if warranted.
+\ 16dec09A.F fixes bug revealed in 32/64-bit iForth coding.
 DECIMAL  ( use decimal numbers )
 variable act 0 act ! ( activation level  )
 variable actbase ( audRecog discrimination activation base)
@@ -65,9 +68,12 @@ variable decpsi2 ( decremend concept 2 avoids repetition )
 variable decpsi3 ( decremend concept 3 tracks recent psi )
 variable detour  ( abort-flag if knowledge is insufficient)
 variable dirobj  ( indicates seeking for a direct object )
+variable doesflag ( 13dec2009 SelfRef answers "What does? )
+variable doflag  ( 13dec2009 SelfRef answers "What do...? )
 variable dopsi  ( direct-object-psi to calculate "thotnum")
+variable dunno  ( 13dec2009 Flag for EnCog to call SelfRef )
 variable edge  0 edge ! ( Rejuvenate: edge-of-thought flag)
-variable EEG 1 EEG ! ( safety measure if users neglect AI )
+\ variable EEG 1 EEG ! ( safety measure if users neglect AI )
 variable en6 ( EnVocab recall-vector "aud" in Rejuvenate )
 variable enx ( holds concept-number in transfer to English)
 variable eot ( end-of-text for use in AudInput )
@@ -81,7 +87,7 @@ variable gusrec  ( for external recognition by GusRecog )
 variable hipsi   ( "high-psi" tag on wavecrest concept )
 ( I = Index in loops; does not require a fetch "@" )
 variable img  ( visRecog: for future use as "image" )
-variable inert  0 inert ! ( trigger of Ego resuscitation )
+\ variable inert  0 inert ! ( trigger of Ego resuscitation )
 variable inflex1  ( inflection for use in SpeechAct )
 variable instnum  ( instantiation number for whatIs/Be )
 variable IQ 6 IQ ! ( an invitation to code an IQ algorithm)
@@ -142,7 +148,7 @@ variable psibase ( winning psibase with winning actbase )
 variable questype  ( oldConcept; Conjoin: "question-type" )
 variable quiet 1 quiet ! ( status flag for auditory input )
 variable recon 0 recon ! ( reconnaissance flag for Q & A )
-variable redux  ( For oldest concept to be revived. )
+\ variable redux  ( For oldest concept to be revived. )
 variable reject 0 reject ! ( used in sentence-generation )
 variable retropsi   ( for AudInput and Audmem noun-stems )
 variable residuum 0 residuum ! ( activation after PsiDamp )
@@ -223,7 +229,8 @@ variable zone  ( time-zone for "pre" and "seq" searches )
 cns @  8  CHANNEL  psi{  ( Mindcore concept array "psi" )
 cns @  7  CHANNEL   en{  ( English lexicon array "en" )
 cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
-:  PSI-CLEAR
+
+:  PsiClear \ 16dec2009 Name modified for sake of wiki-pages.
   1   t @  1 +  DO
     0 I 1 psi{ !
   -1 +LOOP
@@ -245,7 +252,9 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
     0 I  unk @   en{ !
   LOOP
   1  unk +!
-  unk @  6  <  WHILE
+\ Bug discovered during iForth supercomputer AI coding:
+\ unk @ 6 < WHILE \ Showstopper bug in 32/64-bit iForth.
+  unk @ 7 < WHILE \ 16dec2009 Cover #0 to #5, i.e. 6
   REPEAT
   0 unk !
   1 tov !
@@ -453,9 +462,9 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
   fyi @ 2 = IF
     CR ." Tutorial mode is now in effect. "
     ."  Enter input or wait for output."
-    EEG @ 0 = IF
-      CR ." Duplicate thought may have been detected."
-    THEN
+  \ EEG @ 0 = IF  ( 16dec2009 for use in EgoAct )
+  \   CR ." Duplicate thought may have been detected."
+  \ THEN  ( 16dec2009 EEG is slated for deletion )
   THEN
   CR  ." Robot: "
     t @ tov @  DO
@@ -493,12 +502,13 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
     fyi @ 3 = IF
       CR ." sprA pos. seq & spike = " seq @ .  spike @ . CR
     THEN
-    zone @ 9 +   zone @  DO
+  \ zone @ 9 +   zone @  DO
+    zone @ 32 +   zone @  DO  \ 12dec2009 Search past non-seq psi.
       I 0  psi{ @  seqsyn @  =  IF
-    fyi @ 3 = IF
-      CR ." SprA matching seq w. spike = "
-      seq @ .  spike @ . CR
-    THEN
+        fyi @ 3 = IF
+          CR ." SprA matching seq w. spike = "
+          seq @ .  spike @ . CR
+        THEN
         fyi @ 1 > IF
           pov @ 35 = IF
             0 psi7 !
@@ -592,7 +602,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
         fyi @ 3 = IF
           ." sprA: spiking seq " spike @ . seq @ .
         THEN
-        spike   @   I  1 psi{ +!
+        spike   @   I  1 psi{ +!  ( add spike to seqsyn )
         fyi @ 2 > IF
           pov @ 35 = IF
             I 1 psi{ @ .
@@ -601,23 +611,23 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
             THEN
           THEN
         THEN
-          fyi @ 3 = IF
-            I 1 psi{ @ . ." (lim = 63) for t=" I rv !
-              BEGIN
-                -1 rv +!
-                rv @ 3 aud{ @ 1 =
-              UNTIL
-              rv @ .
-              BEGIN
-                rv @ 0 aud{ @ EMIT  1 rv +!
-                rv @ 0 aud{ @ 32 =
-              UNTIL
-              ."  engram; in sprA spike = " spike @ .
-              0 rv !
-           THEN
-          I 1 psi{ @ 63 > IF
-            63 I 1 psi{ !
-          THEN
+        fyi @ 3 = IF
+          I 1 psi{ @ . ." (lim = 63) for t=" I rv !
+          BEGIN
+            -1 rv +!
+            rv @ 3 aud{ @ 1 =
+          UNTIL
+          rv @ .
+          BEGIN
+            rv @ 0 aud{ @ EMIT  1 rv +!
+            rv @ 0 aud{ @ 32 =
+          UNTIL
+          ."  engram; in sprA spike = " spike @ .
+          0 rv !
+        THEN
+        I 1 psi{ @ 63 > IF
+          63 I 1 psi{ !
+        THEN
         I zone  @  6 + > IF
           fyi @ 2 > IF
             CR ." executing LEAVE at zone = " zone @ .
@@ -862,6 +872,17 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
         1 areflag !   \ 11dec2009 For use in SelfRef
         0 act !
       THEN            \ 11dec2009 End of test for 67=ARE.
+      psi @ 59 = IF   \  7dec2009 If psi = "DO"
+        1 doflag !    \ 11dec2009 For use in SelfRef
+        PsiClear      \ 16dec2009 Favor query elements.
+        0 act !
+        PsiDamp   \ 13dec2009 Level the playing field.
+      \ PsiDamp   \ 16dec2009 Vitiates effect of PsiClear?
+      THEN            \  7dec2009 End of test for 59=DO.
+      psi @ 87 = IF   \ 11dec2009 If psi = "DOES"
+        1 doesflag !  \ 11dec2009 For use in SelfRef
+        0 act !
+      THEN            \ 11dec2009 End of test for 87=DOES.
     THEN     \ 7dec2009 End of test for positive whatflag
     singflag @ 1 = IF
       pos @ 5 = IF
@@ -1258,6 +1279,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
         0 audpsi ! 0 newpsi ! 0 oldpsi ! 0 stempsi !
         0 isflag !   \  7dec2009 In case AI is run again.
         0 areflag !  \ 11dec2009 In case AI is run again.
+        0 doflag !   \ 13dec2009 In case AI is run again.
+        0 doesflag ! \ 13dec2009 In case AI is run again.
         0 unkflag !  \  7dec2009 In case AI is run again.
         0 whatflag ! \  7dec2009 In case AI is run again.
         QUIT
@@ -1311,17 +1334,17 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
           1 obstat !
         THEN
       THEN
-      EEG @ 0 = IF
-        psi @ 0 > IF
-           psi @ redux !
-           fyi @ 2 = IF
-             7 EMIT
-             CR ."  Resurrecting oldest concept #"
-             redux @ .
-             CR
-           THEN
-        THEN
-      THEN
+    \ EEG @ 0 = IF
+    \   psi @ 0 > IF
+    \      psi @ redux !
+    \      fyi @ 2 = IF
+    \        7 EMIT
+    \        CR ."  Resurrecting oldest concept #"
+    \        redux @ .
+    \        CR
+    \      THEN
+    \   THEN
+    \ THEN
     THEN
     pov @ 42 = IF
       AudListen
@@ -1641,7 +1664,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
    90 t ! 72 pho !   1 beg !  1 ctu !  0 audpsi ! AudMem \ H
    91 t ! 73 pho !   0 beg !  1 ctu !  0 audpsi ! AudMem \ I
    92 t ! 77 pho !   0 beg !  0 ctu ! 92 audpsi ! AudMem \ M
- 92 nen ! 92 fex !   7 pos ! 92 fin ! 92 aud    ! EnVocab
+ 92 nen ! 92 fex !   7 pos ! 92 fin ! 90 aud    ! EnVocab
  92 psi !  1 num !   0 pre !  0 seq ! 92 enx ! InStantiate
 
  ( HIS -- high word-frequency pronoun )
@@ -2255,42 +2278,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
 ;
 
 
-:  EgoAct ( revive ego after brain-dead flatline )
-  fyi @ 1 > IF CR CR
-    ."   Calling EgoAct; inert = " inert @ .
-  THEN
-  0 recon !
-  0 psi !
-  0 inert !
-  0 recon !
-  EEG @ 0 = IF
-  fyi @ 2 = IF
-    CR ." Repetitious thought detected; EgoAct steps in."
-  THEN
-    vault @ rv !
-      rv @ 0 > IF
-        BEGIN
-          rv @ 0 aud{ @ EMIT  1 rv +!
-          rv @ 0 aud{ @ 32 >
-        UNTIL
-
-        CR ." EgoAct module recalls the oldest memory -- "
-        rv @ aud !
-        SpeechAct
-      THEN
-      0 rv !
-     fyi @ 2 > IF
-       CR ."  EGO: EEG = " EEG @ .  ." psi = " psi @ .
-       ." topic = " topic @ .  ." redux = " redux @ .
-     THEN
-     redux @ psi !
-     40 nounval !
-     nounAct
-     0 redux !
-  THEN
-  EEG @ 0 = IF 3 EEG ! THEN
-;
-
+ ( 16dec2009 EgoAct deleted in favor of KbTraversal )
+ 
 
 :  EnArticle ( select "a" or "the" before a noun )
 nphrpos @ 7 = NOT IF
@@ -2398,6 +2387,37 @@ THEN
     -1 +LOOP  \ End of loop finding the word "KNOW".
     SpeechAct   \ 7dec2009 Speak or display the word "KNOW".
   THEN    \ 7dec2009 End of test for isflag from EnCog
+
+  doflag @   doesflag @  OR  1 =   IF \ 13dec2009
+    \ We insert a "{" for the sake of Rejuvenate.
+    123  t @  2 aud{ !  \  123 is ASCII bracket "{"
+    midway @  t @  DO  \ Look backwards for 50=I.
+      I       0 en{ @  50 = IF  \ If #50 "I" is found,
+        50 motjuste !  \ "nen" concept #50 for "I".
+        I     6 en{ @  aud !  \ 13dec2009 Recall-vector for "I".
+        LEAVE  \ Use the most recent engram of "I".
+      THEN  \ End of search for #50 "I".
+    -1 +LOOP  \ End of loop finding the word "I".
+    SpeechAct \ 13dec2009 Speak or display the word "I".
+    AuxVerb   \ Fetch a form of auxiliary verb "do".
+    midway @  t @  DO  \ Look backwards for 12=not.
+      I       0 en{ @  12 = IF  \ If #12 "not" is found,
+        12 motjuste !  \ "nen" concept #12 for "not".
+        I     6 en{ @  aud !  \ Recall-vector for "not".
+        LEAVE  \ Use the most recent engram of "not".
+      THEN  \ End of search for #12 "not".
+    -1 +LOOP  \ End of loop finding the word "not".
+    SpeechAct \ 13dec2009 Speak or display the word "not".
+    midway @  t @  DO  \ Look backwards for 61=KNOW.
+      I       0 en{ @  61 = IF  \ If #61 "KNOW" is found,
+        61 motjuste !  \ "nen" concept #61 for "KNOW".
+        I     6 en{ @  aud !  \ Recall-vector for "KNOW".
+        LEAVE  \ Use the most recent engram of "not".
+      THEN  \ End of search for #61 "KNOW".
+    -1 +LOOP  \ End of loop finding the word "KNOW".
+    SpeechAct \ 13dec2009 Speak or display the word "KNOW".
+  THEN    \ 13dec2009 End of test for doflag from EnCog
+
   subjectflag @ 1 = IF  ( 3dec2009 NounPhrase seeks a subject )
     motjuste @ 65 = IF  ( 3dec2009 If candidate is 65=ME )
       50 motjuste !  ( 32dec2009 Change 65=ME to 50=I )
@@ -2501,6 +2521,13 @@ THEN
   THEN
   act @ nounval !
   nounval @ 3 - nounval !
+
+  dirobj @ 1 = IF  \ 13dec2009 Only if seeking direct object
+    motjuste @ 0 > IF  \ 13dec2009 If a candidate is found
+\ CR ." NPhr: candidate d.o. & act = " motjuste @ .  act @ .
+    THEN    \ 13dec2009 End of test for a positive candidate.
+  THEN  \ 13dec2009 End of test for seeking a direct object.
+
   act @ 2 < IF
     motjuste @ 0 > IF
       1 reject !
@@ -3001,6 +3028,8 @@ THEN
   0 whatflag !  \ 11dec2009 For sake of SelfRef
   0 isflag !    \ 11dec2009 For sake of SelfRef
   0 areflag !   \ 11dec2009 For sake of SelfRef
+  0 doflag !    \ 13dec2009 For sake of SelfRef
+  0 doesflag !  \ 13dec2009 For sake of SelfRef
   0 unkflag !   \ 11dec2009 For sake of SelfRef
 ;
 
@@ -3014,6 +3043,8 @@ THEN
    0 whatflag !  \ 10dec2009 Prevent pseudo-whatflag.
    0 isflag !    \ 10dec2009 Prevent pseudo-isflag.
    0 areflag !   \ 11dec2009 Prevent pseudo-areflag.
+   0 doflag !    \ 13dec2009 Prevent pseudo-doflag.
+   0 doesflag !  \ 13dec2009 Prevent pseudo-doesflag.
 ;
 
 
@@ -3026,6 +3057,33 @@ THEN
     CR ."   EnCog start: detour @ recon = "
     detour @ . recon @ . CR
   THEN
+
+  doflag @ 1 = IF  \ 13dec2009 Try to intercept pre-thought.
+  \ CR ." EnCog: doflag = " doflag @ .
+    1 dunno !  \ 13dec2009 Assume default call to SelfRef.
+    midway @  t @  DO  \ Examine recent Psi nodes.
+      I 5 psi{ @  5 = IF  \ 13dec2009 Look for nouns not verbs.
+        I   1 psi{ @ 0 > IF  \ If activation is positive.
+          I   1 psi{ @ 13 < IF  \ If activation is below...
+          \ CR  ." EnCog: noun 1-12 act at time " I . CR
+            0 dunno !  \ 13dec2009 Assume slosh-over
+          THEN  \ 13dec2009 End of test for positive but low
+        THEN \ 13dec2009 End of activation-test
+      THEN \ 13dec2009 End of test for 5=noun
+    -1  +LOOP  \ End of backwards loop checking activations.
+    dunno @ 1 = IF  \ 13dec2009 If still positive, SelfRef
+      SelfRef  \ 13dec2009 Call SelfRef to say NOT-KNOW
+      0 dunno !  \ 13dec2009 Reset after using.
+      0 whatflag !  \ 13dec2009
+      0 doflag !    \ 13dec2009
+      0 doesflag !  \ 13dec2009
+      PsiDamp    \ 13dec2009 Suppress stray activations.
+      EXIT  \ 13dec2009 Abandon any other incipient thought.
+    THEN  \ 13dec2009 Test for a still positive "dunno"
+    0 doflag !  \ 13dec2009 Reset before normal thought.
+    0 whatflag !  \ 13dec2009 Reset for normal thought.
+  THEN  \ 13dec2009
+
   isflag @  areflag @  OR  1 = IF  \ 11dec2009
     unkflag @ 1 = IF  \ 7dec2009 if WHAT IS unkflag
       SelfRef   \ For self-admission of ignorance.
@@ -3036,6 +3094,20 @@ THEN
       EXIT   \  7dec2009 Turn thought over to SelfRef.
     THEN  \ 7dec2009 End of test for unkflag.
   THEN   \ 7dec2009 End of test for positive isflag
+
+  doflag @  doesflag @  OR  1 = IF  \ 13dec2009
+    unkflag @ 1 = IF  \ 13dec2009 if WHAT IS unkflag
+      SelfRef   \ For self-admission of ignorance.
+      0 isflag !    \ 13dec2009 Reset.
+      0 areflag !   \ 13dec2009 Reset.
+      0 doflag !    \ 13dec2009 Reset after use.
+      0 doesflag !  \ 13dec2009 Reset after use.
+      0 whatflag !  \ 13dec2009 Reset.
+      0 unkflag !   \ 13dec2009 Reset
+      EXIT   \ 13dec2009 Turn thought over to SelfRef.
+    THEN  \ 13dec2009 End of test for unkflag.
+  THEN   \ 13dec2009 End of test for positive doflag
+
   yesorno @ 0 > IF
     SayYes
     CR

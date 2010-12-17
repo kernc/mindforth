@@ -233,6 +233,108 @@ changelog into two divergent channels through time.
 \ 20may09A.F adds "S" to an English verb in third-person singular.
 \ 23may09A.F reformats the EnBoot sequence to fit within 60 characters.
 \ 24may09A.F prevents "S" from accumulating on verbs; uses 60 char width.
+
+\  7dec09A.F SelfRef answers "I DO NOT KNOW" if warranted.
+\ 10dec09A.F answers "dunno" if verb-activation is too low.
+\ 11dec09A.F can answer what-is or what-are with NOT-KNOW.
+\ 12dec09A.F increases SpreadAct "zone" search space.
+\ 13dec09A.F answers what-do with NOT-KNOW if warranted.
+\ 16dec09A.F fixes bug revealed in 32/64-bit iForth coding.
+\ 18dec09A.F comments out obsolete variables pre-deletion.
+\ 20dec09A.F abandons generation in favor of comprehension.
+\ 22dec09A.F zeroes noun-activations for what-do questions.
+\ 22dec09B.F answers "what-do" tersely or "I DO NOT KNOW".
+\ 23dec09A.F restores EnCog English cognition mind-module.
+\ 24dec09A.F answers questions of the "what-do-X-do" form.
+\ 25dec09A.F fails to advance and is therefore abandoned.
+\ 27dec09A.F introduces qus quv quo to track query-words.
+\ 27dec09B.F responds with subject + verb + query-object.
+\ 28dec09A.F answers what-do-X-do with diagnostic messages.
+\ 29dec09A.F improves upon "What-do-X-do?" responses.
+\ 30dec09A.F introduces EnPronoun English pronoun module.
+\  1jan10A.F solves post-query-thought SelfRef nacpsi bug.
+\  1jan10B.F removes diagnostic messages needed in bugfix.
+\  2jan10A.F uses "quset" flag to isolate EnCog module.
+\  4jan10A.F uses new query flags for sake of EnCog.
+\  4jan10B.F isolates EnCog from OldConcept comprehension.
+\  5jan10A.F guts heart of EnCog and builds back up again.
+\  5jan10B.F removes diagnostic messages from bugfix code.
+\  6jan10A.F builds back up "what-do-X-do?" code in EnCog.
+\  7jan10A.F merges what-do-X-do and what-do-X-verb code.
+\  8jan10A.F avoids generation of non-reply query thought.
+\  8jan10B.F removes diagnostic messages prior to upload.
+\ 11jan10A.F troubleshoots query-variables used for EnCog.
+\ 12jan10A.F fixes bug in .echo to prevent infinite loops.
+\ 12jan10B.F deactivates "do" during what-do-X-do queries.
+\ 13jan10A.F answers what-do-X-do? with OldConcept search.
+\ 13jan10B.F removes diagnostic messages after debugging.
+\ 15jan10A.F solves InStantiate "seq" mis-assignment bug.
+\ 16jan10A.F removes diagnostic messages used for bugfix.
+\ 18jan10A.F introduces SubjectClear for query responses.
+\ 20jan10A.F removes diagnostics prior to upload of code.
+\ 21jan10A.F blanks MindGrid for "what-do-X-do?" queries.
+\ 22jan10A.F alternates faster and slow speed of thought.
+\ 31jan10A.F expands English array with "mfn" gender tag.
+\ 10apr10A.F calls EnPronoun from EnCog to use HE SHE IT.
+\ 20apr10A.F adds twelve new concepts to EnBoot sequence.
+\  8may10A.F fixes a major bug always hidden in AudRecog.
+\ 10may10A.F general clean-up; KbTraversal activates GOD.
+\ 23jul10A.F omits EnArticle before name after who-query.
+\ 24jul10A.F adds "YOU ARE YOURSELF" to EnBoot sequence.
+\ 25jul10A.F introduces WhoPlex as a quasi-mind-module.
+\ 26jul10A.F removes test-comments prior to Web upload.
+\ 27jul10A.F makes "IS" a default verb of being in BeVerb.
+\ 30jul10A.F merges incoming AM IS ARE with "fin" #58=BE.
+\  7aug10A.F introduces WhoBe for asking who-queries.
+\ 10aug10A.F coordinates WhoBe with BeVerb and AskUser.
+\ 11aug10A.F in NounAct de-activates 55=WHO after queries.
+\ 17aug10A.F calls WhoBe if noun has male or fem. gender.
+\ 19aug10A.F makes knowledge-base responses to who-queries.
+\ 20aug10A.F skips A, THE between associative psi concepts.
+\ 23aug10A.F calls AskUser, WhatIs, WhoBe more correctly.
+\ 24aug10A.F enhances query-responses made by EnCog.
+\ 25aug10A.F retrieves knowledge gained from human users.
+\ 27aug10A.F modifies VerbPhrase to correct be-verb forms.
+\ 28aug10A.F introduces "prsn" for 1st, 2nd and 3rd person.
+\ 29aug10A.F uses "prsn" to govern inflectional "S" ending.
+\ 30aug10A.F lets VerbPhrase govern SpeechAct inflections.
+\ 31aug10A.F has subject-verb agreement in person & number.
+\  1sep10A.F uses "prsn" variable to improve WhoBe module.
+\  5sep10A.F codes quasi-neuronal inhibition into the AI.
+\  9sep10A.F causes verb-node inhibition to dwindle down.
+\ 11sep10A.F fixes VerbPhrase bugs impeding self-knowledge.
+\ 12sep10A.F inhibits old KB and new predicate nominatives.
+\ 13sep10A.F tightens up on BeVerb control of verb forms.
+\ 14sep10A.F blocks inhibition to focus on what-queries.
+\ 17sep10A.F re-organizes EnBoot sequence for inhibitions.
+\ 19sep10A.F uses KbTraversal to greet users with no input.
+\ 20sep10A.F achieves KB-exhaustive responses to questions.
+\ 21sep10A.F uses inhibition instead of whatflag settings.
+\ 24sep10A.F clamps down on stray activation in NounPhrase.
+\ 26sep10A.F answers "what are you" or "what am i" from KB.
+\ 27sep10A.F provides comprehensive overview of activation.
+\ 28sep10A.F removes distortions from spreading activation.
+\ 28sep10C.F uses threshold-test to reject inactive nouns.
+\  3oct10B.F uses "qusub" for provisional query-subjects.
+\  6oct10A.F adjusts settings to reduce stray activations.
+\  8oct10A.F fixes deglobalization bug in VerbAct module.
+\  9oct10A.F improves upon be-verb KB responses to queries.
+\ 10oct10A.F revisits Subject-Verb slosh-over onto objects.
+\ 12oct10A.F interim release of 10oct10A minus diagnostics.
+\ 13oct10A.F disallows calls from ReActivate to SpreadAct.
+\ 13oct10B.F is 13oct10A.F cleaned up for release to Web.
+\ 14oct10A.F uses subject-verb slosh-over to direct object.
+\ 14oct10B.F is 14oct10A.F cleaned up for release to Web.
+\ 17oct10A.F uses JSAI techniques to enhance slosh-over.
+\ 18oct10A.F shows verb-object slosh-over in Tutorial mode.
+\ 22oct10A.F begins to reconcile inhibition and slosh-over.
+\ 24oct10A.F is 22oct10A.F with diagnostics commented out.
+\  2nov10A.F in VerbAct narrows gap between "spike" values.
+\  3nov10A.F is 2nov10A.F with diagnostics commented out.
+\  5nov10A.F psi-damps also-ran candidates in NounPhrase.
+\  6nov10A.F is 5nov10A.F with diagnostics commented out.
+\  7nov10A.F psi-damps be-verbs to reduce stray activation.
+\  9nov10A.F is 7nov10A.F with diagnostics commented out.
 }}}
 
 
@@ -244,7 +346,7 @@ http://en.wikipedia.org/wiki/Changelog
 
 http://en.wikipedia.org/wiki/Internet_Archive 
 
-http://agi-roadmap.org/Milestones 
+http://www.scn.org/~mentifex/mindforth.txt
 
 
 === MemeSpace === 
@@ -256,6 +358,6 @@ AdminisTrivia AiEvolution AiTree CodeBase CodeComplete DailyMiracle DeBug EnTelE
 
 Click to run 
 
-[http://www.scn.org/~mentifex/Mind.html http://farm1.static.flickr.com/51/179758367_f283f0d6e0_s.jpg] 
+[http://www.scn.org/~mentifex/AiMind.html http://farm1.static.flickr.com/51/179758367_f283f0d6e0_s.jpg] 
 
 AI For You 

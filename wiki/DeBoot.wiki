@@ -1,0 +1,209 @@
+#summary Deutsch bootstrap for German artificial intelligence
+#labels bootstrap,DeKi,diagram,German,module
+
+CognitiveArchitecture EnBoot MileStones
+
+=== Diagram === 
+
+{{{ 
+  /^^^^^^^^^^^\ Each Syntax Needs Bootstrap Words /^^^^^^^^^^^\
+ /   EYE       \                                 /    EAR      \
+|               |CONCEPTS                       |   _________   |
+|               |   | | |     ______________    |  /DeBoot   \  |
+|   _______     |   | | |    /              \   | / German    \ |
+|  /old    \!!!!|!!!| | |   / English syntax \  | \ bootstrap / |
+| / image   \---|---+ | |   \ (needs EnBoot) /  |  \"vault"  /  |
+| \ recog   /   |  k| | |    \______________/   |   \_______/   |
+|  \_______/    |  l| | |     ______________    |oldest memories|
+|               |  e| |l|    /              \   |to be forgotten|
+|               |  i| |e|   / Russian syntax \  |               |
+|   visual      |  d| |u|   \ (needs RuBoot) /  |newest memories|
+|               |  e| |t|    \______________/   |to be recycled |
+|   memory      |  r|m|e|           _______     |periodically by|
+|               |   |a| |          /       \    |backwards shift|
+|   channel     |   |c| |         / German  \---|--------------\|
+|               |   |h| |         \ syntax  /   |              ||
+|               |   |e| |          \_______/    |              ||
+|   _______     |   |n| |              |        |   _________  ||
+|  /new    \    |   |_|_|_           __V____    |  /"kleider"\ ||
+| / percept \   |  / Psi  \---------/ De    \---|-/ "machen"  \||
+| \ engram  /---|-/concepts\ reify / lexicon \  | \ "leute"   / |
+|  \_______/    | \________/-------\_________/--|--\_________/  |
+}}}
+
+
+=== Purpose === 
+
+The purpose of the German bootstrap "DeBoot" module is to load a basic German vocabulary into the AI Mind at the start of each session of running the AI software. Some artificial intelligence enthusiasts may object that an AI should learn all its vocabulary from experience with the world, as human babies do. Although such a way of learning is preferable to having an innate vocabulary, the AI software will first need to become far more sophisticated before it is powerful enough to function as a _tabula rasa_ or blank slate that is genetically able to learn what it needs to know. MindForth and the German DeKi need the innate bootstrap vocabulary to function as a proof-of-concept AI that can primitively think and learn. 
+
+=== Inclusion === 
+
+IRRTUM 
+ABER 
+AUCH 
+AUF 
+AUTO AUTOS 
+BITTE 
+BRAUCHEN 
+DASS 
+DENKEN 
+DENN 
+DER DIE DAS DIE DEM 
+DEUTSCH 
+DING DINGE 
+DU DEIN DIR DICH 
+ENGLISCH 
+ER SEIN IHM IHN 
+ES SEIN IHM ES 
+ETWAS 
+FALSCH 
+FAMILIE FAMILIEN 
+FILM FILME 
+FRAGE 
+FRAGEN 
+FRAU FRAUEN 
+FREUND FREUNDE 
+FREUNDIN FREUDINNEN 
+GEDICHT GEDICHTE 
+GEHEN 
+GEHIRN GEHIRNE 
+GERN 
+GOTT 
+GROSS 
+GUT 
+HABEN HAST HAT 
+HALLO 
+HEISSEN 
+IHR EUER EUCH EUCH 
+JA 
+JEMAND 
+JETZT 
+LEUTE 
+MAN 
+MIT 
+ICH MEIN MIR MICH 
+IDEE 
+JUNGE JUNGEN 
+KEIN 
+KENNEN 
+KIND KINDER 
+KLEIN 
+LERNEN 
+LIEBEN 
+MACHEN 
+MANN MAENNER 
+MENSCH MENSCHEN 
+NEIN 
+NICHT 
+NICHTS 
+OB 
+ODER 
+OHNE 
+PERSON PERSONEN 
+PROBLEM PROBLEME 
+ROBOTER ROBOTER 
+SAGEN 
+SCHACH 
+SCHLECHT 
+SEHEN SIEHST SIEHT 
+SEI BIN BIST IST SIND SEID 
+SICH 
+SIE IHR IHR SIE 
+SIE IHR IHNEN SIE 
+SONST 
+SPIELEN SPRECHEN SPRICHST SPRICHT 
+SUCHEN 
+TIER TIERE 
+TISCH TISCHE 
+TUN TUE TUST TUT TUN TUT TUN 
+UND 
+VERSTEHEN 
+VIELLEICHT 
+VON 
+WAHR 
+WARUM 
+WAS 
+WEIL 
+WENN 
+WER 
+WIR UNSER UNS UNS 
+WORT WOERTER 
+WOTAN 
+ZEUG 
+ZU 
+ANDRU SPRICHT ENGLISCH 
+KLEIDER MACHEN LEUTE 
+ICH DENKE ALSO BIN ICH 
+ICH BIN WOTAN 
+ICH BIN EINE PERSON 
+ROBOTER BRAUCHEN MICH 
+
+=== Rationale === 
+
+The German-speaking artificial intelligence DeKi contains just 
+enough German words to demonstrate and engage in four kinds of thought: 
+  # positive transitive ideas ("Kleider machen Leute"); 
+  # negated transitive ideas ("Roboter essen nicht Fleisch"); 
+  # positive be-verb statements ("Ich bin Wotan"); 
+  # negated be-verb statements ("Der Mann ist nicht ein Spion"). 
+
+Some of the German words are included as examples of parts of speech which the AI Mind may not yet use for thinking, but which are likely to be needed in due course as the AI is enlarged and improved. Other words are included for testing purposes and for their potential in the areas of machine reasoning and logic. 
+
+Although these words have been selected from German word frequency lists found on the Internet, the innate vocabulary of the AI Mind 
+is not automatically a list of the most frequent German words. The primitive AI may not be ready to make use of some very frequent words on the one hand, and on the other hand the AI may contain words like "ROBOTER" which may be relatively rare but germane to the science of artificial intelligence. 
+
+=== Evolution === 
+
+The vocabulary of the German-speaking artificial intelligence DeKi may be expected to increase and grow in several ways. Initially the AI programmers will add new words as needed for the implementation of new AI functionality. Human users will teach the AI new words during each session of running the AI software, but the AI 
+will not remember words taught to it from session to session, unless an AI Mind installation is made to store files of knowledge gained, or unless the AI coders and maintainers notice important words which ought to be added to the innate vocabulary of the AI. Eventually there should be an attempt automatically to include the entire German lexicon in every session of running the AI Mind. At that point, the AI will comprehend user input much better and without the confusion that results when the AI does not know, for example, whether an incoming word is a noun or an adjective. 
+
+=== Expansion === 
+
+Expanding the DeBoot sequence involves various considerations. 
+  * Recalculating the time "t" values; 
+  * Re-designating the "aud" values; 
+  * Entering the correct ASCII character numbers; 
+  * Changing the declared "vault" value; 
+  * Entering new data for vault-dependent code; 
+  * Incrementing value of "den" at end of DeBoot. 
+
+
+
+
+=== Resources === 
+
+  * http://de.wikipedia.org/wiki/Cyc 
+
+  * http://groups.google.com/group/de.sci.informatik.ki 
+
+  * http://home.planet.nl/~josv/w32for42_671.exe 
+
+  * http://mind.sourceforge.net/enboot.html 
+
+  * http://prdownloads.sourceforge.net/win32forth/W32FOR42_671.zip?download 
+
+  * http://store.kagi.com/cgi-bin/store.cgi?storeID=AMP_Live¤cy=USD 
+
+  * http://www.amazon.de/exec/obidos/ASIN/0595259227/ 
+
+  * http://www.dfki.de 
+
+  * http://www.ranks.nl/stopwords/german.html 
+
+=== Memespace === 
+
+[http://cyborg.blogspot.com/2011/01/aiapp.html AiApp] [http://www.ai-forum.org/topic.asp?forum_id=1&topic_id=8385 AiForum] [http://aimind-i.com AiMind] AskUser BrainTheory ChangeLog [http://www.chatbots.org/ai_zone/viewthread/240/ ChatBots] CognitiveArchitecture 
+[http://cognitiveatlas.org CognitiveAtlas] CognitiveAtlas ConSciousness [http://cyborg.blogspot.com CybOrg] DeFault DeKiManual DfKi DisAmbiguation EnBoot [http://hackerspaces.org/wiki/ HackerSpaces] InFerence IntelForth KbRetro KbSearch [http://cyborg.blogspot.com/2009/11/linux.html LinuxAi] MainLoop [http://www.makerbot.com MakerBot] MasPar MfPj NumBer OpenCog ReJuvenate [http://www.rentacoder.com RentaCoder] [http://cyborg.blogspot.com/2009/09/sciencemuseum.html ScienceMuseum] 
+SensoryInput [http://www.sitesucker.us SiteSucker] SpeechAct [http://www.speechapi.com SpeechApi] SpreadAct SpreadingActivation [http://solartz.de/649/deutsche-stopwords.htm StopWords] StrongAi SubConscious SuperComputer SuperIntelligence [http://technorati.com TechnoRati] [http://cyborg.blogspot.com/2009/08/singularity.html TechnoSingularity] 
+[http://www.chatbots.org/book/ai4u/ TextBook] [http://cyborg.blogspot.com/2009/10/trustmetric.html TrustMetric] VisRecog [http://thewikireader.com WikiReader] 
+
+=== AI For You === 
+
+Click to run 
+
+[http://www.scn.org/~mentifex/AiMind.html http://farm1.static.flickr.com/51/179758367_f283f0d6e0_s.jpg] 
+
+AI For You 
+
+*Table of Contents* 
+<wiki:toc max_depth="3" />

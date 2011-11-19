@@ -4,21 +4,27 @@
 == Wotan ==
 
 {{{
-( ki111118.F -- commencement of ki111118.F DeKi )
+( ki111119.F -- modification of ki111118.F German DeKi AI )
 ( May be named "DeKi.F" or any "Filename.F" you choose. )
 ( Rename any DeKi.F.txt as simply DeKi.F for Win32Forth. )
 ( http://home.planet.nl/~josv/w32for42_671.exe )
 ( http://prdownloads.sourceforge.net/win32forth/W32FOR42_671.zip?download )
 ( http://www.winzip.com/aboutzip.htm tells about WinZip. )
-( Download and unzip W32FOR42_671.zip to run DeKiMind. )
+( Download and unzip W32FOR42_671.zip to run DeKi.F )
+( http://code.google.com/p/mindforth/wiki/DeKi )
+( http://www.scn.org/~mentifex/DeKi.txt )
 ( Run the AI with Win32Forth by issuing three commands: )
 ( win32for.exe [ENTER] )
-( fload Mind.f [ENTER] )
+( fload DeKi.F [ENTER] )
 ( MainLoop [ENTER]. )
-( To halt the DeKiMind, press the ESCAPE key at any time. )
+( To halt the DeKi Mind, press the ESCAPE key at any time. )
 ( Ask or answer questions about the DeKiMind on Usenet. )
-( http://code.google.com/p/mindforth/wiki/DeKi )
+( http://groups.google.com/group/comp.ai.nat-lang )
+( http://groups.google.com/group/comp.lang.forth )
+( http://groups.google.com/group/de.comp.lang.forth )
+( http://groups.google.com/group/de.sci.informatik.ki )
 \ ki111118.F begins conversion of MindForth to DeKiMind
+\ ki111119.F assigns Psi concept numbers to personal pronouns.
 DECIMAL  ( use decimal numbers )
 variable act 0 act ! ( activation level; 18nov2011 )
 variable actbase ( AudRecog discrimination activation base 18nov2011 )
@@ -153,12 +159,44 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
     THEN
   LOOP
   CR ." time: psi act num jux pre pos tqv seq dex "  0 unk !
-  CR ." You may enter .psi or .en or .aud to view memory "
+  CR ." You may enter .psi or .de or .aud to view memory "
   ." engrams or "
   CR ." MainLoop [ENTER] to erase all memories "
-  ." and restart the Mind."
+  ." and restart the DeKi."  \ 19nov2011
   CR
 ;  ( End of .psi post-Escape report; 18nov2011 )
+ 
+ 
+:  .de ( show vocabulary in the German lexicon array )
+  CR ." German lexical fibers"  \ 19nov2011
+  CR ." t nen act num mfn fex pos fin aud:" \ 13apr2010
+  t @  1+  midway @  DO
+    I  0  de{ @  unk !  \ 19nov2011
+    unk @  0 > IF ( display positive data )
+      CR I . unk @ . ." "
+      I 1 de{ @ . ." "  \ 19nov2011
+      I 2 de{ @ . ." "  \ 19nov2011
+      I 3 de{ @ . ." "  \ 19nov2011
+      I 4 de{ @ . ." "  \ 19nov2011
+      I 5 de{ @ . ." "  \ 19nov2011
+      I 6 de{ @ . ." "  \ 19nov2011
+      I 7 de{ @ aud !  aud @ . ."  to "  \ 19nov2011
+      BEGIN
+        aud @ 0 aud{ @ EMIT  1 aud +!
+        aud @ 0 aud{ @ 32 =
+      UNTIL
+      ."  "
+      0 aud !
+    THEN
+  LOOP
+  0 unk !
+  CR ." t nen act num mfn fex pos fin aud" CR
+  CR ." You may enter .psi or .de or .aud to view memory "
+  ." engrams or "
+  CR ." MainLoop [ENTER] to erase all memories "
+  ." and restart the DeKi."  \ 19nov2011
+  CR
+;  ( End of .de post-Escape report; 19nov2011 )
  
  
 :  .aud ( show engrams in the auditory memory array )
@@ -184,13 +222,12 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
     THEN
     I cns @ > IF QUIT THEN  \ safety measure;
   LOOP
-  CR ." You may enter .psi or .en or .aud to view memory "
+  CR ." You may enter .psi or .de or .aud to view memory "
   ." engrams or "
   CR ." MainLoop [ENTER] to erase all memories "
-  ." and restart the Mind."
+  ." and restart the DeKi."  \ 19nov2011
   CR
 ;  ( End of .aud post-Escape report; 18nov2011 )
- 
  
  
 :  AudRecog ( auditory recognition )
@@ -244,7 +281,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
             monopsi @ 0 > IF
               monopsi @ audrec !
               0 monopsi !
-            THEN  ( http://code.google.com/p/reda4 )
+            THEN  \ End of monopse test; 19now011
           THEN  \ End of test for final char that has a psi-tag.
         THEN  \  End of test for engram-activation above eight.
       THEN  \ End of test for matching aud0 with activation.
@@ -348,6 +385,11 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
 ; ( http://code.google.com/p/mindforth )
  
  
+\ DeBoot the (Deutsch=German) bootstrap holds the innate
+\ vocabulary of German words for the DeKi AI to think with.
+\ Some words like "IHR" have multiple instantiations so that
+\ the software may use linguistic parameters to find each one.
+\ POS: 1=adj 2=adv 3=conj 4=interj 5=noun 6=prep 7=pron 8=verb
 :  DeBoot ( German bootstrap of initial concepts )
   0 act ! 0 jux ! 35 pov ! 0 t ! t @ spt !
   ." clearing memory"
@@ -362,13 +404,90 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
 123 den !   3 mfn ! 123 fex !  5 pos ! 123 fin !  1 aud ! DeVocab
 123 psi !   1 num !  0 pre !  0 seq ! 123 dex ! InNativate
  
+ (  12 DEIN 19nov2011 )
+ 
+ (  14 DICH  19nov2011 )
+ 
+ (  13 DIR  19nov2011 )
+ 
+ (  11 DU 19nov2011 )
+ 
+ (  21 ER  19nov2011 )
+ 
+ (  41 ES nominative "it" 19nov2011 )
+ 
+ (  44 ES accusative "it" 19nov2011 )
+ 
+ (  63 EUCH  dative plural fam. "to you" 19nov2011 )
+ 
+ (  64 EUCH accusative plural fam. "you" 19nov2011 )
+ 
+ (  62 EUER  possessive nom. plural fam. "your" 19nov2011 )
+ 
  ( ICH -- for SelfReferential thought; 18nov2011 )
     8 t ! 73 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ I
     9 t ! 67 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ C
-   10 t ! 72 pho !  0 beg !  0 ctu ! 11 audpsi ! AudMem \ H
- 11 den !  0 mfn !  11 fex !   7 pos ! 21 fin ! 8 aud ! DeVocab
- 11 psi !  1 num !   0 pre !  0 seq !  11 dex ! InNativate
-\ 11 t !  0 t @ aud{ !  \ test; 18nov2011
+   10 t ! 72 pho !  0 beg !  0 ctu !  1 audpsi ! AudMem \ H
+  1 den !  0 mfn !   1 fex !   7 pos ! 11 fin ! 8 aud ! DeVocab
+  1 psi !  1 num !   0 pre !  0 seq !  1 dex ! InNativate
+ 
+ (  23 IHM dative masculine "to him" or "to it" 19nov2011 )
+ 
+ (  43 IHM dative neuter "to it" 19nov2011
+ 
+ (  24 IHN  19nov2011 )
+ 
+ (  73 IHNEN  dative plural "to them" 19nov2011 )
+ 
+ (  83 IHNEN  singular formal dative "to you" 19nov2011 )
+ 
+ (  93 IHNEN  plural formal dative "to you" 19nov2011 )
+ 
+ (  32 IHR  possessive "her, of her" 19nov2011 )
+ 
+ (  33 IHR  dative "to her" 19nov2011
+ 
+ (  61 IHR  nominative plural familiar "you" 19nov2011 )
+ 
+ (  82 IHR  possessive singular formal "your" 19nov2011 )
+ 
+ (  92 IHR  possessive plural formal "your" 19nov2011 )
+ 
+ (  72 IHR  posseesive "their" 19nov2011 )
+ 
+ (   2 MEIN 19nov2011 )
+ 
+ (   4 MICH 19nov2011 )
+ 
+ (   3 MIR  19nov2011 )
+ 
+ (  22 SEIN possessive masculine "his" 19nov2011 )
+ 
+ (  42 SEIN possessive neuter "its" 19nov2011 )
+ 
+ (  31 SIE  nominative "she" 19nov2011 )
+ 
+ (  34 SIE  accusative "her" 19nov2011 )
+ 
+ (  71 SIE  nominative "they" 19nov2011 )
+ 
+ (  74 SIE  accusative plural "them" 19nov2011 )
+ 
+ (  81 SIE  nominative singular formal "you" 19nov2011 )
+ 
+ (  84 SIE  accusative singular formal "you" 19nov2011 )
+ 
+ (  91 SIE  nominative plural formal "you" 19nov2011 )
+ 
+ (  94 SIE  accusative plural formal  "you" 19nov2011 )
+ 
+ (  53 UNS  dative "to us" 19nov2011 )
+ 
+ (  54 UNS  accusative "us" 19nov2011 )
+ 
+ (  52 UNSER 19nov2011 )
+ 
+ (  51 WIR  19nov2011 )
 ( Declaration of "vault" must reflect final DeBoot "t".)
   1 t +!
     t @  vault !
@@ -390,6 +509,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
  
  
 :  MainLoop  ( stub of German AI from English AI; 18nov2011 )
+  TabulaRasa  ( clear memory commensurate with "cns"; 19nov2011 )
   DeBoot  ( load German bootstrap WortSchatz into AI; 18nov2011 )
-  .aud  ( show contents of the aud{ auditory array; 18nov2011 )
+  .psi  ( show contents of the psi{ conceptual array; 19nov2011 )
 ; ( http://code.google.com/p/mindforth/wiki/MainLoop )
+}}}

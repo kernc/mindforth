@@ -1,0 +1,395 @@
+#summary free open-source German AI Mind
+#labels DeKi,Win32Forth,iForth,SeedAi,code
+
+== Wotan ==
+
+{{{
+( ki111118.F -- commencement of ki111118.F DeKi )
+( May be named "DeKi.F" or any "Filename.F" you choose. )
+( Rename any DeKi.F.txt as simply DeKi.F for Win32Forth. )
+( http://home.planet.nl/~josv/w32for42_671.exe )
+( http://prdownloads.sourceforge.net/win32forth/W32FOR42_671.zip?download )
+( http://www.winzip.com/aboutzip.htm tells about WinZip. )
+( Download and unzip W32FOR42_671.zip to run DeKiMind. )
+( Run the AI with Win32Forth by issuing three commands: )
+( win32for.exe [ENTER] )
+( fload Mind.f [ENTER] )
+( MainLoop [ENTER]. )
+( To halt the DeKiMind, press the ESCAPE key at any time. )
+( Ask or answer questions about the DeKiMind on Usenet. )
+( http://code.google.com/p/mindforth/wiki/DeKi )
+\ ki111118.F begins conversion of MindForth to DeKiMind
+DECIMAL  ( use decimal numbers )
+variable act 0 act ! ( activation level; 18nov2011 )
+variable actbase ( AudRecog discrimination activation base 18nov2011 )
+variable aud  ( auditory recall-tag for activating engrams 18nov2011 )
+variable audpsi  ( "psi" number at end of auditory engram; 18nov2011 )
+variable audrec  ( the "psi" being recognized in AudRecog; 18nov2011 )
+variable audrun 1 audrun ! ( counter of loops in AudRecog; 18nov2011 )
+variable beg  1 beg ! ( "beginning" of word engrams; 18nov2011 )
+variable cns  1024 cns !  ( "central nervous system" 18nov2011 )
+variable ctu ( continuation-flag for "Aud" array phonemes; 18nov2011 )
+variable den  0 den ! ( German lexical concept number; 18nov2011 )
+variable dex ( holds concept-number in transfer to German 18nov2011 )
+variable fex ( holds fiber-out concept up from Psi memory; 18nov2011 )
+variable fin ( holds fiber-in concept for Psi array access; 18nov2011)
+variable jux  0 jux ! ( holds Psi # of a JUXtaposed word; 18nov2011 )
+variable len  ( length, for avoiding non-words in AudInput 18nov2011)
+variable mfn  ( "masculine feminine neuter" gender flag; 18nov2011 )
+variable midway 1 midway ! ( limit for backwards search; 18nov2011 )
+variable monopsi ( fro recognizing single char in audRecog 18nov2011 )
+variable morphpsi ( for audRecog recognition of morphemes; 18nov2011 )
+variable nlt  0 nlt !  ( not-later-than among time-points 18nov2011 )
+variable newpsi   ( for singular-nounstem assignments; 18nov2011 )
+variable num 0 num !  ( number-flag for the psi array; 18nov2011 )
+variable pho ( phoneme of input/output & internal reentry; 18nov2011 )
+variable pos  ( Old- & NewConcept; DeVocab: part-of-speech 18nov2011 )
+variable pov  ( point-of-view: #35 internal; *42 external; 18nov2011 )
+variable pre ( previous concept associated with a concept; 18nov2011 )
+variable psi ( identifier of a psi concept in Psi mindcore 18nov2011 )
+variable psibase ( winning psibase with winning actbase; 18nov2011 )
+variable recnum  ( recognized number of a recognized word; 18nov2011 )
+variable seq  ( subSEQuent concept associated with another 18nov2011 )
+variable spt  ( AudMem; AudInput: blank Space Time; 18nov2011 )
+variable stemgap  ( for avoiding false audRecog stems; 18nov2011 )
+variable stempsi  ( for singular noun-stem recognition; 18nov2011 )
+variable sublen   ( length of audRecog subpsi word-stem; 18nov2011 )
+variable subpsi ( for AudRecog of sub-component wordstems; 18nov2011 )
+variable t  0 t ! ( time incremented during AudMem; 18nov2011 )
+variable tov 1 tov ! ( time-of-voice; 18nov2011 )
+variable tqv  ( tempus quod vide for specific psi instance 18nov2011 )
+variable trc  ( tabula-rasa-counter like rjc; 18nov2011 )
+variable unk  ( "unknown" variable for general use; 18nov2011 )
+variable vault 128 vault ! ( size of DeBoot; 18nov2011 )
+variable wordend  ( for singular noun-stem assignments; 18nov2011 )
+ 
+ 
+:  CHANNEL   ( size num -< name >- )
+  CREATE   ( Returns address of newly named channel. )
+  OVER     ( #r #c -- #r #c #r )
+  ,        ( Stores number of rows from stack to array.)
+  * CELLS  ( Feeds product of columns * rows to ALLOT.)
+  ALLOT    ( Reserves given quantity of cells for array.)
+  DOES>    ( member; row col -- a-addr )
+  DUP @    ( row col pfa #rows )
+  ROT *    ( row pfa col-index )
+  ROT +    ( pfa index )
+  1 +      ( because first cell has the number of rows.)
+  CELLS +  ( from number of items to # of bytes in offset )
+;
+ 
+ 
+cns @  9  CHANNEL  psi{  ( Mindcore concept array "psi" )
+cns @  8  CHANNEL   de{  ( German lexicon array "de" )
+cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
+ 
+ 
+:  TabulaRasa
+  0 trc !  ( tabula-rasa-counter like jrc; 18nov2011 )
+  1 tov !
+  BEGIN  cns @  1  DO
+    0 I  trc @  psi{ !
+  LOOP
+  1  trc +!
+  trc @  9  <  WHILE  \ Cover 9 columns 0-8; 18nov2011
+  REPEAT
+  0 trc !
+  1 tov !
+  BEGIN  cns @  1  DO
+    0 I  trc @   de{ !  \ 18nov2011
+  LOOP
+  1  trc +!
+  trc @ 8 < WHILE  \ Cover #0 to #7, i.e. 8
+  REPEAT
+  0 trc !
+  1 tov !
+  BEGIN  cns @  1  DO
+    0 I  trc @  aud{ !
+  LOOP
+  1  trc +!
+  trc @  6  <  WHILE
+  REPEAT
+  cns @  1  DO
+    32   I  0   aud{ !
+  LOOP
+; ( End of TabulaRasa )
+ 
+ 
+:  .psi ( show concepts in the Psi array )
+  CR  ." Psi mindcore concepts"
+  CR  ." time: psi act num jux pre pos seq dex "  \ 18nov2011
+  t @ 1+  midway @ DO
+    I    0  psi{ @ 0 > IF
+      CR I . ." : "
+      I  0  psi{ @ . ." "
+      I  1  psi{ @ . ." "
+      I  2  psi{ @ . ." "
+      I  3  psi{ @ . ." "
+      I  4  psi{ @ . ." "
+      I  5  psi{ @ . ." "
+      I  6  psi{ @ . ." "  \ Show tqv-point; 18nov2011
+      I  7  psi{ @ . ." "  \ "seq" position 18nov2011
+      I  8  psi{ @ dex ! dex @ .  \ "dex"; 18nov2011
+      dex @ 0 > IF
+        ." to "
+        I unk !
+        0 aud !
+        midway @ unk @  DO
+          I   0 de{ @  dex @ = IF  \ 18nov2011
+            I 7 de{ @  aud  !    \ 18nov2011
+            aud @ 0= NOT IF
+              BEGIN
+                aud @ 0 aud{ @ EMIT
+                1 aud +!
+                aud @ 0 aud{ @ 32 =
+              UNTIL
+              ."  "
+            THEN
+            0 aud !
+          LEAVE  ( One engrammed word is enough. )
+          THEN
+        -1  +LOOP
+      THEN
+    THEN
+  LOOP
+  CR ." time: psi act num jux pre pos tqv seq dex "  0 unk !
+  CR ." You may enter .psi or .en or .aud to view memory "
+  ." engrams or "
+  CR ." MainLoop [ENTER] to erase all memories "
+  ." and restart the Mind."
+  CR
+;  ( End of .psi post-Escape report; 18nov2011 )
+ 
+ 
+:  .aud ( show engrams in the auditory memory array )
+  CR ." Auditory memory nodes"
+  CR  ."  t pho act pov beg ctu audpsi"
+  t @  1+  1 DO           ( Show the entire Aud channel.)
+    CR    I . ." "
+    I 2 aud{ @ 123  =  IF
+      ."     { "
+    THEN
+    I 0 aud{ @  33  <  IF
+      ."  "  ( show a blank )
+    ELSE
+      I 0 aud{ @ EMIT ."  "
+      I 1 aud{ @ .     ." "
+      I 2 aud{ @ EMIT ."  "
+      I 3 aud{ @ .     ." "
+      I 4 aud{ @ .     ." "
+      I 5 aud{ @ .
+    THEN
+    I 2 aud{ @ 125  =  IF
+      ."     } "
+    THEN
+    I cns @ > IF QUIT THEN  \ safety measure;
+  LOOP
+  CR ." You may enter .psi or .en or .aud to view memory "
+  ." engrams or "
+  CR ." MainLoop [ENTER] to erase all memories "
+  ." and restart the Mind."
+  CR
+;  ( End of .aud post-Escape report; 18nov2011 )
+ 
+ 
+ 
+:  AudRecog ( auditory recognition )
+  0 audrec !
+  0 psi !
+  8 act !
+  0 actbase !
+  midway @  spt @ DO  \ from Space-Time to midway; 18mov2011
+    I 0 aud{ @ pho @ = IF  \ If incoming pho matches stored aud0;
+      I 1 aud{ @ 0 = IF    \ if matching engram has no activation;
+        I 3 aud{ @ 1 = IF  \ if beg=1 on matching no-act aud engram;
+         audrun @ 2 < IF   \ if comparing start of a word
+          I 4 aud{ @ 1 = IF   \ If beg-aud has ctu=1 continuing,
+            8 I 1+   1 aud{ !  \ activate the N-I-L character,
+            0 audrec !
+          ELSE
+            len @ 1 = IF
+              I 5 aud{ @  monopsi !
+            THEN  \ End of test for one char length.
+          THEN   \ end of test for continuation of beg-aud
+         THEN  \ end of test for audrun=1 start of word.
+        THEN   \ end of test for a beg(inning) non-active aud0
+      THEN   \ end of test for matching aud0 with no activation
+      I 1 aud{ @ 0 > IF  \ If matching aud0 has activation,
+        0 audrec !       \ Zero out any previous audrec.
+        I 4 aud{ @ 1 = IF  \ If act-match aud0 has ctu=1 continuing,
+          2 act +!           \ Increment act for discrimination.
+          0 audrec !         \ because match-up is not complete.
+          act @ I 1+   1 aud{ ! \ Increment for discrimination.
+        THEN  \ end of test for active-match aud0 continuation
+        I 4 aud{ @ 0 = IF  \ If ctu=0 indicates end of word
+          len @ 2 = IF  \ If len(gth) is only two characters.
+            I 1 aud{ @ 7 > IF  \ testing for eight (8).
+              I 5 aud{ @ psibase !  \ Assume a match.
+            THEN  \  End of test for act=8 or positive.
+          THEN   \ End of test for two-letter words.
+        THEN   \ End of test for end of word.
+        I 1 aud{ @ 8 > IF  \ If activation higher than initial
+          8 actbase !  \ Since act is > 8 anyway; 8may2010
+          I 4 aud{ @ 0 = IF  \ If matching word-engram now ends,
+            I 1 aud{ @ actbase @ > IF  \ Testing for high act.
+              I 5 aud{ @ audrec !  \ Fetch the potential tag
+              I 5 aud{ @ subpsi !  \ Seize a potential stem.
+              len @ sublen !    \ Hold length of word-stem.
+              I 5 aud{ @ psibase !  \ Hold onto winner.
+              I 2 psi{ @ recnum !   \ recognized number 19jul2011
+              I 1 aud{ @ actbase !  \ Winner is new actbase.
+            THEN  \ End of test for act higher than actbase.
+          ELSE
+            0 audrec !
+            monopsi @ 0 > IF
+              monopsi @ audrec !
+              0 monopsi !
+            THEN  ( http://code.google.com/p/reda4 )
+          THEN  \ End of test for final char that has a psi-tag.
+        THEN  \  End of test for engram-activation above eight.
+      THEN  \ End of test for matching aud0 with activation.
+    THEN  \ End of test for a character matching "pho".
+    I midway @ = IF  \ If a loop reaches midway; 8may2010
+      1 audrun +!  \ Increment audrun beyond unity; 8may2010
+    THEN   \ End of test for loop reaching midway; 8may2010
+  -1 +LOOP
+  0 act !
+  0 actbase !
+  psibase @ 0 > IF
+     psibase @  audrec !
+  THEN
+  audrec @ 0 = IF
+    monopsi @ 0 > IF
+      len @ 2 < IF
+        monopsi @ audrec !
+      THEN
+      0 monopsi !
+   audrec @ 0 = IF
+        psibase @ 0 > IF
+          psibase @ audrec !
+        THEN
+      THEN
+    THEN
+  THEN
+  audrec @ 0 = IF
+      morphpsi @ audrec !
+    sublen @ 0 > IF
+      len @ sublen @ -  stemgap !
+    THEN
+    stemgap @ 0 < IF 0 stemgap ! THEN
+    stemgap @ 1 > IF 0 subpsi ! THEN
+    stemgap @ 1 > IF 0 morphpsi ! THEN
+    stemgap @ 1 > IF 0 audrec ! THEN
+  THEN
+  subpsi @ morphpsi !
+  0 psibase !
+  0 subpsi !
+  audrec @ 0 > IF
+    stemgap @ 2 > IF
+      0 audrec !
+    THEN
+  THEN
+  audrec @ audpsi !
+  0 stemgap !  \ safety measure; 22sep2011
+; ( http://code.google.com/p/mindforth/wiki/AudRecog )
+ 
+ 
+:  AudMem ( auditory memory channel; 18nov2011 )
+  t @ vault @ > IF
+    pho @ 32 > IF
+      AudRecog
+    THEN  ( ASCII 32 = SPACE-bar )
+  THEN  \ 18nov2011
+    t @ 1-  0 aud{ @  0 = IF  1 beg !  THEN
+    t @ 1-  0 aud{ @ 32 = IF  1 beg !  THEN
+    pho @  t @  0 aud{ !
+    pov @  t @  2 aud{ !
+    beg @  t @  3 aud{ !
+    ctu @  t @  4 aud{ !
+    ctu @ 0 = IF
+      audpsi @ 0 > IF
+        audpsi @  t @  5 aud{ !
+      THEN
+      0 audpsi !
+    THEN  \ 18nov2011
+    pov @ 42 = IF
+      pho @ 83 = IF
+        0 stempsi !
+        wordend @ 1 = IF
+            0 t @ 1- 4 aud{ !
+        THEN
+        0 newpsi !
+      THEN
+    THEN
+    pho @ 32 = IF t @ spt !  THEN
+; ( http://code.google.com/p/mindforth/wiki/AudMem )
+ 
+ 
+:  DeVocab ( Deutsch Vocabulary node creation )
+  ( Number "den" of German )        den @  t @  0  de{ !
+  ( Do not store the activation level; it is a transient.)
+  ( Store "num" number tag. )       num @  t @  2  de{ !
+  ( Store "mfn" gender tag. )       mfn @  t @  3  de{ !
+  ( Store mindcore EXit tag. )      fex @  t @  4  de{ !
+  ( Store part of speech "pos".)    pos @  t @  5  de{ !
+  ( Store mindcore IN tag. )        fin @  t @  6  de{ !
+  ( Store the auditory "aud" tag. ) aud @  t @  7  de{ !
+; ( http://code.google.com/p/mindforth/wiki/EnVocab )
+ 
+ 
+:  InNativate ( quasi-instantiate the DeBoot sequence )
+( concept fiber psi )             psi @  t @  0 psi{ !
+( Set "num" number flag )         num @  t @  2 psi{ !
+( Store PREvious associand. )     pre @  t @  4 psi{ !
+( Store functional pos code. )    pos @  t @  5 psi{ !
+( Store the "tqv" time-point. )   tqv @  t @  6 psi{ !
+( Store the subSEQuent tag. )     seq @  t @  7 psi{ !
+( Store the DE-transfer tag. )    dex @  t @  8 psi{ !
+; ( http://code.google.com/p/mindforth )
+ 
+ 
+:  DeBoot ( German bootstrap of initial concepts )
+  0 act ! 0 jux ! 35 pov ! 0 t ! t @ spt !
+  ." clearing memory"
+  CR ." There is no warranty for what this software does."
+ ( IRRTUM -- first word so any bug will announce itself )
+    1 t !  73 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ I
+    2 t !  82 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ R
+    3 t !  82 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ R
+    4 t !  84 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ T
+    5 t !  85 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ U
+    6 t !  77 pho !  0 beg !  0 ctu ! 123 audpsi ! AudMem \ M
+123 den !   3 mfn ! 123 fex !  5 pos ! 123 fin !  1 aud ! DeVocab
+123 psi !   1 num !  0 pre !  0 seq ! 123 dex ! InNativate
+ 
+ ( ICH -- for SelfReferential thought; 18nov2011 )
+    8 t ! 73 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ I
+    9 t ! 67 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ C
+   10 t ! 72 pho !  0 beg !  0 ctu ! 11 audpsi ! AudMem \ H
+ 11 den !  0 mfn !  11 fex !   7 pos ! 21 fin ! 8 aud ! DeVocab
+ 11 psi !  1 num !   0 pre !  0 seq !  11 dex ! InNativate
+\ 11 t !  0 t @ aud{ !  \ test; 18nov2011
+( Declaration of "vault" must reflect final DeBoot "t".)
+  1 t +!
+    t @  vault !
+    t @  tov !
+  1 t +!
+    t @ nlt !  ( nlt may be basis for DAMP functions )
+\ 72 urpsi ! \ As if "KIDS" were the cresting concept.
+\ 115 nen !  \ Adding MEN as concept #115; 19aug2011
+\ 5 bias !
+\ 0 lurk !   \ prepare to auto-start thinking; 19sep2010
+  0 num !
+  0 mfn !  \ Prevent carry-over.
+\ 0 mfnflag !  \ Prevent carry-over; 18nov2011
+\ 0 nwc !
+  0 pho !
+  0 pre !  0 seq !
+\ 0 putnum !  \ prevent carry-over;  4nov2011
+; ( http://code.google.com/p/mindforth/wiki/DeBoot )
+ 
+ 
+:  MainLoop  ( stub of German AI from English AI; 18nov2011 )
+  DeBoot  ( load German bootstrap WortSchatz into AI; 18nov2011 )
+  .aud  ( show contents of the aud{ auditory array; 18nov2011 )
+; ( http://code.google.com/p/mindforth/wiki/MainLoop )

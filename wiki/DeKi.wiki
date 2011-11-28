@@ -4,7 +4,7 @@
 == Wotan ==
 
 {{{
-( ki111119.F -- modification of ki111118.F German DeKi AI )
+( ki111127.F -- modification of ki111126.F German DeKi AI )
 ( May be named "DeKi.F" or any "Filename.F" you choose. )
 ( Rename any DeKi.F.txt as simply DeKi.F for Win32Forth. )
 ( http://home.planet.nl/~josv/w32for42_671.exe )
@@ -25,6 +25,9 @@
 ( http://groups.google.com/group/de.sci.informatik.ki )
 \ ki111118.F begins conversion of MindForth to DeKiMind
 \ ki111119.F assigns Psi concept numbers to personal pronouns.
+\ ki111120.F adds "dba" case for 1=nom; 2=gen; 3=dat; 4=acc.
+\ ki111126.F adds more words alphabetically to DeBoot sequence.
+\ ki111127.F incorporates paradigm of article "der" in DeBoot.
 DECIMAL  ( use decimal numbers )
 variable act 0 act ! ( activation level; 18nov2011 )
 variable actbase ( AudRecog discrimination activation base 18nov2011 )
@@ -35,6 +38,7 @@ variable audrun 1 audrun ! ( counter of loops in AudRecog; 18nov2011 )
 variable beg  1 beg ! ( "beginning" of word engrams; 18nov2011 )
 variable cns  1024 cns !  ( "central nervous system" 18nov2011 )
 variable ctu ( continuation-flag for "Aud" array phonemes; 18nov2011 )
+variable dba 0 dba ! ( "doing business as" lexical case; 24nov2011 )
 variable den  0 den ! ( German lexical concept number; 18nov2011 )
 variable dex ( holds concept-number in transfer to German 18nov2011 )
 variable fex ( holds fiber-out concept up from Psi memory; 18nov2011 )
@@ -66,7 +70,8 @@ variable tov 1 tov ! ( time-of-voice; 18nov2011 )
 variable tqv  ( tempus quod vide for specific psi instance 18nov2011 )
 variable trc  ( tabula-rasa-counter like rjc; 18nov2011 )
 variable unk  ( "unknown" variable for general use; 18nov2011 )
-variable vault 128 vault ! ( size of DeBoot; 18nov2011 )
+variable vault 150 vault ! ( size of DeBoot; 28nov2011 )
+variable vrsn 20111127 vrsn ! ( version identifier; 27nov2011 )
 variable wordend  ( for singular noun-stem assignments; 18nov2011 )
  
  
@@ -86,7 +91,8 @@ variable wordend  ( for singular noun-stem assignments; 18nov2011 )
  
  
 cns @  9  CHANNEL  psi{  ( Mindcore concept array "psi" )
-cns @  8  CHANNEL   de{  ( German lexicon array "de" )
+\ cns @  8  CHANNEL   de{  ( German lexicon array "de" )
+cns @  9  CHANNEL   de{  ( adding "dba" case-flag 24nov2011 )
 cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
  
  
@@ -105,7 +111,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
     0 I  trc @   de{ !  \ 18nov2011
   LOOP
   1  trc +!
-  trc @ 8 < WHILE  \ Cover #0 to #7, i.e. 8
+\ trc @ 8 < WHILE  \ Cover #0 to #7, i.e. 8
+  trc @ 9 < WHILE  \ Cover #0 to #8, i.e. 9; 24nov2011
   REPEAT
   0 trc !
   1 tov !
@@ -123,7 +130,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
  
 :  .psi ( show concepts in the Psi array )
   CR  ." Psi mindcore concepts"
-  CR  ." time: psi act num jux pre pos seq dex "  \ 18nov2011
+  CR  ." time: psi act num jux pre pos tqv seq dex "  \ 21nov2011
   t @ 1+  midway @ DO
     I    0  psi{ @ 0 > IF
       CR I . ." : "
@@ -142,7 +149,8 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
         0 aud !
         midway @ unk @  DO
           I   0 de{ @  dex @ = IF  \ 18nov2011
-            I 7 de{ @  aud  !    \ 18nov2011
+          \ I 7 de{ @  aud  !    \ 18nov2011
+            I 8 de{ @  aud  !    \ 24nov2011
             aud @ 0= NOT IF
               BEGIN
                 aud @ 0 aud{ @ EMIT
@@ -169,18 +177,19 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
  
 :  .de ( show vocabulary in the German lexicon array )
   CR ." German lexical fibers"  \ 19nov2011
-  CR ." t nen act num mfn fex pos fin aud:" \ 13apr2010
+  CR ." t den act num mfn dba fex pos fin aud:" \ 24nov2011
   t @  1+  midway @  DO
-    I  0  de{ @  unk !  \ 19nov2011
-    unk @  0 > IF ( display positive data )
-      CR I . unk @ . ." "
-      I 1 de{ @ . ." "  \ 19nov2011
-      I 2 de{ @ . ." "  \ 19nov2011
-      I 3 de{ @ . ." "  \ 19nov2011
-      I 4 de{ @ . ." "  \ 19nov2011
-      I 5 de{ @ . ." "  \ 19nov2011
-      I 6 de{ @ . ." "  \ 19nov2011
-      I 7 de{ @ aud !  aud @ . ."  to "  \ 19nov2011
+    I  0  de{ @  0 > IF  ( display positive data 24nov2011 )
+      CR I .  \ Show Index as t=time point; 24nov2011
+      I 0 de{ @ . ." "  \ den; 24nov2011
+      I 1 de{ @ . ." "  \ act; 24nov2011
+      I 2 de{ @ . ." "  \ num; 24nov2011
+      I 3 de{ @ . ." "  \ mfn; 24nov2011
+      I 4 de{ @ . ." "  \ dba; 24nov2011
+      I 5 de{ @ . ." "  \ fex; 24nov2011
+      I 6 de{ @ . ." "  \ pos; 24nov2011
+      I 7 de{ @ . ." "  \ fin; 24nov2011
+      I 8 de{ @ aud !  aud @ . ."  to "  \ aud; 24nov2011
       BEGIN
         aud @ 0 aud{ @ EMIT  1 aud +!
         aud @ 0 aud{ @ 32 =
@@ -190,7 +199,7 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
     THEN
   LOOP
   0 unk !
-  CR ." t nen act num mfn fex pos fin aud" CR
+  CR ." t den act num mfn dba fex pos fin aud" CR  \ 24nov2011
   CR ." You may enter .psi or .de or .aud to view memory "
   ." engrams or "
   CR ." MainLoop [ENTER] to erase all memories "
@@ -362,15 +371,17 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
 ; ( http://code.google.com/p/mindforth/wiki/AudMem )
  
  
-:  DeVocab ( Deutsch Vocabulary node creation )
+:  DeVocab ( Deutsch Vocabulary node creation; 24nov2011 )
   ( Number "den" of German )        den @  t @  0  de{ !
   ( Do not store the activation level; it is a transient.)
   ( Store "num" number tag. )       num @  t @  2  de{ !
   ( Store "mfn" gender tag. )       mfn @  t @  3  de{ !
-  ( Store mindcore EXit tag. )      fex @  t @  4  de{ !
-  ( Store part of speech "pos".)    pos @  t @  5  de{ !
-  ( Store mindcore IN tag. )        fin @  t @  6  de{ !
-  ( Store the auditory "aud" tag. ) aud @  t @  7  de{ !
+  ( Store "dba" case; 24nov2011 )   dba @  t @  4  de{ !
+  ( Store mindcore EXit tag. )      fex @  t @  5  de{ !
+  ( Store part of speech "pos".)    pos @  t @  6  de{ !
+  ( Store mindcore IN tag. )        fin @  t @  7  de{ !
+  ( Store the auditory "aud" tag. ) aud @  t @  8  de{ !
+  0 dba !  \ reset for safety; 24nov2011
 ; ( http://code.google.com/p/mindforth/wiki/EnVocab )
  
  
@@ -394,100 +405,501 @@ cns @  6  CHANNEL  aud{  ( Auditory memory channel "aud" )
   0 act ! 0 jux ! 35 pov ! 0 t ! t @ spt !
   ." clearing memory"
   CR ." There is no warranty for what this software does."
- ( IRRTUM -- first word so any bug will announce itself )
+ ( IRRTUM -- "error" first word so any bug will announce itself )
     1 t !  73 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ I
     2 t !  82 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ R
     3 t !  82 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ R
     4 t !  84 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ T
     5 t !  85 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ U
-    6 t !  77 pho !  0 beg !  0 ctu ! 123 audpsi ! AudMem \ M
-123 den !   3 mfn ! 123 fex !  5 pos ! 123 fin !  1 aud ! DeVocab
-123 psi !   1 num !  0 pre !  0 seq ! 123 dex ! InNativate
+    6 t !  77 pho !  0 beg !  0 ctu ! 523 audpsi ! AudMem \ M
+523 den !   3 mfn !  1 dba ! 123 fex !  5 pos ! 523 fin !  1 aud !
+523 psi !   1 num !  0 pre !  0 seq ! 523 dex ! DeVocab InNativate
  
- (  12 DEIN 19nov2011 )
+ ( 501 ANDRU name of the MindForth AI 21nov2011 )
+    8 t !  65 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ A
+    9 t !  78 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ N
+   10 t !  68 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ D
+   11 t !  82 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ R
+   12 t !  85 pho !  0 beg !  0 ctu ! 501 audpsi ! AudMem \ U
+501 den !   1 mfn !  1 dba ! 501 fex ! 5 pos ! 501 fin ! 8 aud !
+501 psi !   0 num !  0 pre !  0 seq ! 501 dex ! DeVocab InNativate
  
- (  14 DICH  19nov2011 )
+ ( 801 ANFANGEN 27nov2011 )
+   14 t !  65 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ A
+   15 t !  78 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ N
+   16 t !  70 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ F
+   17 t !  65 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ A
+   18 t !  78 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ N
+   19 t !  71 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ G
+   20 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+   21 t !  78 pho !  0 beg !  0 ctu ! 801 audpsi ! AudMem \ N
+801 den !   0 mfn !  0 dba ! 801 fex ! 8 pos ! 801 fin ! 14 aud !
+801 psi !   0 num !  0 pre !  0 seq ! 801 dex ! DeVocab InNativate
  
- (  13 DIR  19nov2011 )
+   ( 210 AUCH adverb "also" 24nov2011 )
+   23 t !  65 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ A
+   24 t !  85 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ U
+   25 t !  67 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ C
+   26 t !  72 pho !  0 beg !  0 ctu ! 210 audpsi ! AudMem \ H
+210 den !   0 mfn ! 0 dba ! 210 fex ! 2 pos ! 210 fin ! 23 aud !
+210 psi !   0 num !  0 pre !  0 seq ! 210 dex ! DeVocab InNativate
  
- (  11 DU 19nov2011 )
+ ( 410 BITTE  "please" interjection for HCI; 26nov2011 )
+   28 t !  66 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ B
+   29 t !  73 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ I
+   30 t !  84 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ T
+   31 t !  84 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ T
+   32 t !  69 pho !  0 beg !  0 ctu ! 410 audpsi ! AudMem \ E
+410 den !   0 mfn !  0 dba ! 410 fex ! 4 pos ! 410 fin ! 28 aud !
+410 psi !   0 num !  0 pre !  0 seq ! 410 dex ! DeVocab InNativate
  
- (  21 ER  19nov2011 )
+ ( 503 COMPUTER "computer" noun; 26nov2011 )
+   34 t !  67 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ C
+   35 t !  79 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ O
+   36 t !  77 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ M
+   37 t !  80 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ P
+   38 t !  85 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ U
+   39 t !  84 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ T
+   40 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+   41 t !  82 pho !  0 beg !  0 ctu ! 503 audpsi ! AudMem \ R
+503 den !   1 mfn !  1 dba ! 503 fex ! 5 pos ! 503 fin ! 34 aud !
+503 psi !   0 num !  0 pre !  0 seq ! 503 dex ! DeVocab InNativate
  
- (  41 ES nominative "it" 19nov2011 )
+ ( 505 DANK  "thanks" noun; singular; 27nov2011 )
+   43 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+   44 t !  65 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ A
+   45 t !  78 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ N
+   46 t !  75 pho !  0 beg !  0 ctu ! 505 audpsi ! AudMem \ K
+505 den !   1 mfn ! 1 dba ! 505 fex ! 5 pos ! 505 fin ! 43 aud !
+505 psi !   0 num !  0 pre !  0 seq ! 505 dex ! DeVocab InNativate
  
- (  44 ES accusative "it" 19nov2011 )
+ ( 420 DANKE  "thanks" interjection; for HCI; 26nov2011 )
+   48 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+   49 t !  65 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ A
+   50 t !  78 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ N
+   51 t !  75 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ K
+   52 t !  69 pho !  0 beg !  0 ctu ! 420 audpsi ! AudMem \ E
+420 den !   0 mfn ! 0 dba ! 420 fex ! 4 pos ! 420 fin ! 48 aud !
+420 psi !   0 num !  0 pre !  0 seq ! 420 dex ! DeVocab InNativate
  
- (  63 EUCH  dative plural fam. "to you" 19nov2011 )
+ ( 745 DAS  "that" pronoun; 26nov2011 )
+   54 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+   55 t !  65 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ A
+   56 t !  83 pho !  0 beg !  0 ctu ! 745 audpsi ! AudMem \ S
+745 den !   3 mfn ! 1 dba ! 745 fex ! 7 pos ! 745 fin ! 54 aud !
+745 psi !   0 num !  0 pre !  0 seq ! 745 dex ! DeVocab InNativate
  
- (  64 EUCH accusative plural fam. "you" 19nov2011 )
+ ( 310 DASS  "that" conjunction; 26nov2011 )
+   58 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+   59 t !  65 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ A
+   60 t !  83 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ S
+   61 t !  83 pho !  0 beg !  0 ctu ! 310 audpsi ! AudMem \ S
+310 den !   0 mfn ! 0 dba ! 310 fex ! 3 pos ! 310 fin ! 58 aud !
+310 psi !   0 num !  0 pre !  0 seq ! 310 dex ! DeVocab InNativate
  
- (  62 EUER  possessive nom. plural fam. "your" 19nov2011 )
+ ( 712 DEINER genitive "of you" 21nov2011 )
+   63 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+   64 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+   65 t !  73 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ I
+   66 t !  78 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ N
+   67 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+   68 t !  82 pho !  0 beg !  0 ctu ! 702 audpsi ! AudMem \ R
+712 den !   0 mfn !  2 dba ! 712 fex !  7 pos ! 702 fin ! 63 aud !
+712 psi !   1 num !  0 pre !  0 seq ! 712 dex ! DeVocab InNativate
  
- ( ICH -- for SelfReferential thought; 18nov2011 )
-    8 t ! 73 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ I
-    9 t ! 67 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ C
-   10 t ! 72 pho !  0 beg !  0 ctu !  1 audpsi ! AudMem \ H
-  1 den !  0 mfn !   1 fex !   7 pos ! 11 fin ! 8 aud ! DeVocab
-  1 psi !  1 num !   0 pre !  0 seq !  1 dex ! InNativate
+ ( 320 DENN  "because"  conj. 26nov2011 )
+   70 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+   71 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+   72 t !  78 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ N
+   73 t !  78 pho !  0 beg !  0 ctu ! 505 audpsi ! AudMem \ N
+320 den !   0 mfn ! 0 dba ! 320 fex ! 3 pos ! 320 fin ! 70 aud !
+320 psi !   0 num !  0 pre !  0 seq ! 320 dex ! DeVocab InNativate
  
- (  23 IHM dative masculine "to him" or "to it" 19nov2011 )
+  ( 17 18 19 20 DER DIE DAS DIE )
  
- (  43 IHM dative neuter "to it" 19nov2011
+ (  17 DER  "the" article; nom. masc. sing. 28nov2011 )
+   75 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+   76 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+   77 t !  82 pho !  0 beg !  0 ctu ! 17 audpsi ! AudMem \ R
+ 17 den !   1 mfn ! 1 dba !  17 fex ! 1 pos ! 17 fin ! 75 aud !
+ 17 psi !   1 num !  0 pre !  0 seq ! 17 dex ! DeVocab InNativate
  
- (  24 IHN  19nov2011 )
+ (  18 DIE  "the" article; nom. fem. sing. 28nov2011 )
+   79 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+   80 t !  73 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ I
+   81 t !  69 pho !  0 beg !  0 ctu ! 18 audpsi ! AudMem \ E
+ 18 den !   2 mfn ! 1 dba !  18 fex ! 1 pos ! 18 fin ! 79 aud !
+ 18 psi !   1 num !  0 pre !  0 seq ! 18 dex ! DeVocab InNativate
  
- (  73 IHNEN  dative plural "to them" 19nov2011 )
+ (  19 DAS  "the" article; nom. neuter. sing. 28nov2011 )
+   83 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+   84 t !  65 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ A
+   85 t !  83 pho !  0 beg !  0 ctu ! 19 audpsi ! AudMem \ S
+ 19 den !   3 mfn ! 1 dba !  19 fex ! 1 pos ! 19 fin ! 83 aud !
+ 19 psi !   1 num !  0 pre !  0 seq ! 19 dex ! DeVocab InNativate
  
- (  83 IHNEN  singular formal dative "to you" 19nov2011 )
+ (  20 DIE  "the" article; nom. plural 28nov2011 )
+   87 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+   88 t !  73 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ I
+   89 t !  69 pho !  0 beg !  0 ctu ! 20 audpsi ! AudMem \ E
+ 20 den !   0 mfn ! 1 dba !  20 fex ! 1 pos ! 20 fin ! 87 aud !
+ 20 psi !   2 num !  0 pre !  0 seq ! 20 dex ! DeVocab InNativate
  
- (  93 IHNEN  plural formal dative "to you" 19nov2011 )
+( 21 22 23 24 DES DER DES DER )
  
- (  32 IHR  possessive "her, of her" 19nov2011 )
+ (  21 DES  "the" article; gen. masc. sing. 28nov2011 )
+   91 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+   92 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+   93 t !  83 pho !  0 beg !  0 ctu ! 21 audpsi ! AudMem \ S
+ 21 den !   1 mfn ! 2 dba !  21 fex ! 1 pos ! 21 fin ! 91 aud !
+ 21 psi !   1 num !  0 pre !  0 seq ! 21 dex ! DeVocab InNativate
  
- (  33 IHR  dative "to her" 19nov2011
+ (  22 DER  "the" article; gen. fem. sing. 28nov2011 )
+   95 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+   96 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+   97 t !  82 pho !  0 beg !  0 ctu ! 22 audpsi ! AudMem \ R
+ 22 den !   2 mfn ! 2 dba !  22 fex ! 1 pos ! 22 fin ! 95 aud !
+ 22 psi !   1 num !  0 pre !  0 seq ! 22 dex ! DeVocab InNativate
  
- (  61 IHR  nominative plural familiar "you" 19nov2011 )
+ (  23 DES  "the" article; gen. neut. sing. 28nov2011 )
+   99 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+  100 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+  101 t !  83 pho !  0 beg !  0 ctu ! 23 audpsi ! AudMem \ S
+ 23 den !   3 mfn ! 2 dba !  23 fex ! 1 pos ! 23 fin ! 99 aud !
+ 23 psi !   1 num !  0 pre !  0 seq ! 23 dex ! DeVocab InNativate
  
- (  82 IHR  possessive singular formal "your" 19nov2011 )
+ (  24 DER  "the" article; gen. plural; 28nov2011 )
+  103 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+  104 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+  105 t !  82 pho !  0 beg !  0 ctu ! 24 audpsi ! AudMem \ R
+ 24 den !   0 mfn ! 2 dba !  24 fex ! 1 pos ! 24 fin ! 103 aud !
+ 24 psi !   2 num !  0 pre !  0 seq ! 24 dex ! DeVocab InNativate
  
- (  92 IHR  possessive plural formal "your" 19nov2011 )
+( 25 26 27 28 DEM DER DEM DEN )
  
- (  72 IHR  posseesive "their" 19nov2011 )
+ (  25 DEM  "the" article; dat. masc. sing. 28nov2011 )
+  107 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+  108 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+  109 t !  77 pho !  0 beg !  0 ctu ! 25 audpsi ! AudMem \ M
+ 25 den !   1 mfn ! 3 dba !  25 fex ! 1 pos ! 25 fin ! 107 aud !
+ 25 psi !   1 num !  0 pre !  0 seq ! 25 dex ! DeVocab InNativate
  
- (   2 MEIN 19nov2011 )
+ (  26 DER  "the" article; dat. fem. sing. 28nov2011 )
+  111 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+  112 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+  113 t !  82 pho !  0 beg !  0 ctu ! 26 audpsi ! AudMem \ R
+ 26 den !   2 mfn ! 3 dba !  26 fex ! 1 pos ! 26 fin ! 111 aud !
+ 26 psi !   1 num !  0 pre !  0 seq ! 26 dex ! DeVocab InNativate
  
- (   4 MICH 19nov2011 )
+ (  27 DEM  "the" article; dat. neut. sing. 28nov2011 )
+  115 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+  116 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+  117 t !  77 pho !  0 beg !  0 ctu ! 27 audpsi ! AudMem \ M
+ 27 den !   3 mfn ! 3 dba !  27 fex ! 1 pos ! 27 fin ! 115 aud !
+ 27 psi !   1 num !  0 pre !  0 seq ! 27 dex ! DeVocab InNativate
  
- (   3 MIR  19nov2011 )
+ (  28 DEN  "the" article; dat. plural 28nov2011 )
+  119 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+  120 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+  121 t !  78 pho !  0 beg !  0 ctu ! 28 audpsi ! AudMem \ N
+ 28 den !   0 mfn ! 3 dba !  28 fex ! 1 pos ! 28 fin ! 119 aud !
+ 28 psi !   2 num !  0 pre !  0 seq ! 28 dex ! DeVocab InNativate
  
- (  22 SEIN possessive masculine "his" 19nov2011 )
+( 29 30 31 32 DEN DIE DAS DIE )
  
- (  42 SEIN possessive neuter "its" 19nov2011 )
+ (  29 DEN  "the" article; masc. acc. sing. 28nov2011 )
+  123 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+  124 t !  69 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ E
+  125 t !  78 pho !  0 beg !  0 ctu ! 29 audpsi ! AudMem \ N
+ 29 den !   1 mfn ! 4 dba !  29 fex ! 1 pos ! 29 fin ! 123 aud !
+ 29 psi !   1 num !  0 pre !  0 seq ! 29 dex ! DeVocab InNativate
  
- (  31 SIE  nominative "she" 19nov2011 )
+ (  30 DIE  "the" article; acc. fem. sing. 28nov2011 )
+  127 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+  128 t !  73 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ I
+  129 t !  69 pho !  0 beg !  0 ctu ! 30 audpsi ! AudMem \ E
+ 30 den !   2 mfn ! 4 dba !  30 fex ! 1 pos ! 30 fin ! 127 aud !
+ 30 psi !   1 num !  0 pre !  0 seq ! 30 dex ! DeVocab InNativate
  
- (  34 SIE  accusative "her" 19nov2011 )
+ (  31 DAS  "the" article; acc. neuter. sing. 28nov2011 )
+  131 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+  132 t !  65 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ A
+  133 t !  83 pho !  0 beg !  0 ctu ! 31 audpsi ! AudMem \ S
+ 31 den !   3 mfn ! 4 dba !  31 fex ! 1 pos ! 31 fin ! 131 aud !
+ 31 psi !   1 num !  0 pre !  0 seq ! 31 dex ! DeVocab InNativate
  
- (  71 SIE  nominative "they" 19nov2011 )
+ (  32 DIE  "the" article; acc. plural 28nov2011 )
+  135 t !  68 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ D
+  136 t !  73 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ I
+  137 t !  69 pho !  0 beg !  0 ctu ! 32 audpsi ! AudMem \ E
+ 32 den !   0 mfn ! 4 dba !  32 fex ! 1 pos ! 32 fin ! 135 aud !
+ 32 psi !   2 num !  0 pre !  0 seq ! 32 dex ! DeVocab InNativate
  
- (  74 SIE  accusative plural "them" 19nov2011 )
  
- (  81 SIE  nominative singular formal "you" 19nov2011 )
+ ( 507 DEUTSCH  noun; German as a language 21nov2011 )
  
- (  84 SIE  accusative singular formal "you" 19nov2011 )
+ ( 714 DICH  21nov2011 )
+ 
+ ( 747 DIES  "this" pronoun; 26nov2011 )
+ 
+ ( 509 DING  "thing" noun; 27nov2011 )
+ ( 510 DINGE "thngs" noun; 27nov2011 )
+ 
+ ( 713 DIR  21nov2011 )
+ 
+ ( 220 DOCH "indeed" adverb  26nov2011 )
+ 
+ ( 711 DU 21nov2011 )
+ 
+( 1  2  3  EIN EINE EIN )
+( 4  5  6  EINES EINER EINES )
+( 7  8  9  EINEM EINER EINEM )
+( 10 11 12 EINEN EINE EIN 13 14 15 in reserve )
+ 
+ ( 751 EINS "one" pronoun 26nov2011 )
+ 
+ ( 512 ELTERN  "parents" noun; plural; 27nov2011 )
+ 
+ ( 513 ENGLISCH  noun; English as a language 21nov2011 )
+ 
+ ( 721 ER  21nov2011 )
+ 
+ ( 741 ES nominative "it" 21nov2011 )
+ 
+ ( 744 ES accusative "it" 21nov2011 )
+ 
+ ( 755 ETWAS  "something" pronoun; 28nov2011 )
+ 
+ ( 763 EUCH  dative plural fam. "to you" 21nov2011 )
+ 
+ ( 764 EUCH accusative plural fam. "you" 21nov2011 )
+ 
+ ( 762 EUER  genitive nom. plural fam. "of you" 21nov2011 )
+ 
+ ( 805 FANGEN "catch" needed for a compound; 27nov2011 )
+ 
+ ( 515 FRAU  "woman" noun; singular; 27nov2011 )
+ ( 516 FRAUEN  "women" noun; plural; 27nov2011 )
+ 
+ ( 517 FREUND   "friend" noun; singular; 27nov2011 )
+ ( 518 FREUNDE  "friends" noun; plural; 27nov2011 )
+ 
+ ( 519 FREUNDIN  "friend" noun; singular; 27nov2011 )
+ ( 520 FREUNDINNEN  "friends" noun; plural; 27nov2011 )
+ 
+ ( 640 FUER  "for" prep. with dba accusative; 26nov2011 )
+ 
+ ( 440 GELL  "right?" interjection; 27nov2011 )
+ 
+ ( 228 GENUG "enough" adverb; 28nov2011 )
+ 
+ ( 758 GENUG "enough" pronoun; 28nov2011 )
+ 
+ ( 230 GERN  "gladly" adverb  26nov2011 )
+ 
+ ( 521 GOTT  "God" noun; singular; 27nov2011 )
+ ( 522 GOETTER  "gods" noun; plural; 27nov2011 )
+ 
+ ( 810 HABEN  "have" 27nov2011 )
+ 
+ ( 450 HALLO  "hello" interjection for HCI; 27nov2011 )
+ 
+ ( 820 HALTEN "hold" 27nov2011 )
+ 
+ ( 830 HELFEN "help" verb; takes dative; 27nov2011 )
+ 
+ ( ICH -- for SelfReferential thought; 24nov2011 )
+  144 t ! 73 pho !  1 beg !  1 ctu !  0 audpsi ! AudMem \ I
+  145 t ! 67 pho !  0 beg !  1 ctu !  0 audpsi ! AudMem \ C
+  146 t ! 72 pho !  0 beg ! 0 ctu ! 701 audpsi ! AudMem \ H
+ 701 den !  0 mfn ! 701 fex !   7 pos ! 711 fin ! 144 aud ! DeVocab
+ 701 psi !  1 num !   0 pre !  0 seq ! 701 dex ! InNativate
+ 
+ ( 723 IHM dative masculine "to him" or "to it" 21nov2011 )
+ 
+ ( 743 IHM dative neuter "to it" 21nov2011
+ 
+ ( 724 IHN  accusative "him" 21nov2011 )
+ 
+ ( 773 IHNEN  dative plural "to them" 21nov2011 )
+ 
+ ( 783 IHNEN  singular formal dative "to you" 21nov2011 )
+ 
+ ( 793 IHNEN  plural formal dative "to you" 21nov2011 )
+ 
+ ( 732 IHRER  genitive "her, of her" 21nov2011 )
+ 
+ ( 733 IHR  dative "to her" 21nov2011
+ 
+ ( 761 IHR  nominative plural familiar "you" 21nov2011 )
+ 
+ ( 782 IHRER  genitive singular formal "your" 21nov2011 )
+ 
+ ( 792 IHRER  genitive plural formal "your" 21nov2011 )
+ 
+ ( 772 IHRER  genitive "of them" 21nov2011 )
+ 
+ ( 524 IRRTUEMER  "errors" noun; plural; 27nov2011 )
+ 
+ ( 470 JA  "yes" interjection; for HCI and KbRetro )
+ 
+ ( 760 JEMAND  "somebody" pronoun; 26nov2011 )
+ 
+ ( 160 KAPUTT  "ruined" adjective; 28nov2011 )
+ 
+ ( 837 KENNEN  "know" verb; 27nov2011 )
+ 
+ ( 838 MACHEN  "do, make" verb; 27nov2011 )
+ 
+ ( 525 KIND  "child" noun; singular; 27nov2011 )
+ ( 526 KINDER  "children" noun; plural; 27nov2011 )
+ 
+ ( 527 KLEID  "dress" noun; singular; 27nov2011 )
+ ( 528 KLEIDER  "clothing" noun; plural; 27nov2011 )
+ 
+ ( 530 LEUTE  "people" noun; plural; 27nov22011 )
+ 
+ ( 531 MAEDCHEN  "girl" noun; singular 27nov2011 )
+ ( 532 MAEDCHEN  "girls" noun; plural; 27nov2011 )
+ 
+ ( 533 MANN  "man" noun; singular;  27nov2011 )
+ ( 534 MAENNER  "men" noun; plural; 27nov2011 )
+ 
+ ( 702 MEINER genitive "of me" 21nov2011 )
+ 
+ ( 535 MENSCH  "human being" noun; singular; 27nov2011 )
+ ( 536 MENSCHEN  "human beings" noun; plural; 27nov2011 )
+ 
+ ( 704 MICH 19nov2011 )
+ 
+ ( 703 MIR  19nov2011 )
+ 
+ ( 480 NEIN  "no" interjection; for HCI and KbRetro )
+ 
+ ( 250 NICHT  "not"  adverb for negation; 26nov2011 )
+ 
+ ( 770 NICHTS  "nothing" pronoun; 26nov2011 )
+ 
+ ( 775 NIEMAND  "nobody" pronoun; 26nov2011 )
+ 
+ ( 330 OB  "whether"  conj. 26nov2011 )
+ 
+ ( 340 ODER  "or" conj. 26nov2011 )
+ 
+ ( 537 PERSON  "person" noun; singular; 27nov2011 )
+ ( 538 PERSONEN  "persons" noun; plural; 27nov2011 )
+ 
+ ( 539 PFLANZE  "plant" noun; singular; 27nov2011 )
+ ( 540 PFLANZEN  "plants" noun; plural; 27nov2011 )
+ 
+ ( 541 ROBOTER  "robot" noun; singular; 27nov2011 )
+ ( 542 ROBOTER  "robots" noun; plural; 27nov2011 )
+ 
+ ( 543 SACHE  "thing" noun; singular; 27nov2011 )
+ ( 544 SACHEN  "things" noun; plural; 27nov2011 )
+ 
+ ( 545 SCHACH  "chess" noun; singular; 27nov2011 )
+ 
+ ( 840 SEHEN  "see" verb; needed for VisRecog; 27nov2011 )
+ 
+ ( 850 SEIN  "be" verb; irregular; 27nov2011 )
+ 
+ ( 722 SEINER gentive masculine "of him" 21nov2011 )
+ 
+ ( 742 SEINER genitive neuter "of it" 21nov2011 )
+ 
+ ( 731 SIE  nominative "she" 21nov2011 )
+ 
+ ( 734 SIE  accusative "her" 21nov2011 )
+ 
+ ( 771 SIE  nominative "they" 21nov2011 )
+ 
+ ( 774 SIE  accusative plural "them" 21nov2011 )
+ 
+ ( 781 SIE  nominative singular formal "you" 21nov2011 )
+ 
+ ( 784 SIE  accusative singular formal "you" 21nov2011 )
  
  (  91 SIE  nominative plural formal "you" 19nov2011 )
  
  (  94 SIE  accusative plural formal  "you" 19nov2011 )
  
+ ( 260 SO  "so, thus" adverb, frequent; 26nov2011 )
+ 
+ ( 263 SONST  "otherwise" adverb useful for logic )
+ 
+ ( 266 SOWIESO  "generally" adverb, idiomatically valuable )
+ 
+ ( 860 SPRECHEN  "speak" verb; irregular; 27nov2011 )
+ 
+ ( 546 TIER  "animal" noun; singular; 27nov2011 )
+ ( 547 TIERE  "animals" noun; plural; 27nov2011 )
+ 
+ ( 870 TUN  "do" verb; irregular; 27nov2011 )
+ 
+ ( 350 UM  "in order to" conj. 26nov2011 )
+ 
+ ( 360 UND "and" conj. 26nov2011
+ 
  (  53 UNS  dative "to us" 19nov2011 )
  
  (  54 UNS  accusative "us" 19nov2011 )
  
- (  52 UNSER 19nov2011 )
+ (  52 UNSER  genitive "of us" 21nov2011 )
  
- (  51 WIR  19nov2011 )
+ ( 878 VERSTEHEN "understand"; verb; 27nov2011 )
+ 
+ ( 270 VIELLEICHT  "maybe, perhaps" adverb for KbRetro )
+ 
+ ( 280 WARUM  "why" adverb, essential for reasoning )
+ 
+ ( 780 WAS  "what" pronoun; 26nov2011 )
+ 
+ ( 360 WEIL  "because" conj. changes word-order; 26nov2011 )
+ 
+ ( 390 WENN  "if" conj. essential for logic; 26nov2011 )
+ 
+ ( 791 WER     "who" pronoun; dba nominative; 26nov2011 )
+ ( 792 WESSEN  "whose" pronoun; dba genitive; 26nov2011 )
+ ( 793 WEM     "to whom" pronoun; dba dative;  26nov2011 )
+ ( 794 WEN     "whom" pronoun; dba accusative;  26nov2011 )
+ 
+ ( 880 WERDEN  "become" verb; irregular; 27nov2011 )
+ 
+ ( 751 WIR  19nov2011 )
+ 
+ ( 890 WISSEN  "know" verb; irregular; 27nov2011 )
+ 
+ ( 290 WOHL  "probably" adverb; idiomatically valuable )
+ 
+ ( 591 WOTAN  noun; name of the German AI; 27nov2011 )
+ 
+ ( 691 ZU  "to" infinitive; 26nov2011 )
+ 
+( 751 EINS pronoun 26nov2011 )
+ 
+( 190 ZWEI adj. 26nov2011)
+ 
+( 130 DREI adj. 26nov2011 )
+ 
+( DU BIST EINE PERSON  26nov2011 )
+ 
+( ICH BIN WOTAN  26nov2011 )
+ 
+( ANDRU SPRICHT ENGLISH 26nov2011 )
+ 
+( KLEIDER MACHEN LEUTE  26nov2011 )
+ 
+( ICH SPRECHE DEUTSCH )
+ 
+( ICH DENKE ALSO BIN ICH )
+ 
+( ICH BIN EINE PERSON )
+ 
+( ICH BIN NICHT EIN MENSCH )
+ 
+( ROBOTER BRAUCHEN MICH )
+ 
 ( Declaration of "vault" must reflect final DeBoot "t".)
   1 t +!
     t @  vault !

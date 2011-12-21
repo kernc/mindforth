@@ -4,7 +4,8 @@
 {{{
 <html lang="ru">
 <head>
-<title>Dushka -- the beginnings of a Russian AI Mind</title>
+<title>Dushka -- the beginnings of a Russian AI Mind for Internet Explorer</title>
+<meta http-equiv="content-type" content="text/html; charset=windows-1251" />
 <meta name="description"
  content="Russian-language artificial intelligence in JavaScript" />
 <meta name="keywords" 
@@ -24,7 +25,7 @@ var lastpho = 0; // 18dec2011
 var life = true;  // 18dec2011
 var mfn = 0;  // male-female-neuter gender flag; 18dec2011
 var nru = 0;  // Number of Russian concept; 18dec2011
-var output = "ПРИВЕТ ";  // 18dec2011
+var output = "&#1055;&#1056;&#1048;&#1042;&#1045;&#1058;  "  // "Greeting"
 var pho = ""; // 18dec2011
 var pos = 0;  // part of speech; 18dec2011
 var pov = "#";  // 18dec2011
@@ -33,10 +34,12 @@ var t = 0;  // 18dec2011
 var tult = 0;  // t-ultimate before t; 18dec2011
 var unk = 0;  // 18dec2011
 var vault = 12; // size of RuBoot; 18dec2011
+
 audMemory = new Array(cns);  // 18dec2011
 for (i = 0; i < cns; i++) {  // 18dec2011
   audMemory[i] = new audNode(" ",0," "," "," "," ");
 }
+
 
 function audExam() {  // 18dec2011
   aud0 = this.pho;    // 18dec2011
@@ -46,6 +49,7 @@ function audExam() {  // 18dec2011
   aud4 = this.ctu;    // 18dec2011
   aud5 = this.audpsi; // 18dec2011
 }
+
 function audNode(pho,act,pov,beg,ctu,audpsi) {
   this.pho = pho;         // 18dec2011
   this.act = act;         // 18dec2011
@@ -55,6 +59,7 @@ function audNode(pho,act,pov,beg,ctu,audpsi) {
   this.audpsi = audpsi;   // 18dec2011
   this.audExam = audExam; // 18dec2011
 }
+
 
 function AudMem() {
 // if (t > vault) {
@@ -70,7 +75,7 @@ function AudMem() {
   if (aud0 == " ") beg = 1;
   audMemory[t] = new audNode(pho,0,pov,beg,ctu,audpsi); // 18dec2011
 }
- 
+
 function Tab() {  // stub; 15dec2011
 }  // end of stub of Tab(); 15dec2011
 
@@ -85,28 +90,29 @@ jux = 0;    // 18dec2011
 pov = "#";  // 18dec2011
 spt = t;    // 18dec2011
 t = 0;      // 18dec2011
-// ошибка -- first word so any bug will announce itself 
-t=1;pho="О"; beg=1; ctu=1; audpsi=0; AudMem();
-t=2;pho="Ш"; beg=0; ctu=1; audpsi=0; AudMem();
-t=3;pho="И"; beg=0; ctu=1; audpsi=0; AudMem();
-t=4;pho="Б"; beg=0; ctu=1; audpsi=0; AudMem();
-t=5;pho="К"; beg=0; ctu=1; audpsi=0; AudMem();
-t=6;pho="А"; beg=0; ctu=0; audpsi=82; AudMem();
+// ERROR  -- first word so any bug will announce itself 
+t=1;pho="&#1054;"; beg=1; ctu=1; audpsi=0; AudMem();
+t=2;pho="&#1064"; beg=0; ctu=1; audpsi=0; AudMem();
+t=3;pho="&#1048"; beg=0; ctu=1; audpsi=0; AudMem();
+t=4;pho="&#1041"; beg=0; ctu=1; audpsi=0; AudMem();
+t=5;pho="&#1050"; beg=0; ctu=1; audpsi=0; AudMem();
+t=6;pho="&#1040"; beg=0; ctu=0; audpsi=82; AudMem();
 nen=82; mfn=2; fex=82; pos=5; fin=82; aud=1; // RuVocab();
 psi=82;  num=1; pre=0; seq=0; enx=82; // InNativate();
-alert("End of Ruboot");  // test; remove; 18dec2011
-SpeechAct();  // test; 18dec2011
+alert("End of RuBoot");  // test; remove; 18dec2011
 MainLoop();  // 18dec2011
 }  // end of stub of RuBoot; 15dec2011
+
 
 function Voice() {
 outputplus = ("<font size='+3' color='navy'>"+output+"<\/b><\/font>");
   document.all.mouth.innerHTML = outputplus; // 18dec2011
   document.all.brain.innerHTML = apb;  // 18dec2011
-}
- 
+}  // End of Voice(); 20dec2011
+
+
 function SpeechAct() {  // output of a word as text or sound
-  if (aud == 0) aud = 1;  // say diagnostic "ОШИБКА"; 18dec2011
+  if (aud == 0) aud = 1;  // say diagnostic ERROR; 20dec2011
   ctu = 1;
   spt = (t - 1 );
   do {
@@ -124,21 +130,16 @@ function SpeechAct() {  // output of a word as text or sound
     pho = 32;
    // ReEntry();  // 18dec2011
   }
-  if (lastpho != "S") {  // not after "S"; 2sep2010
-    if (flex1 != "") {  // if positive inflection; 14sep2011
-      output += flex1;  // add inflection to output; 14sep2011
-      flex1 = "";  // reset for safety; 14sep2011
-    }  // End of test for a positive inflection; 2sep2010
-  }  // End of test for previous "S"; 2sep2010
   output += " ";
   Voice();
 }  // End of SpeechAct(); 18dec2011
+
 
 function MainLoop() {
   aud = 1;  // test; 18dec2011
   SpeechAct();  // 18dec2011
   unk = (unk + 1);  // 18dec2011
-  if (unk > 3) life = false;  // to exit loop; 18dec2011
+  if (unk > 1) life = false;  // to exit loop; 20dec2011
   alert("Mainloop: unk = "+unk); // test; 18dec2011
   if (life == true) {
   TID=window.setTimeout("MainLoop();",10000);
@@ -148,50 +149,90 @@ function MainLoop() {
 </script>
 </head>
 <body bgcolor="white" onLoad="RuBoot()">
-<center><font color="blue" size"+3"><b>
-&#1044;&#1091;&#1096;&#1082;&#1072;</b>
- Requires Internet Explorer</font></center>
+
 <p><br /></p>
 <fieldset>
 <legend><font color="navy"><b>
+&#1050;&#1086;&#1085;&#1090;&#1088;&#1086;&#1083;&#1100; - 
+
+ <a href="http://www.scn.org/~mentifex/Dushka.html"
+ title="Dushka distribution source" 
+ style="text-decoration:none;">
+&#1044;&#1091;&#1096;&#1082;&#1072;</a> - 
+
+ <a href="http://www.gotai.net" 
+ title="Russian artificial intelligence website" 
+ style="text-decoration:none;">
+&#1048;&#1089;&#1082;&#1091;&#1089;&#1090;&#1074;&#1077;&#1085;&#1085;&#1099;&#1081; 
+<!-- artificial -->
+ &#1048;&#1085;&#1090;&#1077;&#1083;&#1083;&#1077;&#1082;&#1090;
+ <!-- intelligence --></a> - 
+
+ <a href="http://mind.sourceforge.net/theory5.html" 
+ title="theory of mind for artificial intelligence" 
+ style="text-decoration:none;">
+&#1058;&#1077;&#1086;&#1088;&#1080;&#1103;
+<!-- Theory --></a> - 
+
  <a href="http://www.scn.org/~mentifex/AiMind.html"
  title="AI Mind in English">
 AiMind</a> - 
- <a href="http://aimind-i.com" 
- title="Frank's AI Mind">
-AiMind-i.com</a> - 
-</b>
-</font></legend>
+
+ <a href="http://code.google.com/p/mindforth/wiki/JsAiManual" 
+ title="User Manual of the JavaScript AI Mind in English">
+JsAiManual</a></b></font></legend>
+
 <form name="modes">
-<input type="checkbox"> Transcript
+<input type="checkbox"> Transcript 
 <input type="checkbox"> Tutorial 
+<input type="checkbox"> Diagnostic 
+<input type="checkbox"><font color="fuchsia"><b>HALT</b></font> 
+<input type="checkbox">
+<font color="red"><b>
+&#1050;&#1086;&#1085;&#1095;&#1080;&#1090;&#1100;</font> <!-- end --> 
+(&#1079;&#1072;&#1082;&#1088;&#1099;&#1090;&#1100; <!-- close -->
+ &#1086;&#1082;&#1085;&#1086;)</b><br /> <!-- window -->
 </form>
 </fieldset>
 
 <div id="mouth" style="position:static; 
  background-color:silver; height:35">
-все, что ум говорит, будет здесъ. Output of the Modular AI Mind will appear here.
+&#1042;&#1089;&#1105;, <!-- All -->
+ &#1095;&#1090;&#1086; <!-- what -->
+ &#1091;&#1084; <!-- the mind -->
+ &#1076;&#1091;&#1084;&#1072;&#1077;&#1090;, <!-- thinks -->
+ &#1073;&#1091;&#1076;&#1077;&#1090; <!-- will be -->
+ &#1079;&#1076;&#1077;&#1089;&#1100;. <!-- here. -->
 </div>
+
 <form onSubmit="if (this.submitted) return true; else {CR(); return false;};">
-<b>The AI Mind acquires knowledge by asking questions about new concepts.</b><br />
+
+<b>&#1053;&#1072;&#1087;&#1080;&#1096;&#1080; <!-- Write -->
+ &#1079;&#1076;&#1077;&#1089;&#1100;, <!-- here, -->
+ &#1095;&#1090;&#1086; <!-- what -->
+ &#1090;&#1099; <!-- you --> 
+ &#1076;&#1091;&#1084;&#1072;&#1077;&#1096;&#1100;.</b><br /><!-- think. -->
 <input type="text" name="ear" value="" size="80" onKeyDown="AudListen()">
 </form>
+
 <div id="brain" style="position:static;
  background-color:lightgreen">
-советы --    Informative messages will appear here.
+&#1057;&#1086;&#1074;&#1079;&#1090;&#1099; <!-- counsel -->
 </div>
 
 <div id="idea"> </div>
+
 <div id="radar"> </div>
+
 <input type="hidden" value="0" id="star" />
 <input type="hidden" value="0" id="node" />
 <input type="hidden" value="0" id="ufo" />
 
 <p><br /></p>
-
 </body><!-- Change Log comments of the HTML variety:
 Tues.13dec2011 "ru111213" initiates the AI Mind Control Panel with links.
 Sun.18dec2011 "ru111218" shows display of Russian output.
-(end of HTML Change Log commenmts) -->
+Tues.20dec2011 "ru111220" uses CP-1251 escape codes for Cyrillic.
+(end of HTML Change Log comments) -->
 </html>
 }}}

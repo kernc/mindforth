@@ -4,7 +4,7 @@
 {{{
 <html lang="ru">
 <head>
-<title>Dushka -- the beginnings of a Russian AI Mind for Internet Explorer</title>
+<title>Dushka - Russian JavaScript artificial intelligence for MSIE</title>
 <meta http-equiv="content-type" content="text/html; charset=windows-1251" />
 <meta name="description"
  content="Russian-language artificial intelligence in JavaScript" />
@@ -13,24 +13,31 @@
 <script language="JavaScript">
 var act = 0; // 18dec2011
 var apb = "";  // 18dec2011
+var auddata = ("<b>" + "Auditory memory nodes" + "<\/b>" + "<BR>");
+auddata += ("krt pho act pov beg ctu audpsi");  // 22dec2011
 var audpsi = 0; // 18dec2011
 var beg = 0;  // 18dec2011
 var cns = 768;  // size of central nervous system; 18dec2011
 var ctu = 1;  // 18dec2011
+var dba = 0;  // case for nouns; person for verbs; 22dec2011
 var flex1 = "";  // first inflection phoneme; 18dec2011
 var flex2 = "";  // second inflection phoneme; 18dec2011
 var flex3 = "";  // third inflection phoneme; 18dec2011
+var fyi = "3";  // For Your Information; 22dec2011
 var jux = 0; // 18dec2011
 var lastpho = 0; // 18dec2011
 var life = true;  // 18dec2011
 var mfn = 0;  // male-female-neuter gender flag; 18dec2011
+var nonce = 1;  // for start of Diagnostic display; 22dec2011
 var nru = 0;  // Number of Russian concept; 18dec2011
 var output = "&#1055;&#1056;&#1048;&#1042;&#1045;&#1058;  "  // "Greeting"
 var pho = ""; // 18dec2011
 var pos = 0;  // part of speech; 18dec2011
 var pov = "#";  // 18dec2011
+var rux = 0;  // transfer from deep concept to Russian lexicon; 22dec2011
 var spt = 0;  // 18dec2011
 var t = 0;  // 18dec2011
+var trouble = true;  // for automatic Diagnostic display; 22dec2011
 var tult = 0;  // t-ultimate before t; 18dec2011
 var unk = 0;  // 18dec2011
 var vault = 12; // size of RuBoot; 18dec2011
@@ -76,6 +83,83 @@ function AudMem() {
   audMemory[t] = new audNode(pho,0,pov,beg,ctu,audpsi); // 18dec2011
 }
 
+
+function ruList() {  // 22dec2011
+  for (i = nonce; i < (t +1); i++) {
+    ruLexicon[i].ruExam();
+    rudata += ("<BR>"+i+". <b>" +ru0+"<\/b> "+ru1+" ");
+    rudata += (ru2+" "+ru3+" "+ru4+" "+ru5+" "+ru66+" "+ru7);
+  }  // 22dec2011
+}  // end of ruList(); 22dec2011
+
+
+function audList() {  // 22dec2011
+  for (i = nonce; i < (t +1); i++) {
+    audMemory[i].audExam();
+    auddata += ("<BR>" + i + ". <b>");
+    if (aud2 == "*") auddata += ("<font color='red'>");
+    auddata += (aud0 + "<\/b> ");
+    if (aud2 == "*") auddata += ("<\/font>");
+    if (aud0 == " ") aud1 = " ";
+    auddata += (aud1+" "+aud2+" "+aud3+" "+aud4+" "+aud5); 
+  }  // 22dec2011
+}  // end of audList() for Diagnostic mode; 22dec2011
+
+
+function Tab() {
+  document.forms[1].ear.focus();
+  fyi = (fyi + 1);
+   if (fyi == 0)  {
+    document.all.souvenir.innerHTML = "Cycling through display modes.";
+    document.all["cb1"].checked = false;
+    document.all["cb2"].checked = false;
+    document.all["cb3"].checked = false;
+    trouble = false;
+   }
+   if (fyi == 1)  {
+    document.all["cb2"].checked = false;
+    document.all["cb3"].checked = false;
+    trouble = false;
+    document.all.psicolumn.innerHTML = "";
+    document.all.encolumn.innerHTML = "";
+    document.all.audcolumn.innerHTML = "";
+    document.all["cb1"].checked = true;
+   }
+  if (fyi == 2) {
+    document.all["cb1"].checked = false;
+    document.all.psicolumn.innerHTML = "";
+    document.all.encolumn.innerHTML = "";
+    document.all.audcolumn.innerHTML = "";
+    document.all["cb3"].checked = false;
+    trouble = false;
+    document.all.souvenir.innerHTML = "Tutorial has been called.";
+    document.all.tabula.innerHTML = "Watch the artificial mind think.";
+    document.all["cb2"].checked = true;
+    tutor = true;
+  }
+   if (fyi == 3)  {
+    document.all["cb1"].checked = false;
+    document.all["cb2"].checked = false;
+    document.all.souvenir.innerHTML = "Diagnostic mode has been called.";
+    document.all.tabula.innerHTML = "Diagnostic troubleshoot mode.";
+    document.all["cb3"].checked = true;
+    trouble = true;
+   }
+  if (fyi > 3) {
+    document.all["cb1"].checked = false;
+    document.all["cb2"].checked = false;
+    document.all["cb3"].checked = false;
+    trouble = false;
+    document.all.psicolumn.innerHTML = ""; 
+    document.all.encolumn.innerHTML = "";
+    document.all.audcolumn.innerHTML = "";
+    document.all.souvenir.innerHTML = "Tab key changes display modes.";
+    fyi = 0;
+  }
+  TID=window.setTimeout("CR();",1000);
+}
+
+
 function Tab() {  // stub; 15dec2011
 }  // end of stub of Tab(); 15dec2011
 
@@ -97,8 +181,15 @@ t=3;pho="&#1048"; beg=0; ctu=1; audpsi=0; AudMem();
 t=4;pho="&#1041"; beg=0; ctu=1; audpsi=0; AudMem();
 t=5;pho="&#1050"; beg=0; ctu=1; audpsi=0; AudMem();
 t=6;pho="&#1040"; beg=0; ctu=0; audpsi=82; AudMem();
-nen=82; mfn=2; fex=82; pos=5; fin=82; aud=1; // RuVocab();
-psi=82;  num=1; pre=0; seq=0; enx=82; // InNativate();
+nru=82; mfn=2; fex=82; pos=5; fin=82; aud=1; // RuVocab();
+psi=82;  num=1; pre=0; seq=0; rux=82; // InNativate();
+
+t=8;pho="&#1048;"; beg=1; ctu=1; audpsi=0; AudMem();
+t=9;pho="&#1044"; beg=0; ctu=1; audpsi=0; AudMem();
+t=10;pho="&#1045"; beg=0; ctu=1; audpsi=0; AudMem();
+t=11;pho="&#1071"; beg=0; ctu=0; audpsi=109; AudMem();
+nru=109; mfn=2; fex=109; pos=5; fin=109; aud=1; // RuVocab();
+psi=109;  num=1; pre=0; seq=0; rux=109; // InNativate();
 alert("End of RuBoot");  // test; remove; 18dec2011
 MainLoop();  // 18dec2011
 }  // end of stub of RuBoot; 15dec2011
@@ -135,9 +226,88 @@ function SpeechAct() {  // output of a word as text or sound
 }  // End of SpeechAct(); 18dec2011
 
 
+function Diagnostic() {  // 22dec2011
+  audList(); // 22dec2011
+  if (trouble == true) {  // 22dec2011
+    document.all.audcolumn.innerHTML = auddata; // 22dec2011
+   }  // 22dec2011
+  html = ""; // 22dec2011
+  auddata = ("<b>" + "Auditory memory nodes" + "<\/b>" + "<BR>");
+  auddata += ("krt pho act pov beg ctu audpsi"); // 22dec2011
+}  // end of Diagnostic(); 22dec2011
+
+
+function TuringTest() {
+  if (document.all["cb3"].checked == true) {
+    document.all["cb1"].checked = false;
+    document.all.souvenir.innerHTML = "";
+    document.all["cb2"].checked = false;
+     tutor = false;
+    trouble = true;
+    fyi = 3;
+  }
+  if (document.all["cb3"].checked == false) {
+    document.all.tabula.innerHTML = "";
+    document.all.psicolumn.innerHTML = "";
+    document.all.encolumn.innerHTML = "";
+    document.all.audcolumn.innerHTML = "";
+    trouble = false;
+  }
+  if (document.all["cb1"].checked == true) {
+    document.all["cb2"].checked = false;
+     document.all["cb3"].checked = false;
+    document.all.tabula.innerHTML = "";
+    document.all.psicolumn.innerHTML = "";
+    document.all.encolumn.innerHTML = "";
+    document.all.audcolumn.innerHTML = "";
+    trouble = false;
+    hardcopy = true;
+    fyi = 1;
+    now = new Date(); 
+    adcopy=
+    ("<font size='+2'>AiMind version "+vrsn+" on " +now+"<\/b><\/font>");
+    document.all.souvenir.innerHTML = adcopy;
+  }
+  if (document.all["cb1"].checked == false) {
+    document.all.souvenir.innerHTML = "";
+    hardcopy = false;
+    document.all.tabula.innerHTML = "";
+  }
+  if (hardcopy == true) {
+    if (userline != "" || output != "" ) {
+      Transcript();
+    }
+  }
+  if (document.all["cb2"].checked == true) {
+    document.all["cb1"].checked = false;
+    document.all.souvenir.innerHTML = "";
+    hardcopy = false;
+    document.all["cb3"].checked = false;
+    document.all.tabula.innerHTML = "";
+    document.all.psicolumn.innerHTML = "";
+    document.all.encolumn.innerHTML = "";
+    document.all.audcolumn.innerHTML = "";
+    trouble = false;
+    tutor = true;
+    fyi = 2;
+  }
+  if (document.all["cb2"].checked == false) {
+    tutor = false;
+    if (fyi == 2) fyi = 0;
+  }
+  if (trouble == true) {
+    Diagnostic();
+  }
+  if (life == true) {
+    document.forms[1].ear.focus();
+  }
+}
+
+
 function MainLoop() {
   aud = 1;  // test; 18dec2011
   SpeechAct();  // 18dec2011
+  Diagnostic();  // to show vocabulary; 22dec2011
   unk = (unk + 1);  // 18dec2011
   if (unk > 1) life = false;  // to exit loop; 20dec2011
   alert("Mainloop: unk = "+unk); // test; 18dec2011
@@ -148,7 +318,8 @@ function MainLoop() {
 
 </script>
 </head>
-<body bgcolor="white" onLoad="RuBoot()">
+<!--*********AI code is above; visible Mind is below**********-->
+<body bgcolor="white" onKeyUp="if(event.keyCode==9) Tab();" onLoad="RuBoot()">
 
 <p><br /></p>
 <fieldset>
@@ -163,7 +334,7 @@ function MainLoop() {
  <a href="http://www.gotai.net" 
  title="Russian artificial intelligence website" 
  style="text-decoration:none;">
-&#1048;&#1089;&#1082;&#1091;&#1089;&#1090;&#1074;&#1077;&#1085;&#1085;&#1099;&#1081; 
+&#1048;&#1089;&#1082;&#1091;&#1089;&#1089;&#1090;&#1074;&#1077;&#1085;&#1085;&#1099;&#1081; 
 <!-- artificial -->
  &#1048;&#1085;&#1090;&#1077;&#1083;&#1083;&#1077;&#1082;&#1090;
  <!-- intelligence --></a> - 
@@ -183,9 +354,11 @@ AiMind</a> -
 JsAiManual</a></b></font></legend>
 
 <form name="modes">
-<input type="checkbox"> Transcript 
-<input type="checkbox"> Tutorial 
-<input type="checkbox"> Diagnostic 
+<input type="checkbox"> &#1055;&#1088;&#1086;&#1090;&#1086;&#1082;&#1086;&#1083; 
+<!-- Protocol (Transcript) -->
+<input type="checkbox"> &#1054;&#1073;&#1091;&#1095;&#1077;&#1085;&#1080;&#1077; 
+<!-- Tutorial -->
+<input type="checkbox" name="cb3" onClick="TuringTest();"checked> Diagnostic 
 <input type="checkbox"><font color="fuchsia"><b>HALT</b></font> 
 <input type="checkbox">
 <font color="red"><b>
@@ -217,8 +390,14 @@ JsAiManual</a></b></font></legend>
 
 <div id="brain" style="position:static;
  background-color:lightgreen">
-&#1057;&#1086;&#1074;&#1079;&#1090;&#1099; <!-- counsel -->
+&#1057;&#1086;&#1074;&#1077;&#1090;&#1099; <!-- counsel -->
 </div>
+
+<!-- The Diagnostic columns are present but invisible. -->
+<div id="audcolumn" style="position:absolute; left:460; top:310;
+width:200; height:140; background-color:clear">
+</div>
+
 
 <div id="idea"> </div>
 
@@ -233,6 +412,7 @@ JsAiManual</a></b></font></legend>
 Tues.13dec2011 "ru111213" initiates the AI Mind Control Panel with links.
 Sun.18dec2011 "ru111218" shows display of Russian output.
 Tues.20dec2011 "ru111220" uses CP-1251 escape codes for Cyrillic.
+Thurs.22dec2011 "ru111222" shows Russian words held in memory.
 (end of HTML Change Log comments) -->
 </html>
 }}}

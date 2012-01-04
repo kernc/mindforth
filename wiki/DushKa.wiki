@@ -10,44 +10,103 @@
  content="Russian-language artificial intelligence in JavaScript" />
 <meta name="keywords" 
  content="AI, Cyrillic, Dushka, artificial intelligence, Mentifex" />
-<script language="JavaScript">
+<script language="JavaScript"> 
+var abc = "";  // AudBuffer() transfer character; 28dec2011
 var act = 0; // 18dec2011
 var apb = "";  // 18dec2011
+var aud = 0;   // auditory recall vector; 2jan2012
 var auddata = ("<b>" + "Auditory memory nodes" + "<\/b>" + "<BR>");
 auddata += ("krt pho act pov beg ctu audpsi");  // 22dec2011
 var audpsi = 0; // 18dec2011
+var b01 = "";  // for OutBuffer(); 28dec2011
+var b02 = "";  // for OutBuffer(); 28dec2011
+var b03 = "";  // for OutBuffer(); 28dec2011
+var b04 = "";  // for OutBuffer(); 28dec2011
+var b05 = "";  // for OutBuffer(); 28dec2011
+var b06 = "";  // for OutBuffer(); 28dec2011
+var b07 = "";  // for OutBuffer(); 28dec2011
+var b08 = "";  // for OutBuffer(); 28dec2011
+var b09 = "";  // for OutBuffer(); 28dec2011
+var b10 = "";  // for OutBuffer(); 28dec2011
+var b11 = "";  // for OutBuffer(); 28dec2011
+var b12 = "";  // for OutBuffer(); 28dec2011
+var b13 = "";  // for OutBuffer(); 28dec2011
+var b14 = "";  // for OutBuffer(); 28dec2011
+var b15 = "";  // for OutBuffer(); 28dec2011
+var b16 = "?";  // for OutBuffer(); 28dec2011
 var beg = 0;  // 18dec2011
+var c01 = "";  // for AudBuffer(); 28dec2011
+var c02 = "";  // for AudBuffer(); 28dec2011
+var c03 = "";  // for AudBuffer(); 28dec2011
+var c04 = "";  // for AudBuffer(); 28dec2011
+var c05 = "";  // for AudBuffer(); 28dec2011
+var c06 = "";  // for AudBuffer(); 28dec2011
+var c07 = "";  // for AudBuffer(); 28dec2011
+var c08 = "";  // for AudBuffer(); 28dec2011
+var c09 = "";  // for AudBuffer(); 28dec2011
+var c10 = "";  // for AudBuffer(); 28dec2011
+var c11 = "";  // for AudBuffer(); 28dec2011
+var c12 = "";  // for AudBuffer(); 28dec2011
+var c13 = "";  // for AudBuffer(); 28dec2011
+var c14 = "";  // for AudBuffer(); 28dec2011
+var c15 = "";  // for AudBuffer(); 28dec2011
+var c16 = "";  // for AudBuffer(); 28dec2011
 var cns = 768;  // size of central nervous system; 18dec2011
 var ctu = 1;  // 18dec2011
 var dba = 0;  // case for nouns; person for verbs; 22dec2011
+var fex = 0;  // fiber-out from Psi concept array; 2jan2012
+var fin = 0;  // fiber-in to Psi concept array; 2jan2012
 var flex1 = "";  // first inflection phoneme; 18dec2011
 var flex2 = "";  // second inflection phoneme; 18dec2011
 var flex3 = "";  // third inflection phoneme; 18dec2011
 var fyi = "3";  // For Your Information; 22dec2011
-var jux = 0; // 18dec2011
+var jux = 0;  // 18dec2011
+var krt = 0;  // 2jan2012
 var lastpho = 0; // 18dec2011
 var life = true;  // 18dec2011
 var mfn = 0;  // male-female-neuter gender flag; 18dec2011
 var nonce = 1;  // for start of Diagnostic display; 22dec2011
 var nru = 0;  // Number of Russian concept; 18dec2011
+var num = 0;  // num(ber) of a verb or noun; 2jan2012
 var output = "&#1055;&#1056;&#1048;&#1042;&#1045;&#1058;  "  // "Greeting"
 var pho = ""; // 18dec2011
+var phodex = 0;  // pho-index for AudBuffer(); 28dec2011
 var pos = 0;  // part of speech; 18dec2011
 var pov = "#";  // 18dec2011
+var pre = 0;  // pre(vious) concept; 2jan2012
+var psi = 0;  // concept number in Psi conceptual array; 2jan2012 
+var psidata = ("<b>" + "Psi mindcore concepts" + "<\/b>" + "<BR>");
+psidata += ("krt psi act num jux pre pos tqv seq rux"); // 2jan2012
+var rudata = ("<b>" + "Russian lexical fibers" + "<\/b>" + "<BR>");
+rudata += ("krt nru act num mfn fex pos fin aud"); // 2jan2012
 var rux = 0;  // transfer from deep concept to Russian lexicon; 22dec2011
+var seq = 0;  // subSEQuent concept; 2jan2012
 var spt = 0;  // 18dec2011
 var t = 0;  // 18dec2011
+var tqv = 0;  // tempus quod vide for specific psi instance; 2jan2012
 var trouble = true;  // for automatic Diagnostic display; 22dec2011
 var tult = 0;  // t-ultimate before t; 18dec2011
 var unk = 0;  // 18dec2011
-var vault = 12; // size of RuBoot; 18dec2011
-
+var vault = 181; // size (time at end) of RuBoot; 4jan2012
+ 
+ 
+Psi = new Array(cns);
+for (i = 0; i < cns; i++) {
+  Psi[i] = new psiNode(" "," "," "," "," "," "," "," "," "); // 2jan2012
+}
+ 
+ruLexicon = new Array(cns);  // 2jan2012
+for (i = 0; i < cns; i++) {  // adding extra " " for "dba"; 2jan2012
+  ruLexicon[i] = new ruNode(" "," "," "," "," "," "," "," "," ");
+}  // 2jan2012
+ 
+ 
 audMemory = new Array(cns);  // 18dec2011
 for (i = 0; i < cns; i++) {  // 18dec2011
   audMemory[i] = new audNode(" ",0," "," "," "," ");
 }
-
-
+ 
+ 
 function audExam() {  // 18dec2011
   aud0 = this.pho;    // 18dec2011
   aud1 = this.act;    // 18dec2011
@@ -56,7 +115,7 @@ function audExam() {  // 18dec2011
   aud4 = this.ctu;    // 18dec2011
   aud5 = this.audpsi; // 18dec2011
 }
-
+ 
 function audNode(pho,act,pov,beg,ctu,audpsi) {
   this.pho = pho;         // 18dec2011
   this.act = act;         // 18dec2011
@@ -66,8 +125,8 @@ function audNode(pho,act,pov,beg,ctu,audpsi) {
   this.audpsi = audpsi;   // 18dec2011
   this.audExam = audExam; // 18dec2011
 }
-
-
+ 
+ 
 function AudMem() {
 // if (t > vault) {
 //  AudRecog();
@@ -82,30 +141,235 @@ function AudMem() {
   if (aud0 == " ") beg = 1;
   audMemory[t] = new audNode(pho,0,pov,beg,ctu,audpsi); // 18dec2011
 }
-
-
+ 
+ 
 function ruList() {  // 22dec2011
   for (i = nonce; i < (t +1); i++) {
     ruLexicon[i].ruExam();
-    rudata += ("<BR>"+i+". <b>" +ru0+"<\/b> "+ru1+" ");
-    rudata += (ru2+" "+ru3+" "+ru4+" "+ru5+" "+ru66+" "+ru7);
-  }  // 22dec2011
+    rudata += ("<BR>"+i+". <b>" +ru0+"<\/b> "+ru1+" "+ru2+" ");
+    rudata += (ru3+" "+ru4+" "+ru5+" "+ru6+" "+ru7+" "+ru8);
+  }  // 2jan2012
 }  // end of ruList(); 22dec2011
-
-
+ 
+ 
+function psiList() {  // 2jan2012
+  for (i = nonce; i < (t +1); i++) {
+    Psi[i].psiExam();
+    psidata += ("<BR>" +i+ ". <b>" +psi0+ "<\/b> " +psi1+ " " +psi2);
+    psidata += (" "+psi3+" "+psi4+" "+psi5+" "+psi6+" "+psi7+" "+psi8);
+  }
+}   // 2jan2012
+ 
+ 
 function audList() {  // 22dec2011
   for (i = nonce; i < (t +1); i++) {
     audMemory[i].audExam();
-    auddata += ("<BR>" + i + ". <b>");
+    auddata += ("<BR>" + i + ". ");  // removing bold; 2jan2012
     if (aud2 == "*") auddata += ("<font color='red'>");
-    auddata += (aud0 + "<\/b> ");
+    auddata += (aud0 + " ");  // removing bold; 2jan2012
     if (aud2 == "*") auddata += ("<\/font>");
     if (aud0 == " ") aud1 = " ";
     auddata += (aud1+" "+aud2+" "+aud3+" "+aud4+" "+aud5); 
   }  // 22dec2011
 }  // end of audList() for Diagnostic mode; 22dec2011
-
-
+ 
+ 
+function psiExam() {
+  psi0 = this.psi;
+  psi1 = this.act;
+  psi2 = this.num;
+  psi3 = this.jux;
+  psi4 = this.pre;
+  psi5 = this.pos;
+  psi6 = this.tqv;  // time-point for "verblock" or "nounlock"; 2jan2012
+  psi7 = this.seq;  // subSEQuent concept; 2jan2012
+  psi8 = this.rux;  // Russian-transfer tag; 2jan2012
+}
+ 
+function psiNode(psi,act,num,jux,pre,pos,tqv,seq,rux) { // 2jan2012
+  this.psi = psi;
+  this.act = act;
+  this.num = num;
+  this.jux = jux;
+  this.pre = pre;
+  this.pos = pos;
+  this.tqv = tqv;
+  this.seq = seq;
+  this.rux = rux;  // 2jan2012
+  this.psiExam = psiExam;
+}
+ 
+ 
+function ruExam() {
+  ru0 = this.nru;  // was "nen" in English; 2jan2012
+  ru1 = this.act;
+  ru2 = this.num;
+  ru3 = this.mfn; 
+  ru4 = this.dba;  // 2jan2012
+  ru5 = this.fex;
+  ru6 = this.pos;
+  ru7 = this.fin;
+  ru8 = this.aud;  // nine flags, including zero; 2jan2012
+}
+ 
+function ruNode(nru,act,num,mfn,dba,fex,pos,fin,aud) {
+  this.nru = nru;  // was "nen" in English; 2jan2012
+  this.act = act;
+  this.num = num;
+  this.mfn = mfn;
+  this.dba = dba;  // 2jan2012
+  this.fex = fex;
+  this.pos = pos;
+  this.fin = fin;
+  this.aud = aud;
+  this.ruExam = ruExam;  // 2jan2012
+}
+ 
+ 
+function RuVocab() {  // adding "dba"; 2jan2012
+  ruLexicon[t] = new ruNode(nru,act,num,mfn,dba,fex,pos,fin,aud);
+}  // 2jan2012
+ 
+ 
+ 
+function InNativate() { // quasi-instantiate RuBoot sequence; 2jan2012
+  Psi[t] = new psiNode(psi,0,num,0,pre,pos,tqv,seq,rux);
+}  // end of InNativate(); 2jan2012
+ 
+ 
+ 
+function OutBuffer() {  // for manipulation of SpeechAct words; 28dec2011
+// alert("OutBuffer: unk = "+unk);  // test; 28fdec2011
+  if (c16>"") {  // if the AudBuffer full; 28dec2011
+    b16=c16; b15=c15; b14=c14; b13=c13; b12=c12; b11=c11; 
+    b10=c10; b09=c09; b08=c08; b07=c07; b06=c06; b05=c05; 
+    b04=c04; b03=c03; b02=v02; b01=c01;  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 16-character word; 28dec2011
+  if (c15>"") {  
+    b16=c15; b15=c14; b14=c13; b13=c12; b12=c11; b11=c10;
+    b10=c09; b09=c08; b08=c07; b07=c06; b06=c05; b05=c04; 
+    b04=c03; b03=c02; b02=c01; b01="";  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 15-character word; 28dec2011
+  if (c14>"") {
+    b16=c14; b15=c13; b14=c12; b13=c11; b12=c10; b11=c09;
+    b10=c08; b09=c07; b08=c06; b07=c05; b06=c04; b05=c03;
+    b04=c02; b03=c01; b02="";  b01="";  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 14-character word; 28dec2011
+  if (c13>"") {
+    b16=c13; b15=c12; b14=c11; b13=c10; b12=c09; b11=c08;
+    b10=c07; b09=c06; b08=c05; b07=c04; b06=c03; b05=c02;
+    b04=c01; b03="";  b02="";  b01="";  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 13-character word; 28dec2011
+  if (c12>"") {
+    b16=c12; b15=c11; b14=c10; b13=c09; b12=c08; b11=c07;
+    b10=c06; b09=c05; b08=c04; b07=c03; b06=c02; b05=c01;
+    b04="";  b03="";  b02="";  b01="";  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 12-character word; 28dec2011
+  if (c11>"") {
+    b16=c11; b15=c10; b14=c09; b13=c08; b12=c07; b11=c06;
+    b10=c05; b09=c04; b08=c03; b07=c02; b06=c01; b05="";
+    b04="";  b03="";  b02="";  b01="";  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of an 11-character word; 28dec2011
+  if (c10>"") {
+    b16=c10; b15=c09; b14=c08; b13=c07; b12=c06; b11=c05;
+    b10=c04; b09=c03; b08=c02; b07=c01; b06="";  b05="";
+    b04="";  b03="";  b02="";  b01="";  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 10-character word; 28dec2011
+  if (c09>"") {
+    b16=c09; b15=c08; b14=c07; b13=c06; b12=c05; b11=c04;
+    b10=c03; b09=c02; b08=c01; b07="";  b06="";  b05="";
+    b04="";  b03="";  b02="";  b01="";  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 9-character word; 28dec2011
+  if (c08>"") {
+    b16=c08; b15=c07; b14=c06; b13=c05; b12=c04; b11=c03;
+    b10=c02; b09=c01; b08="";  b07="";  b06="";  b05="";
+    b04="";  b03="";  b02="";  b01="";  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of an 8-character word; 28dec2011
+  if (c07>"") {
+    b16=c07; b15=c06; b14=c05; b13=c04; b12=c03; b11=c02;
+    b10=c01; b09="";  b08="";  b07="";  b06="";  b05="";
+    b04="";  b03="";  b02="";  b01="";  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 7-character word; 28dec2011
+  if (c06>"") {
+    b16=c06; b15=c05; b14=c04; b13=c03; b12=c02; b11=c01;
+    b10="";  b09="";  b08="";  b07="";  b06="";  b05="";
+    b04="";  b03="";  b02="";  b01="";  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 6-character word; 28dec2011
+  if (c05>"") {
+    b16=c05; b15=c04; b14=c03; b13=c02; b12=c01; b11="";
+    b10="";  b09="";  b08="";  b07="";  b06="";  b05="";
+    b04="";  b03="";  b02="";  b01="";  // 28dec2011
+ // alert("OB = "+b10+b11+b12+b13+b14+b15+b16);  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 5-character word; 28dec2011
+  if (c04>"") {
+    b16=c04; b15=c03; b14=c02; b13=c01; b12="";  b11="";
+    b10="";  b09="";  b08="";  b07="";  b06="";  b05="";
+    b04="";  b03="";  b02="";  b01="";  // 28dec2011
+ // alert("OB = "+b10+b11+b12+b13+b14+b15+b16);  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 4-character word; 28dec2011
+  if (c03>"") {
+    b16=c03; b15=c02; b14=c01; b13=""; b12="";  b11="";
+    b10="";  b09="";  b08="";  b07="";  b06="";  b05="";
+    b04="";  b03="";  b02="";  b01="";  // 28dec2011
+ // alert("OB = "+b10+b11+b12+b13+b14+b15+b16);  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 3-character word; 28dec2011
+  if (c02>"") {
+    b16=c02; b15=c01; b14="";  b13=""; b12="";  b11="";
+    b10="";  b09="";  b08="";  b07="";  b06="";  b05="";
+    b04="";  b03="";  b02="";  b01="";  // 28dec2011
+ // alert("OB = "+b10+b11+b12+b13+b14+b15+b16);  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 2-character word; 28dec2011
+  if (c01>"") {
+    b16=c01; b15=""; b14="";  b13=""; b12="";  b11="";
+    b10="";  b09="";  b08="";  b07="";  b06="";  b05="";
+    b04="";  b03="";  b02="";  b01="";  // 28dec2011
+    alert("OB = "+b10+b11+b12+b13+b14+b15+b16);  // 28dec2011
+    return;  // abandon remainder of function; 28dec2011
+  }  // end of transfer of a 1-character word; 28dec2011
+//  alert("OutBuffer = "+b10+b11+b12+b13+b14+b15+b16); 
+}  // end of OutBuffer; 28dec2011
+ 
+ 
+function AudBuffer() {  // for transfer of words to OutBuffer; 28dec2011
+  phodex = (phodex + 1);  // unitary increment; 28dec2011
+  if (phodex==1) {  // 28dec2011
+    c01=abc; c02=""; c03=""; c04=""; c05=""; c06=""; c07=""; c08=""; 
+    c09="";  c10=""; c11=""; c12=""; c13=""; c14=""; c15=""; c16="";
+  }   // emd of using phodex=1 to blank out the AudBuffer; 28dec2011
+  if (phodex==2)  c02=abc;  // 28dec2011
+  if (phodex==3)  c03=abc;  // 28dec2011
+  if (phodex==4)  c04=abc;  // 28dec2011
+  if (phodex==5)  c05=abc;  // 28dec2011
+  if (phodex==6)  c06=abc;  // 28dec2011
+  if (phodex==7)  c07=abc;  // 28dec2011
+  if (phodex==8)  c08=abc;  // 28dec2011
+  if (phodex==9)  c09=abc;  // 28dec2011
+  if (phodex==10)  c10=abc;  // 28dec2011
+  if (phodex==11)  c11=abc;  // 28dec2011
+  if (phodex==12)  c12=abc;  // 28dec2011
+  if (phodex==13)  c13=abc;  // 28dec2011
+  if (phodex==14)  c14=abc;  // 28dec2011
+  if (phodex==15)  c15=abc;  // 28dec2011
+  if (phodex==16)  c16=abc;  // 28dec2011
+// alert("AudBuffer = "+c01+c02+c03+c04+c05+c06+c07+c08);  // 28dec2011
+}  // end of AudBuffer(); 28dec2011
+ 
+ 
 function Tab() {
   document.forms[1].ear.focus();
   fyi = (fyi + 1);
@@ -158,50 +422,328 @@ function Tab() {
   }
   TID=window.setTimeout("CR();",1000);
 }
-
-
+ 
+ 
 function Tab() {  // stub; 15dec2011
 }  // end of stub of Tab(); 15dec2011
-
+ 
 function CR() {  // 18dec2011
 }  // 18dec2011
-
+ 
 function RuBoot() {  // stub; 15dec2011
 // TuringTest();
- alert("RuBoot will be loaded now."); 
+// alert("RuBoot will be loaded now."); 
 act = 0;    // 18dec2011
 jux = 0;    // 18dec2011
 pov = "#";  // 18dec2011
 spt = t;    // 18dec2011
 t = 0;      // 18dec2011
-// ERROR  -- first word so any bug will announce itself 
+// 582 OSHIBKA (error) first word so any bug will announce itself 
 t=1;pho="&#1054;"; beg=1; ctu=1; audpsi=0; AudMem();
 t=2;pho="&#1064"; beg=0; ctu=1; audpsi=0; AudMem();
 t=3;pho="&#1048"; beg=0; ctu=1; audpsi=0; AudMem();
 t=4;pho="&#1041"; beg=0; ctu=1; audpsi=0; AudMem();
 t=5;pho="&#1050"; beg=0; ctu=1; audpsi=0; AudMem();
-t=6;pho="&#1040"; beg=0; ctu=0; audpsi=82; AudMem();
-nru=82; mfn=2; fex=82; pos=5; fin=82; aud=1; // RuVocab();
-psi=82;  num=1; pre=0; seq=0; rux=82; // InNativate();
-
-t=8;pho="&#1048;"; beg=1; ctu=1; audpsi=0; AudMem();
-t=9;pho="&#1044"; beg=0; ctu=1; audpsi=0; AudMem();
-t=10;pho="&#1045"; beg=0; ctu=1; audpsi=0; AudMem();
-t=11;pho="&#1071"; beg=0; ctu=0; audpsi=109; AudMem();
-nru=109; mfn=2; fex=109; pos=5; fin=109; aud=1; // RuVocab();
-psi=109;  num=1; pre=0; seq=0; rux=109; // InNativate();
-alert("End of RuBoot");  // test; remove; 18dec2011
+t=6;pho="&#1040"; beg=0; ctu=0; audpsi=582; AudMem();
+nru=582; mfn=2; dba=1; fex=582; pos=5; fin=582; aud=1;
+psi=582; num=1; pre=0; seq=0; rux=582; RuVocab(); InNativate();
+ 
+// 800 BWIT' (to be) verb; irreg; infinitive 4jan2012
+t=8;pho="&#1041;"; beg=1; ctu=1; audpsi=0; AudMem();
+t=9;pho="&#1067"; beg=0; ctu=1; audpsi=0; AudMem();
+t=10;pho="&#1058"; beg=0; ctu=1; audpsi=0; AudMem();
+t=11;pho="&#1068"; beg=0; ctu=0; audpsi=800; AudMem();
+nru=800; mfn=0; dba=0; fex=800; pos=8; fin=800; aud=8; // 
+psi=800; num=0; pre=0; seq=0; rux=800; RuVocab(); InNativate();
+ 
+// 807 BUDU (will be) verb; irreg; 1st person future 4jan2012
+t=13;pho="&#1041;"; beg=1; ctu=1; audpsi=0; AudMem();
+t=14;pho="&#1059"; beg=0; ctu=1; audpsi=0; AudMem();
+t=15;pho="&#1044"; beg=0; ctu=1; audpsi=0; AudMem();
+t=16;pho="&#1059"; beg=0; ctu=0; audpsi=807; AudMem();
+nru=807; mfn=0; dba=1; fex=807; pos=8; fin=800; aud=13; // 
+psi=800; num=1; pre=0; seq=0; rux=807; RuVocab(); InNativate();
+ 
+// 781 VWI (you) pronoun; formal nom. sing. 2jan2012
+t=18;pho="&#1042;"; beg=1; ctu=1; audpsi=0; AudMem();
+t=19;pho="&#1067"; beg=0; ctu=0; audpsi=781; AudMem();
+nru=781; mfn=0; dba=1; fex=781; pos=7; fin=701; aud=18; // 
+psi=781; num=1; pre=0; seq=0; rux=781; RuVocab(); InNativate();
+ 
+// 782 VAS (of you) pronoun; formal gen. sing. 2jan2012
+t=21;pho="&#1042;"; beg=1; ctu=1; audpsi=0; AudMem();
+t=22;pho="&#1040"; beg=0; ctu=1; audpsi=0; AudMem();
+t=23;pho="&#1057"; beg=0; ctu=0; audpsi=782; AudMem();
+nru=782; mfn=0; dba=2; fex=782; pos=7; fin=701; aud=21; // 
+psi=781; num=1; pre=0; seq=0; rux=782; RuVocab(); InNativate();
+ 
+// 783 VAM (to you) pronoun; formal dat. sing. 2jan2012
+t=25;pho="&#1042;"; beg=1; ctu=1; audpsi=0; AudMem();
+t=26;pho="&#1040"; beg=0; ctu=1; audpsi=0; AudMem();
+t=27;pho="&#1052"; beg=0; ctu=0; audpsi=783; AudMem();
+nru=783; mfn=0; dba=3; fex=783; pos=7; fin=701; aud=25; // 
+psi=781; num=1; pre=0; seq=0; rux=783; RuVocab(); InNativate();
+ 
+// 784 VAS (you) pronoun; formal acc. sing. 2jan2012
+t=29;pho="&#1042;"; beg=1; ctu=1; audpsi=0; AudMem();
+t=30;pho="&#1040"; beg=0; ctu=1; audpsi=0; AudMem();
+t=31;pho="&#1057"; beg=0; ctu=0; audpsi=784; AudMem();
+nru=784; mfn=0; dba=4; fex=784; pos=7; fin=701; aud=29; // 
+psi=781; num=1; pre=0; seq=0; rux=784; RuVocab(); InNativate();
+ 
+// 785 VAMI (you) pron; formal instrumental sing. 2jan2012
+t=33;pho="&#1042;"; beg=1; ctu=1; audpsi=0; AudMem();
+t=34;pho="&#1040"; beg=0; ctu=1; audpsi=0; AudMem();
+t=35;pho="&#1052"; beg=0; ctu=1; audpsi=0; AudMem();
+t=36;pho="&#1048"; beg=0; ctu=0; audpsi=785; AudMem();
+nru=785; mfn=0; dba=5; fex=785; pos=7; fin=701; aud=33; // 
+psi=781; num=1; pre=0; seq=0; rux=785; RuVocab(); InNativate();
+ 
+// 786 VAS (you) pron; formal prep. sing. 2jan2012
+t=38;pho="&#1042;"; beg=1; ctu=1; audpsi=0; AudMem();
+t=39;pho="&#1040"; beg=0; ctu=1; audpsi=0; AudMem();
+t=40;pho="&#1057"; beg=0; ctu=0; audpsi=786; AudMem();
+nru=786; mfn=0; dba=6; fex=786; pos=7; fin=701; aud=38; // 
+psi=781; num=1; pre=0; seq=0; rux=786; RuVocab(); InNativate();
+ 
+// 432 DA (yes) interjection 4jan2012
+t=42;pho="&#1044;"; beg=1; ctu=1; audpsi=0; AudMem();
+t=43;pho="&#1040"; beg=0; ctu=0; audpsi=432; AudMem();
+nru=432; mfn=0; dba=0; fex=432; pos=4; fin=432; aud=42;
+psi=432; num=0; pre=0; seq=0; rux=432; RuVocab(); InNativate();
+ 
+// 831 DUMAYU ("I think"); sample verb; 2jan2012
+t=45;pho="&#1044"; beg=1; ctu=1; audpsi=0; AudMem();
+t=46;pho="&#1059"; beg=0; ctu=1; audpsi=0; AudMem();
+t=47;pho="&#1052"; beg=0; ctu=1; audpsi=0; AudMem();
+t=48;pho="&#1040"; beg=0; ctu=1; audpsi=0; AudMem();
+t=49;pho="&#1070"; beg=0; ctu=0; audpsi=831; AudMem();
+nru=831; mfn=0; dba=1; fex=831; pos=8; fin=831; aud=45; 
+psi=830;  num=1; pre=0; seq=0; rux=831; RuVocab(); InNativate();
+ 
+// 521 DUSHKA ("little soul"); name of the Russian AI; 4jan2012
+t=51;pho="&#1044"; beg=1; ctu=1; audpsi=0; AudMem();
+t=52;pho="&#1059"; beg=0; ctu=1; audpsi=0; AudMem();
+t=53;pho="&#1064"; beg=0; ctu=1; audpsi=0; AudMem();
+t=54;pho="&#1050"; beg=0; ctu=1; audpsi=0; AudMem();
+t=55;pho="&#1040"; beg=0; ctu=0; audpsi=521; AudMem();
+nru=521; mfn=2; dba=1; fex=521; pos=5; fin=521; aud=51; 
+psi=521;  num=1; pre=0; seq=0; rux=521; RuVocab(); InNativate();
+ 
+// 803 YEST' ("there is"); verb; 4jan2012
+t=57;pho="&#1045"; beg=1; ctu=1; audpsi=0; AudMem();
+t=58;pho="&#1057"; beg=0; ctu=1; audpsi=0; AudMem();
+t=59;pho="&#1058"; beg=0; ctu=1; audpsi=0; AudMem();
+t=60;pho="&#1068"; beg=0; ctu=0; audpsi=803; AudMem();
+nru=803; mfn=0; dba=3; fex=803; pos=8; fin=803; aud=57;
+psi=803; num=1; pre=0; seq=0; rux=803; RuVocab(); InNativate();
+ 
+// 840 ZNAT' ("to know"); sample verb; 2jan2012
+t=62;pho="&#1047"; beg=1; ctu=1; audpsi=0; AudMem();
+t=63;pho="&#1053"; beg=0; ctu=1; audpsi=0; AudMem();
+t=64;pho="&#1040"; beg=0; ctu=1; audpsi=0; AudMem();
+t=65;pho="&#1058"; beg=0; ctu=1; audpsi=0; AudMem();
+t=66;pho="&#1068"; beg=0; ctu=0; audpsi=840; AudMem();
+nru=840; mfn=0; dba=0; fex=840; pos=8; fin=840; aud=62;
+psi=840; num=0; pre=0; seq=0; rux=840; RuVocab(); InNativate();
+ 
+// 360 EE ("and") conjunction; 4jan2012
+t=68;pho="&#1048"; beg=1; ctu=0; audpsi=360; AudMem();
+nru=360; mfn=0; dba=1; fex=360; pos=3; fin=360; aud=68;
+psi=360; num=0; pre=0; seq=0; rux=360; RuVocab(); InNativate();
+ 
+// 587 LYUDI (people) noun; plural; 4jan2012
+t=70;pho="&#1051;"; beg=1; ctu=1; audpsi=0; AudMem();
+t=71;pho="&#1070"; beg=0; ctu=1; audpsi=0; AudMem();
+t=72;pho="&#1044"; beg=0; ctu=1; audpsi=0; AudMem();
+t=73;pho="&#1048"; beg=0; ctu=0; audpsi=587; AudMem();
+nru=587; mfn=0; dba=1; fex=587; pos=5; fin=587; aud=70; // 
+psi=587; num=2; pre=0; seq=0; rux=587; RuVocab(); InNativate();
+ 
+// 850 MWISLIT' ("to think"); verb; infinitive; 4jan2012
+t=75;pho="&#1052"; beg=1; ctu=1; audpsi=0; AudMem();
+t=76;pho="&#1067"; beg=0; ctu=1; audpsi=0; AudMem();
+t=77;pho="&#1057"; beg=0; ctu=1; audpsi=0; AudMem();
+t=78;pho="&#1051"; beg=0; ctu=1; audpsi=0; AudMem();
+t=79;pho="&#1048"; beg=0; ctu=1; audpsi=0; AudMem();
+t=80;pho="&#1058"; beg=0; ctu=1; audpsi=0; AudMem();
+t=81;pho="&#1068"; beg=0; ctu=0; audpsi=850; AudMem();
+nru=850; mfn=0; dba=0; fex=850; pos=8; fin=850; aud=75;
+psi=850; num=0; pre=0; seq=0; rux=850; RuVocab(); InNativate();
+ 
+// 250 NYE (not) adverb for negation; 2jan2012
+t=83;pho="&#1053"; beg=1; ctu=1; audpsi=0; AudMem();
+t=84;pho="&#1045"; beg=0; ctu=0; audpsi=250; AudMem();
+nru=250; mfn=0; dba=0; fex=250; pos=2; fin=250; aud=83;
+psi=250; num=0; pre=0; seq=0; rux=250; RuVocab(); InNativate();
+ 
+// 427 NYET (no) interjection; 4jan2012
+t=86;pho="&#1053"; beg=1; ctu=1; audpsi=0; AudMem();
+t=87;pho="&#1045"; beg=0; ctu=1; audpsi=0; AudMem();
+t=88;pho="&#1058"; beg=0; ctu=0; audpsi=427; AudMem();
+nru=427; mfn=0; dba=0; fex=427; pos=4; fin=427; aud=86;
+psi=427; num=0; pre=0; seq=0; rux=427; RuVocab(); InNativate();
+ 
+// 860 PONIMAT' ("to understand"); sample verb; 2jan2012
+t=90;pho="&#1055"; beg=1; ctu=1; audpsi=0; AudMem();
+t=91;pho="&#1054"; beg=0; ctu=1; audpsi=0; AudMem();
+t=92;pho="&#1053"; beg=0; ctu=1; audpsi=0; AudMem();
+t=93;pho="&#1048"; beg=0; ctu=1; audpsi=0; AudMem();
+t=94;pho="&#1052"; beg=0; ctu=1; audpsi=0; AudMem();
+t=95;pho="&#1040"; beg=0; ctu=1; audpsi=0; AudMem();
+t=96;pho="&#1058"; beg=0; ctu=1; audpsi=0; AudMem();
+t=97;pho="&#1068"; beg=0; ctu=0; audpsi=860; AudMem();
+nru=860; mfn=0; dba=0; fex=860; pos=8; fin=860; aud=90;
+psi=860; num=0; pre=0; seq=0; rux=860; RuVocab(); InNativate();
+ 
+// 571 ROBOT ("robot"); noun; nominative 4jan2012
+t=99;pho="&#1056"; beg=1; ctu=1; audpsi=0; AudMem();
+t=100;pho="&#1054"; beg=0; ctu=1; audpsi=0; AudMem();
+t=101;pho="&#1041"; beg=0; ctu=1; audpsi=0; AudMem();
+t=102;pho="&#1054"; beg=0; ctu=1; audpsi=0; AudMem();
+t=103;pho="&#1058"; beg=0; ctu=0; audpsi=571; AudMem();
+nru=571; mfn=1; dba=1; fex=571; pos=5; fin=571; aud=99; 
+psi=571;  num=1; pre=0; seq=0; rux=571; RuVocab(); InNativate();
+ 
+// 680 S ("with") preposition; 4jan2012
+t=105;pho="&#1057"; beg=1; ctu=0; audpsi=680; AudMem();
+nru=680; mfn=0; dba=0; fex=680; pos=6; fin=680; aud=105;
+psi=680; num=0; pre=0; seq=0; rux=680; RuVocab(); InNativate();
+ 
+// 681 SO ("with") preposition; 4jan2012
+t=107;pho="&#1057"; beg=1; ctu=1; audpsi=0; AudMem();
+t=108;pho="&#1054"; beg=0; ctu=0; audpsi=681; AudMem();
+nru=681; mfn=0; dba=0; fex=681; pos=6; fin=680; aud=107;
+psi=680; num=0; pre=0; seq=0; rux=681; RuVocab(); InNativate();
+ 
+// 880 TREBOVAT' ("to demand"); verb; infinitive; 4jan2012
+t=110;pho="&#1058"; beg=1; ctu=1; audpsi=0; AudMem();
+t=111;pho="&#1056"; beg=0; ctu=1; audpsi=0; AudMem();
+t=112;pho="&#1045"; beg=0; ctu=1; audpsi=0; AudMem();
+t=113;pho="&#1041"; beg=0; ctu=1; audpsi=0; AudMem();
+t=114;pho="&#1054"; beg=0; ctu=1; audpsi=0; AudMem();
+t=115;pho="&#1042"; beg=0; ctu=1; audpsi=0; AudMem();
+t=116;pho="&#1040"; beg=0; ctu=1; audpsi=0; AudMem();
+t=117;pho="&#1058"; beg=0; ctu=1; audpsi=0; AudMem();
+t=118;pho="&#1068"; beg=0; ctu=0; audpsi=880; AudMem();
+nru=880; mfn=0; dba=0; fex=880; pos=8; fin=880; aud=110;
+psi=880; num=0; pre=0; seq=0; rux=880; RuVocab(); InNativate();
+ 
+// 711 TY ("you") pronoun; familiar; nom. sing. 4jan2012
+t=120;pho="&#1058"; beg=1; ctu=1; audpsi=0; AudMem();
+t=121;pho="&#1067"; beg=0; ctu=0; audpsi=711; AudMem();
+nru=711; mfn=0; dba=1; fex=711; pos=7; fin=701; aud=120;
+psi=711; num=1; pre=0; seq=0; rux=711; RuVocab(); InNativate();
+ 
+// 712 TEBYA ("of you") pronoun; familiar; gen. sing. 4jan2012
+t=123;pho="&#1058"; beg=1; ctu=1; audpsi=0; AudMem();
+t=124;pho="&#1045"; beg=0; ctu=1; audpsi=0; AudMem();
+t=125;pho="&#1041"; beg=0; ctu=1; audpsi=0; AudMem();
+t=126;pho="&#1071"; beg=0; ctu=0; audpsi=712; AudMem();
+nru=712; mfn=0; dba=2; fex=711; pos=7; fin=702; aud=123;
+psi=711; num=1; pre=0; seq=0; rux=712; RuVocab(); InNativate();
+ 
+// 713 TEBYE ("to you") pronoun; familiar; dat. sing. 4jan2012
+t=128;pho="&#1058"; beg=1; ctu=1; audpsi=0; AudMem();
+t=129;pho="&#1045"; beg=0; ctu=1; audpsi=0; AudMem();
+t=130;pho="&#1041"; beg=0; ctu=1; audpsi=0; AudMem();
+t=131;pho="&#1045"; beg=0; ctu=0; audpsi=713; AudMem();
+nru=713; mfn=0; dba=3; fex=711; pos=7; fin=703; aud=128;
+psi=711; num=1; pre=0; seq=0; rux=713; RuVocab(); InNativate();
+ 
+// 714 TEBYA ("you") pronoun; familiar; acc. sing. 4jan2012
+t=133;pho="&#1058"; beg=1; ctu=1; audpsi=0; AudMem();
+t=134;pho="&#1045"; beg=0; ctu=1; audpsi=0; AudMem();
+t=135;pho="&#1041"; beg=0; ctu=1; audpsi=0; AudMem();
+t=136;pho="&#1071"; beg=0; ctu=0; audpsi=714; AudMem();
+nru=714; mfn=0; dba=4; fex=711; pos=7; fin=704; aud=133;
+psi=711; num=1; pre=0; seq=0; rux=714; RuVocab(); InNativate();
+ 
+ 
+// 715 TOBOY ("you") pronoun; familiar; instrumental sing. 4jan2012
+t=138;pho="&#1058"; beg=1; ctu=1; audpsi=0; AudMem();
+t=139;pho="&#1054"; beg=0; ctu=1; audpsi=0; AudMem();
+t=140;pho="&#1041"; beg=0; ctu=1; audpsi=0; AudMem();
+t=141;pho="&#1054"; beg=0; ctu=1; audpsi=0; AudMem();
+t=142;pho="&#1049"; beg=0; ctu=0; audpsi=715; AudMem();
+nru=715; mfn=0; dba=5; fex=711; pos=7; fin=705; aud=138;
+psi=711; num=1; pre=0; seq=0; rux=715; RuVocab(); InNativate();
+ 
+// 716 TEBYE ("you") pronoun; familiar; prep. sing. 4jan2012
+t=144;pho="&#1058"; beg=1; ctu=1; audpsi=0; AudMem();
+t=145;pho="&#1045"; beg=0; ctu=1; audpsi=0; AudMem();
+t=146;pho="&#1041"; beg=0; ctu=1; audpsi=0; AudMem();
+t=147;pho="&#1045"; beg=0; ctu=0; audpsi=716; AudMem();
+nru=716; mfn=0; dba=6; fex=711; pos=7; fin=706; aud=144;
+psi=711; num=1; pre=0; seq=0; rux=716; RuVocab(); InNativate();
+ 
+// 581 CHELOVEK ("human being") noun; nom. sing. 4jan2012
+t=149;pho="&#1063"; beg=1; ctu=1; audpsi=0; AudMem();
+t=150;pho="&#1045"; beg=0; ctu=1; audpsi=0; AudMem();
+t=151;pho="&#1051"; beg=0; ctu=1; audpsi=0; AudMem();
+t=152;pho="&#1054"; beg=0; ctu=1; audpsi=0; AudMem();
+t=153;pho="&#1042"; beg=0; ctu=1; audpsi=0; AudMem();
+t=154;pho="&#1045"; beg=0; ctu=1; audpsi=0; AudMem();
+t=155;pho="&#1050"; beg=0; ctu=0; audpsi=581; AudMem();
+nru=581; mfn=1; dba=1; fex=581; pos=5; fin=581; aud=149; 
+psi=581;  num=1; pre=0; seq=0; rux=581; RuVocab(); InNativate();
+ 
+// 701 YA (I) pronoun; nom. sing. 2jan2012
+t=157;pho="&#1071"; beg=1; ctu=0; audpsi=701; AudMem();
+nru=701; mfn=0; dba=1; fex=701; pos=7; fin=711; aud=157;
+psi=701; num=1; pre=0; seq=0; rux=701; RuVocab(); InNativate();
+ 
+// 702 MENYA ("of me") pronoun; familiar; gen. sing. 4jan2012
+t=159;pho="&#1052"; beg=1; ctu=1; audpsi=0; AudMem();
+t=160;pho="&#1045"; beg=0; ctu=1; audpsi=0; AudMem();
+t=161;pho="&#1053"; beg=0; ctu=1; audpsi=0; AudMem();
+t=162;pho="&#1071"; beg=0; ctu=0; audpsi=702; AudMem();
+nru=702; mfn=0; dba=2; fex=702; pos=7; fin=712; aud=159;
+psi=701; num=1; pre=0; seq=0; rux=702; RuVocab(); InNativate();
+ 
+// 703 MNYE ("to me") pronoun; familiar; dat. sing. 4jan2012
+t=164;pho="&#1052"; beg=1; ctu=1; audpsi=0; AudMem();
+t=165;pho="&#1053"; beg=0; ctu=1; audpsi=0; AudMem();
+t=166;pho="&#1045"; beg=0; ctu=0; audpsi=703; AudMem();
+nru=703; mfn=0; dba=3; fex=713; pos=7; fin=713; aud=164;
+psi=701; num=1; pre=0; seq=0; rux=703; RuVocab(); InNativate();
+ 
+// 704 MENYA ("me") pronoun; familiar; acc. sing. 4jan2012
+t=168;pho="&#1052"; beg=1; ctu=1; audpsi=0; AudMem();
+t=169;pho="&#1045"; beg=0; ctu=1; audpsi=0; AudMem();
+t=170;pho="&#1053"; beg=0; ctu=1; audpsi=0; AudMem();
+t=171;pho="&#1071"; beg=0; ctu=0; audpsi=704; AudMem();
+nru=704; mfn=0; dba=4; fex=704; pos=7; fin=714; aud=168;
+psi=701; num=1; pre=0; seq=0; rux=704; RuVocab(); InNativate();
+ 
+// 705 MNOY ("me") pronoun; familiar; instr. sing. 4jan2012
+t=173;pho="&#1052"; beg=1; ctu=1; audpsi=0; AudMem();
+t=174;pho="&#1053"; beg=0; ctu=1; audpsi=0; AudMem();
+t=175;pho="&#1054"; beg=0; ctu=1; audpsi=0; AudMem();
+t=176;pho="&#1049"; beg=0; ctu=0; audpsi=705; AudMem();
+nru=705; mfn=0; dba=5; fex=705; pos=7; fin=715; aud=173;
+psi=701; num=1; pre=0; seq=0; rux=705; RuVocab(); InNativate();
+ 
+// 706 MNYE ("me") pronoun; familiar; prep. sing. 4jan2012
+t=178;pho="&#1052"; beg=1; ctu=1; audpsi=0; AudMem();
+t=179;pho="&#1053"; beg=0; ctu=1; audpsi=0; AudMem();
+t=180;pho="&#1045"; beg=0; ctu=0; audpsi=706; AudMem();
+nru=706; mfn=0; dba=6; fex=706; pos=7; fin=716; aud=164;
+psi=701; num=1; pre=0; seq=0; rux=706; RuVocab(); InNativate();
+// alert("End of RuBoot");  // test; remove; 18dec2011
+t = 181;  // approximate source of "vault" value; 4jan2012
+t = 182;
 MainLoop();  // 18dec2011
 }  // end of stub of RuBoot; 15dec2011
-
-
-function Voice() {
-outputplus = ("<font size='+3' color='navy'>"+output+"<\/b><\/font>");
+ 
+ 
+function Voice() {  // Changing font size from 3 to 2; 2jan2012
+outputplus = ("<font size='+2' color='navy'>"+output+"<\/b><\/font>");
   document.all.mouth.innerHTML = outputplus; // 18dec2011
   document.all.brain.innerHTML = apb;  // 18dec2011
 }  // End of Voice(); 20dec2011
-
-
+ 
+ 
 function SpeechAct() {  // output of a word as text or sound
   if (aud == 0) aud = 1;  // say diagnostic ERROR; 20dec2011
   ctu = 1;
@@ -209,7 +751,16 @@ function SpeechAct() {  // output of a word as text or sound
   do {
     audMemory[aud].audExam();
     pho = aud0;
+    abc = aud0;  // for AudBuffer(); 28dec2011
+    AudBuffer();  // to transfer engrams; 28dec2011
     lastpho = aud0;  // Keep track of previous pho; 18dec2011
+    if (aud4==0) {  // 28dec2011
+      OutBuffer();   // 28dec2011
+      if (b16=="&#1070") {  // "YU"; 2jan2012 
+     // alert("OutB: word ends in yu");  // 28dec2011
+        aud0 = "";  // 28dec2011
+        }  // 28dec2011
+    }  // 28dec2011
     output += aud0;
     ctu = aud4;
     pov = "#";
@@ -218,25 +769,55 @@ function SpeechAct() {  // output of a word as text or sound
   }
   while (ctu == 1);
   if (ctu == 0) {
+    OutBuffer();  // upon end of word display OutBuffer; 28dec2011
+    if (unk==0)  // during initial MainLoop; 28dec2011
+      if (b16=="&#1070") { 
+        output += "&#1070;"  // substitute; 28dec2011       
+    }  // end of test for non-initial loop; 28dec2011
+    if (unk==1)  // after initial MainLoop; 28dec2011
+      if (b16=="&#1070") { 
+        output += "&#1045;"  // substitute; 28dec2011
+        output += "&#1064;"  // substitute; 28dec2011    
+        output += "&#1068;"  // substitute; 28dec2011                  
+    }  // end of test for non-initial loop; 28dec2011
+    if (unk==2)  // after initial MainLoop; 28dec2011
+      if (b16=="&#1070") { 
+        output += "&#1045;"  // substitute; 28dec2011
+        output += "&#1058;"  // substitute; 28dec2011  
+    }  // end of test for non-initial loop; 28dec2011
+    if (unk==3)  // after initial MainLoop; 28dec2011
+      if (b16=="&#1070") { 
+        output += "&#1045;"  // substitute; 28dec2011
+        output += "&#1052;"  // substitute; 28dec2011        
+    }  // end of test for non-initial loop; 28dec2011
     pho = 32;
    // ReEntry();  // 18dec2011
   }
   output += " ";
   Voice();
+  phodex = 0;  // reset to prevent carry-over; 28dec2011
 }  // End of SpeechAct(); 18dec2011
-
-
+ 
+ 
 function Diagnostic() {  // 22dec2011
-  audList(); // 22dec2011
+  psiList();  //  2jan2012
+  ruList();   //  2jan2012
+  audList();  // 22dec2011
   if (trouble == true) {  // 22dec2011
+    document.all.psicolumn.innerHTML = psidata; //  2jan2012
+    document.all.rucolumn.innerHTML = rudata;   //  2jan2012
     document.all.audcolumn.innerHTML = auddata; // 22dec2011
    }  // 22dec2011
   html = ""; // 22dec2011
+  psidata = ("<b>" + "Psi mindcore concepts" + "<\/b>" + "<BR>");
+  psidata += ("krt psi act num jux pre pos tqv seq rux"); // 2jan2012
+  rudata = ("<b>" + "Russian lexical fibers" + "<\/b>" + "<BR>");
+  rudata += ("krt nru act num mfn dba fex pos fin aud"); // 2jan2012
   auddata = ("<b>" + "Auditory memory nodes" + "<\/b>" + "<BR>");
   auddata += ("krt pho act pov beg ctu audpsi"); // 22dec2011
 }  // end of Diagnostic(); 22dec2011
-
-
+ 
+ 
 function TuringTest() {
   if (document.all["cb3"].checked == true) {
     document.all["cb1"].checked = false;
@@ -302,72 +883,88 @@ function TuringTest() {
     document.forms[1].ear.focus();
   }
 }
-
-
+ 
+ 
 function MainLoop() {
-  aud = 1;  // test; 18dec2011
+  aud = 45;  // to start with a verb form; test; 4jan2012
   SpeechAct();  // 18dec2011
   Diagnostic();  // to show vocabulary; 22dec2011
   unk = (unk + 1);  // 18dec2011
-  if (unk > 1) life = false;  // to exit loop; 20dec2011
-  alert("Mainloop: unk = "+unk); // test; 18dec2011
+  if (unk > 3) life = false;  // to exit loop; 28dec2011
+// alert("Mainloop: output "+unk+" of four"); // test; 18dec2011
   if (life == true) {
-  TID=window.setTimeout("MainLoop();",10000);
+  TID=window.setTimeout("MainLoop();",2000); // 28dec2011
   }
 }
-
+ 
 </script>
 </head>
 <!--*********AI code is above; visible Mind is below**********-->
 <body bgcolor="white" onKeyUp="if(event.keyCode==9) Tab();" onLoad="RuBoot()">
-
+ 
 <p><br /></p>
 <fieldset>
 <legend><font color="navy"><b>
-&#1050;&#1086;&#1085;&#1090;&#1088;&#1086;&#1083;&#1100; - 
-
+&#1059;&#1087;&#1088;&#1072;&#1074;&#1083;&#1077;&#1085;&#1080;&#1077; - 
+ 
  <a href="http://www.scn.org/~mentifex/Dushka.html"
  title="Dushka distribution source" 
  style="text-decoration:none;">
 &#1044;&#1091;&#1096;&#1082;&#1072;</a> - 
-
- <a href="http://www.gotai.net" 
- title="Russian artificial intelligence website" 
+ 
+ <a href="http://ai.obrazec.ru" 
+ title="Club of amateurs and experts in AI" 
  style="text-decoration:none;">
 &#1048;&#1089;&#1082;&#1091;&#1089;&#1089;&#1090;&#1074;&#1077;&#1085;&#1085;&#1099;&#1081; 
 <!-- artificial -->
  &#1048;&#1085;&#1090;&#1077;&#1083;&#1083;&#1077;&#1082;&#1090;
  <!-- intelligence --></a> - 
-
+ 
  <a href="http://mind.sourceforge.net/theory5.html" 
  title="theory of mind for artificial intelligence" 
  style="text-decoration:none;">
 &#1058;&#1077;&#1086;&#1088;&#1080;&#1103;
 <!-- Theory --></a> - 
-
+ 
  <a href="http://www.scn.org/~mentifex/AiMind.html"
  title="AI Mind in English">
 AiMind</a> - 
-
+ 
  <a href="http://code.google.com/p/mindforth/wiki/JsAiManual" 
  title="User Manual of the JavaScript AI Mind in English">
 JsAiManual</a></b></font></legend>
-
+ 
 <form name="modes">
-<input type="checkbox"> &#1055;&#1088;&#1086;&#1090;&#1086;&#1082;&#1086;&#1083; 
+<input type="checkbox"> 
+&#1055;&#1088;&#1086;&#1090;&#1086;&#1082;&#1086;&#1083; 
 <!-- Protocol (Transcript) -->
-<input type="checkbox"> &#1054;&#1073;&#1091;&#1095;&#1077;&#1085;&#1080;&#1077; 
+ 
+<input type="checkbox"> 
+&#1054;&#1073;&#1091;&#1095;&#1077;&#1085;&#1080;&#1077; 
 <!-- Tutorial -->
-<input type="checkbox" name="cb3" onClick="TuringTest();"checked> Diagnostic 
-<input type="checkbox"><font color="fuchsia"><b>HALT</b></font> 
-<input type="checkbox">
-<font color="red"><b>
-&#1050;&#1086;&#1085;&#1095;&#1080;&#1090;&#1100;</font> <!-- end --> 
+ 
+<input type="checkbox" name="cb3" onClick="TuringTest();"checked> 
+&#1044;&#1080;&#1072;&#1075;&#1085;&#1086;&#1089;&#1090;&#1080;&#1082;&#1072 - 
+<!-- Diagnostic -->
+ 
+<a href="http://www.russiankeyboards.com"
+ target="_blank"><img border="0" 
+ src="http://www.webideas.com/images/icons/free_kbd104x31.gif" 
+ width="103" height="31" longdesc="RussianKeyboards.com" 
+ alt="Get A Free Russian Keyboard from RussianKeyboards.com!"></a>
+ 
+<input type="checkbox"><font color="fuchsia"><b>
+&#1054;&#1089;&#1090;&#1072;&#1085;&#1086;&#1074;&#1082;&#1072;</b></font> -  
+<!-- Halt -->
+ 
+<input type="checkbox"><font color="red"><b>
+&#1047;&#1072;&#1074;&#1077;&#1088;&#1096;&#1080;&#1090;&#1100; - </font> 
+<!-- Terminate --> 
 (&#1079;&#1072;&#1082;&#1088;&#1099;&#1090;&#1100; <!-- close -->
  &#1086;&#1082;&#1085;&#1086;)</b><br /> <!-- window -->
 </form>
 </fieldset>
-
+ 
 <div id="mouth" style="position:static; 
  background-color:silver; height:35">
 &#1042;&#1089;&#1105;, <!-- All -->
@@ -377,9 +974,9 @@ JsAiManual</a></b></font></legend>
  &#1073;&#1091;&#1076;&#1077;&#1090; <!-- will be -->
  &#1079;&#1076;&#1077;&#1089;&#1100;. <!-- here. -->
 </div>
-
+ 
 <form onSubmit="if (this.submitted) return true; else {CR(); return false;};">
-
+ 
 <b>&#1053;&#1072;&#1087;&#1080;&#1096;&#1080; <!-- Write -->
  &#1079;&#1076;&#1077;&#1089;&#1100;, <!-- here, -->
  &#1095;&#1090;&#1086; <!-- what -->
@@ -387,32 +984,41 @@ JsAiManual</a></b></font></legend>
  &#1076;&#1091;&#1084;&#1072;&#1077;&#1096;&#1100;.</b><br /><!-- think. -->
 <input type="text" name="ear" value="" size="80" onKeyDown="AudListen()">
 </form>
-
+ 
 <div id="brain" style="position:static;
  background-color:lightgreen">
 &#1057;&#1086;&#1074;&#1077;&#1090;&#1099; <!-- counsel -->
 </div>
-
+ 
 <!-- The Diagnostic columns are present but invisible. -->
-<div id="audcolumn" style="position:absolute; left:460; top:310;
+<div id="psicolumn" style="position:absolute; left:1; top:310;
+width:240; height:140; background-color:clear">
+</div>
+<div id="rucolumn" style="position:absolute; left:240; top:310;
+width:240; height:140; background-color:clear">
+</div>
+<div id="audcolumn" style="position:absolute; left:480; top:310;
 width:200; height:140; background-color:clear">
 </div>
-
-
+ 
 <div id="idea"> </div>
-
+ 
 <div id="radar"> </div>
-
+ 
 <input type="hidden" value="0" id="star" />
 <input type="hidden" value="0" id="node" />
 <input type="hidden" value="0" id="ufo" />
-
+ 
 <p><br /></p>
 </body><!-- Change Log comments of the HTML variety:
 Tues.13dec2011 "ru111213" initiates the AI Mind Control Panel with links.
 Sun.18dec2011 "ru111218" shows display of Russian output.
 Tues.20dec2011 "ru111220" uses CP-1251 escape codes for Cyrillic.
 Thurs.22dec2011 "ru111222" shows Russian words held in memory.
+Wed.28dec2011 "ru111228" prepares a verb for OutBuffer manipulation.
+Wed.28dec2011 "ru111229" uses OutBuffer to change verb-endings.
+Mon.2jan2012 "ru120102" displays three arrays in Diagnostic mode.
+Wed.4jan2012 "ru120104" has minimal RuBoot to test input/output.
 (end of HTML Change Log comments) -->
 </html>
 }}}

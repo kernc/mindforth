@@ -195,6 +195,7 @@ var presubj = 0;
 var preverb = 0;
 var preview = "";
 var prevtag = 0;
+var provrec = 0;  // provisional recognition in AudRecog; 15jan2012
 var prox1 = 0;  // first proximate concept of input cluster; 14sep2011
 var prox2 = 0;  // for determining association among engrams; 14sep2011
 var prox3 = 0;  // for disparate reactivation in ReActivate; 14sep2011
@@ -203,7 +204,7 @@ var prsn = 0;  // 1st, 2nd, 3rd person; 2sep2010
 var psi = 0;
 var psi0 = 0;
 var psi1 = 0;
-var psi8 = 0;  // test; 13oct2011
+var psi8 = 0;
 var psibase = 0;
 var psidata = ("<b>" + "Psi mindcore concepts" + "<\/b>" + "<BR>");
 psidata += ("krt psi act num jux pre pos tqv seq enx"); // 13oct2011
@@ -216,6 +217,7 @@ var qusub = 0; // query subject in more readable code; 2oct2010
 var qusubnum = 0;  // num(ber) of query-subject; 27oct2011
 var quverb = 0;  // query-verb for yes-or-no questions; 22jun2011
 var recnum = 0;  // recognized number of a recognized word 20jul2011
+var recogcon = false;  // for AudInput to passim-ize audpsi; 15jan2012
 var recon = 0;
 var residuum = 0;
 var rjc = 0;
@@ -305,7 +307,7 @@ var verbval = 0;
 var verbcall = 0;
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "12jan12B"; // for Transcript mode; 12jan2012
+var vrsn = "15jan12"; // for Transcript mode; 15jan2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -461,7 +463,8 @@ function RuDamp() {  // Wiki-page form of name; 5jan2012
 function audDamp() {
   for (i = t; i > midway; --i) {
     audMemory[i].audExam();
-    if (aud4 == 1) aud5 = 0;
+ // if (aud4 == 1) aud5 = 0;
+ // if (aud4 == 1) aud5 = 0;  // commenting out on 15jan2012
     audMemory[i] = new audNode(aud0,0,aud2,aud3,aud4,aud5);
   }
 }
@@ -1286,7 +1289,8 @@ function OldConcept() {
   num = 0;  // test; remove; 18jun2011
   psi = 0;  // test; remove; 30jun2011
 }  // End of OldConcept; return to AudInput(); 22aug2011
- 
+
+
 function NewConcept() {
   nru = (nru + 1);  // 5jan2012
   psi = nru;  // 5jan2012
@@ -1335,6 +1339,7 @@ function AudRecog() {
   psi = 0;
   act = 8;
   actbase = 0;
+  audpsi = 0;  // for safety; 15jan2012
   for (i=spt; i>midway; i--) {
     audMemory[i].audExam();
     if (aud0 == pho) {
@@ -1342,6 +1347,10 @@ function AudRecog() {
         if (aud3 == 1) {  // if beg=1 on matching no-act aud engram;
          if (audrun < 2) {  // If comparing start of word; 13jul2010
           if (aud4 == 1) {  // If beg-aud0 has ctu=1 continuing,
+            if (aud5 > 0) { 
+              provrec = aud5;  // stem? 15jan2012
+           // alert("AudRecog1: provrec = "+provrec);  // 15jan2012
+            }  // 15jan2012
             j = (i + 1); // 8apr2009 Target next-in-line time-point.
             audMemory[j].audExam();  // Fetch audNode at i+1
             aud1 = 8;  // 16aug2008 Activate next-in-line char,
@@ -1362,6 +1371,10 @@ function AudRecog() {
       if (aud1 > 0) {
         psi = 0;
         if (aud4 == 1) {
+          if (aud5 > 0) { 
+            provrec = aud5;  // stem? 15jan2012
+         // alert("AudRecog2: provrec = "+provrec);  // 15jan2012
+          }  // 15jan2012
           act = (act + 2);
           psi = 0;
           j = (i + 1);
@@ -1395,7 +1408,8 @@ function AudRecog() {
         }
         else
         {
-          psi = 0;
+       // psi = 0;  // Commented out on 15jan2012
+          if (provrec == 0) psi = 0;  // 15jan2012
           if (monopsi > 0) {
             psi = monopsi;
             monopsi = 0;
@@ -1421,6 +1435,7 @@ function AudRecog() {
     }
   }
   psibase = 0;
+  if (psi==0 && provrec > 0) psi = provrec;  // stem? 15jan2012
   if (psi == 0) {
     psi = morphpsi;
     if (sublen > 0)  {
@@ -1441,14 +1456,18 @@ function AudRecog() {
     if (pho == "S") {
       num = 2;
     }
- // else num = 1;  // Commenting out on 6nov2011
     else num = 0;  // a default quasi-singular; 6nov2011
     if (recnum > 0) num = recnum;  // override; 20jul2011
   }
+ // if (psi == 0 && provrec > 0) psi = provrec);  // 15jan2012
+  if (psi == 0) psi = provrec;  // 15jan2012 
+// alert("AudRecog: provrec morphpsi psi = "+provrec+" "+morphpsi+" "+psi);
   audpsi = psi;  // 9dec2009 For transfer from AudRecog() to AudMem()
+  morphpsi = 0;  // reset until further notice; 15jan2015
+ // provrec = 0;  // reset to prevent carry-over; 15jan2012
   stemgap = 0;  // safety measure; 25sep2011
-}  // End of AudRecog()
- 
+}  // End of AudRecog(); return to AudMem(); 15jan2012
+
  
 function audExam() {
   aud0 = this.pho;
@@ -1469,9 +1488,14 @@ function audNode(pho,act,pov,beg,ctu,audpsi) {
   this.audExam = audExam;
 }
 
+
 function AudMem() {
   if (t > vault) {
     AudRecog();
+    if (audpsi == 0) {  // 15jan2012
+      if (provrec > 0) audpsi = provrec;  // 15jan2012
+      provrec = 0;  // reset in any case; 15jan2012
+    }  // 15jan2012
   }
   tult = (t - 1);
   audMemory[tult].audExam();
@@ -1482,11 +1506,10 @@ function AudMem() {
   if (beg == 1) onset = t;
   if (aud0 == " ") beg = 1;
   audMemory[t] = new audNode(pho,0,pov,beg,ctu,audpsi); // 8dec2009
-// if (b15 > "") alert("AudMem: b15 = "+b15);
-// if (b16==String.fromCharCode(1070)) alert("AudMem: b16 = "+b16);
 // if (ctu==0) quobj = audpsi; // for AskUser; test; 22jun2011
-}
- 
+}  // end of AudMem; 15jan2012
+
+
 function Attention() {
   brain = false;
   danger = false;
@@ -1497,7 +1520,8 @@ function Attention() {
     skip = skip+1;
   }
 }
- 
+
+
 function AudListen() {
   quiet = false;
   apb = "Calling AudListen module; when done press [ENTER]";
@@ -1587,6 +1611,7 @@ function AudListen() {
   }
 }  // End of AudListen(); 29sep2010
  
+
 function Tab() {
   document.forms[1].ear.focus();
   fyi = (fyi + 1);
@@ -1682,36 +1707,28 @@ function AudInput() {
     aud = onset;
     audMemory[tult].audExam();
     if (aud4 == 0) {  // If "continuation" is false; 12may2011
+      if (pov == "*") {  // only during input; 15jan2012
+        recogcon = true;  // word or stem has been recognized; 15jan2012
+      }  // end of test for input-only; 15jan2012
       audMemory[tult] = new audNode(aud0,aud1,aud2,aud3,aud4,audpsi);
-    }
-    if (the1 == 0) { 
-      the1 = audpsi;  // 8dec2009 "audpsi" replacing "psi"
-    } 
-    else if (the2 == 0) { 
-      the2 = audpsi;  // 8dec2009 "audpsi" replacing "psi"
-    }
-    else if (the3 == 0) { 
-      the3 = audpsi; // 8dec2009 "audpsi" replacing "psi
-    }
-    else if (the4 == 0) { 
-      the4 = audpsi; // 8dec2009 "audpsi" replacing "psi
-    }
-    else if (the5 == 0) {
-      the5 = audpsi; // 8dec2009 "audpsi" replacing "psi
-    } 
-    else if (the6 == 0) {
-      the6 = audpsi; // 8dec2009 "audpsi" replacing "psi
-    }
-    else if (the7 == 0) {
-      the7 = audpsi; // 8dec2009 "audpsi" replacing "psi
-    }
-    else  {
-      xthe = xthe;
-    }
+    }  // end of "aud4" continuation-test; 15jan2012
+    if (recogcon == true) {  // is word recognized? 15jan2012
+      if (len > 3) {  // if long enough for inflection; 15jan2012
+        audMemory[tult-3].audExam();  // far enough back for stem? 15jan2012
+        audMemory[tult-3] = new audNode(aud0,aud1,aud2,aud3,aud4,audpsi);
+        audMemory[tult-2].audExam();  // two phonemes back; 15jan2012
+        audMemory[tult-2] = new audNode(aud0,aud1,aud2,aud3,aud4,audpsi);
+        audMemory[tult-1].audExam();  // penujltimate phoneme; 15jan2012
+        audMemory[tult-1] = new audNode(aud0,aud1,aud2,aud3,aud4,audpsi);
+       }  // end of test of length of recognized word; 15jan2012
+       recogcon = false;  // reset after use; 15jan2012
+    }  // 15jan2012
+    recogcon = false;   // reset; 15jan2012
     oldpsi = audpsi;  // for conformance with MindForth; 3jul2011
     OldConcept();
     psi = 0;
-    audpsi = 0;  // 8dec2009 de-globalizing "psi"
+    audpsi = 0;
+    aud5 = 0;  // test; remove; 15jan2012
     aud = 0;
   } else {  // i.e., if AudRecog has not recognized word; 12may2011
     if (len > 0) {
@@ -1728,7 +1745,7 @@ function AudInput() {
   onset = 0;
   aud = 0;
 } // End of AudInput; return to AudListen(), CR() or ReEntry().
- 
+
  
 function SensoryInput() {
   // navigator.geolocation.getCurrentPosition(lost,found) // 16oct2010
@@ -1736,8 +1753,8 @@ function SensoryInput() {
     document.forms[1].ear.focus();
   }
 }
- 
- 
+
+
 function RuBoot() {  // diverging from English AI; 7jan2012
 TuringTest();
 act = 0;    // 8dec2009
@@ -1782,9 +1799,9 @@ t=15;c=1067; beg=0; ctu=1; audpsi=0;
     pho = String.fromCharCode(c); AudMem();  // 9jan2012
 t=16;c=1042; beg=0; ctu=1; audpsi=0; 
     pho = String.fromCharCode(c); AudMem();  // 9jan2012
-t=17;c=1040; beg=0; ctu=1; audpsi=0; 
+t=17;c=1040; beg=0; ctu=1; audpsi=813;  // provisional; 15jan2012
     pho = String.fromCharCode(c); AudMem();  // 9jan2012
-t=18;c=1058; beg=0; ctu=1; audpsi=0; 
+t=18;c=1058; beg=0; ctu=1; audpsi=813;  // provisional; 15jan2012 
      pho = String.fromCharCode(c); AudMem();  // 7jan2012
 t=19;c=1068; beg=0; ctu=0; audpsi=813; 
      pho = String.fromCharCode(c); AudMem();  // 7jan2012
@@ -2010,14 +2027,14 @@ t=107;c=1045; beg=0; ctu=1; audpsi=0;
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
 t=108;c=1051; beg=0; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=109;c=1040; beg=0; ctu=1; audpsi=0; 
+t=109;c=1040; beg=0; ctu=1; audpsi=820;  // provisional; 15jan2012 
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=110;c=1058; beg=0; ctu=1; audpsi=0; 
+t=110;c=1058; beg=0; ctu=1; audpsi=820;  // provisional; 15jan2012
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
 t=111;c=1068; beg=0; ctu=0; audpsi=820; 
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
 nru=820; mfn=0; dba=0; fex=820; pos=8; fin=820; aud=106; 
-psi=820;  num=1; pre=0; seq=0; rux=820; RuVocab(); InNativate();
+psi=820; num=1; pre=0; seq=0; rux=820; RuVocab(); InNativate();
 
 // 821 DELAYU ("I do"); sample verb; 9jan2012
 t=113;c=1044; beg=1; ctu=1; audpsi=0; 
@@ -2136,14 +2153,14 @@ t=162;c=1059; beg=0; ctu=1; audpsi=0;
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 t=163;c=1052; beg=0; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=164;c=1040; beg=0; ctu=1; audpsi=0; 
+t=164;c=1040; beg=0; ctu=1; audpsi=830;  // provisional; 15jan2012 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=165;c=1058; beg=0; ctu=1; audpsi=0; 
+t=165;c=1058; beg=0; ctu=1; audpsi=830;  // provisional; 15jan2012 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=166;c=1068; beg=0; ctu=0; audpsi=831; 
+t=166;c=1068; beg=0; ctu=0; audpsi=830; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=831; mfn=0; dba=1; fex=831; pos=8; fin=831; aud=161; 
-psi=830;  num=1; pre=0; seq=0; rux=831; RuVocab(); InNativate();
+nru=830; mfn=0; dba=0; fex=830; pos=8; fin=830; aud=161; 
+psi=830;  num=1; pre=0; seq=0; rux=830; RuVocab(); InNativate();
 
 // 521 DUSHKA ("little soul"); name of the Russian AI; 4jan2012
 t=168;c=1044; beg=1; ctu=1; audpsi=0; 
@@ -2176,9 +2193,9 @@ t=179;c=1047; beg=1; ctu=1; audpsi=0;
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 t=180;c=1053; beg=0; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=181;c=1040; beg=0; ctu=1; audpsi=0; 
+t=181;c=1040; beg=0; ctu=1; audpsi=840;  // provisional; 15jan2012
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=182;c=1058; beg=0; ctu=1; audpsi=0; 
+t=182;c=1058; beg=0; ctu=1; audpsi=840;  // provisional; 15jan2012 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 t=183;c=1068; beg=0; ctu=0; audpsi=840; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
@@ -2314,9 +2331,9 @@ t=235;c=1057; beg=0; ctu=1; audpsi=0;
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 t=236;c=1051; beg=0; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=237;c=1048; beg=0; ctu=1; audpsi=0; 
+t=237;c=1048; beg=0; ctu=1; audpsi=850;  // provisional; 15jan2012 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=238;c=1058; beg=0; ctu=1; audpsi=0; 
+t=238;c=1058; beg=0; ctu=1; audpsi=850;  // provisional; 15jan2012 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 t=239;c=1068; beg=0; ctu=0; audpsi=850; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
@@ -2600,9 +2617,9 @@ t=349;c=1048; beg=0; ctu=1; audpsi=0;
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 t=350;c=1052; beg=0; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=351;c=1040; beg=0; ctu=1; audpsi=0; 
+t=351;c=1040; beg=0; ctu=1; audpsi=860;  // provisional; 15jan2012 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=352;c=1058; beg=0; ctu=1; audpsi=0; 
+t=352;c=1058; beg=0; ctu=1; audpsi=860;  // provisional; 15jan2012 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 t=353;c=1068; beg=0; ctu=0; audpsi=860; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
@@ -2680,9 +2697,9 @@ t=383;c=1054; beg=0; ctu=1; audpsi=0;
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 t=384;c=1042; beg=0; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=385;c=1040; beg=0; ctu=1; audpsi=0; 
+t=385;c=1040; beg=0; ctu=1; audpsi=880;  // provisional; 15jan2012 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=386;c=1058; beg=0; ctu=1; audpsi=0; 
+t=386;c=1058; beg=0; ctu=1; audpsi=880;  // provisional; 15jan2012
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 t=387;c=1068; beg=0; ctu=0; audpsi=880; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
@@ -2880,7 +2897,6 @@ t=466;c=1043; beg=0; ctu=0; audpsi=501;
      pho = String.fromCharCode(c); AudMem();  // 9jan2012
 nru=501; mfn=1; dba=1; fex=501; pos=5; fin=501; aud=464;
 psi=501; num=1; pre=0; seq=0; rux=501; RuVocab(); InNativate();
-// alert("End of RuBoot");  // test; remove; 18dec2011
 t = 476;  // approximate source of "vault" value; 9jan2012
   audpsi = 0;  // lest pass through AudInput to EnParser; 22aug2011
   indefartcon = 0;  // lest WHO trigger EnArticle; 17jun2011
@@ -3086,7 +3102,6 @@ function AuxVerb() {  // 12jan2012
 
 
 function WhatSVerb() {  // What Do Subjects Verb; 10jan2012
-// alert("WSV topic & verbpsi = "+topic+" "+verbpsi);  // 10jan2012
   for (i = t; i>midway; i--) {  // search backwards in time.
     ruLexicon[i].ruExam();  // examine Russian lexixon; 10jan2012
     if (ru0 == 781) {  // 781=CHTO (what); 10jan2012
@@ -3150,7 +3165,6 @@ function WhatSDo() {  // modified from WhatAuxSDo(); 10jan2012
 
  
 function WhoBe() {  // for asking WHO IS-AM-ARE; 10jan2012
-// alert("WhoBe has been called"); // 10jan2012
   moot = 1;  // prevent storage of spurious ideas; 10jan2012
   if (topic > 0) qusub = topic;  // not yet definite source; 3aug2011
   if (subjpsi > 0) qusub = subjpsi;  // not yet sure source; 3aug2011
@@ -3866,6 +3880,7 @@ function VerbPhrase() {
 
 function RuCog() {  // 5jan20p12
   moot = 0;  // may have been set in previous thought; 24oct2011
+  morphpsi = 0;  // reset; from MindForth English AI; 15jan2012
   nphrnum = 0;  // reset after previous thoughts;  5jul2011
   PsiDecay();  // for distribution of PsiDecay influence; 3jul2011
   tov = t;  // For sake of ReActivate & InHibition;  8jun2011
@@ -4513,6 +4528,7 @@ Tues.10jan2012 "ru120110" with WhatBe() has AI asking what it is.
 Wed.11jan2012 "ru120111" removes code pertinent to English.
 Thurs.12jan2012 "ru120112" removes or deactivates all English code.
 Thurs.12jan2012 "12jan12B" achieves recognition of verb-endings.
+Sun.15jan2012 "ru120115" achieves recognition of verb-stems.
 (end of HTML Change Log comments) -->
 </html>
 }}}

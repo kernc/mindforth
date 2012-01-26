@@ -181,13 +181,15 @@ var oldpsi = 0;
 var onset = 0;
 var ordo = 0;
 var origin = "";
-var output = "&#1055;&#1056;&#1048;&#1042;&#1045;&#1058;  "  // "Greeting"
+// var output = "&#1055;&#1056;&#1048;&#1042;&#1045;&#1058;  "  // "Greeting"
 // var output = ""; // commenting out on 5jan2012
+var output = ""; // reinstating on 24jan2012
 var pho = "";
 var phodex = 0;  // pho-index for AudBuffer(); 4jan2012
 var pos = 0;
 var posflag = 0;  // AskUser discriminand; 13aug2010
 var pov = "#";
+var prc = 0;  // possible shortener for "provrec"; 24jan2012
 var pre = 0;
 var precand = 0;
 var predflag = 0;  // indicates predicate nominative; 16sep2010
@@ -313,7 +315,7 @@ var verbval = 0;
 var verbcall = 0;
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "23jan12"; // for Transcript mode; 23jan2012
+var vrsn = "25jan12"; // for Transcript mode; 25jan2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -1327,7 +1329,6 @@ function NewConcept() {
     topic = nru;  // potentially a query "topic";  5jan2012
     quobj = nru;  // for AskUser; test;  5jan2012
   }
-// if (pos == 8) quverb = nen;  // for AskUser; test; 22jun2011
   if (pos == 8) quverb = nru;  // for AskUser; test; 6jan2012
   if (kbcon > 0) {  // if user answers yes-or-no question; 3jul2011
     KbRetro();  // retroactively adjust knowledge base; 3jul2011
@@ -1469,9 +1470,9 @@ function AudRecog() {
     if (stemgap > 2) {
       psi = 0;
     }
-//  if (pho == "S") {
-//    num = 2;
-//  }
+//  if (pho == "S") {  // changes for Russian AI? 25jan2012
+//    num = 2;  // perhaps use OutBuffer for Russian plurals
+//  }  // Save this location for Russian noun-recognition.
 //  else num = 0;  // a default quasi-singular; 6nov2011
     if (recnum > 0) num = recnum;  // override; 20jul2011
   }
@@ -1522,7 +1523,7 @@ function AudMem() {
   if (aud0 == " ") beg = 1;
   audMemory[t] = new audNode(pho,0,pov,beg,ctu,audpsi); // 8dec2009
 // if (ctu==0) quobj = audpsi; // for AskUser; test; 22jun2011
-}  // end of AudMem; 15jan2012
+}  // end of AudMem; return to AudListen or ReEntry; 25jan2012
 
 
 function Attention() {
@@ -1583,7 +1584,6 @@ function AudListen() {
          b05=""; b06=""; b07=""; b08="";  // 18jan2012
          b09=""; b10=""; b11=""; b12="";  // 18jan2012 
          b13=""; b14=""; b15=""; b16="";  // 18jan2012
-  //  alert("AudL: 1st person verb YU");  // test; 18jan2012
       }  // end of nested if-clause; 18jan2012
       if (b14==String.fromCharCode(1045)) {  // "E" 18jan2012
         if (b15==String.fromCharCode(1064)) {  // "SH" 18jan2012
@@ -1683,7 +1683,7 @@ function AudListen() {
     pho = " ";
     return true;
   }
-}  // End of AudListen(); 29sep2010
+}  // End of AudListen(); wait for keystroke event; 25jan2012
  
 
 function Tab() {
@@ -1777,12 +1777,13 @@ function AudInput() {
   tult = (t - 1);
   audMemory[tult].audExam();
   audMemory[tult] = new audNode(aud0,aud1,aud2,aud3,0,aud5);
-  if (audpsi > 0) {   // 8dec2009 "audpsi" replacing "psi"
+  if (audpsi > 0) {   // concept recognized by AudRecog; 25jan2012
     aud = onset;
     audMemory[tult].audExam();
     if (aud4 == 0) {  // If "continuation" is false; 12may2011
       if (pov == "*") {  // only during input; 15jan2012
         recogcon = true;  // word or stem has been recognized; 15jan2012
+    //  provrec = 0;  // reset; test; 25jan2012
       }  // end of test for input-only; 15jan2012
       audMemory[tult] = new audNode(aud0,aud1,aud2,aud3,aud4,audpsi);
     }  // end of "aud4" continuation-test; 15jan2012
@@ -1792,20 +1793,22 @@ function AudInput() {
         audMemory[tult-3] = new audNode(aud0,aud1,aud2,aud3,aud4,audpsi);
         audMemory[tult-2].audExam();  // two phonemes back; 15jan2012
         audMemory[tult-2] = new audNode(aud0,aud1,aud2,aud3,aud4,audpsi);
-        audMemory[tult-1].audExam();  // penujltimate phoneme; 15jan2012
+        audMemory[tult-1].audExam();  // penultimate phoneme; 15jan2012
         audMemory[tult-1] = new audNode(aud0,aud1,aud2,aud3,aud4,audpsi);
        }  // end of test of length of recognized word; 15jan2012
        recogcon = false;  // reset after use; 15jan2012
     }  // 15jan2012
     recogcon = false;   // reset; 15jan2012
     oldpsi = audpsi;  // for conformance with MindForth; 3jul2011
+    provrec = 0;  // reset; test; 25jan2012
     OldConcept();
     psi = 0;
     audpsi = 0;
     aud5 = 0;  // test; remove; 15jan2012
     aud = 0;
   } else {  // i.e., if AudRecog has not recognized word; 12may2011
-    if (len > 0) {
+ // if (len > 0) {
+    if (len > 0 && pho != 32) {  // avoid 32=space-bar; 24jan2012
       aud = onset;
       NewConcept();  // AudInput() calls NewConcept(); 12may2011
       audMemory[tult].audExam();

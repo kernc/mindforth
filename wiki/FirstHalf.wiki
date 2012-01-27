@@ -181,9 +181,7 @@ var oldpsi = 0;
 var onset = 0;
 var ordo = 0;
 var origin = "";
-// var output = "&#1055;&#1056;&#1048;&#1042;&#1045;&#1058;  "  // "Greeting"
-// var output = ""; // commenting out on 5jan2012
-var output = ""; // reinstating on 24jan2012
+var output = "";
 var pho = "";
 var phodex = 0;  // pho-index for AudBuffer(); 4jan2012
 var pos = 0;
@@ -258,7 +256,6 @@ var star = 0;  // For tutorial slosh-over showSubject() display.
 var stemgap = 0;
 var subjcall = 0;  // To avoid showSubject() of articles; 21may2011
 var subjectflag = 0;  // 9dec2009 For NounPhrase to call SelfRef.
-// var subjnum = 0;  // for agreement with predicate nominative; 18may2011
 var subjold = 0;  // old subject as default candidate 29sep2010
 var subjpsi = 0;
 var sublen = 0;
@@ -315,7 +312,7 @@ var verbval = 0;
 var verbcall = 0;
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "26jan12"; // for Transcript mode; 26jan2012
+var vrsn = "27jan12"; // for Transcript mode; 27jan2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -1111,33 +1108,27 @@ function InStantiate() {
   if (mfn == 0) mfnflag = 0;  // reset for safety; 3aug2011 
   preset = 0;
   prevtag = psi;
-  // removing English test for auxiliary; check for Ru "li"? 6jan2012
-  // reinstating seqneed code for needing a verb; 26jan2012
- // if (psi != 59) {  // skip auxiliary verb "59=DO"; 6oct2011
- // if (psi != 87) {  // skip auxiliary verb "87=DOES"; 6oct2011
-      if (seqneed==8) {  // if looking for a verb; 4oct2011
-        if (pos==8) {  // if part-of-speech is verb; 4oct2011
-          seq = psi;  // because a verb has arrived; 4oct2011
-          seqpos = pos;  // possibly for tqv; 4oct2011
-          seqneed = 0;  // zero out after use; 4oct2011
-        }  // end of test for 8=pos verb; 4oct2011
-        for (i=(t-2); i>vault; --i) {  // find noun needing seq; 4oct2011
-          Psi[i].psiExam();  // examine the Psi concept array; 4oct2011
-            if (psi5==5 || psi5==7) {  // noun or pronoun? 4oct2011
-             if (moot==0) {  // deprive queries of tags; 4oct2011
-           Psi[i] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,psi6,seq,psi8);
-               if (seqpos==8) {  // a verb? 25oct2011
-                 tqv = t;  // assign "tqv" value; 25oct2011
-                 Psi[i].psiExam();  // 25oct2011
-           Psi[i] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,t,psi7,psi8);
-               }  // end of seqpos=verb test; 25oct2011
-             }  // end of test for a moot query input; 4oct2011
-             break;  // Change only one seq; 4oct2011
-            }  // end of test for subject noun or pronoun; 4oct2011      
-        }  // end of backwards loop; 4oct2011
-      }  // end of test for needing a verb; 4oct2011
- //  }  // end of skipping auxiliary verb "87=DOES"; 7oct2011
- // }  // end of skipping auxiliary verb "59=DO"; 6oct2011
+  if (seqneed==8) {  // if looking for a verb; 27jan2012
+    if (pos==8) {  // if part-of-speech is verb; 27jan2012
+      seq = psi;  // because a verb has arrived; 27jan2012
+      seqpos = pos;  // possibly for tqv; 27jan2012
+      seqneed = 0;  // zero out after use; 27jan2012
+    }  // end of test for 8=pos verb; 27jan2012
+    for (i=(t-2); i>vault; --i) {  // find noun needing seq; 27jan2012
+      Psi[i].psiExam();  // examine the Psi concept array; 27jan2012
+      if (psi5==5 || psi5==7) {  // noun or pronoun? 27jan2012
+        if (moot==0) {  // deprive queries of tags; 27jan2012
+          Psi[i] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,psi6,seq,psi8);
+          if (seqpos==8) {  // a verb? 27jan2012
+            tqv = t;  // assign "tqv" value; 27jan2012
+            Psi[i].psiExam();  // 27jan2012
+            Psi[i] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,t,psi7,psi8);
+          }  // end of seqpos=verb test; 27jan2012
+        }  // end of test for a moot query input; 27jan2012
+        break;  // Change only one seq; 27jan2012
+      }  // end of test for subject noun or pronoun; 27jan2012      
+    }  // end of backwards loop; 27jan2012
+  }  // end of test for needing a verb; 27jan2012
   if (seqneed==5) {  // if looking for a noun; 4oct2011
     if (pos==5 || pos==7) {  // if noun or pronoun; 4oct2011
       seq = psi;  // because a (pro)noun has arrived; 4oct2011
@@ -1391,7 +1382,6 @@ function AudRecog() {
          if (audrun < 2) {  // If comparing start of word; 13jul2010
           if (aud4 == 1) {  // If beg-aud0 has ctu=1 continuing,
             if (aud5 > 0) { 
-           // provrec = aud5;  // stem? 15jan2012
               prc = aud5;  // provisional recognition; 26jan2012
             }  // 15jan2012
             j = (i + 1); // 8apr2009 Target next-in-line time-point.
@@ -1414,8 +1404,7 @@ function AudRecog() {
       if (aud1 > 0) {
         psi = 0;
         if (aud4 == 1) {
-          if (aud5 > 0) { 
-         // provrec = aud5;  // stem? 15jan2012
+          if (aud5 > 0) {
             prc = aud5;  // provisional recognition? 26jan2012
           }  // 15jan2012
           act = (act + 2);
@@ -1451,7 +1440,6 @@ function AudRecog() {
         }
         else
         {
-       // if (provrec == 0) psi = 0;  // 15jan2012
           if (prc == 0) psi = 0;  // 26jan2012
           if (monopsi > 0) {
             psi = monopsi;
@@ -1480,7 +1468,6 @@ function AudRecog() {
     }
   }
   psibase = 0;
-//  if (psi==0 && provrec > 0) psi = provrec;  // stem? 15jan2012
   if (psi==0 && prc > 0) psi = prc;  // prov. recog; 26jan2012
   if (psi == 0) {
     psi = morphpsi;
@@ -1505,7 +1492,6 @@ function AudRecog() {
 //  else num = 0;  // a default quasi-singular; 6nov2011
     if (recnum > 0) num = recnum;  // override; 20jul2011
   }
-//  if (psi == 0) psi = provrec;  // 15jan2012
   if (psi == 0) psi = prc;  // provisional recognition; 26jan2012
   audpsi = psi;  // 9dec2009 For transfer from AudRecog() to AudMem()
   morphpsi = 0;  // reset until further notice; 15jan2015
@@ -1537,9 +1523,7 @@ function AudMem() {
   if (t > vault) {
     AudRecog();
     if (audpsi == 0) {  // 15jan2012
-   // if (provrec > 0) audpsi = provrec;  // 15jan2012
       if (prc > 0) audpsi = prc;  // prov. recog; 26jan2012
-   // provrec = 0;  // reset in any case; 15jan2012
       prc = 0;  // reset in any case; 26jan2012
     }  // 15jan2012
   }
@@ -1829,7 +1813,6 @@ function AudInput() {
     }  // 15jan2012
     recogcon = false;   // reset; 15jan2012
     oldpsi = audpsi;  // for conformance with MindForth; 3jul2011
- // provrec = 0;  // reset; test; 25jan2012
     prc = 0; // reset provisional recognition at end of word; 26jan2012
     OldConcept();
     psi = 0;

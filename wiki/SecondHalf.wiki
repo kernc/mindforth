@@ -14,7 +14,7 @@ t=251;c=1059; beg=0; ctu=0; audpsi=228;
 nru=228; mfn=0; dba=0; fex=228; pos=2; fin=228; aud=248;
 psi=228; num=0; pre=0; seq=0; rux=228; RuVocab(); InNativate();
 
-// 860 NICHEGO ("nothing"); pronoun; 9jan2012
+// 760 NICHEGO ("nothing"); pronoun; 26jan2012
 t=253;c=1053; beg=1; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
 t=254;c=1048; beg=0; ctu=1; audpsi=0; 
@@ -25,10 +25,10 @@ t=256;c=1045; beg=0; ctu=1; audpsi=0;
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
 t=257;c=1043; beg=0; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=258;c=1054; beg=0; ctu=0; audpsi=860; 
+t=258;c=1054; beg=0; ctu=0; audpsi=760;  // 26jan2012
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=860; mfn=0; dba=0; fex=860; pos=8; fin=860; aud=253;
-psi=860; num=0; pre=0; seq=0; rux=860; RuVocab(); InNativate();
+nru=760; mfn=3; dba=4; fex=760; pos=7; fin=760; aud=253;
+psi=760; num=1; pre=0; seq=0; rux=760; RuVocab(); InNativate();
 
 // 713 ON (he) pronoun; nom. sing. masc. 10jan2012
 t=260;c=1054; beg=1; ctu=1; audpsi=0; 
@@ -1128,7 +1128,7 @@ function AskUser() {  // selector of question formats; 13aug2010
   bias = 5;  // restore expectation of a noun; 30jun2011
 }  // End of AskUser(); return to RuCog(); 11jan2012
 
- 
+
 function NounPhrase() {
   audjuste = 0;  // prevent carry-over; 24oct2011
   if (verblock > 0) {  // 24oct2011
@@ -1331,27 +1331,22 @@ function NounPhrase() {
   }  // End of test for direct object; 14jun2011
   RuDamp();  // Wiki-page form of name; 5jan2012
   nounval = act;
-// if (nphrnum != subjnum) {  // make sure of agreement; 18may2011
   if (nphrnum != snu) {  // make sure of agreement; 24jan2012
     for (i = t; i>midway; i--) {  // Search backwards in time; 18may2011
       ruLexicon[i].ruExam();  // Examine Russian lexicon; 5jan2012
       if (ru0 == motjuste) {  // If chosen concept is found; 5jan2012
-     // if (ru2 == subjnum) {  // If matching num(ber); 5jan2012
         if (ru2 == snu) {  // If matching num(ber); 24jan2012
-         if (ru4 == dba) {  // if correct case; 21jan2012
-          audjuste = ru8; // Switch away from wrong number;  5jan2012
-       // num = subjnum;  // For InStantiate of new engram; 18may2011
-          num = snu;  // For InStantiate of new engram; 24jan2012
-       // nphrnum = subjnum;  // for EnArticle; test; 19jun2011
-          nphrnum = snu;  // for EnArticle; test; 24jan2012
-       // subjnum = 0;  // Reset after use for safety; 18may2011
-          snu = 0;  // Reset after use for safety; 24jan2012
-          break;
-         }  // end of dba-test for correct case; 21jan2012
+          if (ru4 == dba) {  // if correct case; 21jan2012
+            audjuste = ru8; // Switch away from wrong number; 5jan2012
+            num = snu;  // For InStantiate of new engram; 24jan2012
+            nphrnum = snu;  // for EnArticle; test; 24jan2012
+            snu = 0;  // Reset after use for safety; 24jan2012
+            break;
+          }  // end of dba-test for correct case; 21jan2012
         }  // End of test for matching num(ber); 18may2011
       }  // End of search for engram of proper number; 18may2011
     }  // End of finding not only engram but proper number. 18may2011
-  }  // end of test to match subjnum and found noun; 18may2011
+  }  // end of test to match subject-number and found noun; 26jan2012
   anset = 0;  // Safety measure reset to zero; 4may2011
 //  audMemory[aud].audExam();  // Inspect auditory memory at "aud";
 //  if (aud0 == "A") anset = 65;  // If vowel "A"; 4may2011
@@ -1742,7 +1737,6 @@ function VerbPhrase() {
     if (motjuste != 0 && ru0 == motjuste) {  // look for motjuste; 17jan2017
     audbase = ru8;  // location of quasi-stem for VerbGen(); 18jan2012
       if (ru4 == dba)  {  // for proper person; 17jan2012
-     // if (ru2 == subjnum) {  // num(ber) parameter; 17jan2012
         if (ru2 == snu) {  // num(ber) parameter; 24jan2012
           vphraud = ru8;  // auditory recall-vector; 17jan2012
           break;  // exit the loop after first find; 17jan2017
@@ -1779,7 +1773,6 @@ function VerbPhrase() {
         return;  // abandon rest of VerbPhrase; 3aug2011
       }  // end of test to ask WHO instead of WHAT; 3aug2011
       qusub = subjpsi;  // as set in NounPhrase; 29oct2011
-   // qusubnum = subjnum;  // parameter for WhatBe; 28oct2011
       qusubnum = snu;  // parameter for WhatBe; 24jan2012
       WhatBe();  // 19jun2011
       return;  // abandon rest of VerbPhrase; 27jun2011
@@ -1802,7 +1795,6 @@ function VerbPhrase() {
           return;  // abandon rest of VerbPhrase; 3aug2011
         }  // end of test to ask WHO instead of WHAT; 3aug2011
         qusub = subjpsi;  // as set in NounPhrase; 29oct2011
-     // qusubnum = subjnum;  // parameter for WhatBe; 29oct2011
         qusubnum = snu;  // parameter for WhatBe; 24jan2012
         if (gencon == 0) {  // prevent double output; 19jan2012
           WhatBe();  // to ask a what-is question; 27jun2011
@@ -1949,7 +1941,7 @@ function VerbPhrase() {
 }  // End of VerbPhrase(); return to EnCog(); 29jun2011
 
 
-function RuCog() {  // 5jan2012
+function RuCog() {  // Russian cognition; 26jan2012
   moot = 0;  // may have been set in previous thought; 24oct2011
   morphpsi = 0;  // reset; from MindForth English AI; 15jan2012
   nphrnum = 0;  // reset after previous thoughts;  5jul2011
@@ -1962,9 +1954,7 @@ function RuCog() {  // 5jan2012
   if (inert > 1) {  // if no input start thinking; 23oct2011
     qusub = topic;  // default for WhatBe; 27oct2011
     if (cogpsi>0) qusub=cogpsi;  // override; 27oct2011
- // qusubnum = subjnum;  // default for WhatBe; 27oct2011
-    qusubnum = snu;  // default for WhatBe; 24jan2012
- // if (cognum>0) qusubnum = cognum;  // override; 27oct2011
+    qusubnum = snu;  // subject-number default for WhatBe; 26jan2012
     if (cognum > -1) qusubnum = cognum;  // override; 6nov2011
   if (cogpsi > 0) {  // if there is a question; 27oct2011
     artnum = qusubnum;  // parameter for EnArticle; 6nov2011
@@ -2474,7 +2464,11 @@ function MainLoop() {
  <a href="http://www.scn.org/~mentifex/AiMind.html"
  title="AI Mind in English">
 AiMind</a> - 
- 
+
+ <a href="http://www.scn.org/~mentifex/RuAiUser.html"
+ title="Russian AI User Manual in English">
+Manual</a> - 
+
  <a href="http://code.google.com/p/mindforth/wiki/RuBoot" 
  title="Russian bootstrap module in JavaScript for MSIE">
 RuBoot</a></b>
@@ -2606,6 +2600,7 @@ Thurs.19jan2012 "ru120119" generates a missing Russian verb-form.
 Sat.21jan2012 "ru120121" enhances VerbGen for generating verbs.
 Mon.23jan2012 "ru120123" adds small knowledge base (KB) of ideas.
 Wed.25jan2012 "ru120125" fills in VerbGen with six verb-forms.
+Thurs.26jan2012 "ru120126" restores deleted "seqneed" functionality.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

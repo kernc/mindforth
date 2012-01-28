@@ -1190,7 +1190,8 @@ function NounPhrase() {
             for (j = t; j>midway; --j) {  // 22jan2012
              ruLexicon[j].ruExam();  // examine Russian lexicon; 5jan2012
              if (ru0 == motjuste) {  // 22jan2012
-              if (ru2 == snu && ru4 == dba) {  // 22jan2012
+           // if (ru2 == snu && ru4 == dba) {  // 22jan2012
+              if (ru2 == snu && ru4 == 1) {  // dba must be "1"; 27JAN2012
                 audjuste = ru8;  // avoid the spurious; 24oct2011; 5jan2012
               }  // 22jan2012   
              }  // 22jan2012
@@ -1199,19 +1200,25 @@ function NounPhrase() {
               for (i = t; i>midway; i--) {  //search backwards; 25oct2011
                 ruLexicon[i].ruExam(); // examine Russian lexicon; 5jan2012
                 if (ru0 == 701) {  // "701=Ya"; 5jan2012
-                  audjuste = ru8;  // auditory recall-vector;  5jan2012
-                  break; // one I-engram is enough; 25oct2011
+                  if (ru4 == 1) {  // dba must be "1"; 27jan2012
+                    audjuste = ru8;  // auditory recall-vector;  5jan2012
+                    snu = 1;  // try to influence InStantiate; 27jan2012
+                    dba = 1;  // try to influence InStantiate; 27jan2012
+                    break; // one I-engram is enough; 25oct2011
+                  }  // end of test for dba==1; 27jan2012
                 }  // end of test for "701=Ya";  5jan2012 
               }  // end of backwards loop; 25oct2011
             }  // end of test for "701=Ya"; 5jan2012
-         // if (motjuste == 711) {  // guarantee "Ty";  5jan2012
             if (motjuste == 707) {  // guarantee "Ty"; 21jan2012
               for (i = t; i>midway; i--) {  //search backwards; 25oct2011
                 ruLexicon[i].ruExam(); // examine Russian lexicon; 5jan2012
-            // if (ru0 == 711) {  // "711=Ty";  5jan2012
-               if (ru0 == 707) {  // "707=Ty"; 21jan2012
-                   audjuste = ru8;  // auditory recall-vector;  5jan2012
-                  break; // one you-engram is enough;  5jan2012
+                if (ru0 == 707) {  // "707=Ty"; 21jan2012
+                  if (ru4 == 1) {  // dba must be "1"; 27jan2012
+                    audjuste = ru8;  // auditory recall-vector;  5jan2012
+                    snu = 1;  // try to influence InStantiate; 27jan2012
+                    dba = 1;  // try to influence InStantiate; 27jan2012
+                    break; // one you-engram is enough;  5jan2012
+                  }  // end of test for dba==1; 27jan2012
                 }  // end of test for "707=Ty"; 21jan2012
               }  // end of backwards loop; 25oct2011
             }  // end of test for "707=Ty"; 21jan2012
@@ -1600,12 +1607,12 @@ function VerbGen() {  // to creat missing verb-forms; 18jan2012
     while (binc < 17);  // while inspecting OutBuffer; 19jan2012
     binc = 0;  // reset after use; 19jan2012
      if (dba == 1) {  // first person; 22jan2012
-      if (snu ==1) {  // a parameter; 24jan2012
+      if (snu == 1) {  // a parameter; 24jan2012
         output += "&#1070;"  // "YU"; 21jan2012
         pho = "&#1070;"  // "YU"; 21jan2012
         ReEntry();  // for record of thought; 25jan2012
       }  // 21jan2012
-     if (snu ==2) {  // subject-number parameter; 25jan2012
+     if (snu == 2) {  // subject-number parameter; 25jan2012
         output += "&#1045;"  // "E"; 25jan2012
         pho = "&#1045;"  // for ReEntry; 25jan2012
         ReEntry();  // for record of thought; 25jan2012
@@ -1615,7 +1622,7 @@ function VerbGen() {  // to creat missing verb-forms; 18jan2012
       }  // end of test for plural subject-number; 25jan2012
     }  // end of test for first-person; 25jan2012
     if (dba == 2) {  // second person; 22jan2012
-      if (snu ==1) {  // a parameter; 24jan2012
+      if (snu == 1) {  // a parameter; 24jan2012
         output += "&#1045;"  // substitute; 28dec2011
         pho = "&#1045;"  // "YE"; 21jan2012
         ReEntry();  // for record of thought; 25jan2012
@@ -1626,7 +1633,7 @@ function VerbGen() {  // to creat missing verb-forms; 18jan2012
         pho = "&#1068;"  // "b"; 21jan2012
         ReEntry();  // for record of thought; 25jan2012
       }  // end of test for singular subject-number; 25jan2012
-      if (snu ==2) {  // subject-number parameter; 25jan2012
+      if (snu == 2) {  // subject-number parameter; 25jan2012
         output += "&#1045;"  // "E"; 25jan2012
         pho = "&#1045;"  // for ReEntry; 25jan2012
         ReEntry();  // for record of thought; 25jan2012
@@ -1639,7 +1646,7 @@ function VerbGen() {  // to creat missing verb-forms; 18jan2012
       }  // end of test for plural subject-number; 25jan2012
     }  // end of test for second-person; 25jan2012
     if (dba == 3) {  // third person; 25jan2012
-      if (snu ==1) {  // subject-number parameter; 25jan2012
+      if (snu == 1) {  // subject-number parameter; 25jan2012
         output += "&#1045;"  // "E"; 25jan2012
         pho = "&#1045;"  // for ReEntry; 25jan2012
         ReEntry();  // for record of thought; 25jan2012
@@ -1647,7 +1654,7 @@ function VerbGen() {  // to creat missing verb-forms; 18jan2012
         pho = "&#1058;"  // for ReEntry; 25jan2012
         ReEntry();  // for record of thought; 25jan2012
       }  // end of test for singular subject-number; 25jan2012
-      if (snu ==2) {  // subject-number parameter; 25jan2012
+      if (snu == 2) {  // subject-number parameter; 25jan2012
         output += "&#1070;"  // "YU"; 25jan2012
         pho = "&#1070;"  // for ReEntry; 25jan2012
         ReEntry();  // for record of thought; 25jan2012
@@ -1743,6 +1750,11 @@ function VerbPhrase() {
         }  // end of number-parameter test; 17jan2012
       }  // end of dba-parameter test; 17jan2012
       gencon = 1;  // status flag for detour into VerbGen; 19jan2012
+   //  dba = 3;  // a default unless countermanded; 27jan2012
+      if (subjpsi == 701) dba = 1;  // first person; 27jan2012
+      if (subjpsi == 707) dba = 2;  // second person; 27jan2012
+      if (subjpsi == 731) dba = 1;  // first person "we"; 27jan2012
+      // fill in conditions for other pronouns; 27jan2012
       VerbGen();  // Generate a missing verb-form; 19jan2012
     audbase = 0;  // reset for safety; 18jan2012
     break;  // test; 19jan2019
@@ -2601,6 +2613,7 @@ Sat.21jan2012 "ru120121" enhances VerbGen for generating verbs.
 Mon.23jan2012 "ru120123" adds small knowledge base (KB) of ideas.
 Wed.25jan2012 "ru120125" fills in VerbGen with six verb-forms.
 Thurs.26jan2012 "ru120126" restores deleted "seqneed" functionality.
+Fri.27jan2012 "ru120127" uses parameters to find nominative subjects.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

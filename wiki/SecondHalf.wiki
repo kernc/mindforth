@@ -2,34 +2,6 @@
 #labels source
 
 {{{
-// 228 NYETU (is not) adverb; 9jan2012
-t=248;c=1053; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=249;c=1045; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=250;c=1058; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=251;c=1059; beg=0; ctu=0; audpsi=228; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=228; mfn=0; dba=0; fex=228; pos=2; fin=228; aud=248;
-psi=228; num=0; pre=0; seq=0; rux=228; RuVocab(); InNativate();
-
-// 760 NICHEGO ("nothing"); pronoun; 26jan2012
-t=253;c=1053; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=254;c=1048; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=255;c=1063; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=256;c=1045; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=257;c=1043; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=258;c=1054; beg=0; ctu=0; audpsi=760;  // 26jan2012
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=760; mfn=3; dba=4; fex=760; pos=7; fin=760; aud=253;
-psi=760; num=1; pre=0; seq=0; rux=760; RuVocab(); InNativate();
-
 // 713 ON (he) pronoun; nom. sing. masc. 10jan2012
 t=260;c=1054; beg=1; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
@@ -532,7 +504,6 @@ t=462;c=1045; beg=0; ctu=0; audpsi=701;  // 21jan2012
 nru=701; mfn=0; dba=6; fex=701; pos=7; fin=707; aud=460;
 psi=701; num=1; pre=0; seq=0; rux=701; RuVocab(); InNativate();
 
-
 // 707 TY ("you") pronoun; familiar; nom. sing. 23jan2012
 t=464;c=1058; beg=1; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
@@ -854,6 +825,7 @@ function ReEntry() {
   }
   if (onset == t) beg = 1;
   else beg = 0;
+  if (dirobj == 1) dba = 4;  // test; 29jan2012
   if (pho != 32) {
     len = (len +1);
     AudMem();
@@ -1190,7 +1162,6 @@ function NounPhrase() {
             for (j = t; j>midway; --j) {  // 22jan2012
              ruLexicon[j].ruExam();  // examine Russian lexicon; 5jan2012
              if (ru0 == motjuste) {  // 22jan2012
-           // if (ru2 == snu && ru4 == dba) {  // 22jan2012
               if (ru2 == snu && ru4 == 1) {  // dba must be "1"; 27JAN2012
                 audjuste = ru8;  // avoid the spurious; 24oct2011; 5jan2012
               }  // 22jan2012   
@@ -1245,6 +1216,7 @@ function NounPhrase() {
           putnum = psi2;   // putative num for verb; 24oct2011
           nphrpos = psi5;  // NounPhrase part-of-speech; 24oct2011
           if (dirobj == 1)  {  // seeking direct object? 24oct2011
+            dba = 4;  // for OldConcept; test; 29jan2012
             Psi[i].psiExam(); // avoid error-on-page; 18oct2011
             nphrnum = psi2; // 13aug2011
             objold = motjuste; // a test ICW slosh-over; 18oct2010
@@ -1261,31 +1233,31 @@ function NounPhrase() {
       }  // end of test for 0=subjectflag; test; 24oct2011
     }  // End of test of for a noun or pronoun; 24oct2011
   }  // End of backwards search for most active "motjuste"; 25may2011
-     for (i = t; i>midway; i--) {  // 13aug2011
-      ruLexicon[i].ruExam();      //  5jan2012
-      if (ru0 == motjuste) {      //  5jan2012
-        if (predflag==1) {  // only for predicate nominatives; 20sep2011
-         if (nounlock == 0) {  // in absence of nounlock; 25oct2011
-          if (ru2==snu) {  // num(ber) agreement? 24jan2012
-            audjuste = ru8;  // set auditory recall-vector;  5jan2012
-            break;  // one auditory engram is enough; 20sep2011 
-          }  // end of test for agreement in num(ber); 20sep2011
-         }  // end of test for absence of nounlock; 25oct2011
-        }  // end of test for positive "predflag"; 20sep2011
-        else  // for normal direct objects; 20sep2011
-          if (verblock == 0) {  // if no verblock; 25oct2011
-           if (ru4 == dba) {  // if dba-4 accusative; 21jan2012
-            audjuste = ru8;  // for NounPhrase SpeechAct;  5jan2012
-            break;  // one auditory engram is enough; 20sep2011
-           }  // end of test for ru4 accusative dba; 21jan2012
-          }  // end of test for absence of verblock; 25oct2011
-      }  // end of test for motjuste; 13aug2011
-    }  // end of backwards loop; 13aug2011
+  for (i = t; i>midway; i--) {  // 13aug2011
+    ruLexicon[i].ruExam();      //  5jan2012
+    if (ru0 == motjuste) {      //  5jan2012
+      if (predflag==1) {  // only for predicate nominatives; 20sep2011
+       if (nounlock == 0) {  // in absence of nounlock; 25oct2011
+        if (ru2==snu) {  // num(ber) agreement? 24jan2012
+          audjuste = ru8;  // set auditory recall-vector;  5jan2012
+          break;  // one auditory engram is enough; 20sep2011 
+        }  // end of test for agreement in num(ber); 20sep2011
+      }  // end of test for absence of nounlock; 25oct2011
+    }  // end of test for positive "predflag"; 20sep2011
+    else  // for normal direct objects; 20sep2011
+      if (verblock == 0) {  // if no verblock; 25oct2011
+        if (ru4 == dba) {  // if dba-4 accusative; 21jan2012
+          audjuste = ru8;  // for NounPhrase SpeechAct;  5jan2012
+          break;  // one auditory engram is enough; 20sep2011
+        }  // end of test for ru4 accusative dba; 21jan2012
+      }  // end of test for absence of verblock; 25oct2011
+    }  // end of test for motjuste; 13aug2011
+  }  // end of backwards loop; 13aug2011
   star = 0;
   node = 0;
   ufo = 0;
- if (nounlock == 0) {  // if no nounlock override; 24oct2011
-  if (act < 20) {  // if no subject of thought is found; 21aug2011
+  if (nounlock == 0) {  // if no nounlock override; 24oct2011
+   if (act < 20) {  // if no subject of thought is found; 21aug2011
     if (subjectflag==1) {  // default to "I" only as subject 18oct2011
       motjuste = 701;  // default concept of an AI Mind; 5jan2012
       nphrpos = 7;  // pronoun "I"; to prevent EnArticle; 14sep2011
@@ -1319,8 +1291,8 @@ function NounPhrase() {
         }  // End of search for "701=Ya"; 5jan2012
       }  // end of Russian lexicon search loop; 5jan2012
     }  // end of test for "I" to become subj. not obj. 18oct2011
-  }  // end of threshold-test; 18oct2011
- }  // end of test for absence of pre-ordained nounlock; 24oct2011
+   }  // end of threshold-test; 18oct2011
+  }  // end of test for absence of pre-ordained nounlock; 24oct2011
   if (motjuste==701) {  // if 701=Ya selected; 5jan2012
     prsn = 1;  // first person; 2sep2010
     num = 1;   // singular; 2sep2010
@@ -1414,7 +1386,8 @@ function NounPhrase() {
  // Psi[t] = new psiNode(psi0,48,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
     PsiDecay();  // Try _differential_ psi-decay; 14may2011
     PsiDecay();  // MindForth: try to knock out also-rans; 8jun2011
-    PsiDecay();  // test; remove; 3jul2011
+ // PsiDecay();  // test; remove; 3jul2011
+ // PsiDecay();  // Commenting out above line as test; 29jan2012
   }  // end of test for positive predflag; 16sep2010
   inhibcon = 1;  // flag for OldConcept and InStantiate; 27oct2011
   if (dirobj != 1 && predflag !=1 ) { // only subjects; 29oct2011
@@ -1572,7 +1545,9 @@ function VerbGen() {  // to creat missing verb-forms; 18jan2012
         }  // end of test for content in b12; 21jan2012
       }  // 19jan2012
       if (binc==13) {  // 19jan2012
-        if (b13 != "") {  // 21jan2012
+     // if (b13 != "") {  // 21jan2012
+        if (b13 > "") {  // changing above line as a test; 30jan2012
+
           output += b13;  // 19jan2012
           pho = b13;  // for ReEntry; 19jan2012
           ReEntry();  // for record of thought; 25jan2012
@@ -1582,7 +1557,8 @@ function VerbGen() {  // to creat missing verb-forms; 18jan2012
         if (b14==String.fromCharCode(1045)) b14 = "";  // "E"
         output += b14;  // 19jan2012
         pho = b14;  // for ReEntry; 19jan2012
-        ReEntry();  // from SpeechAct; 19jan2012
+     // ReEntry();  // from SpeechAct; 19jan2012
+        if (pho != "") ReEntry();  // avoid empty aud engrams; 30jan2012
       }  // 19jan2012
       if (binc==15) {  // "EM" or "ET" or "ESHb"; 22jan2012
         if (b15==String.fromCharCode(1045)) b15 = ""; // "E"
@@ -1590,17 +1566,20 @@ function VerbGen() {  // to creat missing verb-forms; 18jan2012
         if (b15==String.fromCharCode(1064)) b15 = ""; // "SH"
         output += b15;  // no change; 22jan2012
         pho = b15;  // for ReEntry; 22jan2012
-        ReEntry();  // from SpeechAct; 22jan2012
+    //  ReEntry();  // from SpeechAct; 22jan2012
+        if (pho != "") ReEntry();  // avoid empty aud engrams; 30jan2012
       }  // 19jan2012
       if (binc==16) {  // for present-tense endings 22jan2012
         if (b16==String.fromCharCode(1045)) b16 = ""; // "ETE"
         if (b16==String.fromCharCode(1052)) b16 = ""; // "EM"
         if (b16==String.fromCharCode(1058)) b16 = ""; // "ET, YUT"
         if (b16==String.fromCharCode(1068)) b16 = ""; // "b"
-        if (b16==String.fromCharCode(1070)) b16 = ""; // "YU"
+        if (b16==String.fromCharCode(1070)) b16 = ""; // "YU"  // test; 30jan2012
         output += b16;  // no change; 22jan2012
         pho = b16;  // for ReEntry; 22jan2012
-        ReEntry();  // for record of thought; 25jan2012
+     // ReEntry();  // for record of thought; 25jan2012  // test; 30jan2012
+        if (pho != "") ReEntry();  // avoid empty aud engrams; 30jan2012
+ 
       }  // end of test of final position in OutBuffer; 25jan2012
       binc = (binc + 1);  // increment; 19jan2012
     }  // end of looping through OutBuffer; 19jan2012
@@ -1613,24 +1592,24 @@ function VerbGen() {  // to creat missing verb-forms; 18jan2012
         ReEntry();  // for record of thought; 25jan2012
       }  // 21jan2012
      if (snu == 2) {  // subject-number parameter; 25jan2012
-        output += "&#1045;"  // "E"; 25jan2012
-        pho = "&#1045;"  // for ReEntry; 25jan2012
+        output += "&#1045;";  // "E"; 30jan2012
+        pho = "&#1045;";  // for ReEntry; 30jan2012
         ReEntry();  // for record of thought; 25jan2012
-        output += "&#1052;"  // "M"; 25jan2012
-        pho = "&#1052;"  // for ReEntry; 25jan2012
+        output += "&#1052;";  // "M"; 30jan2012
+        pho = "&#1052;";  // for ReEntry; 30jan2012
         ReEntry();  // for record of thought; 25jan2012
       }  // end of test for plural subject-number; 25jan2012
     }  // end of test for first-person; 25jan2012
     if (dba == 2) {  // second person; 22jan2012
       if (snu == 1) {  // a parameter; 24jan2012
-        output += "&#1045;"  // substitute; 28dec2011
-        pho = "&#1045;"  // "YE"; 21jan2012
+        output += "&#1045;";  // "YE"; 30jan2012
+        pho = "&#1045;"  // for ReEntry; 30jan2012
         ReEntry();  // for record of thought; 25jan2012
-        output += "&#1064;"  // substitute; 28dec2011   
-        pho = "&#1064;"  // "SH"; 21jan2012
+        output += "&#1064;";  // "SH"; 30jan2012  
+        pho = "&#1064;";  // for ReEntry; 30jan2012
         ReEntry();  // for record of thought; 25jan2012
-        output += "&#1068;"  // substitute; 28dec2011   
-        pho = "&#1068;"  // "b"; 21jan2012
+        output += "&#1068;";  // "b"; 30jan2012  
+        pho = "&#1068;";  // for ReEntry; 30jan2012
         ReEntry();  // for record of thought; 25jan2012
       }  // end of test for singular subject-number; 25jan2012
       if (snu == 2) {  // subject-number parameter; 25jan2012
@@ -1751,10 +1730,16 @@ function VerbPhrase() {
       }  // end of dba-parameter test; 17jan2012
       gencon = 1;  // status flag for detour into VerbGen; 19jan2012
    //  dba = 3;  // a default unless countermanded; 27jan2012
-      if (subjpsi == 701) dba = 1;  // first person; 27jan2012
-      if (subjpsi == 707) dba = 2;  // second person; 27jan2012
-      if (subjpsi == 731) dba = 1;  // first person "we"; 27jan2012
-      // fill in conditions for other pronouns; 27jan2012
+      if (subjpsi == 701) dba = 1;  // YA (I) 1st p. sing; 29jan2012
+      if (subjpsi == 707) dba = 2;  // TY (you) 2nd p. sing 29jan2012
+      if (subjpsi == 713) dba = 3;  // ON (he) 3rd p. sing; 29jan2012
+      if (subjpsi == 719) dba = 3;  // ONA (she) 3rd p. s; 29jan2012
+      if (subjpsi == 725) dba = 3;  // ONO (it) 3rd p. s; 29jan2012
+      if (subjpsi == 731) dba = 1;  // MWI (we) 1st p. pl; 29jan2012
+      if (subjpsi == 737) dba = 2;  // VWI (you) 2nd p. pl; 29jan2012
+      if (subjpsi == 749) dba = 2;  // VWI (you) 2nd p. s; 29jan2012
+      if (subjpsi == 755) dba = 2;  // VWI (you) 2nd p. pl; 29jan2012
+      if (subjpsi == 743) dba = 3;  // ONI (they) 3rd p. p; 29jan2012
       VerbGen();  // Generate a missing verb-form; 19jan2012
     audbase = 0;  // reset for safety; 18jan2012
     break;  // test; 19jan2019
@@ -1930,6 +1915,7 @@ function VerbPhrase() {
   psi = 0;
   pho = " ";
   dirobj = 1;
+  dba = 4;  // 4=acc; test; 29jan2012
   if (subjpsi==50) {  // only for subject "50=I"; 25sep2011
     if (motjuste==62) {  // only for verb "62=SEE"; 25sep2011
       if (svo3==0) {  // if SEE has no direct object; 25sep2011
@@ -1952,7 +1938,7 @@ function VerbPhrase() {
   verblock = 0;  // after selection of NPhr seq-verb; 24oct2011
 }  // End of VerbPhrase(); return to EnCog(); 29jun2011
 
-
+ 
 function RuCog() {  // Russian cognition; 26jan2012
   moot = 0;  // may have been set in previous thought; 24oct2011
   morphpsi = 0;  // reset; from MindForth English AI; 15jan2012
@@ -2614,6 +2600,7 @@ Mon.23jan2012 "ru120123" adds small knowledge base (KB) of ideas.
 Wed.25jan2012 "ru120125" fills in VerbGen with six verb-forms.
 Thurs.26jan2012 "ru120126" restores deleted "seqneed" functionality.
 Fri.27jan2012 "ru120127" uses parameters to find nominative subjects.
+Mon.30jan2012 in VerbGen creates Russian verbs without engram-gaps.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

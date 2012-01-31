@@ -312,7 +312,7 @@ var verbval = 0;
 var verbcall = 0;
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "27jan12"; // for Transcript mode; 27jan2012
+var vrsn = "30jan12"; // for Transcript mode; 30jan2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -694,8 +694,9 @@ function NounAct() {
       Psi[i].psiExam();
       if (psi0 == nacpsi) {  // nacpsi replaces psi; 13aug2010
         if (psi1 > -1) {   // avoid inhibition; 29oct2011
-          psi1 = 26;  // start near a threshold level; 7jun2011
-        }  //
+       // psi1 = 26;  // start near a threshold level; 7jun2011
+          psi1 = (40 - (4 * ordo));  // test; for sloping act; 29jan2012
+        }  // 
         Psi[i] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
         if (psi0 == 781) {  // 781=CHTO (what); 11jan2012    
           PsiDecay();  // MindForth: await active subject; 13may2011
@@ -808,11 +809,14 @@ function ReActivate() { // re-activate recent nodes of a concept
           if (psi1 < 0) {  // if inhibited; 27oct2011
             psi1 = (psi1 + 1);  // reactivate only slightly; 27oct2011
           }  // end of test for inhibited concept; 27oct2011
-          else psi1 = psi1 + 35;  // full reactivation; 27oct2011
+       // else psi1 = psi1 + 35;  // full reactivation; 27oct2011
+       // else psi1 = psi1 + 35;  // Commenting out as test; 29jan2012
+          else psi1 = (40 - (4 * ordo));  // test; 29jan2012
         }  // end of test for a moot query input; 22aug2011
         if (firstword==54) psi1 = 48;  // affirm queries; 1nov2011
         if (psi0 == 781) psi1 =  0; // 781=CHTO (what); 11jan2011
         if (psi0 == 791) psi1 =  0; // 791=KTO (who); 11jan2012
+        if (lastword == true) psi1 = 24;  // test; 29jan2012
         Psi[i] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
         spike = 1;
         if (psi1 == 0)  spike = 0;
@@ -1023,7 +1027,8 @@ function InStantiate() {
   }  // end of test for a DO-query; 24oct2011
   if (lastword == true) {
     seq = 0;
-    lastword = false;
+ // lastword = false;
+ // lastword = false; // Commenting out on 29jan2012
   }
   if (t > 201) {  
     if (pos == 6) {
@@ -1081,7 +1086,6 @@ function InStantiate() {
     act = 0;  // To suppress "WHO" during answer; 19apr2011
   }  // End of test for psi #55 WHO; 19apr2011
   if (pov == "*") {  // If POV is external; 20jul2011
- // if (pos == 5) {  // If external noun comes in; 20jul2011
     if (pos == 5 || pos == 7) {  // if noun or pronoun; 22jan2012
        if (recnum > 0) {  // If positive recog-num; 20jul2011
          num = recnum;  // Override num(ber); 20jul2011
@@ -1090,9 +1094,16 @@ function InStantiate() {
        quobj = psi;  // query-object for AskUser; 18aug2011
     }  // End of test for a noun; 20jul2011
   }  // End of test for external "*" point-of-view; 20jul2011
+
+//  act = (60 - (5 * ordo));  // test; for sloping act; 29jan2012
+ 
+
   if (pov == "#") {  // If POV is ASCII 35 "#" internal; 1may2011
     act = 0; // 0 activation for ReEntry concepts; 1may2011
   }  // End of test for "#" internal POV;  1may2011
+
+  act = (30 - (5 * ordo));  // test; for sloping act; 29jan2012
+
   Psi[t] = new psiNode(psi,act,num,jux,prevtag,pos,tqv,seq,rux);
   act = 0;  // reset for safety; 27oct2011
   inhibcon = 0;  // reset for safety; 27oct2011
@@ -1110,6 +1121,7 @@ function InStantiate() {
   prevtag = psi;
   if (seqneed==8) {  // if looking for a verb; 27jan2012
     if (pos==8) {  // if part-of-speech is verb; 27jan2012
+      jux = -1;  // a default to be reset for dir. obj; 29jan2012
       seq = psi;  // because a verb has arrived; 27jan2012
       seqpos = pos;  // possibly for tqv; 27jan2012
       seqneed = 0;  // zero out after use; 27jan2012
@@ -1129,8 +1141,10 @@ function InStantiate() {
       }  // end of test for subject noun or pronoun; 27jan2012      
     }  // end of backwards loop; 27jan2012
   }  // end of test for needing a verb; 27jan2012
+ // if (pos != 8 && jux == -1) jux = 0;  // Reset; 29jan2012
   if (seqneed==5) {  // if looking for a noun; 4oct2011
     if (pos==5 || pos==7) {  // if noun or pronoun; 4oct2011
+      dba = 4;  // assuming an accusative direct object; 29jan2012
       seq = psi;  // because a (pro)noun has arrived; 4oct2011
       seqpos = pos;  // possibly for tqv; 4oct2011
       seqneed = 0;  // zero out after use; 4oct2011
@@ -1154,7 +1168,8 @@ function InStantiate() {
     seq = psi;  // 4oct2011
     if (lastword == true) {  // 4oct2011
       seq = 0;  // 4oct2011
-      lastword = false;  // 4oct2011
+   // lastword = false;  // 4oct2011
+   // lastword = false;  // Commenting out on 29jan2012
     }  // 4oct2011
   }  // 4oct2011
   if (pos==5 || pos==7) seqneed = 8; // if noun need verb; 4oct2011
@@ -1202,10 +1217,15 @@ function RuVocab() {  // adding "dba"; 2jan2012
  
  
 function RuParser() {  // renamed; 5jan2012
+// alert("RuParser: ordo = "+ordo); // test; 29jan2012
   bias = 5;
   act = 30;  // MindForth: Activate lower than ReActivate; 8jun2011
   if (pov == "*") {  // only during external input; 15oct2010
-    act = (act - ordo); // reduce S-V-O act's; 15oct2010
+ // act = (act - ordo); // reduce S-V-O act's; 15oct2010 
+ // act = (act - ordo); // Commenting out as a test; 29jan2012
+ // act = (act + (ordo * 2)); // steeper; 29jan2012
+  act = 40; // test; 29jan2012
+  act = (act - (3 * ordo));  // test; 29jan2012
   }  // end of test for external POV; 15oct2010
   InStantiate();
   if (pos == 5) bias = 8;
@@ -1255,7 +1275,10 @@ function KbRetro() {  // for yes-or-no answers; 29jun2011
  
  
 function OldConcept() {
-  act = 28;  // from MindForth; test;  8jun2011
+  ordo = (ordo + 1);  // increment for any word; test; 29jan2012
+//  act = 28;  // from MindForth; test;  8jun2011
+//  act = 28;  // Commenting out above line as test; 29jan2012
+  act = (35 - (ordo * 2));  // descending input act; 29jan2012
   for (i=t; i>midway; --i) {
     ruLexicon[i].ruExam();  // 5jan2012
     if (ru0 == oldpsi) {  // conformance with MindForth; 5jan2012
@@ -1273,7 +1296,13 @@ function OldConcept() {
   if (oldpsi==58) tbev = t;  // 58=BE; 15aug2011
   if (oldpsi==66) tbev = t;  // 66=IS; 15aug2011
   if (oldpsi==67) tbev = t;  // 67=ARE; 15aug2011
-   ruLexicon[t] = new ruNode(oldpsi,0,unk,mfn,dba,fex,pos,fin,aud);
+  if (pos == 5 || pos == 7) dba = 1;  // default before changes; test; 29jan2012  
+  if ((pos == 5 || pos == 7) && (lastword == true)) dba = 4;  // test; 29jan2012 
+// if (seqneed == 5 && pos == 5) {  // 29jan2012
+  if  ((seqneed == 5) && (pos == 5 || pos == 7)) {  // 29jan2012
+    dba = 4;  // accusative; 29jan2w012
+  }  // 29jan2012
+  ruLexicon[t] = new ruNode(oldpsi,0,unk,mfn,dba,fex,pos,fin,aud);
   mfn = 0;  // reset to prevent carry-over; test; 22jan2012
   if (pov == "{") oldpsi = fex;  // deglobalizing psi; 3jul2011
   if (pov == "#") oldpsi = fex;  // deglobalizing psi; 3jul2011
@@ -1326,6 +1355,7 @@ function OldConcept() {
 
 
 function NewConcept() {
+  ordo = (ordo + 1);  // increment for any word; test; 29jan2012
   nru = (nru + 1);  // 5jan2012
   psi = nru;  // 5jan2012
   fex = nru;  // 5jan2012
@@ -1676,7 +1706,8 @@ function AudListen() {
     }
     if (c == 32) { // From CR or space-bar; 12jul2010.
       audrun = 1;  // Reset to 1 at end of word; 12jul2010.
-      ordo = (ordo + 1);  // 22aug2011
+   // ordo = (ordo + 1);  // 22aug2011
+   // ordo = (ordo + 1);  // Commenting out as a test; 29jan2012
       phodex = 0;  // reset for AudBuffer(); 12jan2012
       if (ordo==1) firstword = audpsi;  // 22aug2011
       AudInput();  // To register a space-bar; 12jul2010.
@@ -1774,7 +1805,8 @@ function CR() {
   eot = 0;
   firstword = 0;  // not valid beyond current input; 1nov2011
   moot = 0;  // assuming end of moot user queries; 1nov2011
-  ordo = 0;
+// ordo = 0; // May interfere with ordo-count elsewhere; 29jan2012
+// ordo = 0; // Commenting out above line on 29jan2012
   quiet = true;
 // output = "";  // end on-screen persistence of output; 6nov2011
 // outputplus = "";  // end on-screen persistence of output;
@@ -1782,7 +1814,8 @@ function CR() {
  
 
 function AudInput() {
-  ordo = (ordo + 1 );
+// ordo = (ordo + 1 );
+// ordo = (ordo + 1 );  // Commenting out as a test; 29jan2012
   spt = t;
   upnext = 0;
   if (urpsi > 0) {

@@ -2,6 +2,34 @@
 #labels source
 
 {{{
+// 228 NYETU (is not) adverb; 9jan2012
+t=248;c=1053; beg=1; ctu=1; audpsi=0; 
+     pho = String.fromCharCode(c); AudMem(); // 9jan2012
+t=249;c=1045; beg=0; ctu=1; audpsi=0; 
+     pho = String.fromCharCode(c); AudMem(); // 9jan2012
+t=250;c=1058; beg=0; ctu=1; audpsi=0; 
+     pho = String.fromCharCode(c); AudMem(); // 9jan2012
+t=251;c=1059; beg=0; ctu=0; audpsi=228; 
+     pho = String.fromCharCode(c); AudMem(); // 9jan2012
+nru=228; mfn=0; dba=0; fex=228; pos=2; fin=228; aud=248;
+psi=228; num=0; pre=0; seq=0; rux=228; RuVocab(); InNativate();
+
+// 760 NICHEGO ("nothing"); pronoun; 26jan2012
+t=253;c=1053; beg=1; ctu=1; audpsi=0; 
+     pho = String.fromCharCode(c); AudMem(); // 9jan2012
+t=254;c=1048; beg=0; ctu=1; audpsi=0; 
+     pho = String.fromCharCode(c); AudMem(); // 9jan2012
+t=255;c=1063; beg=0; ctu=1; audpsi=0; 
+     pho = String.fromCharCode(c); AudMem(); // 9jan2012
+t=256;c=1045; beg=0; ctu=1; audpsi=0; 
+     pho = String.fromCharCode(c); AudMem(); // 9jan2012
+t=257;c=1043; beg=0; ctu=1; audpsi=0; 
+     pho = String.fromCharCode(c); AudMem(); // 9jan2012
+t=258;c=1054; beg=0; ctu=0; audpsi=760;  // 26jan2012
+     pho = String.fromCharCode(c); AudMem(); // 9jan2012
+nru=760; mfn=3; dba=4; fex=760; pos=7; fin=760; aud=253;
+psi=760; num=1; pre=0; seq=0; rux=760; RuVocab(); InNativate();
+
 // 713 ON (he) pronoun; nom. sing. masc. 10jan2012
 t=260;c=1054; beg=1; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
@@ -828,6 +856,7 @@ function ReEntry() {
   if (dirobj == 1) dba = 4;  // test; 29jan2012
   if (pho != 32) {
     len = (len +1);
+    if (psi == 0) psi = nru;  // test; 31jan2012
     AudMem();
   }  // End of test that input "pho" is not a "space".
   if (pho == 32) { // If pho is a "space".
@@ -835,7 +864,8 @@ function ReEntry() {
     AudInput();  // Re-entry into audition; 13jul2010
   }  // End of test for space-bar re-entry; 13jul2010
 }  // End of ReEntry(); return to SpeechAct().
- 
+
+
 function Voice() {
 outputplus = ("<font size='+3' color='navy'>"+output+"<\/b><\/font>");
   document.all.mouth.innerHTML = outputplus;
@@ -1426,7 +1456,7 @@ function ConJoin() {
 }  // End of ConJoin(); currently not called; 13aug2010
 
 
-function VerbGen() {  // to creat missing verb-forms; 18jan2012
+function VerbGen() {  // to create missing verb-forms; 18jan2012
   do {  // first loop fills in AudBuffer
     audMemory[audbase].audExam();
     pho = aud0;
@@ -1546,8 +1576,8 @@ function VerbGen() {  // to creat missing verb-forms; 18jan2012
       }  // 19jan2012
       if (binc==13) {  // 19jan2012
      // if (b13 != "") {  // 21jan2012
-        if (b13 > "") {  // changing above line as a test; 30jan2012
-
+        if (b13 > "") {  // changing above line; 30jan2012
+          prc = vip;  // for "audpsi"; test; 31jan2012
           output += b13;  // 19jan2012
           pho = b13;  // for ReEntry; 19jan2012
           ReEntry();  // for record of thought; 25jan2012
@@ -1557,8 +1587,7 @@ function VerbGen() {  // to creat missing verb-forms; 18jan2012
         if (b14==String.fromCharCode(1045)) b14 = "";  // "E"
         output += b14;  // 19jan2012
         pho = b14;  // for ReEntry; 19jan2012
-     // ReEntry();  // from SpeechAct; 19jan2012
-        if (pho != "") ReEntry();  // avoid empty aud engrams; 30jan2012
+        if (pho != "") ReEntry();  // avoid empty aud; 30jan2012
       }  // 19jan2012
       if (binc==15) {  // "EM" or "ET" or "ESHb"; 22jan2012
         if (b15==String.fromCharCode(1045)) b15 = ""; // "E"
@@ -1566,21 +1595,19 @@ function VerbGen() {  // to creat missing verb-forms; 18jan2012
         if (b15==String.fromCharCode(1064)) b15 = ""; // "SH"
         output += b15;  // no change; 22jan2012
         pho = b15;  // for ReEntry; 22jan2012
-    //  ReEntry();  // from SpeechAct; 22jan2012
-        if (pho != "") ReEntry();  // avoid empty aud engrams; 30jan2012
+        if (pho != "") ReEntry();  // avoid empty aud; 30jan2012
       }  // 19jan2012
       if (binc==16) {  // for present-tense endings 22jan2012
         if (b16==String.fromCharCode(1045)) b16 = ""; // "ETE"
         if (b16==String.fromCharCode(1052)) b16 = ""; // "EM"
         if (b16==String.fromCharCode(1058)) b16 = ""; // "ET, YUT"
         if (b16==String.fromCharCode(1068)) b16 = ""; // "b"
-        if (b16==String.fromCharCode(1070)) b16 = ""; // "YU"  // test; 30jan2012
+        if (b16==String.fromCharCode(1070)) b16 = ""; // "YU"
         output += b16;  // no change; 22jan2012
         pho = b16;  // for ReEntry; 22jan2012
-     // ReEntry();  // for record of thought; 25jan2012  // test; 30jan2012
-        if (pho != "") ReEntry();  // avoid empty aud engrams; 30jan2012
- 
-      }  // end of test of final position in OutBuffer; 25jan2012
+     // ReEntry();  // for record of thought; 25jan2012  // 30jan2012
+        if (pho != "") ReEntry();  // avoid empty aud; 30jan2012
+       }  // end of test of final position in OutBuffer; 25jan2012
       binc = (binc + 1);  // increment; 19jan2012
     }  // end of looping through OutBuffer; 19jan2012
     while (binc < 17);  // while inspecting OutBuffer; 19jan2012
@@ -1636,7 +1663,8 @@ function VerbGen() {  // to creat missing verb-forms; 18jan2012
       if (snu == 2) {  // subject-number parameter; 25jan2012
         output += "&#1070;"  // "YU"; 25jan2012
         pho = "&#1070;"  // for ReEntry; 25jan2012
-        ReEntry();  // for record of thought; 25jan2012
+     // ReEntry();  // for record of thought; 25jan2012
+     // ReEntry();  // Commenting out as test; 31jan2012
         output += "&#1058;"  //  "T"; 25jan2012  
         pho = "&#1058;"  // for ReEntry; 25jan2012
         ReEntry();  // for record of thought; 25jan2012
@@ -1729,7 +1757,8 @@ function VerbPhrase() {
         }  // end of number-parameter test; 17jan2012
       }  // end of dba-parameter test; 17jan2012
       gencon = 1;  // status flag for detour into VerbGen; 19jan2012
-   //  dba = 3;  // a default unless countermanded; 27jan2012
+  //  dba = 3;  // a default unless countermanded; 27jan2012
+      dba = 3;  // a default unless countermanded; 31jan2012
       if (subjpsi == 701) dba = 1;  // YA (I) 1st p. sing; 29jan2012
       if (subjpsi == 707) dba = 2;  // TY (you) 2nd p. sing 29jan2012
       if (subjpsi == 713) dba = 3;  // ON (he) 3rd p. sing; 29jan2012
@@ -1740,7 +1769,9 @@ function VerbPhrase() {
       if (subjpsi == 749) dba = 2;  // VWI (you) 2nd p. s; 29jan2012
       if (subjpsi == 755) dba = 2;  // VWI (you) 2nd p. pl; 29jan2012
       if (subjpsi == 743) dba = 3;  // ONI (they) 3rd p. p; 29jan2012
+      vip = motjuste;  // for setting "audpsi" on engram; 31jan2012
       VerbGen();  // Generate a missing verb-form; 19jan2012
+      vip = 0;  // reset for safety; 31jan2012
     audbase = 0;  // reset for safety; 18jan2012
     break;  // test; 19jan2019
     }  // end of test for motjuste; 17jan2017
@@ -2601,6 +2632,7 @@ Wed.25jan2012 "ru120125" fills in VerbGen with six verb-forms.
 Thurs.26jan2012 "ru120126" restores deleted "seqneed" functionality.
 Fri.27jan2012 "ru120127" uses parameters to find nominative subjects.
 Mon.30jan2012 in VerbGen creates Russian verbs without engram-gaps.
+Wed.1feb2012 "ru120201" improves tagging of verbs and direct objects.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

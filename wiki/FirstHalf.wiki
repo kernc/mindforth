@@ -100,7 +100,7 @@ var en0 = 0; // "nen" for "n(umber)" in "En(glish)"; 4apr2010
 var en1 = 0; // "act(ivation)" level; 4apr2010
 var en2 = 0; // "num(ber)" since 12apr09B.html; 4apr2010
 var en3 = 0; // "mfn" being introduced as gender flag; 4apr2010
-var en4 = 0; // "dba" being intorduced as case or person; 4jan2012
+var en4 = 0; // "dba" being introduced as case or person; 4jan2012
 var en5 = 0; // "fex" fiber-out from Psi array; 4apr2010; 4jan2012
 var en6 = 0; // "pos" part-of-speech flag; 4apr2010; 4jan2012
 var en7 = 0; // "fin" fiber-in to Psi array; 4apr2010; 4jan2012
@@ -245,6 +245,7 @@ var seq7enx = 0;  // SpreadAct(): for enLexicon search; 13oct2011
 var seqneed = 0;  // noun/pronoun or verb needed as a "seq"; 4oct2011
 var seqpos = 0;  // "seq" concept part-of-speech; 4oct2011
 var seqpsi = 0;  // for deglobalizing "seq" in SpreadAct(); 16sep2010
+var seqseek = 0;  // possible replacement for "seqneed"; 1feb2012
 var seqverb = "";
 var singflag = 0;  // singularity flag for singular nouns; 4nov2011
 var skip = 0;
@@ -310,9 +311,10 @@ var verbnum = 0;
 var verbpsi = 0;  // for transit into WhatAuxSVerb() 14jun2011
 var verbval = 0;
 var verbcall = 0;
+var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "30jan12"; // for Transcript mode; 30jan2012
+var vrsn = "1feb12"; // for Transcript mode;  1feb2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -1094,16 +1096,11 @@ function InStantiate() {
        quobj = psi;  // query-object for AskUser; 18aug2011
     }  // End of test for a noun; 20jul2011
   }  // End of test for external "*" point-of-view; 20jul2011
-
 //  act = (60 - (5 * ordo));  // test; for sloping act; 29jan2012
- 
-
   if (pov == "#") {  // If POV is ASCII 35 "#" internal; 1may2011
     act = 0; // 0 activation for ReEntry concepts; 1may2011
   }  // End of test for "#" internal POV;  1may2011
-
   act = (30 - (5 * ordo));  // test; for sloping act; 29jan2012
-
   Psi[t] = new psiNode(psi,act,num,jux,prevtag,pos,tqv,seq,rux);
   act = 0;  // reset for safety; 27oct2011
   inhibcon = 0;  // reset for safety; 27oct2011
@@ -1141,11 +1138,14 @@ function InStantiate() {
       }  // end of test for subject noun or pronoun; 27jan2012      
     }  // end of backwards loop; 27jan2012
   }  // end of test for needing a verb; 27jan2012
- // if (pos != 8 && jux == -1) jux = 0;  // Reset; 29jan2012
+  // if (pos != 8 && jux == -1) jux = 0;  // Reset; 29jan2012
   if (seqneed==5) {  // if looking for a noun; 4oct2011
     if (pos==5 || pos==7) {  // if noun or pronoun; 4oct2011
       dba = 4;  // assuming an accusative direct object; 29jan2012
       seq = psi;  // because a (pro)noun has arrived; 4oct2011
+      // Next two lines affect objects of transitive verbs; 1feb2012
+      ruLexicon[t].ruExam();  // adding a "dba" of 4; 1feb2012
+      ruLexicon[t] = new ruNode(ru0,ru1,ru2,ru3,4,ru5,ru6,ru7,ru8);
       seqpos = pos;  // possibly for tqv; 4oct2011
       seqneed = 0;  // zero out after use; 4oct2011
     }  // end of test for 5=pos noun or 7=pos pronoun; 4oct2011
@@ -1174,11 +1174,7 @@ function InStantiate() {
   }  // 4oct2011
   if (pos==5 || pos==7) seqneed = 8; // if noun need verb; 4oct2011
   if (pos==6) seqneed = 5;  // if preposition need noun; 4oct2011
-  if (psi != 59) {  // skip auxiliary verb "59=DO"; 7oct2011
-    if (psi != 87) {  // skip auxiliary "87=DOES"; 8oct2011
-      if (pos==8) seqneed = 5;  // if verb need noun; 4oct2011
-    }  // end of test to skip auxiliary DOES; 7oct2011
-  }  // end of test to skip auxiliary DO; 7oct2011
+  if (pos==8) seqneed = 5;  // if verb need noun;  1feb2012
   recnum = 0;  // lest carry-over to other words; 20jul2011
   seq = 0;
 } // End of InStantiate(); 4sep2010
@@ -1296,12 +1292,15 @@ function OldConcept() {
   if (oldpsi==58) tbev = t;  // 58=BE; 15aug2011
   if (oldpsi==66) tbev = t;  // 66=IS; 15aug2011
   if (oldpsi==67) tbev = t;  // 67=ARE; 15aug2011
-  if (pos == 5 || pos == 7) dba = 1;  // default before changes; test; 29jan2012  
-  if ((pos == 5 || pos == 7) && (lastword == true)) dba = 4;  // test; 29jan2012 
+  if (pos == 5 || pos == 7) dba = 1;  // default before changes; 29jan2012  
+// if ((pos == 5 || pos == 7) && (lastword == true)) dba = 4;  // 29jan2012 
+// Commenting out the above line for SV/SVO input; 31jan2012
 // if (seqneed == 5 && pos == 5) {  // 29jan2012
-  if  ((seqneed == 5) && (pos == 5 || pos == 7)) {  // 29jan2012
-    dba = 4;  // accusative; 29jan2w012
-  }  // 29jan2012
+//  if  ((seqneed == 5) && (pos == 5 || pos == 7)) {  // 29jan2012
+//    dba = 4;  // accusative; 29jan2w012
+//  }  // 29jan2012
+  if (subjectflag == 1) dba = 1;  // nominative for subject; 31jan2012
+  if (dirobj == 1) dba = 4;  // acc. for direct objects; 31jan2012
   ruLexicon[t] = new ruNode(oldpsi,0,unk,mfn,dba,fex,pos,fin,aud);
   mfn = 0;  // reset to prevent carry-over; test; 22jan2012
   if (pov == "{") oldpsi = fex;  // deglobalizing psi; 3jul2011

@@ -314,7 +314,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "1feb12"; // for Transcript mode;  1feb2012
+var vrsn = "4feb12"; // for Transcript mode;  4feb2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -322,6 +322,9 @@ var whoskip = 0;
 var xthe = 0;
 var yncon = 0;  // a statuscon to trigger yes-or-no query; 27jun2011
 var ynverb = 0;  // yes-or-no verb for AskUser; 29jun2011
+var zad1 = 0;  // input audpsi one character back; 4feb2012
+var zad2 = 0;  // input audpsi two characters back; 4feb2012
+var zad3 = 0;  // input audpsi three characters back; 4feb2012
 var zone = 0;
  
 // defaultStatus="Click on View...Source to save Dushka.html"
@@ -1292,8 +1295,8 @@ function OldConcept() {
   if (oldpsi==58) tbev = t;  // 58=BE; 15aug2011
   if (oldpsi==66) tbev = t;  // 66=IS; 15aug2011
   if (oldpsi==67) tbev = t;  // 67=ARE; 15aug2011
-  if (pos == 5 || pos == 7) dba = 1;  // default before changes; 29jan2012  
-// if ((pos == 5 || pos == 7) && (lastword == true)) dba = 4;  // 29jan2012 
+  if (pos == 5 || pos == 7) dba = 1;  // default before changes; 29jan12  
+// if ((pos == 5 || pos == 7) && (lastword == true)) dba = 4; // 29jan12 
 // Commenting out the above line for SV/SVO input; 31jan2012
 // if (seqneed == 5 && pos == 5) {  // 29jan2012
 //  if  ((seqneed == 5) && (pos == 5 || pos == 7)) {  // 29jan2012
@@ -1456,6 +1459,7 @@ function AudRecog() {
               if (aud1 > actbase) {
                 psi = aud5;
                 subpsi = aud5;
+                zad1 = aud5;  // back-one; test; 4feb2012
                 sublen = len;
                 psibase = aud5;
                 Psi[i].psiExam();  // 20jul2011
@@ -1497,7 +1501,9 @@ function AudRecog() {
     }
   }
   psibase = 0;
-  if (psi==0 && prc > 0) psi = prc;  // prov. recog; 26jan2012
+  if (psi==0 && prc > 0) {  // test; 4feb2012
+    psi = prc;  // prov. recog; 26jan2012
+  }  // test; 4feb2012
   if (psi == 0) {
     psi = morphpsi;
     if (sublen > 0)  {
@@ -1522,6 +1528,10 @@ function AudRecog() {
     if (recnum > 0) num = recnum;  // override; 20jul2011
   }
   if (psi == 0) psi = prc;  // provisional recognition; 26jan2012
+  if (psi == 0 && zad1 > 0) {  // test; 4feb2012
+    psi = zad1;  // retrieve back-one recog; 4feb2012
+    zad1 = 0;  // reset for safety; 4feb2012
+  }  // test; 4feb2012
   audpsi = psi;  // 9dec2009 For transfer from AudRecog() to AudMem()
   morphpsi = 0;  // reset until further notice; 15jan2015
   stemgap = 0;  // safety measure; 25sep2011
@@ -1553,6 +1563,7 @@ function AudMem() {
     AudRecog();
     if (audpsi == 0) {  // 15jan2012
       if (prc > 0) audpsi = prc;  // prov. recog; 26jan2012
+   //   if (prc > 0) { // test; 4feb2012
       prc = 0;  // reset in any case; 26jan2012
     }  // 15jan2012
   }
@@ -1705,8 +1716,6 @@ function AudListen() {
     }
     if (c == 32) { // From CR or space-bar; 12jul2010.
       audrun = 1;  // Reset to 1 at end of word; 12jul2010.
-   // ordo = (ordo + 1);  // 22aug2011
-   // ordo = (ordo + 1);  // Commenting out as a test; 29jan2012
       phodex = 0;  // reset for AudBuffer(); 12jan2012
       if (ordo==1) firstword = audpsi;  // 22aug2011
       AudInput();  // To register a space-bar; 12jul2010.
@@ -1804,8 +1813,6 @@ function CR() {
   eot = 0;
   firstword = 0;  // not valid beyond current input; 1nov2011
   moot = 0;  // assuming end of moot user queries; 1nov2011
-// ordo = 0; // May interfere with ordo-count elsewhere; 29jan2012
-// ordo = 0; // Commenting out above line on 29jan2012
   quiet = true;
 // output = "";  // end on-screen persistence of output; 6nov2011
 // outputplus = "";  // end on-screen persistence of output;
@@ -1813,8 +1820,6 @@ function CR() {
  
 
 function AudInput() {
-// ordo = (ordo + 1 );
-// ordo = (ordo + 1 );  // Commenting out as a test; 29jan2012
   spt = t;
   upnext = 0;
   if (urpsi > 0) {

@@ -697,7 +697,6 @@ psi=777; num=1; pre=0; seq=0; rux=777; RuVocab(); InNativate();
 t = 532;  // approximate source of "vault" value; 23jan2012
   audpsi = 0;  // lest pass through AudInput to EnParser; 22aug2011
   indefartcon = 0;  // lest WHO trigger EnArticle; 17jun2011
-// alert("RuBoot: oldpsi psi bias = "+oldpsi+" "+psi+" "+bias);  // 24jan2012
   psi = 0;
   pre = 0;
   t = (t+1);
@@ -2436,8 +2435,8 @@ function MainLoop() {
  style="text-decoration:none;">
 &#1044;&#1091;&#1096;&#1082;&#1072;</a> - 
  
- <a href="http://ai.obrazec.ru" 
- title="Club of amateurs and experts in AI" 
+ <a href="http://www.gotai.net/forum/" 
+ title="AI discussion forum in Russian" 
  style="text-decoration:none;">
 &#1048;&#1089;&#1082;&#1091;&#1089;&#1089;&#1090;&#1074;&#1077;&#1085;&#1085;&#1099;&#1081; 
 <!-- artificial -->
@@ -2594,6 +2593,7 @@ Fri.27jan2012 "ru120127" uses parameters to find nominative subjects.
 Mon.30jan2012 in VerbGen creates Russian verbs without engram-gaps.
 Wed.1feb2012 "ru120201" improves tagging of verbs and direct objects.
 Sat.4feb2012 "ru120204" learns noun-endings like a human child learns.
+Sat.11feb2012 "ru120211" integrates unspoken be-verbs with InStantiate.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

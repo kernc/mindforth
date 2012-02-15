@@ -1471,7 +1471,6 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         aud0=" ";  // "SH"; 19jan2012
         if (b16==String.fromCharCode(1068)) {  // 19jan2012
           aud0=" ";  // "b"; 19jan2012
-      //  alert("end three = ESHb");  // 21jan2012
         }  // 19jan2012
       }  // 19jan2012
     }  // 19jan2012
@@ -1796,7 +1795,6 @@ function VerbPhrase() {
       return;  // abandon rest of VerbPhrase; 27jun2011
     }  // 19jun2011
     if (nphrnum == 2) {  // if plural subject; 27jun2011
-      caller = "VerbPhrase";  // alert-diagnostic;  5jul2011
       topic = subjpsi;  // supersede any default;  7jul2011
       WhatSDo();  // Russian What do Subjects Do? 10jan2012
       yncon = 1;  // delay yes-or-no ? until after input; 27jun2011 
@@ -1820,7 +1818,6 @@ function VerbPhrase() {
         }  // 19jan2012
       }  // arbitrarily asking what-is builds ontology; 27jun2011
       if (nphrnum == 2) {  // if plural subject; 27jun2011
-        caller = "VerbPhrase";  // alert-diagnostic;  5jul2011
         topic = subjpsi;  // supersede any default;  7jul2011
         WhatSDo();  // Russian What do Subjects Do? 10jan2012
         topic = " ";  // reset for safety;  7jul2011
@@ -1964,6 +1961,7 @@ function RuCog() {  // Russian cognition; 26jan2012
   VerbPhrase();  
   verbcall = 0;
   verbnum = 0;
+  prevpsi = 0;  // safety measure; 14feb2012
   the1 = 0;
   the2 = 0;
   the3 = 0;
@@ -2594,6 +2592,7 @@ Mon.30jan2012 in VerbGen creates Russian verbs without engram-gaps.
 Wed.1feb2012 "ru120201" improves tagging of verbs and direct objects.
 Sat.4feb2012 "ru120204" learns noun-endings like a human child learns.
 Sat.11feb2012 "ru120211" integrates unspoken be-verbs with InStantiate.
+Tues.14feb2012 "ru120214" skips unwarranted default-only be-verbs.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

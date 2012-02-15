@@ -197,6 +197,7 @@ var preset = 0;
 var presubj = 0;
 var preverb = 0;
 var preview = "";
+var prevpsi = 0;  // for InStantiate to cancel imputed BeVerb; 14feb2012
 var prevtag = 0;
 var provrec = 0;  // provisional recognition in AudRecog; 15jan2012
 var prox1 = 0;  // first proximate concept of input cluster; 14sep2011
@@ -314,7 +315,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "11feb12"; // for Transcript mode; 11feb2012
+var vrsn = "14feb12"; // for Transcript mode; 14feb2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -857,103 +858,88 @@ function InNativate() { // quasi-instantiate EnBoot sequence; 23oct2011
 
 
 function OutBuffer() {  // for manipulation of SpeechAct words; 4jan2012
-// alert("OutBuffer called by c = "+c+" and binc = "+binc); // 19jan2012
   if (c16>"") {  // if the AudBuffer full; 4jan2012
     b16=c16; b15=c15; b14=c14; b13=c13; b12=c12; b11=c11; 
     b10=c10; b09=c09; b08=c08; b07=c07; b06=c06; b05=c05; 
     b04=c04; b03=c03; b02=v02; b01=c01;  // 4jan2012
-// alert("OutBuffer16 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of a 16-character word; 4jan2012
   if (c15>"") {  
     b16=c15; b15=c14; b14=c13; b13=c12; b12=c11; b11=c10;
     b10=c09; b09=c08; b08=c07; b07=c06; b06=c05; b05=c04; 
     b04=c03; b03=c02; b02=c01; b01="";  // 4jan2012
-// alert("OutBuffer15 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of a 15-character word; 4jan2012
   if (c14>"") {
     b16=c14; b15=c13; b14=c12; b13=c11; b12=c10; b11=c09;
     b10=c08; b09=c07; b08=c06; b07=c05; b06=c04; b05=c03;
     b04=c02; b03=c01; b02="";  b01="";  // 4jan2012
-//  alert("OutBuffer14 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of a 14-character word; 4jan2012
   if (c13>"") {
     b16=c13; b15=c12; b14=c11; b13=c10; b12=c09; b11=c08;
     b10=c07; b09=c06; b08=c05; b07=c04; b06=c03; b05=c02;
     b04=c01; b03="";  b02="";  b01="";  // 4jan2012
-//  alert("OutBuffer13 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of a 13-character word; 4jan2012
   if (c12>"") {
     b16=c12; b15=c11; b14=c10; b13=c09; b12=c08; b11=c07;
     b10=c06; b09=c05; b08=c04; b07=c03; b06=c02; b05=c01;
     b04="";  b03="";  b02="";  b01="";  // 4jan2012
-//  alert("OutBuffer12 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 
   }  // end of transfer of a 12-character word; 4jan2012
   if (c11>"") {
     b16=c11; b15=c10; b14=c09; b13=c08; b12=c07; b11=c06;
     b10=c05; b09=c04; b08=c03; b07=c02; b06=c01; b05="";
     b04="";  b03="";  b02="";  b01="";  // 4jan2012
-//  alert("OutBuffer11 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of an 11-character word; 4jan2012
   if (c10>"") {
     b16=c10; b15=c09; b14=c08; b13=c07; b12=c06; b11=c05;
     b10=c04; b09=c03; b08=c02; b07=c01; b06="";  b05="";
     b04="";  b03="";  b02="";  b01="";  // 4jan2012
-//  alert("OutBuffer10 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of a 10-character word; 4jan2012
   if (c09>"") {
     b16=c09; b15=c08; b14=c07; b13=c06; b12=c05; b11=c04;
     b10=c03; b09=c02; b08=c01; b07="";  b06="";  b05="";
     b04="";  b03="";  b02="";  b01="";  // 4jan2012
-//  alert("OutBuffer9 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of a 9-character word; 4jan2012
   if (c08>"") {
     b16=c08; b15=c07; b14=c06; b13=c05; b12=c04; b11=c03;
     b10=c02; b09=c01; b08="";  b07="";  b06="";  b05="";
     b04="";  b03="";  b02="";  b01="";  // 4jan2012
-//  alert("OutBuffer8 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of an 8-character word; 4jan2012
   if (c07>"") {
     b16=c07; b15=c06; b14=c05; b13=c04; b12=c03; b11=c02;
     b10=c01; b09="";  b08="";  b07="";  b06="";  b05="";
     b04="";  b03="";  b02="";  b01="";  // 4jan2012
-//  alert("OutBuffer7 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of a 7-character word; 4jan2012
   if (c06>"") {
     b16=c06; b15=c05; b14=c04; b13=c03; b12=c02; b11=c01;
     b10="";  b09="";  b08="";  b07="";  b06="";  b05="";
     b04="";  b03="";  b02="";  b01="";  // 4jan2012
-//  alert("OutBuffer6 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of a 6-character word; 4jan2012
   if (c05>"") {
     b16=c05; b15=c04; b14=c03; b13=c02; b12=c01; b11="";
     b10="";  b09="";  b08="";  b07="";  b06="";  b05="";
     b04="";  b03="";  b02="";  b01="";  // 4jan2012
-//  alert("OutBuffer5 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of a 5-character word; 4jan2012
   if (c04>"") {
     b16=c04; b15=c03; b14=c02; b13=c01; b12="";  b11="";
     b10="";  b09="";  b08="";  b07="";  b06="";  b05="";
     b04="";  b03="";  b02="";  b01="";  // 4jan2012
-//  alert("OutBuffer4 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of a 4-character word; 4jan2012
   if (c03>"") {
     b16=c03; b15=c02; b14=c01; b13=""; b12="";  b11="";
     b10="";  b09="";  b08="";  b07="";  b06="";  b05="";
     b04="";  b03="";  b02="";  b01="";  // 4jan2012
-//  alert("OutBuffer3 = "+b10+b11+b12+b13+b14+b15+b16);
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of a 3-character word; 4jan2012
   if (c02>"") {
@@ -961,7 +947,6 @@ function OutBuffer() {  // for manipulation of SpeechAct words; 4jan2012
     b10="";  b09="";  b08="";  b07="";  b06="";  b05="";
     b04="";  b03="";  b02="";  b01="";  // 4jan2012
     return;  // abandon remainder of function; 4jan2012
-//  alert("OutBuffer2 = "+b10+b11+b12+b13+b14+b15+b16);
   }  // end of transfer of a 2-character word; 4jan2012
   if (c01>"") {
     b16=c01; b15=""; b14="";  b13=""; b12="";  b11="";
@@ -969,7 +954,6 @@ function OutBuffer() {  // for manipulation of SpeechAct words; 4jan2012
     b04="";  b03="";  b02="";  b01="";  // 4jan2012
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of a 1-character word; 4jan2012
-//  alert("OutBuffer1 = "+b09+b10+b11+b12+b13+b14+b15+b16);
 }  // end of OutBuffer called from AudListen(); 12jan2012
  
 
@@ -1131,15 +1115,22 @@ function InStantiate() {
     ruLexicon[t] = new ruNode(800,0,0,0,dba,800,8,800,t);
     psi = 800;  // to become "seq" of the subject; 11feb2012
     pos = 8;  // 8=verb so next code creates "seq"; 11feb2012
+    prevpsi = 800;  // to enable cancellation of be-verb; 14feb2012
     t = (t+1)  // increment "t" to create an ending gap; 10feb2012
    }  // end of test for external "*" POV; 12feb2012
   }  // end of test for SPACE-input during need for a verb; 11feb2w012
+  if (prevpsi == 800 && seqneed == 5) {  // test; 14feb2012
+    if (prevpsi == 800 && pos == 8) { // if real verb follows pseudo-be-verb;
+      seqneed = 8;  // the seq to the real verb is needed; 14feb2012
+      prevpsi = 0;  // reset after using; 14feb2012
+    }  // end of test for pseudo-be-verb and real verb; 14feb2012
+  }  // end of test for wrong seqneed; 14feb2012
   if (seqneed==8) {  // if looking for a verb; 27jan2012
     if (pos==8) {  // if part-of-speech is verb; 27jan2012
       jux = -1;  // a default to be reset for dir. obj; 29jan2012
       seq = psi;  // because a verb has arrived; 27jan2012
       seqpos = pos;  // possibly for tqv; 27jan2012
-      seqneed = 0;  // zero out after use; 27jan2012
+      if (psi != 800) seqneed = 0; // skip imaginary BeVerb; 12feb2012
     }  // end of test for 8=pos verb; 27jan2012
     for (i=(t-2); i>vault; --i) {  // find noun needing seq; 27jan2012
       Psi[i].psiExam();  // examine the Psi concept array; 27jan2012
@@ -1231,7 +1222,6 @@ function RuVocab() {  // adding "dba"; 2jan2012
  
  
 function RuParser() {  // renamed; 5jan2012
-// alert("RuParser: ordo = "+ordo); // test; 29jan2012
   bias = 5;
   act = 30;  // MindForth: Activate lower than ReActivate; 8jun2011
   if (pov == "*") {  // only during external input; 15oct2010
@@ -1665,7 +1655,6 @@ function AudListen() {
             b05=""; b06=""; b07=""; b08="";  // 12jan2012
             b09=""; b10=""; b11=""; b12="";  // 12jan2012 
             b13=""; b14=""; b15=""; b16="";  // 12jan2012
-   //  alert("AudL: 2nd person verb YESH");  // test; 12jan2012
       } } }  // end of nested if-clauses; 12jan2012
       if (b15==String.fromCharCode(1045)) {  // "E" 18jan2012
         if (b16==String.fromCharCode(1058)) {  // "T" 18jan2012
@@ -1677,7 +1666,6 @@ function AudListen() {
           b05=""; b06=""; b07=""; b08="";  // 18jan2012
           b09=""; b10=""; b11=""; b12="";  // 18jan2012 
           b13=""; b14=""; b15=""; b16="";  // 18jan2012
-   // alert("AudL: 3rd person verb YET");  // test; 18jan2012
       } }  // end of nested if-clauses; 18jan2012
       if (b15==String.fromCharCode(1045)) {  // "E" 18jan2012
         if (b16==String.fromCharCode(1052)) {  // "M" 18jan2012
@@ -1689,7 +1677,6 @@ function AudListen() {
           b05=""; b06=""; b07=""; b08="";  // 18jan2012
           b09=""; b10=""; b11=""; b12="";  // 18jan2012 
           b13=""; b14=""; b15=""; b16="";  // 18jan2012
-  //  alert("AudL: 1st person verb YEM");  // test; 18jan2012
       } }  // end of nested if-clauses; 18jan2012
       if (b14==String.fromCharCode(1045)) {  // "E" 18jan2012
         if (b15==String.fromCharCode(1058)) {  // "T" 18jan2012
@@ -1702,7 +1689,6 @@ function AudListen() {
             b05=""; b06=""; b07=""; b08="";  // 18jan2012
             b09=""; b10=""; b11=""; b12="";  // 18jan2012 
             b13=""; b14=""; b15=""; b16="";  // 18jan2012
-   // alert("AudL: 2nd person verb YETYE");  // test; 18jan2012
       } } }  // end of nested if-clauses; 18jan2012
       if (b15==String.fromCharCode(1070)) {  // "YU" 18jan2012
         if (b16==String.fromCharCode(1058)) {  // "T" 18jan2012
@@ -1714,7 +1700,6 @@ function AudListen() {
           b05=""; b06=""; b07=""; b08="";  // 18jan2012
           b09=""; b10=""; b11=""; b12="";  // 18jan2012 
           b13=""; b14=""; b15=""; b16="";  // 18jan2012
-   // alert("AudL: 3rd person verb YUT");  // test; 18jan2012
       } }  // end of nested if-clauses; 18jan2012
     }  // end of test for a space-bar or carriage-return.
     pho = String.fromCharCode(c);

@@ -2,454 +2,6 @@
 #labels source
 
 {{{
-// 228 NYETU (is not) adverb; 9jan2012
-t=248;c=1053; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=249;c=1045; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=250;c=1058; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=251;c=1059; beg=0; ctu=0; audpsi=228; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=228; mfn=0; dba=0; fex=228; pos=2; fin=228; aud=248;
-psi=228; num=0; pre=0; seq=0; rux=228; RuVocab(); InNativate();
-
-// 760 NICHEGO ("nothing"); pronoun; 26jan2012
-t=253;c=1053; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=254;c=1048; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=255;c=1063; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=256;c=1045; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=257;c=1043; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=258;c=1054; beg=0; ctu=0; audpsi=760;  // 26jan2012
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=760; mfn=3; dba=4; fex=760; pos=7; fin=760; aud=253;
-psi=760; num=1; pre=0; seq=0; rux=760; RuVocab(); InNativate();
-
-// 713 ON (he) pronoun; nom. sing. masc. 10jan2012
-t=260;c=1054; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=261;c=1053; beg=0; ctu=0; audpsi=713; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=713; mfn=1; dba=1; fex=713; pos=7; fin=713; aud=260;
-psi=713; num=1; pre=0; seq=0; rux=713; RuVocab(); InNativate();
-
-// 713 EGO (of him) pronoun; gen. sing. masc. 23jan2012
-t=263;c=1045; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=264;c=1043; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=265;c=1054; beg=0; ctu=0; audpsi=713;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=713; mfn=1; dba=2; fex=713; pos=7; fin=713; aud=263;
-psi=713; num=1; pre=0; seq=0; rux=713; RuVocab(); InNativate();
-
-// 713 EMU (to him) pronoun; dat. sing. masc. 23jan2012
-t=267;c=1045; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=268;c=1052; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=269;c=1059; beg=0; ctu=0; audpsi=713;   // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=713; mfn=1; dba=3; fex=713; pos=7; fin=713; aud=267;
-psi=713; num=1; pre=0; seq=0; rux=713; RuVocab(); InNativate();
-
-// 713 EGO (him) pronoun; acc. sing. masc. 23jan2012
-t=271;c=1045; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=272;c=1043; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=273;c=1054; beg=0; ctu=0; audpsi=713;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=713; mfn=1; dba=4; fex=713; pos=7; fin=713; aud=271;
-psi=713; num=1; pre=0; seq=0; rux=713; RuVocab(); InNativate();
-
-// 713 IM (him) pronoun; instrumental sing. masc. 23jan2012
-t=275;c=1048; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=276;c=1052; beg=0; ctu=0; audpsi=713;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=713; mfn=1; dba=5; fex=713; pos=7; fin=713; aud=275;
-psi=713; num=1; pre=0; seq=0; rux=713; RuVocab(); InNativate();
-
-// 713 NYOM (him) pronoun; prepositional sing. masc. 23jan2012
-t=278;c=1053; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=279;c=1025; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=280;c=1052; beg=0; ctu=0; audpsi=717; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=713; mfn=1; dba=6; fex=713; pos=7; fin=713; aud=278;
-psi=713; num=1; pre=0; seq=0; rux=713; RuVocab(); InNativate();
-
-// 719 ONA (she) pronoun; nom. sing. fem. 10jan2012
-t=282;c=1054; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=283;c=1053; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=284;c=1040; beg=0; ctu=0; audpsi=719; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=719; mfn=2; dba=1; fex=719; pos=7; fin=719; aud=282;
-psi=719; num=1; pre=0; seq=0; rux=719; RuVocab(); InNativate();
-
-// 719 YEYO (of her) pronoun; gen. sing. fem. 23jan2012
-t=286;c=1045; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=287;c=1025; beg=0; ctu=0; audpsi=719;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=719; mfn=2; dba=2; fex=719; pos=7; fin=719; aud=286;
-psi=719; num=1; pre=0; seq=0; rux=719; RuVocab(); InNativate();
-
-// 719 YEY (to her) pronoun; dat. sing. fem. 23jan2012
-t=289;c=1045; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=290;c=1049; beg=0; ctu=0; audpsi=719;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=719; mfn=2; dba=3; fex=719; pos=7; fin=719; aud=289;
-psi=719; num=1; pre=0; seq=0; rux=719; RuVocab(); InNativate();
-
-// 719 YEYO (her) pronoun; acc. sing. fem. 23jan2012
-t=292;c=1045; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=293;c=1025; beg=0; ctu=0; audpsi=719;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=719; mfn=2; dba=4; fex=719; pos=7; fin=719; aud=292;
-psi=719; num=1; pre=0; seq=0; rux=719; RuVocab(); InNativate();
-
-// 719 YEY (her) pronoun; instrumental. sing. fem. 23jan2012
-t=295;c=1045; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=296;c=1049; beg=0; ctu=0; audpsi=719;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=719; mfn=2; dba=5; fex=719; pos=7; fin=719; aud=295;
-psi=719; num=1; pre=0; seq=0; rux=719; RuVocab(); InNativate();
-
-// 719 NYEY (her) pronoun; prepositional sing. fem. 19jan2012
-t=298;c=1053; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=299;c=1045; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=300;c=1049; beg=0; ctu=0; audpsi=719;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=719; mfn=2; dba=6; fex=719; pos=7; fin=719; aud=298;
-psi=719; num=1; pre=0; seq=0; rux=719; RuVocab(); InNativate();
-
-// 725 ONO (it) pronoun; nom. sing. neuter; 10jan2012
-t=302;c=1054; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=303;c=1053; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=304;c=1054; beg=0; ctu=0; audpsi=725; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=725; mfn=3; dba=1; fex=725; pos=7; fin=725; aud=302;
-psi=725; num=1; pre=0; seq=0; rux=725; RuVocab(); InNativate();
-
-// 725 EGO (of it) pronoun; gen. sing. neuter; 23jan2012
-t=306;c=1045; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=307;c=1043; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=308;c=1054; beg=0; ctu=0; audpsi=725;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=725; mfn=3; dba=2; fex=725; pos=7; fin=725; aud=306;
-psi=725; num=1; pre=0; seq=0; rux=725; RuVocab(); InNativate();
-
-// 725 EMU (to it) pronoun; dat. sing. neuter; 23jan2012
-t=310;c=1045; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=311;c=1052; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=312;c=1059; beg=0; ctu=0; audpsi=725;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=725; mfn=3; dba=3; fex=725; pos=7; fin=725; aud=310;
-psi=725; num=1; pre=0; seq=0; rux=725; RuVocab(); InNativate();
-
-// 725 EGO (it) pronoun; acc. sing. neuter; 23jan2012
-t=314;c=1045; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=315;c=1043; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=316;c=1054; beg=0; ctu=0; audpsi=725;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=725; mfn=3; dba=4; fex=725; pos=7; fin=725; aud=314;
-psi=725; num=1; pre=0; seq=0; rux=725; RuVocab(); InNativate();
-
-// 725 IM (it) pronoun; instrumental sing. neuter; 23jan2012
-t=318;c=1048; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=319;c=1052; beg=0; ctu=0; audpsi=725;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=725; mfn=3; dba=5; fex=725; pos=7; fin=725; aud=318;
-psi=725; num=1; pre=0; seq=0; rux=725; RuVocab(); InNativate();
-
-// 725 NYOM (it) pronoun; prepositional sing. neuter; 23jan2012
-t=321;c=1053; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=322;c=1025; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=323;c=1052; beg=0; ctu=0; audpsi=725;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=725; mfn=3; dba=6; fex=725; pos=7; fin=725; aud=321;
-psi=725; num=1; pre=0; seq=0; rux=725; RuVocab(); InNativate();
-
-// 743 ONI (they) pronoun; nom. plural; 10jan2012
-t=325;c=1054; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=326;c=1053; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=327;c=1048; beg=0; ctu=0; audpsi=743; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=743; mfn=0; dba=1; fex=743; pos=7; fin=743; aud=325;
-psi=743; num=2; pre=0; seq=0; rux=743; RuVocab(); InNativate();
-
-// 743 IKH (of them) pronoun; gen. plural 23jan2012
-t=329;c=1048; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=330;c=1061; beg=0; ctu=0; audpsi=743;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=743; mfn=0; dba=2; fex=743; pos=7; fin=743; aud=329;
-psi=743; num=2; pre=0; seq=0; rux=743; RuVocab(); InNativate();
-
-// 743 IM (to them) pronoun; dative plural; 23jan2012
-t=332;c=1048; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=333;c=1052; beg=0; ctu=0; audpsi=743;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=743; mfn=0; dba=3; fex=743; pos=7; fin=743; aud=332;
-psi=743; num=2; pre=0; seq=0; rux=743; RuVocab(); InNativate();
-
-// 743 IKH (them) pronoun; acc. plural 23jan2012
-t=335;c=1048; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=336;c=1061; beg=0; ctu=0; audpsi=743;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=743; mfn=0; dba=4; fex=743; pos=7; fin=743; aud=335;
-psi=743; num=2; pre=0; seq=0; rux=743; RuVocab(); InNativate();
-
-// 743 IMI (them) pronoun; instrumental plural; 23jan2012
-t=338;c=1048; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=339;c=1052; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=340;c=1048; beg=0; ctu=0; audpsi=743;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=743; mfn=0; dba=5; fex=743; pos=7; fin=743; aud=338;
-psi=743; num=2; pre=0; seq=0; rux=743; RuVocab(); InNativate();
-
-// 743 NIKH (they) pronoun; prepositional plural; 23jan2012
-t=342;c=1053; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=343;c=1048; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=344;c=1061; beg=0; ctu=0; audpsi=743;  // 23jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=743; mfn=0; dba=6; fex=743; pos=7; fin=743; aud=342;
-psi=743; num=2; pre=0; seq=0; rux=743; RuVocab(); InNativate();
-
-// 860 PONIMAT' ("to understand"); sample verb; 2jan2012
-t=346;c=1055; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=347;c=1054; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=348;c=1053; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=349;c=1048; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=350;c=1052; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=351;c=1040; beg=0; ctu=1; audpsi=860;  // provisional; 15jan2012 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=352;c=1058; beg=0; ctu=1; audpsi=860;  // provisional; 15jan2012 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=353;c=1068; beg=0; ctu=0; audpsi=860; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=860; mfn=0; dba=0; fex=860; pos=8; fin=860; aud=346;
-psi=860; num=0; pre=0; seq=0; rux=860; RuVocab(); InNativate();
-
-// 370 POCHEMU ("why"); conjunction; 9jan2012
-t=355;c=1055; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=356;c=1054; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=357;c=1063; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=358;c=1045; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=359;c=1052; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=360;c=1059; beg=0; ctu=0; audpsi=370; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=370; mfn=0; dba=0; fex=370; pos=3; fin=370; aud=355;
-psi=370; num=0; pre=0; seq=0; rux=370; RuVocab(); InNativate();
-
-// 571 ROBOT ("robot"); noun; nominative 4jan2012
-t=362;c=1056; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=363;c=1054; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=364;c=1041; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=365;c=1054; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=366;c=1058; beg=0; ctu=0; audpsi=571; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=571; mfn=1; dba=1; fex=571; pos=5; fin=571; aud=362; 
-psi=571;  num=1; pre=0; seq=0; rux=571; RuVocab(); InNativate();
-
-// 680 S ("with") preposition; 4jan2012
-t=368;c=1057; beg=1; ctu=0; audpsi=680; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=680; mfn=0; dba=0; fex=680; pos=6; fin=680; aud=368;
-psi=680; num=0; pre=0; seq=0; rux=680; RuVocab(); InNativate();
- 
-// 681 SO ("with") preposition; 4jan2012
-t=370;c=1057; beg=1; ctu=1; audpsi=0; AudMem();
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=371;c=1054; beg=0; ctu=0; audpsi=681; AudMem();
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=681; mfn=0; dba=0; fex=681; pos=6; fin=680; aud=370;
-psi=680; num=0; pre=0; seq=0; rux=681; RuVocab(); InNativate();
-
-// 170 TAKOYE ("such"); adjective; 9jan2012
-t=373;c=1058; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=374;c=1040; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=375;c=1050; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=376;c=1054; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=377;c=1045; beg=0; ctu=0; audpsi=170; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=170; mfn=3; dba=1; fex=170; pos=1; fin=170; aud=373;
-psi=170; num=0; pre=0; seq=0; rux=170; RuVocab(); InNativate();
-
-// 880 TREBOVAT' ("to demand"); verb; infinitive; 4jan2012
-t=379;c=1058; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=380;c=1056; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=381;c=1045; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=382;c=1041; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=383;c=1054; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=384;c=1042; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=385;c=1040; beg=0; ctu=1; audpsi=880;  // provisional; 15jan2012 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=386;c=1058; beg=0; ctu=1; audpsi=880;  // provisional; 15jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=387;c=1068; beg=0; ctu=0; audpsi=880; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=880; mfn=0; dba=0; fex=880; pos=8; fin=880; aud=379;
-psi=880; num=0; pre=0; seq=0; rux=880; RuVocab(); InNativate();
- 
-// 707 TY ("you") pronoun; familiar; nom. sing. 11jan2012
-t=389;c=1058; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=390;c=1067; beg=0; ctu=0; audpsi=707; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=707; mfn=0; dba=1; fex=707; pos=7; fin=701; aud=389;
-psi=707; num=1; pre=0; seq=0; rux=707; RuVocab(); InNativate();
- 
-// 707 TEBYA ("of you") pronoun; familiar; gen. sing. 21jan2012
-t=392;c=1058; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=393;c=1045; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=394;c=1041; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=395;c=1071; beg=0; ctu=0; audpsi=707;  // 21jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=707; mfn=0; dba=2; fex=707; pos=7; fin=701; aud=392;
-psi=707; num=1; pre=0; seq=0; rux=707; RuVocab(); InNativate();
-
-// 707 TEBYE ("to you") pronoun; familiar; dat. sing. 4jan2012
-t=397;c=1058; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=398;c=1045; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=399;c=1041; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=400;c=1045; beg=0; ctu=0; audpsi=707;  // 21jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=707; mfn=0; dba=3; fex=707; pos=7; fin=701; aud=397;
-psi=707; num=1; pre=0; seq=0; rux=707; RuVocab(); InNativate();
- 
-// 707 TEBYA ("you") pronoun; familiar; acc. sing. 21jan2012
-t=402;c=1058; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=403;c=1045; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=404;c=1041; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=405;c=1071; beg=0; ctu=0; audpsi=707;  // 21jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=707; mfn=0; dba=4; fex=707; pos=7; fin=701; aud=402;
-psi=707; num=1; pre=0; seq=0; rux=707; RuVocab(); InNativate();
- 
-// 707 TOBOY ("you") pronoun; familiar; instrumental sing. 21jan2012
-t=407;c=1058; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=408;c=1054; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=409;c=1041; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=410;c=1054; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=411;c=1049; beg=0; ctu=0; audpsi=701;  // 21jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=707; mfn=0; dba=5; fex=707; pos=7; fin=701; aud=407;
-psi=707; num=1; pre=0; seq=0; rux=707; RuVocab(); InNativate();
-
-// 707 TEBYE ("you") pronoun; familiar; prep. sing. 4jan2012
-t=413;c=1058; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=414;c=1045; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=415;c=1041; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=416;c=1045; beg=0; ctu=0; audpsi=707;  // 21jan2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=707; mfn=0; dba=6; fex=707; pos=7; fin=701; aud=413;
-psi=707; num=1; pre=0; seq=0; rux=707; RuVocab(); InNativate();
-
-// 816 KHOCHU ("want") verb; 1st pers. sing. 11jan2012
-t=418;c=1061; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=419;c=1054; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=420;c=1063; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=421;c=1059; beg=0; ctu=0; audpsi=816; 
-     pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=816; mfn=0; dba=6; fex=816; pos=8; fin=816; aud=418;
-psi=811; num=1; pre=0; seq=0; rux=616; RuVocab(); InNativate();
-
-// 581 CHELOVEK ("human being") noun; nom. sing. 4jan2012
-t=423;c=1063; beg=1; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=424;c=1045; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=425;c=1051; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=426;c=1054; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=427;c=1042; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=428;c=1045; beg=0; ctu=1; audpsi=0; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=429;c=1050; beg=0; ctu=0; audpsi=581; 
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=581; mfn=1; dba=1; fex=581; pos=5; fin=581; aud=423; 
-psi=581;  num=1; pre=0; seq=0; rux=581; RuVocab(); InNativate();
-
 // 781 CHTO (what) pronoun; nominative singular 10jan2012
 t=431;c=1063; beg=1; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
@@ -718,7 +270,6 @@ t = 532;  // approximate source of "vault" value; 23jan2012
   MainLoop();
 }  // end of RuBoot Russian bootstrap; 5jan2012
 
-
 function KbTraversal() {
   if (kbtv==0) kbtv = 1;  // Input sets to zero; 23may2011
   apb=("Rejuvenation count is at " + rjc); // 24may2011
@@ -839,8 +390,7 @@ function EmotiOn() {
   apb = "EmotiOn module has been called.";
   Voice();
 }
- 
- 
+
 function ReEntry() {
   pov = "#";
   t = (t + 1);
@@ -995,7 +545,6 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 10jan2012
   if (recon != 250) recon = 0;  // test for yes-or-no; 6jan2012
   moot = 0;  // end of not tagging query-concepts; 10jan2012 
 }  // End of WhoBe(); return to AskUser(); 10jan2012
-
 
 function WhatBe() {  // what AM/IS/ARE Subjects
   moot = 1;  // prevent storage of spurious ideas; 24oct2011
@@ -1234,6 +783,7 @@ function NounPhrase() {
           if (nounlock > 0) {  // if positive nounlock exists; 24oct2011
             if (i == nounlock) {  // upon reaching engram; 24oct2011
               motjuste = psi0;  // grab nounlock psi; 24oct2011
+ // alert("NounPhr: nounlocked motjuste = "+motjuste);  // test; 19aug2012
               nphrnum = psi2;  // NounPhrase num(ber) 24oct2011
               ruLexicon[i].ruExam();  // Examine Ru-lexicon;  5jan20p12
               audjuste = ru8;  // auditory fetch-tag;  5jan2012
@@ -1262,6 +812,7 @@ function NounPhrase() {
       }  // end of test for 0=subjectflag; test; 24oct2011
     }  // End of test of for a noun or pronoun; 24oct2011
   }  // End of backwards search for most active "motjuste"; 25may2011
+
   for (i = t; i>midway; i--) {  // 13aug2011
     ruLexicon[i].ruExam();      //  5jan2012
     if (ru0 == motjuste) {      //  5jan2012
@@ -1322,6 +873,84 @@ function NounPhrase() {
     }  // end of test for "I" to become subj. not obj. 18oct2011
    }  // end of threshold-test; 18oct2011
   }  // end of test for absence of pre-ordained nounlock; 24oct2011
+
+// alert("NPhr-mid: nounlock = "+nounlock);  // test; 20aug2012 
+
+  if (nounlock > 0) {  // from MindForth; if positive; 18aug2012
+ 
+// alert("NPhrLockA: motjuste & audjuste = " + motjuste + " & " + audjuste);
+
+    if (nounlock > 0) {  // already a nounlock? 20aug2012
+      Psi[nounlock].psiExam(); // find nounlock inside Psi array; 20aug2012
+      motjuste = psi0;  // test; 20aug2012
+      ruLexicon[nounlock].ruExam();  // examine Russian lexicon; 20aug2012
+      audjuste = ru8;  // hold the auditory recall-vector; 20aug2012
+    }  // end of test for a positive nounlock; 24oct2011; 20aug2012
+
+// alert("NPhrLockB: motjuste & audjuste = " + motjuste + " & " + audjuste);
+
+    if (motjuste == 701) {  // if 701="Ya" is indicated; 18aug2012
+      for (i = t; i>midway; i--) {  // Look backwards for 701=menya; 18aug2012
+        ruLexicon[i].ruExam(); // examine Russian lexicon; 18aug2012
+        if (ru0 == 701) {  // If #701 "menya" found; 18aug2012
+          if (ru4 == 4)  {  // direct object; 19aug2012
+            audjuste = ru8;  // "menya" engram 18aug2012
+
+// alert("NPhr701OR: motjuste & audjuste = " + motjuste + " & " + audjuste);
+
+            break; // Use most recent engram of "menya"; 18aug2012
+          }  // end of ru4 dba-test; 19aug2012
+        }  // End of search for #707 "menya"; 18aug2012
+      }  // End of loop finding word "menya"; 18aug2012
+    }  // from MindForth; end of special override for 701=menya; 18aug2012
+
+    if (motjuste == 707) {  // if 707="Ty" is needed; 18aug2012
+      for (i = t; i>midway; i--) {  // Look backwards for 707=tebya; 18aug2012
+        ruLexicon[i].ruExam(); // examine Russian lexicon; 18aug2012
+        if (ru0 == 707) {  // If #707 "tebya" found; 18aug2012
+          if (ru4 == 4)  {  // direct object; 18aug2012
+            audjuste = ru8;  // "tebya" engram 18aug2012
+// alert("NPhr707OR: motjuste & audjuste = " + motjuste + " & " + audjuste);
+            break; // Use most recent engram of "tebya"; 18aug2012
+          }  // end of ru4 dba-test; 18aug2012
+        }  // End of search for #707 "tebya"; 18aug2012
+      }  // End of loop finding word "tebya"; 18aug2012
+    }  // from MindForth; end of special override for 707=tebya; 20aug2012
+
+
+    if (motjuste == 731) {  // if 731="nas" is needed; 20aug2012
+      for (i = t; i>midway; i--) {  // Look backwards for 731=nas; 20aug2012
+        ruLexicon[i].ruExam(); // examine Russian lexicon; 20aug2012
+        if (ru0 == 731) {  // If #731 "nas" found; 20aug2012
+          if (ru4 == 4)  {  // direct object; 20aug2012
+            audjuste = ru8;  // "nas" engram 20aug2012
+
+// alert("NPhr731OR: motjuste & audjuste = " + motjuste + " & " + audjuste);
+
+            break; // Use most recent engram of "nas"; 20aug2012
+          }  // end of ru4 dba-test; 20aug2012
+        }  // End of search for #731 "nas"; 20aug2012
+
+      }  // End of loop finding word "nas"; 20aug2012
+    }  // from MindForth; end of special override for 731=nas; 20aug2012
+
+    if (motjuste == 755) {  // if 755="vas" is needed; 20aug2012
+      for (i = t; i>midway; i--) {  // Look backwards for 755=vas; 20aug2012
+        ruLexicon[i].ruExam(); // examine Russian lexicon; 20aug2012
+
+        if (ru0 == 755) {  // If #755 "vas" found; 20aug2012
+          if (ru4 == 4)  {  // direct object; 20aug2012
+            audjuste = ru8;  // "vas" engram 20aug2012
+
+// alert("NPhr755OR: motjuste & audjuste = " + motjuste + " & " + audjuste);
+
+            break; // Use most recent engram of "vas"; 20aug2012
+          }  // end of ru4 dba-test; 20aug2012
+        }  // End of search for #755 "vas"; 20aug2012
+      }  // End of loop finding word "vas"; 20aug2012
+    }  // from MindForth; end of special override for 755=vas; 20aug2012
+  }  // from MindForth; end of test for a positive nounlock; 20aug2012
+
   if (motjuste==701) {  // if 701=Ya selected; 5jan2012
     prsn = 1;  // first person; 2sep2010
     num = 1;   // singular; 2sep2010
@@ -1451,9 +1080,11 @@ function ConJoin() {
   SpeechAct();
   questype = 0;
 }  // End of ConJoin(); currently not called; 13aug2010
-
+ 
 
 function VerbGen() {  // to create missing verb-forms; 18jan2012
+// alert("VerbGen: dba = "+dba);  // test; 19aug2012
+// alert("VerbGen: dba audbase = "+dba+" "+audbase);  // test; 20aug2012
   do {  // first loop fills in AudBuffer
     audMemory[audbase].audExam();
     pho = aud0;
@@ -1488,6 +1119,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b01 > "") {  // 21jan2012
           output += b01;  // 21jan2012
           pho = b01;  // for ReEntry; 21jan2012
+          ctu = 1;  // for auditory continuation; 19aug2012
           ReEntry();  // for record of thought; 25jan2012
         }  // end of test for content; 21jan2012
       }  // 21jan2012
@@ -1495,6 +1127,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b02 > "") {  // 21jan2012
           output += b02;  // 21jan2012
           pho = b02;  // for ReEntry; 21jan2012
+          ctu = 1;  // for auditory continuation; 19aug2012
           ReEntry();  // for record of thought; 25jan2012
         }  // end of test for content; 21jan2012
       }  // 21jan2012
@@ -1502,6 +1135,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b03 > "") {  // 21jan2012
           output += b03;  // 21jan2012
           pho = b03;  // for ReEntry; 21jan2012
+          ctu = 1;  // for auditory continuation; 19aug2012
           ReEntry();  // for record of thought; 25jan2012
         }  // end of test for content; 21jan2012
       }  // 21jan2012
@@ -1509,6 +1143,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b04 > "") {  // 21jan2012
           output += b04;  // 21jan2012
           pho = b04;  // for ReEntry; 21jan2012
+          ctu = 1;  // for auditory continuation; 19aug2012
           ReEntry();  // for record of thought; 25jan2012
         }  // end of test for content; 21jan2012
       }  // 21jan2012 
@@ -1516,6 +1151,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b05 > "") {  // 21jan2012
           output += b05;  // 21jan2012
           pho = b05;  // for ReEntry; 21jan2012
+          ctu = 1;  // for auditory continuation; 19aug2012
           ReEntry();  // for record of thought; 25jan2012
         }  // end of test for content; 21jan2012
       }  // 21jan2012
@@ -1523,6 +1159,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b06 > "") {  // 21jan2012
           output += b06;  // 21jan2012
           pho = b06;  // for ReEntry; 21jan2012
+          ctu = 1;  // for auditory continuation; 19aug2012
           ReEntry();  // for record of thought; 25jan2012
         }  // end of test for content; 21jan2012
       }  // 21jan2012
@@ -1530,6 +1167,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b07 > "") {  // 21jan2012
           output += b07;  // 21jan2012
           pho = b07;  // for ReEntry; 21jan2012
+          ctu = 1;  // for auditory continuation; 19aug2012
           ReEntry();  // for record of thought; 25jan2012
         }  // end of test for content; 21jan2012
       }  // 21jan2012
@@ -1537,6 +1175,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b08 > "") {  // 21jan2012
           output += b08;  // 21jan2012
           pho = b08;  // for ReEntry; 21jan2012
+          ctu = 1;  // for auditory continuation; 19aug2012
           ReEntry();  // for record of thought; 25jan2012
         }  // end of test for content; 21jan2012
       }  // 21jan2012
@@ -1544,6 +1183,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b09 > "") {  // 21jan2012
           output += b09;  // 21jan2012
           pho = b09;  // for ReEntry; 21jan2012
+          ctu = 1;  // for auditory continuation; 19aug2012
           ReEntry();  // for record of thought; 25jan2012
         }  // end of test for content; 21jan2012
       }  // 21jan2012 
@@ -1551,6 +1191,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b10 > "") {  // 21jan2012
           output += b10;  // 19jan2012
           pho = b10;  // for ReEntry; 19jan2012
+          ctu = 1;  // for auditory continuation; 19aug2012
           ReEntry();  // for record of thought; 25jan2012
         }  // end of test for content in b10; 21jan2012
       }  // 19jan2012
@@ -1558,6 +1199,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b11 > "") {  // 21jan2012
           output += b11;  // 19jan2012
           pho = b11;  // for ReEntry; 19jan2012
+          ctu = 1;  // for auditory continuation; 19aug2012
           ReEntry();  // for record of thought; 25jan2012
         }  // end of test for content in b11; 21jan2012
       }  // 19jan2012 
@@ -1565,6 +1207,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b12 > "") {  // 21jan2012
           output += b12;  // 19jan2012
           pho = b12;  // for ReEntry; 19jan2012
+          ctu = 1;  // test; 19aug2012
           ReEntry();  // for record of thought; 25jan2012
         }  // end of test for content in b12; 21jan2012
       }  // 19jan2012
@@ -1573,6 +1216,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
           prc = vip;  // for "audpsi"; test; 31jan2012
           output += b13;  // 19jan2012
           pho = b13;  // for ReEntry; 19jan2012
+          ctu = 1;  // test; 19aug2012
           ReEntry();  // for record of thought; 25jan2012
         }  // end of test for content in b13; 21jan2012
       }  // 19jan2012
@@ -1580,6 +1224,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b14==String.fromCharCode(1045)) b14 = "";  // "E"
         output += b14;  // 19jan2012
         pho = b14;  // for ReEntry; 19jan2012
+        ctu = 1;  // test; 19aug2012
         if (pho != "") ReEntry();  // avoid empty aud; 30jan2012
       }  // 19jan2012
       if (binc==15) {  // "EM" or "ET" or "ESHb"; 22jan2012
@@ -1588,6 +1233,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b15==String.fromCharCode(1064)) b15 = ""; // "SH"
         output += b15;  // no change; 22jan2012
         pho = b15;  // for ReEntry; 22jan2012
+        ctu = 1;  // test; 19aug2012
         if (pho != "") ReEntry();  // avoid empty aud; 30jan2012
       }  // 19jan2012
       if (binc==16) {  // for present-tense endings 22jan2012
@@ -1598,6 +1244,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
         if (b16==String.fromCharCode(1070)) b16 = ""; // "YU"
         output += b16;  // no change; 22jan2012
         pho = b16;  // for ReEntry; 22jan2012
+        ctu = 0;  // terminate continuation "ctu"; 19aug2012
         if (pho != "") ReEntry();  // avoid empty aud; 30jan2012
        }  // end of test of final position in OutBuffer; 25jan2012
       binc = (binc + 1);  // increment; 19jan2012
@@ -1761,7 +1408,8 @@ function VerbPhrase() {
       vip = motjuste;  // for setting "audpsi" on engram; 31jan2012
       VerbGen();  // Generate a missing verb-form; 19jan2012
       vip = 0;  // reset for safety; 31jan2012
-    audbase = 0;  // reset for safety; 18jan2012
+ // audbase = 0;  // reset for safety; 18jan2012
+ // audbase = 0;  // Commenting out; 20aug2012
     break;  // test; 19jan2019
     }  // end of test for motjuste; 17jan2017
   }  // end of loop in search of motjuste; 17jan2017
@@ -1777,6 +1425,55 @@ function VerbPhrase() {
     vphraud = ru8;  // hold the auditory recall-vector;  5jan2012
     act = 64;  // prevent rejection of selection; 24oct2011
   }  // 24oct2011
+// alert("VPhr-mid: verblock = "+verblock);  // test; 20aug2012 
+  if (verblock > 0) {  // 19aug2012
+//  alert("VPhr: motjuste verbnum dba audjuste = "+motjuste+" "
+// +verbnum+" "+dba+" "+audjuste);  // test; 19aug2012
+
+    if (dba == 1) {  // if first person; 19aug2012
+      for (i = t; i>midway; i--) {  // Look backwards for 701=menya; 18aug2012
+        ruLexicon[i].ruExam(); // examine Russian lexicon; 19aug2012
+        if (ru0 == motjuste) {  // If motjuste is found; 19aug2012
+          if (ru4 == dba) {  // if dba matches; 19aug2012
+            if (ru2 == verbnum) {  // number-match? 19aug2012
+ // alert("VPhr override audjuste ru8 "+audjuste+" "+ru8);  // 19aug2012
+              vphraud = ru8;  // engram of verb; 19aug2012
+              break; // Use most recent engram; 19aug2012
+            }  // end of verbnum-match; 19aug2012
+            else {  // if no form found; 20aug2012
+//  alert("No first-person verb-form found; audbase = "+audbase); // 20aug2012
+              gencon = 1;  // status flag for detour into VerbGen; 20aug2012
+              VerbGen();  // Generate a missing verb-form; 20aug2012
+              audbase = 0;  // reset for safety; 20aug2012
+            }  // end of else-clause; 20aug2012
+          }  // end of dba-test; 19aug2012
+        }  // End of search for motjuste; 19aug2012
+      }  // End of loop finding verb-form; 19aug2012
+    }  // end of override to find correct verb-form; 19aug2012
+
+    if (dba == 2) {  // if second person; 20aug2012
+      for (i = t; i>midway; i--) {  // Look backwards for 707=ty; 20aug2012
+        ruLexicon[i].ruExam(); // examine Russian lexicon; 20aug2012
+        if (ru0 == motjuste) {  // If motjuste is found; 20aug2012
+          if (ru4 == dba) {  // if dba matches; 20aug2012
+            if (ru2 == verbnum) {  // number-match? 20aug2012
+// alert("VPhr override audjuste ru8 "+audjuste+" "+ru8);  // 20aug2012
+              vphraud = ru8;  // engram of verb; 20aug2012
+              break; // Use most recent engram; 20aug2012
+            }  // end of verbnum-match; 20aug2012
+            else {  // if no form found; 20aug2012
+//  alert("No second-person verb-form found; audbase = "+audbase); // 20aug2012
+              gencon = 1;  // status flag for detour into VerbGen; 20aug2012
+              VerbGen();  // Generate a missing verb-form; 20aug2012
+              audbase = 0;  // reset for safety; 20aug2012
+            }  // end of else-clause; 20aug2012
+          }  // end of dba-test; 20aug2012
+        }  // End of search for motjuste; 20aug2012
+      }  // End of loop finding verb-form; 20aug2012
+    }  // end of override to find correct verb-form; 20aug2012
+
+  }  // end of code for override of verblocked verbs; 19aug2012
+
   Psi[tqv].psiExam(); // examine array row at "tqv"; 24oct2011
   Psi[tqv] = new psiNode(psi0,128,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
   node = 0;  // Reset tutorial verb display for showVerb().
@@ -1863,6 +1560,7 @@ function VerbPhrase() {
     vacpsi = motjuste;  // for VerbAct(); 18aug2011
     VerbAct();  // moved from below SpeechAct & old KB-inhib; 18aug2011
     aud = vphraud;  // transfer just before call; 28jun2011
+// alert("VPhr: gencon vphraud = "+gencon+" "+vphraud);  // test; 19aug2012 
     if (gencon == 0) {  // if no call to VerbGen(); 19jan2012
       SpeechAct(); // main call from VerbPhrase to SpeechAct; 2sep2010
     }  // prevent speaking extra verb after VerbGen(); 19jan2012
@@ -1925,7 +1623,7 @@ function VerbPhrase() {
   verblock = 0;  // after selection of NPhr seq-verb; 24oct2011
 }  // End of VerbPhrase(); return to EnCog(); 29jun2011
 
- 
+
 function RuCog() {  // Russian cognition; 26jan2012
   moot = 0;  // may have been set in previous thought; 24oct2011
   morphpsi = 0;  // reset; from MindForth English AI; 15jan2012
@@ -2067,8 +1765,8 @@ function showSubject() {
     pho = 32;
   }
   tsubject += " ";
-  fact.innerHTML = " " + tsubject + " associates to " + engram;
-  preview = "";
+  fact.innerHTML = tseln + " " + tsubject + " to " + engram;
+  preview = "";  // adding "tseln" above;  20aug2012
   seqverb = "";
   engram = "";
   aud = holdaud;
@@ -2140,8 +1838,8 @@ function showVerb() {
     pho = 32;
   }
   tverb += " ";
-  concept.innerHTML = tverb + " associates to " + sloshmark + engram;
-  preview = "";
+  concept.innerHTML = verblock + " " + tverb + " to " + sloshmark + engram;
+  preview = "";  // adding "verblock" above; 20aug2012
   engram = "";
   aud = holdaud;
   tverb = "";
@@ -2208,14 +1906,14 @@ function showObject() {
     pho = 32;
   }
   tobject += " ";
-  answer.innerHTML = "  " + tobject + " activates " + engram;
-  preview = "";
+  answer.innerHTML = nounlock + "  " + tobject + " activates " + engram;
+  preview = "";  // adding "nounlock" above; 20aug2012
   aud = holdaud;
   tobject = "";
   engram = "";
   query.appendChild(answer);
 }
- 
+
 function wipeSubject(oldnouns) {
   var istr = document.getElementById("cosmos");
   var zilch = document.getElementById(oldnouns);
@@ -2333,7 +2031,8 @@ function TuringTest() {
  
 function SeCurity() {
   TuringTest();
- if (t > 160)  nonce = vault;  // Diagnostic display of all thought.
+// if (t > 160)  nonce = vault;  // Diagnostic display of all thought.
+  nonce = 1;  // temporary; for full-view troubleshooting; 19aug2012
 // if (t > 160)  nonce = 460;  // Only while re-coding RuBoot; 23jan2012
   if (t > (cns-64)) ReJuvenate();
   if (life == true) {
@@ -2348,7 +2047,7 @@ apb=("AI 4U on KB psi #"+kbtv+" at t="+t+" is alive on cyc #"+rjc+" since " +dob
     Voice();
   }
 }
- 
+
 function MainLoop() {
   if (brevity > 0)  wipeSubject("sun" + 1);
   if (brevity > 1)  wipeSubject("sun" + 2);
@@ -2472,11 +2171,12 @@ RuBoot</a></b>
  &#1044;&#1080;&#1072;&#1075;&#1085;&#1086;&#1089;&#1090;&#1080;&#1082;&#1072 - 
 <!-- Diagnostic -->
 
-<a href="http://www.russiankeyboards.com"
- target="_blank"><img border="0" 
- src="http://www.webideas.com/images/icons/free_kbd104x31.gif" 
- width="103" height="31" longdesc="RussianKeyboards.com" 
- alt="Get A Free Russian Keyboard from RussianKeyboards.com!"></a>
+<a href="http://bookstore.iuniverse.com/Products/SKU-000540906/AI4U.aspx"
+ title="AI4U Mobi e-book for Kindle & app; ePub file for 
+Sony(R) eReader, Kobo eReader, Nook(TM), iBooks">
+<img border="0" 
+ src="http://farm1.static.flickr.com/51/179758367_f283f0d6e0_s.jpg"
+ alt="AI4U e-book in English"></a> 
 
 <input type="checkbox" name="cb4" onClick="Shutdown();">
 <font color="fuchsia"><b>
@@ -2554,7 +2254,7 @@ width:200; height:140; background-color:clear">
   | CATS associates to NEED  |                                | FISH activates AVOID |
    --------------------------                                   ---------------------
 </pre></strong></font></div>
- 
+
 <div id="idea"> </div>
  
 <div id="radar"> </div>
@@ -2593,6 +2293,8 @@ Wed.1feb2012 "ru120201" improves tagging of verbs and direct objects.
 Sat.4feb2012 "ru120204" learns noun-endings like a human child learns.
 Sat.11feb2012 "ru120211" integrates unspoken be-verbs with InStantiate.
 Tues.14feb2012 "ru120214" skips unwarranted default-only be-verbs.
+Sat.18aug2012 "ru120818" overrides improper pronouns and verb-forms.
+Mon.20aug2012 "ru120820" attempts to substitute VerbGen corrections.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

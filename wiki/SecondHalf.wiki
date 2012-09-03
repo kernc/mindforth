@@ -440,6 +440,8 @@ function KbTraversal() {
   apb=("Rejuvenation count is at " + rjc); // 24may2011
   if (kbtv==1) {  // State the concept by name; 20may2011
     apb=("KbTraversal activates concept of YOU in the knowledge base.");
+    subjpsi = 707;  // test; 3sep2012
+// alert("KbTrav: subjpsi = "+subjpsi);  // test; 3sep2012
   }  // End of test to identify concept by name; 20may2011
   if (kbtv==2) {  // State the concept by name; 20may2011
     apb=("KbTraversal activates concept of ROBOT in the knowledge base.");
@@ -458,7 +460,8 @@ function KbTraversal() {
     psi = 707;    // Russian "Ty" for "you"; 11jan2012
     nacpsi = 707; // Russian "Ty" for "you"; 11jan2012
     qusub = 707;  // Russian "Ty" for "you"; 11jan2012
-    subjpsi = 56;  // a test to help WhoBe; 13aug2010
+ // subjpsi = 56;  // a test to help WhoBe; 13aug2010
+ // subjpsi = 56;  // Commenting out (non-Russian) on 3sep2012
     nounval = 62;
     defcon = nounval;  // force majeure into NounAct; 17nov2010
     NounAct();
@@ -513,7 +516,7 @@ function ReJuvenate() {
   for (i = (vault+coda); i<(t+2); ++i) {
     jrt = (i - coda);
     if (edge == 1) {
-      Psi[i].psiExam(); // subtracting coda from psi6 to keep tqv valid; 23aug2012
+      Psi[i].psiExam(); // subtracting coda from psi6 to keep tqv valid.
       Psi[jrt] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,(psi6-coda),psi7,psi8);
       Psi[i] = new psiNode(" "," "," "," "," "," "," "," "," "); // 13oct
     }
@@ -847,6 +850,7 @@ function AskUser() {  // selector of question formats; 13aug2010
 
 
 function NounPhrase() {
+// alert("NPhrA: subjpsi verblock = "+subjpsi+" "+verblock);  // 3sep2012
   audjuste = 0;  // prevent carry-over; 24oct2011
   if (verblock > 0) {  // 24oct2011
     Psi[verblock].psiExam(); // expose all values to change one; 24oct2011
@@ -895,6 +899,7 @@ function NounPhrase() {
             tsels = i;  // retain time of subject; 24oct2011
             tseln = i;  // time of selected noun; 10may2011
             motjuste = psi0; // store psi-tag of noun/pronoun; 13aug2011
+ // alert("NPhrSelect: motjuste subjpsi dba = "+motjuste+" "+subjpsi+" "+dba);
             nphrnum = psi2;  // 13aug2011
             snu = psi2;  // for parameter in verb-selection; 22jan2012
       //  }  // for subjects; 24oct2011
@@ -1049,7 +1054,7 @@ function NounPhrase() {
       audjuste = ru8;  // hold the auditory recall-vector; 20aug2012
     }  // end of test for a positive nounlock; 24oct2011; 20aug2012
     if (motjuste == 701) {  // if 701="Ya" is indicated; 18aug2012
-      for (i = t; i>midway; i--) {  // Look backwards for 701=menya; 18aug2012
+      for (i = t; i>midway; i--) {  // Look backwards for 701=menya.
         ruLexicon[i].ruExam(); // examine Russian lexicon; 18aug2012
         if (ru0 == 701) {  // If #701 "menya" found; 18aug2012
           if (ru4 == 4)  {  // direct object; 19aug2012
@@ -1060,7 +1065,7 @@ function NounPhrase() {
       }  // End of loop finding word "menya"; 18aug2012
     }  // from MindForth; end of special override for 701=menya; 18aug2012
     if (motjuste == 707) {  // if 707="Ty" is needed; 18aug2012
-      for (i = t; i>midway; i--) {  // Look backwards for 707=tebya; 18aug2012
+      for (i = t; i>midway; i--) {  // Look backwards for 707=tebya.
         ruLexicon[i].ruExam(); // examine Russian lexicon; 18aug2012
         if (ru0 == 707) {  // If #707 "tebya" found; 18aug2012
           if (ru4 == 4)  {  // direct object; 18aug2012
@@ -1098,6 +1103,22 @@ function NounPhrase() {
     num = 1;   // singular; 2sep2010
     nphrnum = 1;  // xfer into VerbPhrase; 2sep2010
   }  // end of test for 701=Ya; 5jan2012
+
+//  if (motjuste==707) {  // if 707=Ty selected; 1sep2012
+//    prsn = 2;  // second person; 1sep2012
+//    num = 1;   // singular; 1sep2012
+//    nphrnum = 1;  // xfer into VerbPhrase; 1sep2012
+//  }  // end of test for 707=Ty; 1sep2012
+
+   if (motjuste==707) prsn = 2;  // Ty (you) singular; 1sep2012
+
+   if (motjuste==731) prsn = 1; // 1st person "WE" 1sep2012
+
+   if (motjuste==737) prsn = 2;  // VWI (you) plural; 1sep2012
+   if (motjuste==737) num = 2;  // VWI (you) plural; 1sep2012
+   if (motjuste==737) snu = 2;  // VWI (you) plural; 1sep2012
+
+
   if (dirobj == 1) {  // When seeking direct object; 14jun2011
    if (nounlock == 0) {  // if no nounlock override; 24oct2011
     if (act < 20) {  // Revert to general threshold; 8jul2011
@@ -1153,8 +1174,10 @@ function NounPhrase() {
     if (motjuste != 707) {  // not 707=Ty; 11jan2012
       if (motjuste != 731) {  // not 731=MWI (we); 11jan2012
         prsn = 3;  // third person; not I YOU WE; 2sep2010
-      }  // end of test for 53=WE; 2sep2010
-    }  // end of test for 56=YOU; 2sep2010
+   // }  // end of test for 53=WE; 2sep2010
+      }  // end of test for 731=MWI (we);  3sep2012
+ // }  // end of test for 56=YOU; 2sep2010
+    }  // end of test for 707=Ty (you);  3sep2012
   }  // end of test for "not I"; 2sep2010
   if (subjcall == 1) {  // _After_ any call to EnArticle(); 21may2011
     nouncall = 1;  // 1=nom.; (2=gen.); (3=dat.); 4=acc.; 21may2011
@@ -1225,6 +1248,12 @@ function ConJoin() {
  
 
 function VerbGen() {  // to create missing verb-forms; 18jan2012
+// alert("VbGn: dba subjpsi snu audbase = "+dba+" "+subjpsi+" "+snu+" "+audbase);
+  if (subjpsi==701) dba = 1;  // "701=Ya" is first-person "I"; 3sep2012
+  if (subjpsi==707) dba = 2;  // 707="Ty" is second-person "you"; 3sep2012
+  if (subjpsi==737) dba = 2;  // 737="VWI" is second-person "you"; 3sep2012
+  if (subjpsi==731) dba = 1;  // 731="MWI" is first-person "we"; 3sep2012
+  
   do {  // first loop fills in AudBuffer
     audMemory[audbase].audExam();
     pho = aud0;
@@ -1474,27 +1503,22 @@ function VerbPhrase() {
     ruLexicon[verblock].ruExam();  // examine row in array;  5jan2012
     verbpsi = ru0;  // grab the verbpsi; test; 28aug2012
     audbase = ru8;  // parameter for VerbGen to call AudBuffer; 29aug2012
+// alert("VPhr: dba prsn ru4 = "+dba+" "+prsn+" "+ru4);  // test; 1sep2012
     dba = prsn;  // parameter for VerbGen; 30aug2012
-     for (i = t; i>midway; i--) {  // search for verb-form; 28aug2012
+    for (i = t; i>midway; i--) {  // search for verb-form; 28aug2012
       ruLexicon[i].ruExam();  // examine Russian lexicon; 28aug2012
-      if (ru0 == verbpsi) {  // stick with same verb; 28aug201
-        if (ru2==nphrnum && ru4==prsn) {  // 29aug2012
-            vphraud = ru8;  // test; 28aug2012
-            break;  // one instance is enough; 29aug2012
-          }  // end of match for number and person; 28aug2012
-          else { // test; 28aug2012
-            gencon = 1;  // prevent usual call from VerbPhrase to SpeechAct; 29aug2012
-            VerbGen();  // test; 29aug2012
-
-       // }  // test; 28aqug2012
-     // }  // end of test for correct number; 28aug2012
-      }  // end of test for same verb; 28aqug2012
-
-      }  // end of triple test of ru0; ru2; ru4; 29aug2012
+      if (ru0==verbpsi && ru2==nphrnum && ru4==prsn) {  // 3sep2012
+        vphraud = ru8;  // test; 28aug2012
+     // gencon = 1;  // keep other verbs from SpeechAct; 3sep2012
+        break;  // one instance is enough; 29aug2012
+      }  // end of triple test of ru0; ru2; ru4;  3sep2012
+      else { // test; 28aug2012
+        gencon = 1;  // prevent usual call from VerbPhrase to SpeechAct.
+        VerbGen();  // test; 29aug2012
+      }  // end of else-clause to call VerbGen; 3sep2012
     }  // end of loop in search of correct verb-form;; 28aug2012
-    
- //   vphraud = ru8;  //  5jan2012; 28aug2012
   }  // end of test for a positive verblock; 24oct2011
+
   opt = 8;
   psi = 0;
   verbcall = 1;
@@ -1592,7 +1616,7 @@ function VerbPhrase() {
   }  // 24oct2011
   if (verblock > 0) {  // 19aug2012
     if (dba == 1) {  // if first person; 19aug2012
-      for (i = t; i>midway; i--) {  // Look backwards for 701=menya; 18aug2012
+      for (i = t; i>midway; i--) {  // Look backwards for 701=menya.
         ruLexicon[i].ruExam(); // examine Russian lexicon; 19aug2012
         if (ru0 == motjuste) {  // If motjuste is found; 19aug2012
           if (ru4 == dba) {  // if dba matches; 19aug2012
@@ -1710,8 +1734,10 @@ function VerbPhrase() {
       if (subjpsi==701) {  // 701=YA ("I"); 11jan2012
       }  // end of test for subject-psi 50=I; 13aug2011
       if (subjpsi==707 || subjpsi==479) {  // fam. or formal; 11jan2012
-      }  // end of test for 56=YOU; 15aug2011 
-    }  // end of test for 58=BE; 13aug2011
+   // }  // end of test for 56=YOU; 15aug2011 
+      }  // end of test for 707 or 479 YOU; 3sep2012
+ // }  // end of test for 58=BE; 13aug2011
+    }  // end of test for 800="BWIT'" (be);  3sep2012
     vacpsi = motjuste;  // for VerbAct(); 18aug2011
     VerbAct();  // moved from below SpeechAct & old KB-inhib; 18aug2011
     aud = vphraud;  // transfer just before call; 28jun2011
@@ -1776,7 +1802,7 @@ function VerbPhrase() {
   nouncall = 0;
   tqv = 0;  // reset for safety; 25oct2011
   verblock = 0;  // after selection of NPhr seq-verb; 24oct2011
-}  // End of VerbPhrase(); return to EnCog(); 29jun2011
+}  // End of VerbPhrase(); return to RuCog();  1sep2012
 
 
 function RuCog() {  // Russian cognition; 26jan2012
@@ -1851,6 +1877,7 @@ function ThInk() {
   ordo = 0; 
   if (lurk > greet) {  // if no input by arbitrary time; 29sep2010
     kbtv = (kbtv + 1);  // increment as a trigger; 29sep2010
+// alert("ThInk: calling KbTra with kbtv = "+kbtv);  // 3sep2012
     KbTraversal();  // activate ideas as a greeting; 29sep2010
     lurk = 0;  // reset for safety; 29sep2010
   }  // end of test to launch greeting; 29sep2010
@@ -2311,9 +2338,9 @@ AiMind</a> -
  title="Russian AI User Manual in English">
 Manual</a> - 
 
- <a href="http://code.google.com/p/mindforth/wiki/RuBoot" 
- title="Russian bootstrap module in JavaScript for MSIE">
-RuBoot</a></b>
+ <a href="http://cyborg.blogspot.com/2012/08/aug23ruai.html" 
+ title="23 August 2012 Russian AI Programming Journal">
+AI Lab Notes</a></b>
 </font></legend>
 <form name="modes">
 <input type="checkbox" name="cb1" onClick="Transcript();"> 
@@ -2455,6 +2482,8 @@ Mon.20aug2012 "ru120820" attempts to substitute VerbGen corrections.
 Thurs.23aug2012 "23aug12" begins to find verb-forms as necessary.
 Wed.29aug2012 "29aug12" VerbGen returns stem of inveniend verb.
 Thurs.30aug2012 "30aug12" uses "dba" as parameter for VerbGen.
+Sat.1sep2012 "ru120901" answers first-person inputs in second person.
+Mon.3sep2012 replaces English 56=YOU with Russian 707="Ty" (you).
 (end of HTML Change Log comments) --> 
 </html>
 }}}

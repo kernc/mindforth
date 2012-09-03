@@ -4,7 +4,7 @@
 {{{
 <html lang="ru">
 <head>
-<title>Dushka - Russian JavaScript artificial intelligence for MSIE</title>
+<title>Dushka Russian AI for MSIE - please host on your website</title>
 <meta http-equiv="content-type" content="text/html; charset=windows-1251" />
 <meta name="description"
  content="Russian-language artificial intelligence in JavaScript" />
@@ -227,7 +227,6 @@ var residuum = 0;
 var rjc = 0;
 var rsvp = 1000;
 var rudata = ("<b>" + "Russian lexical fibers" + "<\/b>" + "<BR>");
-// rudata += ("krt nru act num mfn fex pos fin aud"); // 2jan2012
 rudata += ("krt nru act num mfn dba fex pos fin aud"); // 17jan2012
 var rux = 0;  // transfer from deep concept to Russian lexicon; 22dec2011
 var ru0 = 0; // "nru" for "n(umber)" in Russian; 5jan20121
@@ -315,7 +314,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "30aug12"; // for Transcript mode; thurs30aug2012
+var vrsn = "3sep12"; // for Transcript mode; mon3sep2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -696,7 +695,8 @@ function NounAct() {
       if (psi0 == nacpsi) {  // nacpsi replaces psi; 13aug2010
         if (psi1 > -1) {   // avoid inhibition; 29oct2011
        // psi1 = 26;  // start near a threshold level; 7jun2011
-          psi1 = (40 - (4 * ordo));  // test; for sloping act; 29jan2012
+       // psi1 = (40 - (4 * ordo));  // test; for sloping act; 29jan2012
+          psi1 = 26;  // start near a threshold level;  1sep2012
         }  // 
         Psi[i] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
         if (psi0 == 781) {  // 781=CHTO (what); 11jan2012    
@@ -1085,7 +1085,8 @@ function InStantiate() {
     act = 0; // 0 activation for ReEntry concepts; 1may2011
   }  // End of test for "#" internal POV;  1may2011
   if (seq == 0) tqv = 0; // avoid spurious carry-overs; 23aug2012
-  act = (30 - (5 * ordo));  // test; for sloping act; 29jan2012
+// act = (30 - (5 * ordo));  // test; for sloping act; 29jan2012
+// act = (30 - (5 * ordo));  // test; for sloping act;  1sep2012
   Psi[t] = new psiNode(psi,act,num,jux,prevtag,pos,tqv,seq,rux);
   act = 0;  // reset for safety; 27oct2011
   inhibcon = 0;  // reset for safety; 27oct2011
@@ -2766,5 +2767,4 @@ t=360;c=1059; beg=0; ctu=0; audpsi=370;
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 nru=370; mfn=0; dba=0; fex=370; pos=3; fin=370; aud=355;
 psi=370; num=0; pre=0; seq=0; rux=370; RuVocab(); InNativate();
-
 }}}

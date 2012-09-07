@@ -314,7 +314,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "3sep12"; // for Transcript mode; mon3sep2012
+var vrsn = "7sep12"; // for Transcript mode; fri7sep2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -854,6 +854,10 @@ function InNativate() { // quasi-instantiate EnBoot sequence; 23oct2011
 
 
 function OutBuffer() {  // for manipulation of SpeechAct words; 4jan2012
+   b01=""; b02=""; b03=""; b04=""; b05=""; b06="";  // 5sep2102
+   b07=""; b08=""; b09=""; b10=""; b11=""; b12="";  // 5sep2012
+   b13=""; b14=""; b15=""; b16="";  // clear tabula rasa; 5sep2012
+
   if (c16>"") {  // if the AudBuffer full; 4jan2012
     b16=c16; b15=c15; b14=c14; b13=c13; b12=c12; b11=c11; 
     b10=c10; b09=c09; b08=c08; b07=c07; b06=c06; b05=c05; 
@@ -958,7 +962,7 @@ function AudBuffer() {  // for transfer of words to OutBuffer.
   if (phodex==1) {  // 4jan2012
     c01=abc; c02=""; c03=""; c04=""; c05=""; c06=""; c07=""; c08=""; 
     c09="";  c10=""; c11=""; c12=""; c13=""; c14=""; c15=""; c16="";
-  }   // emd of using phodex=1 to blank out the AudBuffer; 4jan2012
+  }   // end of using phodex=1 to blank out the AudBuffer; 4jan2012
   if (phodex==2)  c02=abc;  //  4jan2012
   if (phodex==3)  c03=abc;  //  4jan2012
   if (phodex==4)  c04=abc;  //  4jan2012
@@ -974,6 +978,7 @@ function AudBuffer() {  // for transfer of words to OutBuffer.
   if (phodex==14)  c14=abc;  // 4jan2012
   if (phodex==15)  c15=abc;  // 4jan2012
   if (phodex==16)  c16=abc;  // 4jan2012
+ // phodex = 0;  // clear for next time; test; 5sep2012
 }  // end of AudBuffer() called from AudListen() or elsewhere.
  
 
@@ -2331,7 +2336,7 @@ psi=840; num=0; pre=0; seq=0; rux=840; RuVocab(); InNativate();
 // 360 EE ("and") conjunction; 4jan2012
 t=185;c=1048; beg=1; ctu=0; audpsi=360; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=360; mfn=0; dba=1; fex=360; pos=3; fin=360; aud=185;
+nru=360; mfn=0; dba=0; fex=360; pos=3; fin=360; aud=185;
 psi=360; num=0; pre=0; seq=0; rux=360; RuVocab(); InNativate();
 
 // 340 ILI (or) conjunction; 9jan2012
@@ -2342,7 +2347,7 @@ t=188;c=1051; beg=0; ctu=1; audpsi=0;
 t=189;c=1048; beg=0; ctu=0; audpsi=340; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 nru=340; mfn=0; dba=0; fex=340; pos=3; fin=340; aud=187;
-psi=340; num=0; pre=0; seq=0; rux=427; RuVocab(); InNativate();
+psi=340; num=0; pre=0; seq=0; rux=340; RuVocab(); InNativate();
 
 // 266 INACHE ("else"); conjunction; 9jan2012
 t=191;c=1048; beg=1; ctu=1; audpsi=0; 
@@ -2353,10 +2358,10 @@ t=193;c=1040; beg=0; ctu=1; audpsi=0;
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
 t=194;c=1063; beg=0; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=195;c=1045; beg=0; ctu=0; audpsi=571; 
+t=195;c=1045; beg=0; ctu=0; audpsi=266;      // 5sep2012
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
-nru=571; mfn=1; dba=1; fex=571; pos=5; fin=571; aud=191; 
-psi=571;  num=1; pre=0; seq=0; rux=571; RuVocab(); InNativate();
+nru=266; mfn=0; dba=0; fex=266; pos=3; fin=266; aud=191; 
+psi=266;  num=0; pre=0; seq=0; rux=266; RuVocab(); InNativate();
 
 // 791 KTO (who) pronoun; 9jan2012
 t=197;c=1050; beg=1; ctu=1; audpsi=0; 
@@ -2767,4 +2772,5 @@ t=360;c=1059; beg=0; ctu=0; audpsi=370;
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 nru=370; mfn=0; dba=0; fex=370; pos=3; fin=370; aud=355;
 psi=370; num=0; pre=0; seq=0; rux=370; RuVocab(); InNativate();
+
 }}}

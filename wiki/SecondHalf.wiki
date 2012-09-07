@@ -440,8 +440,6 @@ function KbTraversal() {
   apb=("Rejuvenation count is at " + rjc); // 24may2011
   if (kbtv==1) {  // State the concept by name; 20may2011
     apb=("KbTraversal activates concept of YOU in the knowledge base.");
-    subjpsi = 707;  // test; 3sep2012
-// alert("KbTrav: subjpsi = "+subjpsi);  // test; 3sep2012
   }  // End of test to identify concept by name; 20may2011
   if (kbtv==2) {  // State the concept by name; 20may2011
     apb=("KbTraversal activates concept of ROBOT in the knowledge base.");
@@ -460,8 +458,6 @@ function KbTraversal() {
     psi = 707;    // Russian "Ty" for "you"; 11jan2012
     nacpsi = 707; // Russian "Ty" for "you"; 11jan2012
     qusub = 707;  // Russian "Ty" for "you"; 11jan2012
- // subjpsi = 56;  // a test to help WhoBe; 13aug2010
- // subjpsi = 56;  // Commenting out (non-Russian) on 3sep2012
     nounval = 62;
     defcon = nounval;  // force majeure into NounAct; 17nov2010
     NounAct();
@@ -610,6 +606,7 @@ function SpeechAct() {  // output of a word as text or sound
   }
   output += " ";
   Voice();
+  audbase = "";  // preventive; test; 5sep2012
 }  // End of SpeechAct(); 13aug2010
 
  
@@ -850,7 +847,6 @@ function AskUser() {  // selector of question formats; 13aug2010
 
 
 function NounPhrase() {
-// alert("NPhrA: subjpsi verblock = "+subjpsi+" "+verblock);  // 3sep2012
   audjuste = 0;  // prevent carry-over; 24oct2011
   if (verblock > 0) {  // 24oct2011
     Psi[verblock].psiExam(); // expose all values to change one; 24oct2011
@@ -899,10 +895,8 @@ function NounPhrase() {
             tsels = i;  // retain time of subject; 24oct2011
             tseln = i;  // time of selected noun; 10may2011
             motjuste = psi0; // store psi-tag of noun/pronoun; 13aug2011
- // alert("NPhrSelect: motjuste subjpsi dba = "+motjuste+" "+subjpsi+" "+dba);
             nphrnum = psi2;  // 13aug2011
             snu = psi2;  // for parameter in verb-selection; 22jan2012
-      //  }  // for subjects; 24oct2011
           }  // for subjects; 24oct2011; 23aug2012
           snu = psi2;  // for parameter in verb-selection; 22jan2012
           subjpsi = psi0;  // 13aug2011
@@ -1248,7 +1242,6 @@ function ConJoin() {
  
 
 function VerbGen() {  // to create missing verb-forms; 18jan2012
-// alert("VbGn: dba subjpsi snu audbase = "+dba+" "+subjpsi+" "+snu+" "+audbase);
   if (subjpsi==701) dba = 1;  // "701=Ya" is first-person "I"; 3sep2012
   if (subjpsi==707) dba = 2;  // 707="Ty" is second-person "you"; 3sep2012
   if (subjpsi==737) dba = 2;  // 737="VWI" is second-person "you"; 3sep2012
@@ -1419,6 +1412,12 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
       binc = (binc + 1);  // increment; 19jan2012
     }  // end of looping through OutBuffer; 19jan2012
     while (binc < 17);  // while inspecting OutBuffer; 19jan2012
+
+    c16=""; c15=""; c14=""; c13=""; c12=""; // 6sep2012
+    c11=""; c10=""; c09=""; c08=""; c07=""; // 6sep2012
+    c06=""; c05=""; c04=""; c03=""; c02=""; // 6sep2012
+    c01="";  // clear out the AudBuffer; 6sep2012
+
     binc = 0;  // reset after use; 19jan2012
      if (dba == 1) {  // first person; 22jan2012
       if (snu == 1) {  // a parameter; 24jan2012
@@ -1483,7 +1482,6 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
     output += " ";  // add a space; 21jan2012
     Voice();  // 21jan2012
   act = 31;  // value intended for "vphract"; 21jan2012
-// gencon = 0;  // reset as test; 23aug2012
 }  // end of VerbGen(); 18jan2012
 
 
@@ -1503,18 +1501,19 @@ function VerbPhrase() {
     ruLexicon[verblock].ruExam();  // examine row in array;  5jan2012
     verbpsi = ru0;  // grab the verbpsi; test; 28aug2012
     audbase = ru8;  // parameter for VerbGen to call AudBuffer; 29aug2012
-// alert("VPhr: dba prsn ru4 = "+dba+" "+prsn+" "+ru4);  // test; 1sep2012
     dba = prsn;  // parameter for VerbGen; 30aug2012
     for (i = t; i>midway; i--) {  // search for verb-form; 28aug2012
       ruLexicon[i].ruExam();  // examine Russian lexicon; 28aug2012
+   // Following code accepts only a verb-form matching three 
+   // requirements: [ ]same concept; [ ]num(ber); and [ ]person:
       if (ru0==verbpsi && ru2==nphrnum && ru4==prsn) {  // 3sep2012
-        vphraud = ru8;  // test; 28aug2012
-     // gencon = 1;  // keep other verbs from SpeechAct; 3sep2012
+        vphraud = ru8;  // VerbPhrase auditory engram tag; 7sep2012
+        gencon = 1;  // keep other verbs from SpeechAct; 5sep2012
         break;  // one instance is enough; 29aug2012
       }  // end of triple test of ru0; ru2; ru4;  3sep2012
-      else { // test; 28aug2012
+      else { // if no exact match is found, do the following; 7sep2012
         gencon = 1;  // prevent usual call from VerbPhrase to SpeechAct.
-        VerbGen();  // test; 29aug2012
+        VerbGen(); // generate the verb-form needed to think in Russian.
       }  // end of else-clause to call VerbGen; 3sep2012
     }  // end of loop in search of correct verb-form;; 28aug2012
   }  // end of test for a positive verblock; 24oct2011
@@ -1523,8 +1522,6 @@ function VerbPhrase() {
   psi = 0;
   verbcall = 1;
   vphract = 0;  // for validity of threshold-tests; 15aug2011
-// vphraud = 0;  // prevent spurious carry-overs; 24oct2011
-// vphraud = 0;  // prevent spurious carry-overs; 24oct2011; 29aug2012
  if (verblock == 0) {  // prevent false negations; 24oct2011
    if (subjpsi==701) dba = 1;  // must be 1st person; 17jan2012
   for (i = t; i>midway; i--) {
@@ -1867,9 +1864,7 @@ function ThInk() {
   if (quiet == true) {  
     pov = "#"; 
     output = ""; 
- // output = "";  // Commenting out as a test; 6nov2011
     outputplus = ""; 
- // outputplus = "";  // Commenting out as a test; 6nov2011
     if (glot == 1) {  // flag for polyglot AI;  9jul2011
       RuCog();  // think in Russian;  5jan2012
     }  // input of German might switch glot to two; 9jul2011
@@ -1877,12 +1872,9 @@ function ThInk() {
   ordo = 0; 
   if (lurk > greet) {  // if no input by arbitrary time; 29sep2010
     kbtv = (kbtv + 1);  // increment as a trigger; 29sep2010
-// alert("ThInk: calling KbTra with kbtv = "+kbtv);  // 3sep2012
     KbTraversal();  // activate ideas as a greeting; 29sep2010
     lurk = 0;  // reset for safety; 29sep2010
   }  // end of test to launch greeting; 29sep2010
-// output = "";  // Let AI thought persist during input; 6nov2011
-// outputplus = "";  // Let AI thought persist during input; 6nov2011
   bias = 5;  // test ICW slosh-over; 15oct2010
 }  // End of ThInk module.
 
@@ -2347,20 +2339,14 @@ AI Lab Notes</a></b>
  &#1055;&#1088;&#1086;&#1090;&#1086;&#1082;&#1086;&#1083; 
 <!-- Protocol (Transcript) --> 
 
-<input type="checkbox" name="cb2" onClick="Tutorial();"> 
+<input type="checkbox" name="cb2" onClick="Tutorial();" checked> 
  &#1054;&#1073;&#1091;&#1095;&#1077;&#1085;&#1080;&#1077; 
 <!-- Tutorial -->
 
-<input type="checkbox" name="cb3" onClick="TuringTest();" checked> 
+<input type="checkbox" name="cb3" onClick="TuringTest();"> 
  &#1044;&#1080;&#1072;&#1075;&#1085;&#1086;&#1089;&#1090;&#1080;&#1082;&#1072 - 
 <!-- Diagnostic -->
 
-<a href="http://bookstore.iuniverse.com/Products/SKU-000540906/AI4U.aspx"
- title="AI4U Mobi e-book for Kindle & app; ePub file for 
-Sony(R) eReader, Kobo eReader, Nook(TM), iBooks">
-<img border="0" 
- src="http://farm1.static.flickr.com/51/179758367_f283f0d6e0_s.jpg"
- alt="AI4U e-book in English"></a> 
 
 <input type="checkbox" name="cb4" onClick="Shutdown();">
 <font color="fuchsia"><b>
@@ -2484,6 +2470,8 @@ Wed.29aug2012 "29aug12" VerbGen returns stem of inveniend verb.
 Thurs.30aug2012 "30aug12" uses "dba" as parameter for VerbGen.
 Sat.1sep2012 "ru120901" answers first-person inputs in second person.
 Mon.3sep2012 replaces English 56=YOU with Russian 707="Ty" (you).
+Wed.5sep2012 ensures single verb-retrieval by clearing AudBuffer.
+Fri.7sep2012 clarifies or removes diagnostic comments for AI upload.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

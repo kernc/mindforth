@@ -435,6 +435,7 @@ t = 532;  // approximate source of "vault" value; 23jan2012
   MainLoop();
 }  // end of RuBoot Russian bootstrap; 5jan2012
 
+
 function KbTraversal() {
   if (kbtv==0) kbtv = 1;  // Input sets to zero; 23may2011
   apb=("Rejuvenation count is at " + rjc); // 24may2011
@@ -549,7 +550,8 @@ function ReJuvenate() {
     KbTraversal();
   }
 }  // End of ReJuvenate(); return to SeCurity(); 12jul2011
- 
+
+
 function EmotiOn() {
   apb = "EmotiOn module has been called.";
   Voice();
@@ -584,6 +586,7 @@ outputplus = ("<font size='+3' color='navy'>"+output+"<\/b><\/font>");
   document.all.mouth.innerHTML = outputplus;
   document.all.brain.innerHTML = apb;
 }
+
  
 function SpeechAct() {  // output of a word as text or sound
   if (aud == 0) aud = 1;  // say diagnostic "ERROR"; 16jul2011
@@ -607,6 +610,11 @@ function SpeechAct() {  // output of a word as text or sound
   output += " ";
   Voice();
   audbase = "";  // preventive; test; 5sep2012
+
+  c16=""; c15=""; c14=""; c13=""; c12=""; // 8sep2012
+  c11=""; c10=""; c09=""; c08=""; c07=""; // 8sep2012
+  c06=""; c05=""; c04=""; c03=""; c02=""; // 8sep2012
+  c01="";  // clear out the AudBuffer; 8sep2012
 }  // End of SpeechAct(); 13aug2010
 
  
@@ -711,6 +719,7 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 10jan2012
   if (recon != 250) recon = 0;  // test for yes-or-no; 6jan2012
   moot = 0;  // end of not tagging query-concepts; 10jan2012 
 }  // End of WhoBe(); return to AskUser(); 10jan2012
+
 
 function WhatBe() {  // what AM/IS/ARE Subjects
   moot = 1;  // prevent storage of spurious ideas; 24oct2011
@@ -945,6 +954,8 @@ function NounPhrase() {
           }  // prevent false motjuste; 24oct2011
         }  // End of test for a higher activation; 24oct2011
       }  // end of test for 1=subjectflag; 24oct2011
+if (i==nonce) {  // 8sep2012
+}  // 8sep2012
       if (subjectflag == 0) {  // i.e., dir.obj or pred.nom; 24oct2011
         if (psi1 > act) {  // If psi1 is higher than "act"; 24oct2011
           tseln = i;  // retain time of motjuste; 24oct2011
@@ -1003,8 +1014,9 @@ function NounPhrase() {
   star = 0;
   node = 0;
   ufo = 0;
-  if (nounlock == 0) {  // if no nounlock override; 24oct2011
-   if (act < 20) {  // if no subject of thought is found; 24aug2012
+  if (nounlock == 0) {  // if no nounlock override; 24oct2011 
+// if (act < 20) {  // if no subject of thought is found; 24aug2012
+   if (act < 21) {  // if no subject of thought is found;  8sep2012
     if (subjectflag==1) {  // default to "I" only as subject 18oct2011
       motjuste = 701;  // default concept of an AI Mind; 5jan2012
       nphrpos = 7;  // pronoun "I"; to prevent EnArticle; 14sep2011
@@ -1097,22 +1109,16 @@ function NounPhrase() {
     num = 1;   // singular; 2sep2010
     nphrnum = 1;  // xfer into VerbPhrase; 2sep2010
   }  // end of test for 701=Ya; 5jan2012
-
 //  if (motjuste==707) {  // if 707=Ty selected; 1sep2012
 //    prsn = 2;  // second person; 1sep2012
 //    num = 1;   // singular; 1sep2012
 //    nphrnum = 1;  // xfer into VerbPhrase; 1sep2012
 //  }  // end of test for 707=Ty; 1sep2012
-
    if (motjuste==707) prsn = 2;  // Ty (you) singular; 1sep2012
-
    if (motjuste==731) prsn = 1; // 1st person "WE" 1sep2012
-
    if (motjuste==737) prsn = 2;  // VWI (you) plural; 1sep2012
    if (motjuste==737) num = 2;  // VWI (you) plural; 1sep2012
    if (motjuste==737) snu = 2;  // VWI (you) plural; 1sep2012
-
-
   if (dirobj == 1) {  // When seeking direct object; 14jun2011
    if (nounlock == 0) {  // if no nounlock override; 24oct2011
     if (act < 20) {  // Revert to general threshold; 8jul2011
@@ -1412,12 +1418,10 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
       binc = (binc + 1);  // increment; 19jan2012
     }  // end of looping through OutBuffer; 19jan2012
     while (binc < 17);  // while inspecting OutBuffer; 19jan2012
-
     c16=""; c15=""; c14=""; c13=""; c12=""; // 6sep2012
     c11=""; c10=""; c09=""; c08=""; c07=""; // 6sep2012
     c06=""; c05=""; c04=""; c03=""; c02=""; // 6sep2012
     c01="";  // clear out the AudBuffer; 6sep2012
-
     binc = 0;  // reset after use; 19jan2012
      if (dba == 1) {  // first person; 22jan2012
       if (snu == 1) {  // a parameter; 24jan2012
@@ -1510,14 +1514,15 @@ function VerbPhrase() {
         vphraud = ru8;  // VerbPhrase auditory engram tag; 7sep2012
         gencon = 1;  // keep other verbs from SpeechAct; 5sep2012
         break;  // one instance is enough; 29aug2012
-      }  // end of triple test of ru0; ru2; ru4;  3sep2012
+      }  // end of test to find regular or irregular verb-form; 10sep2012
       else { // if no exact match is found, do the following; 7sep2012
         gencon = 1;  // prevent usual call from VerbPhrase to SpeechAct.
-        VerbGen(); // generate the verb-form needed to think in Russian.
+        if (verbpsi != 800) {  // avoid be-verbs; test; 10sep2012
+          VerbGen(); // generate the verb-form needed to think in Russian.
+        }  // end of test for be-verbs; test; 10sep2102
       }  // end of else-clause to call VerbGen; 3sep2012
     }  // end of loop in search of correct verb-form;; 28aug2012
   }  // end of test for a positive verblock; 24oct2011
-
   opt = 8;
   psi = 0;
   verbcall = 1;
@@ -1568,8 +1573,7 @@ function VerbPhrase() {
         }  // end of if-clause looking for higher activation
       } else continue;
   }  // end of search for "motjuste" in Psi array; 13aug2011
-
- if (vphraud == 0) {  // if not substituted above; 29aug2012
+  if (vphraud == 0) {  // if not substituted above; 29aug2012
    for (i = t; i>midway; i--) {  // separate search for verb-form;
     ruLexicon[i].ruExam();  // examine Russian lexicon; 17jan2012
     if (motjuste != 0 && ru0 == motjuste) {  // look for motjuste; 17jan2012
@@ -1648,9 +1652,7 @@ function VerbPhrase() {
         }  // End of search for motjuste; 20aug2012
       }  // End of loop finding verb-form; 20aug2012
     }  // end of override to find correct verb-form; 20aug2012
-
   }  // end of code for override of verblocked verbs; 19aug2012
-
   Psi[tqv].psiExam(); // examine array row at "tqv"; 24oct2011
   Psi[tqv] = new psiNode(psi0,128,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
   node = 0;  // Reset tutorial verb display for showVerb().
@@ -1948,6 +1950,7 @@ function showSubject() {
   kb.appendChild(fact);
 }
 
+
 function showVerb() {
   var aha = document.getElementById("idea");
   var taxi = document.getElementById("node");
@@ -2019,7 +2022,8 @@ function showVerb() {
   tverb = "";
   aha.appendChild(concept);
 }
- 
+
+
 function showObject() {
   var query = document.getElementById("radar");
   var turi = document.getElementById("ufo");
@@ -2088,29 +2092,34 @@ function showObject() {
   query.appendChild(answer);
 }
 
+
 function wipeSubject(oldnouns) {
   var istr = document.getElementById("cosmos");
   var zilch = document.getElementById(oldnouns);
   istr.removeChild(zilch);
 }
- 
+
+
 function wipeVerb(oldverbs) {
   var btdt = document.getElementById("idea");
   var rasa = document.getElementById(oldverbs);
   btdt.removeChild(rasa);
 }
- 
+
+
 function wipeObject(oldobjects) {
   var scnr = document.getElementById("radar");
   var nada = document.getElementById(oldobjects);
   scnr.removeChild(nada);
 }
- 
+
+
 function FreeWill() {
   apb = "Volition module has been called.";
   Voice();
 }
- 
+
+
 function MotorOutput() {
   apb = "Motorium module has been called.";
   Voice();
@@ -2207,7 +2216,6 @@ function SeCurity() {
   TuringTest();
 // if (t > 160)  nonce = vault;  // Diagnostic display of all thought.
   if (t > 160)  nonce = 503;  // special test on 23aug2012
-
 // nonce = 1;  // temporary; for full-view troubleshooting; 19aug2012
 // if (t > 160)  nonce = 460;  // Only while re-coding RuBoot; 23jan2012
   if (t > (cns-64)) ReJuvenate();
@@ -2223,6 +2231,7 @@ apb=("AI 4U on KB psi #"+kbtv+" at t="+t+" is alive on cyc #"+rjc+" since " +dob
     Voice();
   }
 }
+
 
 function MainLoop() {
   if (brevity > 0)  wipeSubject("sun" + 1);
@@ -2472,6 +2481,7 @@ Sat.1sep2012 "ru120901" answers first-person inputs in second person.
 Mon.3sep2012 replaces English 56=YOU with Russian 707="Ty" (you).
 Wed.5sep2012 ensures single verb-retrieval by clearing AudBuffer.
 Fri.7sep2012 clarifies or removes diagnostic comments for AI upload.
+Mon.10sep2012 changes instantiation of be-verbs for sake of verblock.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

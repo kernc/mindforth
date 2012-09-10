@@ -74,7 +74,8 @@ var c16 = "";  // for AudBuffer();  4jan2012
 var caller = "none";
 var casus = "0";
 var city = 0;
-var cns = 768;  // prevent bog-down; 15oct2010
+// var cns = 768;  // prevent bog-down; 15oct2010
+var cns = 1024;  // make room for thought; 8sep2012
 var coda = 128;
 var cognum = 0;  // grammatical number of cogpsi; 27oct2011
 var cogpsi = 0;  // new noun being learned; 18oct2011
@@ -314,7 +315,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "7sep12"; // for Transcript mode; fri7sep2012
+var vrsn = "10sep12"; // for Transcript mode; mon10sep2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -328,7 +329,7 @@ var zad3 = 0;  // input audpsi three characters back; 4feb2012
 var zone = 0;
  
 // defaultStatus="Click on View...Source to save Dushka.html"
- 
+
 Psi = new Array(cns);
 for (i = 0; i < cns; i++) {
   Psi[i] = new psiNode(" "," "," "," "," "," "," "," "," "); // 13oct2011
@@ -478,7 +479,8 @@ function audDamp() {
     audMemory[i] = new audNode(aud0,0,aud2,aud3,aud4,aud5);
   }
 }
- 
+
+
 function Shutdown() {
   if (document.all["cb4"].checked == true) {
     life = false;
@@ -525,8 +527,7 @@ function Transcript() {
     hardcopy = true;
     fyi = 1;
     now = new Date(); 
-    adcopy=
-("<font size='+2'>Dushka AI version "+vrsn+" on " +now+"<\/b><\/font>");
+adcopy=("<font size='+2'>Dushka AI version "+vrsn+" on " +now+"<\/b><\/font>");
     document.all.souvenir.innerHTML = adcopy;
   }
   Transcribe();
@@ -543,7 +544,8 @@ function Transcript() {
   }
   if (hardcopy == false) html = "";
 }
- 
+
+
 function psiList() {
   for (i = nonce; i < (t +1); i++) {
     Psi[i].psiExam();
@@ -560,6 +562,7 @@ function ruList() {  // 22dec2011
     rudata += (" "+ru3+" "+ru4+" "+ru5+" "+ru6+" "+ru7+" "+ru8);
   }  // 2jan2012
 }  // end of ruList(); 22dec2011
+
 
 function audList() {
   for (i = nonce; i < (t +1); i++) {
@@ -993,7 +996,8 @@ function psiExam() {
   psi7 = this.seq;  // subSEQuent concept; 2jan2012
   psi8 = this.rux;  // Russian-transfer tag; 2jan2012
 }
- 
+
+
 function psiNode(psi,act,num,jux,pre,pos,tqv,seq,rux) { // 2jan2012
   this.psi = psi;
   this.act = act;
@@ -1114,9 +1118,13 @@ function InStantiate() {
     audpsi = 800;  // 800=BWIT' (to be); 10feb2012
     audMemory[t] = new audNode(pho,0,pov,beg,ctu,audpsi); // 8dec2009
  // Psi[t] = new psiNode(psi,act,num,jux,prevtag,pos,tqv,seq,rux);
-    Psi[t] = new psiNode(800,0,num,0,prevtag,8,0,seq,800);  // 12feb2012
+ // Psi[t] = new psiNode(800,0,num,0,prevtag,8,0,seq,800);  // 12feb2012
+    // adding space for sake of finding "verblock"; test; 10sep2012
+    Psi[t+1] = new psiNode(800,0,num,0,prevtag,8,0,seq,800);  // 10sep2012
  // ruLexicon[t] = new ruNode(nru,act,num,mfn,dba,fex,pos,fin,aud);
-    ruLexicon[t] = new ruNode(800,0,0,0,dba,800,8,800,t);
+ // ruLexicon[t] = new ruNode(800,0,0,0,dba,800,8,800,t);
+    // adding space for sake of finding "verblock"; test; 10sep2012
+    ruLexicon[t+1] = new ruNode(800,0,0,0,dba,800,8,800,t);
     psi = 800;  // to become "seq" of the subject; 11feb2012
     pos = 8;  // 8=verb so next code creates "seq"; 11feb2012
     prevpsi = 800;  // to enable cancellation of be-verb; 14feb2012
@@ -1365,6 +1373,7 @@ function OldConcept() {
   psi = 0;  // test; remove; 30jun2011
 }  // End of OldConcept; return to AudInput(); 22aug2011
 
+
 function NewConcept() {
   ordo = (ordo + 1);  // increment for any word; test; 29jan2012
   nru = (nru + 1);  // 5jan2012
@@ -1555,7 +1564,8 @@ function audExam() {
   aud4 = this.ctu;
   aud5 = this.audpsi;  // 8dec2009 deglobalizing from "psi"
 }
- 
+
+
 function audNode(pho,act,pov,beg,ctu,audpsi) {
   this.pho = pho;
   this.act = act;
@@ -1795,7 +1805,8 @@ function Tab() {
   }
   TID=window.setTimeout("CR();",1000);
 }
- 
+
+
 function CR() {
   document.forms[1].elements[0].value = "";
   if (trouble == true) Diagnostic();

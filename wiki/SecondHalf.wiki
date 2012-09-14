@@ -610,11 +610,11 @@ function SpeechAct() {  // output of a word as text or sound
   output += " ";
   Voice();
   audbase = "";  // preventive; test; 5sep2012
-
   c16=""; c15=""; c14=""; c13=""; c12=""; // 8sep2012
   c11=""; c10=""; c09=""; c08=""; c07=""; // 8sep2012
   c06=""; c05=""; c04=""; c03=""; c02=""; // 8sep2012
   c01="";  // clear out the AudBuffer; 8sep2012
+  phodex = 0;  // reset for AudBuffer; 14sep2012
 }  // End of SpeechAct(); 13aug2010
 
  
@@ -1252,7 +1252,6 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
   if (subjpsi==707) dba = 2;  // 707="Ty" is second-person "you"; 3sep2012
   if (subjpsi==737) dba = 2;  // 737="VWI" is second-person "you"; 3sep2012
   if (subjpsi==731) dba = 1;  // 731="MWI" is first-person "we"; 3sep2012
-  
   do {  // first loop fills in AudBuffer
     audMemory[audbase].audExam();
     pho = aud0;
@@ -1427,6 +1426,7 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
       if (snu == 1) {  // a parameter; 24jan2012
         output += "&#1070;"  // "YU"; 21jan2012
         pho = "&#1070;"  // "YU"; 21jan2012
+        num = 1;  // not otherwise provided; 14sep2012
         ReEntry();  // for record of thought; 25jan2012
       }  // 21jan2012
      if (snu == 2) {  // subject-number parameter; 25jan2012
@@ -1506,6 +1506,7 @@ function VerbPhrase() {
     verbpsi = ru0;  // grab the verbpsi; test; 28aug2012
     audbase = ru8;  // parameter for VerbGen to call AudBuffer; 29aug2012
     dba = prsn;  // parameter for VerbGen; 30aug2012
+    vphraud = 0;  // until a known verb is found; 14sep2012
     for (i = t; i>midway; i--) {  // search for verb-form; 28aug2012
       ruLexicon[i].ruExam();  // examine Russian lexicon; 28aug2012
    // Following code accepts only a verb-form matching three 
@@ -1515,13 +1516,14 @@ function VerbPhrase() {
         gencon = 1;  // keep other verbs from SpeechAct; 5sep2012
         break;  // one instance is enough; 29aug2012
       }  // end of test to find regular or irregular verb-form; 10sep2012
-      else { // if no exact match is found, do the following; 7sep2012
-        gencon = 1;  // prevent usual call from VerbPhrase to SpeechAct.
-        if (verbpsi != 800) {  // avoid be-verbs; test; 10sep2012
-          VerbGen(); // generate the verb-form needed to think in Russian.
-        }  // end of test for be-verbs; test; 10sep2102
-      }  // end of else-clause to call VerbGen; 3sep2012
-    }  // end of loop in search of correct verb-form;; 28aug2012
+    }  // end of loop in search of correct verb-form;; 14sep2012
+    if (vphraud==0) { // as if else-clause for the verb-search; 14sep2012
+      gencon = 1;  // prevent usual call from VerbPhrase to SpeechAct.
+      if (verbpsi != 800) {  // avoid be-verbs; test; 10sep2012
+        phodex = 0;  // prevent carry-over values; 14sep2012
+        VerbGen(); // generate the verb-form needed to think in Russian.
+      }  // end of test for be-verbs; test; 10sep2102
+    }  // end of quasi-else-clause to call VerbGen; 14sep2012
   }  // end of test for a positive verblock; 24oct2011
   opt = 8;
   psi = 0;
@@ -2482,6 +2484,7 @@ Mon.3sep2012 replaces English 56=YOU with Russian 707="Ty" (you).
 Wed.5sep2012 ensures single verb-retrieval by clearing AudBuffer.
 Fri.7sep2012 clarifies or removes diagnostic comments for AI upload.
 Mon.10sep2012 changes instantiation of be-verbs for sake of verblock.
+Fri.14sep2012 "ru120914" uses quasi-else-clause to call VerbGen().
 (end of HTML Change Log comments) --> 
 </html>
 }}}

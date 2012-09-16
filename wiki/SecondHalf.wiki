@@ -190,7 +190,7 @@ psi=310; num=0; pre=0; seq=0; rux=310; RuVocab(); InNativate();
 t=439;c=1071; beg=1; ctu=0; audpsi=701; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 nru=701; mfn=0; dba=1; fex=701; pos=7; fin=707; aud=439;
-psi=701; num=1; pre=0; seq=831; rux=701; RuVocab(); InNativate();
+psi=701; num=1; pre=0; seq=0; rux=701; RuVocab(); InNativate();
  
 // 701 MENYA ("of me") pronoun; familiar; gen. sing. 21jan2012
 t=441;c=1052; beg=1; ctu=1; audpsi=0; 
@@ -459,6 +459,7 @@ function KbTraversal() {
     psi = 707;    // Russian "Ty" for "you"; 11jan2012
     nacpsi = 707; // Russian "Ty" for "you"; 11jan2012
     qusub = 707;  // Russian "Ty" for "you"; 11jan2012
+ // nounlock = 465;  // test; 15sep2012
     nounval = 62;
     defcon = nounval;  // force majeure into NounAct; 17nov2010
     NounAct();
@@ -856,6 +857,7 @@ function AskUser() {  // selector of question formats; 13aug2010
 
 
 function NounPhrase() {
+  PsiDecay();  // for quicker psi-decay; 16sep2012
   audjuste = 0;  // prevent carry-over; 24oct2011
   if (verblock > 0) {  // 24oct2011
     Psi[verblock].psiExam(); // expose all values to change one; 24oct2011
@@ -889,17 +891,12 @@ function NounPhrase() {
   if (dirobj == 1) dba = 4;  // seek accusative case; 21jan2012
   if (predflag == 1) subjectflag = 0;  // toggle; 24oct2011
   if (predflag == 1) dba = 1;  // seek nominative case; 21jan2012
-  psi = 0;  // The "psi-tag" carried by the "en0" flag.
+  psi = 0;  // The "psi-tag" carried by the "ru0" flag; 16sep2012
   for (i = t; i>midway; --i) {
     Psi[i].psiExam(); // examine Psi array for most active concept.
     if (psi5 == 5 || psi5 == 7) {  // Logical OR; 13aug2011
       if (subjectflag == 1) {  // selecting a subject? 24oct2011
-     // if (psi1 > act) {  // If psi1 is higher than "act"; 13aug2011
-     // if (psi1 > act && psi6 > 0) {  // tqv-check; 24oct2011
         if (psi1 > act && psi6 > 0) {  // tqv-check; 23aug2012
-     // if (psi1 > act) {  // without tqv-check; 22jan2012
-     // if (psi1 > act) {  // Commenting-out; 23aug2012
-       // if (psi7 > 0) {  // Testing for seq-concept; 24oct2011
            if (psi7 > 0) {  // Testing for seq-concept; 23aug2011
             tsels = i;  // retain time of subject; 24oct2011
             tseln = i;  // time of selected noun; 10may2011
@@ -913,7 +910,9 @@ function NounPhrase() {
           nphrpos = psi5;  // NounPhrase part-of-speech; 13aug2011
           posflag = psi5; // AskUser discriminand; 13aug2011
        // if (psi1 > act && psi7 > 0) {  // seq-check; 25oct2011
-          if (psi1 > act) {  // without seq-check; test; 22jan2012
+       // if (psi1 > act) {  // without seq-check; test; 22jan2012
+       // if (psi1 > act && psi7 > 0) {  // with seq-check; 16sep2012
+          if (psi1 > act) {  // without seq-check; 16sep2012
             verblock = psi6;  // tqv of seq-concept; 24oct2011
             for (j = t; j>midway; --j) {  // 22jan2012
              ruLexicon[j].ruExam();  // examine Russian lexicon; 5jan2012
@@ -954,8 +953,6 @@ function NounPhrase() {
           }  // prevent false motjuste; 24oct2011
         }  // End of test for a higher activation; 24oct2011
       }  // end of test for 1=subjectflag; 24oct2011
-if (i==nonce) {  // 8sep2012
-}  // 8sep2012
       if (subjectflag == 0) {  // i.e., dir.obj or pred.nom; 24oct2011
         if (psi1 > act) {  // If psi1 is higher than "act"; 24oct2011
           tseln = i;  // retain time of motjuste; 24oct2011
@@ -1031,8 +1028,8 @@ if (i==nonce) {  // 8sep2012
             verblock = psi6;  // lock onto valid verb; 25oct2011
             break;  // test; 29oct2011
           }  // end of test for higher-act ego-concept; 25oct2011
-        }  // end of test for "50=I" with seq-check; 29oct2011
-      }  // End of search for #50 "I"; 9jul2011
+        }  // end of test for "701=YA" (I) with seq-check; 16sep2012
+      }  // End of search for #701 "YA" (I); 16sep2012
       dba = 1;  // subject requires nominative case; 21jan2012
       subjpsi = 701;  // for use elsewhere;  5jan2012
       topic = 701;   // for question-asking modules;  5jan2012
@@ -1148,12 +1145,6 @@ if (i==nonce) {  // 8sep2012
     }  // End of finding not only engram but proper number. 18may2011
   }  // end of test to match subject-number and found noun; 26jan2012
   anset = 0;  // Safety measure reset to zero; 4may2011
-//  audMemory[aud].audExam();  // Inspect auditory memory at "aud";
-//  if (aud0 == "A") anset = 65;  // If vowel "A"; 4may2011
-//  if (aud0 == "E") anset = 69;  // If vowel "E"; 4may2011
-//  if (aud0 == "I") anset = 73;  // If vowel "I"; 4may2011
-//  if (aud0 == "O") anset = 79;  // If vowel "O"; 4may2011
-//  if (aud0 == "U") anset = 85;  // If vowel "U"; 4may2011
   ghost = 0;
   xthe = 0;  
     urpsi = motjuste; // prepare to psi-damp; 18oct2010
@@ -1513,7 +1504,11 @@ function VerbPhrase() {
    // requirements: [ ]same concept; [ ]num(ber); and [ ]person:
       if (ru0==verbpsi && ru2==nphrnum && ru4==prsn) {  // 3sep2012
         vphraud = ru8;  // VerbPhrase auditory engram tag; 7sep2012
-        gencon = 1;  // keep other verbs from SpeechAct; 5sep2012
+    //  gencon = 1;  // keep other verbs from SpeechAct; 5sep2012; 15sep2102
+    //  if (fyi==2 || fyi==3)  {  // Tutorial display mode? 15tsep2012
+          apb = "Activating auditory engram of verb #"+ru0+" at t = "+vphraud;
+          Voice();  // 15sep2012
+    //  }  // end of test for Tutorial display mode; 15sep2012
         break;  // one instance is enough; 29aug2012
       }  // end of test to find regular or irregular verb-form; 10sep2012
     }  // end of loop in search of correct verb-form;; 14sep2012
@@ -1742,6 +1737,10 @@ function VerbPhrase() {
     vacpsi = motjuste;  // for VerbAct(); 18aug2011
     VerbAct();  // moved from below SpeechAct & old KB-inhib; 18aug2011
     aud = vphraud;  // transfer just before call; 28jun2011
+
+ // if (aud==0) gencon = 1; WhatBe(); // test; 15sep2012
+    if (aud==0) return; // if no verb, abort the thought; 15sep2012
+
     if (gencon == 0) {  // if no call to VerbGen(); 19jan2012
       SpeechAct(); // main call from VerbPhrase to SpeechAct; 2sep2010
     }  // prevent speaking extra verb after VerbGen(); 19jan2012
@@ -2485,6 +2484,7 @@ Wed.5sep2012 ensures single verb-retrieval by clearing AudBuffer.
 Fri.7sep2012 clarifies or removes diagnostic comments for AI upload.
 Mon.10sep2012 changes instantiation of be-verbs for sake of verblock.
 Fri.14sep2012 "ru120914" uses quasi-else-clause to call VerbGen().
+Sun.16sep2012 "ru120916" announces selection of a Russian verb-form.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

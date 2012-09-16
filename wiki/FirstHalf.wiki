@@ -4,10 +4,10 @@
 {{{
 <html lang="ru">
 <head>
-<title>Dushka Russian AI for MSIE - please host on your website</title>
+<title>Russian artificial intelligence qua Technological Singularity</title>
 <meta http-equiv="content-type" content="text/html; charset=windows-1251" />
 <meta name="description"
- content="Russian-language artificial intelligence in JavaScript" />
+ content="Russian artificial intelligence in JavaScript for MSIE" />
 <meta name="keywords" 
  content="AI, Cyrillic, Dushka, artificial intelligence, Mentifex" />
 <script language="JavaScript"> 
@@ -156,7 +156,7 @@ var moot = 0;  // flag to prevent associations in DO-queries; 22aug2011
 var morphpsi = 0;
 var motjuste = "";
 var muse = 1;
-var nacpsi = 0;  // de-globalized psi for NounAct; 13aug2010
+var nacpsi = 0;  // noun-activand psi-concept for NounAct; 15sep2012
 var negjux = 0;  // flag for 12=NOT juxtaposed to a verb; 13oct2011
 var nen = 0;
 var nlt = 5;
@@ -307,6 +307,7 @@ var userline = "";
 var vacpsi = 0;  // de-globalized psi for VerbAct(); 1oct2010
 // var vault = 476; // size (time at end) of RuBoot; 10jan2012
 var vault = 531; // size (time at end) of RuBoot; 23jan2012
+var verbcept = 0;  // verb from perception not memory; 16sep2012
 var verblock = 0;  // for subject-noun to lock onto seq-verb; 13oct2011
 var verbnum = 0;
 var verbpsi = 0;  // for transit into WhatAuxSVerb() 14jun2011
@@ -315,7 +316,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "14sep12"; // for Transcript mode; fri14sep2012
+var vrsn = "16sep12"; // for Transcript mode; sun16sep2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -553,7 +554,7 @@ function psiList() {
     psidata += (" "+psi3+" "+psi4+" "+psi5+" "+psi6+" "+psi7+" "+psi8);
   }
 }
- 
+
 
 function ruList() {  // 22dec2011
   for (i = nonce; i < (t +1); i++) {
@@ -691,7 +692,7 @@ function SpreadAct() {
  
 
 function NounAct() {
-  if (nacpsi > 0) {  // using deglobalized variable; 13aug2010
+  if (nacpsi > 0) {  // noun-activand psi-concept; 15sep2012
     oldpsi = nacpsi;  // nacpsi replaces psi; 13aug2010
     for (i=(t + 1); i>midway; --i) {
       Psi[i].psiExam();
@@ -2287,7 +2288,7 @@ t=159;c=1048; beg=0; ctu=0; audpsi=807;
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
 nru=514; mfn=0; dba=1; fex=514; pos=5; fin=514; aud=156;
 psi=514; num=2; pre=0; seq=0; rux=514; RuVocab(); InNativate();
-
+ 
 // 830 DUMAT' ("to think"); verb; infinitive; 9jan2012
 t=161;c=1044; beg=1; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
@@ -2302,7 +2303,7 @@ t=165;c=1058; beg=0; ctu=1; audpsi=830;  // provisional; 15jan2012
 t=166;c=1068; beg=0; ctu=0; audpsi=830; 
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 nru=830; mfn=0; dba=0; fex=830; pos=8; fin=830; aud=161; 
-psi=830;  num=1; pre=0; seq=0; rux=830; RuVocab(); InNativate();
+psi=830;  num=0; pre=0; seq=0; rux=830; RuVocab(); InNativate();
 
 // 521 DUSHKA ("little soul"); name of the Russian AI; 4jan2012
 t=168;c=1044; beg=1; ctu=1; audpsi=0; 

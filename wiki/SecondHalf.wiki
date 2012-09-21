@@ -1539,10 +1539,8 @@ function VerbPhrase() {
       if (ru0==verbpsi && ru2==nphrnum && ru4==prsn) {  // 3sep2012
         vphraud = ru8;  // VerbPhrase auditory engram tag; 7sep2012
     //  gencon = 1;  // keep other verbs from SpeechAct; 5sep2012; 15sep2102
-    //  if (fyi==2 || fyi==3)  {  // Tutorial display mode? 15tsep2012
-          apb = "Activating auditory engram of verb #"+ru0+" at t = "+vphraud;
-          Voice();  // 15sep2012
-    //  }  // end of test for Tutorial display mode; 15sep2012
+        apb = "Activating auditory engram of verb #"+ru0+" at t = "+vphraud;
+        Voice();  // 15sep2012
         break;  // one instance is enough; 29aug2012
       }  // end of test to find regular or irregular verb-form; 10sep2012
     }  // end of loop in search of correct verb-form;; 14sep2012
@@ -1642,13 +1640,17 @@ function VerbPhrase() {
     if (subjpsi==701) {  // 17jan2012
        dba = 1;  // verb must be 1st person; 17jan2012
     }  // end of test for 1st person singular; 17jan2012
-    ruLexicon[verblock].ruExam();  // examine Russian lexicon; 5jan2012
-    vphraud = ru8;  // hold the auditory recall-vector;  5jan2012
+ // ruLexicon[verblock].ruExam();  // examine Russian lexicon; 5jan2012
+ // ruLexicon[verblock].ruExam();  // Ru-verbs not chosen thus; 20sep2012
+ // vphraud = ru8;  // hold the auditory recall-vector;  5jan2012
+ // vphraud = ru8;  // Let value come from elsewhere; 20sep2012
     act = 64;  // prevent rejection of selection; 24oct2011
+ // act = 64;  // Commenting out on 20sep2012
   }  // 24oct2011
-  if (verblock > 0) {  // 19aug2012
+// if (verblock > 0) {  // 19aug2012
+  if (verblock > 0 && vphraud == 0) {  // if no found verb; 20sep2012
     if (dba == 1) {  // if first person; 19aug2012
-      for (i = t; i>midway; i--) {  // Look backwards for 701=menya.
+      for (i = t; i>midway; i--) {  // Look backwards; 20sep2012
         ruLexicon[i].ruExam(); // examine Russian lexicon; 19aug2012
         if (ru0 == motjuste) {  // If motjuste is found; 19aug2012
           if (ru4 == dba) {  // if dba matches; 19aug2012
@@ -1771,10 +1773,8 @@ function VerbPhrase() {
     vacpsi = motjuste;  // for VerbAct(); 18aug2011
     VerbAct();  // moved from below SpeechAct & old KB-inhib; 18aug2011
     aud = vphraud;  // transfer just before call; 28jun2011
-
  // if (aud==0) gencon = 1; WhatBe(); // test; 15sep2012
     if (aud==0) return; // if no verb, abort the thought; 15sep2012
-
     if (gencon == 0) {  // if no call to VerbGen(); 19jan2012
       SpeechAct(); // main call from VerbPhrase to SpeechAct; 2sep2010
     }  // prevent speaking extra verb after VerbGen(); 19jan2012
@@ -2250,11 +2250,8 @@ function TuringTest() {
 function SeCurity() {
   TuringTest();
 // if (t > 160)  nonce = vault;  // Diagnostic display of all thought.
-  if (t > 160)  nonce = 503;  // special test on 23aug2012
-// nonce = 1;  // temporary; for full-view troubleshooting; 19aug2012
-
-   nonce = 1;  // temporary; for full-view troubleshooting; 19sep012
-
+// if (t > 160)  nonce = 503;  // special test on 23aug2012
+// nonce = 1;  // temporary; for full-view troubleshooting; 19sep012
 // if (t > 160)  nonce = 460;  // Only while re-coding RuBoot; 23jan2012
   if (t > (cns-64)) ReJuvenate();
   if (life == true) {
@@ -2523,6 +2520,7 @@ Mon.10sep2012 changes instantiation of be-verbs for sake of verblock.
 Fri.14sep2012 "ru120914" uses quasi-else-clause to call VerbGen().
 Sun.16sep2012 "ru120916" announces selection of a Russian verb-form.
 Wed.19sep2012 "ru120919" embeds verb of "to see" for sake of VisRecog.
+Fri.21sep2012 "ru120921" discards obsolete legacy VerbPhrase code.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

@@ -159,10 +159,10 @@ var muse = 1;
 var nacpsi = 0;  // noun-activand psi-concept for NounAct; 15sep2012
 var negjux = 0;  // flag for 12=NOT juxtaposed to a verb; 13oct2011
 var nen = 0;
-var nlt = 5;
+var nlt = 5; 
 var node = 0;
 // var nonce = 1;
-var nonce = 531;  // = vault; to speed up Diagnostics; 23jan2012
+var nonce = 538;  // = vault; to speed up Diagnostics; 21sep2012
 var nounaud = 0;
 var nouncall = 0;  // Try not to show articles as subjects; 21may2011
 var nounduck = 0;
@@ -317,7 +317,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "19sep12"; // for Transcript mode; wed19sep2012
+var vrsn = "21sep12"; // for Transcript mode; fri21sep2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -1259,8 +1259,6 @@ function RuReify() {  // adapted from EnReify; 5jan2012
     num = psi2;  // test; 17jan2012
     if (psi1 > 0) {
       lexact = psi1;  // from MindForth;  8jun2011
-  //  num = psi2;  // from MindForth;  8jun2011; 17jan2012
-  //  j = i;  // Instead of nesting;  8jun2011
       ruLexicon[i].ruExam();  // examine Russian array; 5jan2012
       ruLexicon[i] = new ruNode(ru0,lexact,num,ru3,ru4,ru5,ru6,ru7,ru8);
     }  // end of test for a psi with positive activation; 9aug2011
@@ -1304,6 +1302,7 @@ function OldConcept() {
       if (ru2 > 0) unk = ru2; //  5jan2012
       if (ru2 > 0) recnum = ru2;  // test; 22jan2012
       if (ru3 > 0) mfn = ru3; //  5jan2012
+      if (ru4 > 0) dba = ru4; // for verb-recognition; 20sep2012
       if (ru5 > 0) fex = ru5; //  5jan2012
       if (ru6 > 0) pos = ru6; //  5jan2012
       if (ru7 > 0) fin = ru7; //  5jan2012
@@ -1324,7 +1323,8 @@ function OldConcept() {
 //  }  // 29jan2012
   if (subjectflag == 1) dba = 1;  // nominative for subject; 31jan2012
   if (dirobj == 1) dba = 4;  // acc. for direct objects; 31jan2012
-  ruLexicon[t] = new ruNode(oldpsi,0,unk,mfn,dba,fex,pos,fin,aud);
+// ruLexicon[t] = new ruNode(oldpsi,0,unk,mfn,dba,fex,pos,fin,aud);
+  ruLexicon[t] = new ruNode(oldpsi,0,unk,mfn,prsn,fex,pos,fin,aud);
   mfn = 0;  // reset to prevent carry-over; test; 22jan2012
   if (pov == "{") oldpsi = fex;  // deglobalizing psi; 3jul2011
   if (pov == "#") oldpsi = fex;  // deglobalizing psi; 3jul2011

@@ -317,7 +317,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "21sep12"; // for Transcript mode; fri21sep2012
+var vrsn = "26sep12"; // for Transcript mode; wed26sep2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -434,6 +434,7 @@ function PsiDecay() {  // replacement for old PsiDecay(); 14may2011
       actran = 0;  // Reset to zero for safety;  8jun2011
       --psi1;  // Decrement the psi1 activation-level; 8sep2010
       if (psi0 == 781) psi1 = 0;  // 781=CHTO (what); 11jan2012
+      if (psi0 == 830) psi1 = 8;  // 830=DYELAT' (do); 22sep2012
       Psi[i] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
     } //  End of if-clause finding and reducing positive activations
     Psi[i].psiExam();  // test; REMOVE; 14jun2011
@@ -461,7 +462,8 @@ function PsiDamp() {
    }
   }
   residuum = 0;
-  PsiDecay();  // Testing to see if new version works well; 25may2011
+// PsiDecay();  // Testing to see if new version works well; 25may2011
+// PsiDecay();  // Commenting out; 26ysep2012
 }  // End of PsiDamp(); 15nov2010
 
  
@@ -699,14 +701,13 @@ function NounAct() {
       Psi[i].psiExam();
       if (psi0 == nacpsi) {  // nacpsi replaces psi; 13aug2010
         if (psi1 > -1) {   // avoid inhibition; 29oct2011
-       // psi1 = 26;  // start near a threshold level; 7jun2011
-       // psi1 = (40 - (4 * ordo));  // test; for sloping act; 29jan2012
           psi1 = 26;  // start near a threshold level;  1sep2012
         }  // 
         Psi[i] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
         if (psi0 == 781) {  // 781=CHTO (what); 11jan2012    
-          PsiDecay();  // MindForth: await active subject; 13may2011
-          PsiDecay();  // MindForth: await active subject;  7jun2011
+       // PsiDecay();  // MindForth: await active subject; 13may2011
+       // PsiDecay();  // MindForth: await active subject;  7jun2011
+       // PsiDecay();  // Commenting out; 26ysep2012
         }  // from MindForth; 13may2011
         spike = 12;  // Aim for ample spikes;  7jun2011
         prepsi = psi4;  // deglobalized; 1oct2010
@@ -815,9 +816,6 @@ function ReActivate() { // re-activate recent nodes of a concept
           if (psi1 < 0) {  // if inhibited; 27oct2011
             psi1 = (psi1 + 1);  // reactivate only slightly; 27oct2011
           }  // end of test for inhibited concept; 27oct2011
-       // else psi1 = psi1 + 35;  // full reactivation; 27oct2011
-       // else psi1 = psi1 + 35;  // Commenting out as test; 29jan2012
-       // else psi1 = (40 - (4 * ordo));  // test; 29jan2012; 28aug2012
           else psi1 = psi1 + 35;  // full reactivation; 28aug2012
         }  // end of test for a moot query input; 22aug2011
         if (firstword==54) psi1 = 48;  // affirm queries; 1nov2011
@@ -983,7 +981,6 @@ function AudBuffer() {  // for transfer of words to OutBuffer.
   if (phodex==14)  c14=abc;  // 4jan2012
   if (phodex==15)  c15=abc;  // 4jan2012
   if (phodex==16)  c16=abc;  // 4jan2012
- // phodex = 0;  // clear for next time; test; 5sep2012
 }  // end of AudBuffer() called from AudListen() or elsewhere.
  
 
@@ -1013,7 +1010,7 @@ function psiNode(psi,act,num,jux,pre,pos,tqv,seq,rux) { // 2jan2012
   this.psiExam = psiExam;
 }
 
-  
+
 function InStantiate() {
   if (seqneed == 0) seqneed = 5;  // for dir.obj. of verb; 23aug2012
   if (precand > 0) pre = precand;
@@ -1091,13 +1088,10 @@ function InStantiate() {
        quobj = psi;  // query-object for AskUser; 18aug2011
     }  // End of test for a noun; 20jul2011
   }  // End of test for external "*" point-of-view; 20jul2011
-//  act = (60 - (5 * ordo));  // test; for sloping act; 29jan2012
   if (pov == "#") {  // If POV is ASCII 35 "#" internal; 1may2011
     act = 0; // 0 activation for ReEntry concepts; 1may2011
   }  // End of test for "#" internal POV;  1may2011
   if (seq == 0) tqv = 0; // avoid spurious carry-overs; 23aug2012
-// act = (30 - (5 * ordo));  // test; for sloping act; 29jan2012
-// act = (30 - (5 * ordo));  // test; for sloping act;  1sep2012
   Psi[t] = new psiNode(psi,act,num,jux,prevtag,pos,tqv,seq,rux);
   act = 0;  // reset for safety; 27oct2011
   inhibcon = 0;  // reset for safety; 27oct2011
@@ -1239,11 +1233,7 @@ function RuParser() {  // renamed; 5jan2012
   bias = 5;
   act = 30;  // MindForth: Activate lower than ReActivate; 8jun2011
   if (pov == "*") {  // only during external input; 15oct2010
- // act = (act - ordo); // reduce S-V-O act's; 15oct2010 
- // act = (act - ordo); // Commenting out as a test; 29jan2012
- // act = (act + (ordo * 2)); // steeper; 29jan2012
  // act = 40; // test; 29jan2012
- // act = (act - (3 * ordo));  // test; 29jan2012
     act = 32;  // test; 23aug2012
   }  // end of test for external POV; 15oct2010
   InStantiate();
@@ -1349,7 +1339,8 @@ function OldConcept() {
     KbRetro();  // retroactively adjust knowledge base; 3jul2011
     kbcon = 0;  // reset for safety; 3jul2011
   }  // User has had one chance to answer yes-or-no question.
-  if (oldpsi == 707) act = 34;  // Enhance Ty (you); test; 26jan2012
+// if (oldpsi == 707) act = 34;  // Enhance Ty (you); test; 26jan2012
+// if (oldpsi == 707) act = 34;  // Commenting out; 26sep2012
   if (oldpsi == 781) act = 0;  // Suppress 781=CHTO (what); 11jan2012
   if (oldpsi == 791) act = 0;  // Subactivate 791=KTO (who); 11jan2012
   if (oldpsi == 250) {  // upon recognition of 250=NYE (not); 11jan2012
@@ -1976,9 +1967,7 @@ t=29;c=1059; beg=0; ctu=0; audpsi=807;
 nru=807; mfn=0; dba=1; fex=807; pos=8; fin=800; aud=26;
 psi=800; num=1; pre=0; seq=0; rux=807; RuVocab(); InNativate();
 
-// 820 DELAT' ("to do"); sample verb; 9jan2012
 // 820 VEEDYET' ("to see"); verb; infinitive; 19sep2012
-
 t=31;c=1042; beg=1; ctu=1; audpsi=0; // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 19sep2012
 t=32;c=1048; beg=0; ctu=1; audpsi=0;         // 19sep2012
@@ -1994,7 +1983,6 @@ t=36;c=1068; beg=0; ctu=0; audpsi=820;       // 19sep2012
 nru=820; mfn=0; dba=0; fex=820; pos=8; fin=820; aud=31; 
 psi=820; num=0; pre=0; seq=0; rux=820; RuVocab(); InNativate();
 
-// 820 DELAYU ("I do"); sample verb; 9jan2012
 // 820 VEEZHU ("I see"); verb for VisRecog; 19sep2012
 t=38;c=1042; beg=1; ctu=1; audpsi=0;         // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 19sep2012
@@ -2007,7 +1995,6 @@ t=41;c=1059; beg=0; ctu=0; audpsi=820;       // 19sep2012
 nru=820; mfn=0; dba=1; fex=820; pos=8; fin=820; aud=38; 
 psi=820;  num=1; pre=0; seq=0; rux=820; RuVocab(); InNativate();
 
-// 820 DELAYESH ("you do"); sample verb; 17jan2012
 // 820 VEEDYEESH ("you see"); verb for VisRecog; 19sep2012
 t=43;c=1042; beg=1; ctu=1; audpsi=0;         // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 19sep2012
@@ -2023,8 +2010,7 @@ t=48;c=1068; beg=0; ctu=0; audpsi=820; // prov. 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 19sep2012
 nru=820; mfn=0; dba=2; fex=820; pos=8; fin=820; aud=43; 
 psi=820; num=1; pre=0; tqv=0; seq=0; rux=820; RuVocab(); InNativate();
- 
-// 820 DELAYET ("he does"); sample verb; 9jan2012
+
 // 820 VEEDYEET ("he sees"); verb for VisRecog; 19sep2012
 t=50;c=1042; beg=1; ctu=1; audpsi=0;         // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 19sep2012
@@ -2039,7 +2025,6 @@ t=54;c=1058; beg=0; ctu=0; audpsi=820;       // 19sep2012
 nru=820; mfn=0; dba=3; fex=820; pos=8; fin=820; aud=50; 
 psi=820;  num=1; pre=0; seq=0; rux=820; RuVocab(); InNativate();
 
-// 820 DELAYEM ("we do"); sample verb; 9jan2012
 // 820 VEEDYEEM ("we see"); verb for VisRecog; 19sep2012
 t=56;c=1042; beg=1; ctu=1; audpsi=0;         // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 19sep2012
@@ -2054,7 +2039,6 @@ t=60;c=1052; beg=0; ctu=0; audpsi=820;       // 19sep2012
 nru=820; mfn=0; dba=1; fex=820; pos=8; fin=820; aud=56; 
 psi=820;  num=2; pre=0; seq=0; rux=820; RuVocab(); InNativate();
 
-// 820 DELAYETE ("you do"); verb; plural; 9jan2012
 // 820 VEEDYEETYE ("you see"); verb; plural; 19sep2012
 t=62;c=1042; beg=1; ctu=1; audpsi=0;        // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
@@ -2071,7 +2055,6 @@ t=67;c=1045; beg=0; ctu=0; audpsi=820;      // 19sep2012
 nru=820; mfn=0; dba=2; fex=820; pos=8; fin=820; aud=62; 
 psi=820;  num=2; pre=0; seq=0; rux=820; RuVocab(); InNativate();
 
-// 820 DELAYUT ("they do"); verb; 3rd pers. plural; 9jan2012
 // 820 VEEDYAT ("they see"); verb; 3rd pers. plural; 19sep2012
 t=69;c=1042; beg=1; ctu=1; audpsi=0;         // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 19sep2012
@@ -2283,12 +2266,14 @@ t=151;c=1045; beg=0; ctu=1; audpsi=0;        // 19sep2012
      pho = String.fromCharCode(c); AudMem(); //  9jan2012
 t=152;c=1051; beg=0; ctu=1; audpsi=0;        // 19sep2012
      pho = String.fromCharCode(c); AudMem(); //  9jan2012
-t=153;c=1040; beg=0; ctu=1; audpsi=0;        // 19sep2012
+t=153;c=1040; beg=0; ctu=1; audpsi=830;      // 22sep2012
      pho = String.fromCharCode(c); AudMem(); //  9jan2012
 t=154;c=1070; beg=0; ctu=0; audpsi=830;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); //  9jan2012
-nru=830; mfn=0; dba=1; fex=821; pos=8; fin=823; aud=150; 
-psi=830;  num=1; pre=0; seq=0; rux=821; RuVocab(); InNativate();
+// nru=830; mfn=0; dba=1; fex=821; pos=8; fin=823; aud=150; 
+nru=830; mfn=0; dba=1; fex=830; pos=8; fin=830; aud=150; 
+// psi=830;  num=1; pre=0; seq=0; rux=821; RuVocab(); InNativate();
+psi=830;  num=1; pre=0; seq=0; rux=830; RuVocab(); InNativate();
 
 // 514 DETYI (children) noun; plural; 9jan2012
 t=156;c=1044; beg=1; ctu=1; audpsi=0;
@@ -2779,5 +2764,4 @@ t=351;c=1059; beg=0; ctu=0; audpsi=370;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 nru=370; mfn=0; dba=0; fex=370; pos=3; fin=370; aud=346;
 psi=370; num=0; pre=0; seq=0; rux=370; RuVocab(); InNativate();
-
 }}}

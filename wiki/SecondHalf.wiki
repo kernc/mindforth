@@ -238,7 +238,6 @@ t=449;c=1049; beg=0; ctu=0; audpsi=701;      // 19sep2012
 nru=701; mfn=0; dba=5; fex=701; pos=7; fin=707; aud=446;
 psi=701; num=1; pre=0; seq=0; rux=701; RuVocab(); InNativate();
 
-
 // 701 MNYE ("me") pronoun; familiar; prep. sing. 21jan2012
 t=451;c=1052; beg=1; ctu=1; audpsi=0;        // 19sep2012
      pho = String.fromCharCode(c); AudMem(); //  7jan2012
@@ -493,7 +492,17 @@ function KbTraversal() {
     psi = 707;    // Russian "Ty" for "you"; 11jan2012
     nacpsi = 707; // Russian "Ty" for "you"; 11jan2012
     qusub = 707;  // Russian "Ty" for "you"; 11jan2012
- // nounlock = 465;  // test; 15sep2012
+    for (i = t; i>midway; i--) { // search backwards in time; 25sep2012
+      Psi[i].psiExam(); // expose all values to change one; 25sep2012
+      if (psi0 == 707) {  // test for specific concept; 25sep2012
+         ruLexicon[i].ruExam();  // examine the Russian lexicon; 25sep2012
+         if (ru4==1) {  // if nominative subject-form; 25sep2012
+        // alert("KbTrav: enhancing 707=YOU at t = "+i); // test 25sep2012
+           psi1 = (psi1 + 64);  // test; 26sep2012
+           Psi[i] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
+         }  // end of test for dba==1 (subject); 25sep2012
+       }  // end of test for specific concept to make more active.
+     }  // end of search of lexical array; 26sep2012
     nounval = 62;
     defcon = nounval;  // force majeure into NounAct; 17nov2010
     NounAct();
@@ -680,6 +689,7 @@ function WhatSVerb() {  // What Do Subjects Verb; 10jan2012
   for (i = t; i>midway; i--) {
     ruLexicon[i].ruExam();
     if (ru0 == verbpsi) {  // if concept number of verb; 10jan2012
+      // 25sep2012 Following code is for English, not Russian:
       if (ru2 == 2) {  // assume plural is like infinitive; 10jan2012
         aud = ru8; // recall-vector for verb-form; 10jan2012
         break;  // one instance is enough; 10jan2012
@@ -725,6 +735,8 @@ function WhatSDo() {  // modified from WhatAuxSDo(); 10jan2012
 function WhoBe() {  // for asking WHO IS-AM-ARE; 10jan2012
   tqv = 0;  // prevent spurious carry-over values; 23aug2012
   moot = 1;  // prevent storage of spurious ideas; 10jan2012
+  nounlock = 0;  // prevent spurious carry-over values; 26sep2012
+  verblock = 0;  // prevent spurious carry-over values; 26sep2012
   if (topic > 0) qusub = topic;  // not yet definite source; 3aug2011
   if (subjpsi > 0) qusub = subjpsi;  // not yet sure source; 3aug2011
   for (i = t; i>midway; i--) {  // first look for 55=WHO; 13aug2010
@@ -758,7 +770,9 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 10jan2012
 
 function WhatBe() {  // what AM/IS/ARE Subjects
   moot = 1;  // prevent storage of spurious ideas; 24oct2011
+  nounlock = 0;  // prevent spurious carry-over values; 26sep2012
   tqv = 0;  // prevent spurious carry-over values; 23aug2012
+  verblock = 0;  // prevent spurious carry-over values; 26sep2012
   for (i = t; i>midway; i--) {  // 19jun2011
     ruLexicon[i].ruExam();  // 10jan2012
     if (ru0 == 781) {  // 781=CHTO (what); 10jan2012
@@ -775,7 +789,8 @@ function WhatBe() {  // what AM/IS/ARE Subjects
     } // end of test for subjpsi;  5jul2011
   }  // end of search of En array; 19jun2011
   SpeechAct();  // 19jun2011
-  PsiDecay();  // from MindForth;  3jul2011
+// PsiDecay();  // from MindForth;  3jul2011
+// PsiDecay();  // Commenting out; 26sep2012
   for (i = t; i>midway; i--) {  // 11jan2012
     ruLexicon[i].ruExam();  // 11jan2012
     if (ru0 == 170) {  // 170=TAKOYE for idiomatic questions.
@@ -791,7 +806,7 @@ function WhatBe() {  // what AM/IS/ARE Subjects
   qusub = 0;  // reset for safety; 27oct2011
   qusubnum = 0;  // reset for safety; 27oct2011
 }  // End of WhatBe(); 27oct2011
- 
+
  
 function AskUser() {  // selector of question formats; 13aug2010
   if (posflag==7 || posflag==5) {  // noun or pronoun; 13aug2010
@@ -891,6 +906,11 @@ function AskUser() {  // selector of question formats; 13aug2010
 
 
 function NounPhrase() {
+  if (verblock > 0) {  // subject-finding test; 25sep2012
+    Psi[verblock].psiExam(); // examine at time of verblock; 25sep2012
+    motjuste = psi4;  // test; 25sep2012
+    subkpsi = psi4;  // testg; 25sep2012
+  }  // end of subject-finding test; 25sep2012
   PsiDecay();  // for quicker psi-decay; 16sep2012
   audjuste = 0;  // prevent carry-over; 24oct2011
   if (verblock > 0) {  // 24oct2011
@@ -1098,7 +1118,7 @@ function NounPhrase() {
             audjuste = ru8;  // "menya" engram 18aug2012
             break; // Use most recent engram of "menya"; 18aug2012
           }  // end of ru4 dba-test; 19aug2012
-        }  // End of search for #707 "menya"; 18aug2012
+        }  // End of search for #701 "menya"; 18aug2012; 22sep2012
       }  // End of loop finding word "menya"; 18aug2012
     }  // from MindForth; end of special override for 701=menya; 18aug2012
     if (motjuste == 707) {  // if 707="Ty" is needed; 18aug2012
@@ -1232,8 +1252,9 @@ function NounPhrase() {
     motjuste = psi0;   // test; 29oct2011
     // Try accentuating, not inhibiting; 29oct2011
  // Psi[t] = new psiNode(psi0,48,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
-    PsiDecay();  // Try _differential_ psi-decay; 14may2011
-    PsiDecay();  // MindForth: try to knock out also-rans; 8jun2011
+ //  PsiDecay();  // Try _differential_ psi-decay; 14may2011
+ // PsiDecay();  // MindForth: try to knock out also-rans; 8jun2011
+ // PsiDecay();  // Commenting out; 26sep2012
   }  // end of test for positive predflag; 16sep2010
   inhibcon = 1;  // flag for OldConcept and InStantiate; 27oct2011
   if (dirobj != 1 && predflag !=1 ) { // only subjects; 29oct2011
@@ -1546,10 +1567,10 @@ function VerbPhrase() {
     }  // end of loop in search of correct verb-form;; 14sep2012
     if (vphraud==0) { // as if else-clause for the verb-search; 14sep2012
       gencon = 1;  // prevent usual call from VerbPhrase to SpeechAct.
-      if (verbpsi != 800) {  // avoid be-verbs; test; 10sep2012
+      if (verbpsi != 800) {  // avoid be-verbs not spoken in Russian.
         phodex = 0;  // prevent carry-over values; 14sep2012
         VerbGen(); // generate the verb-form needed to think in Russian.
-      }  // end of test for be-verbs; test; 10sep2102
+      }  // end of test to exclude unspoken Russian be-verbs; 25sep2012
     }  // end of quasi-else-clause to call VerbGen; 14sep2012
   }  // end of test for a positive verblock; 24oct2011
   opt = 8;
@@ -1644,8 +1665,8 @@ function VerbPhrase() {
  // ruLexicon[verblock].ruExam();  // Ru-verbs not chosen thus; 20sep2012
  // vphraud = ru8;  // hold the auditory recall-vector;  5jan2012
  // vphraud = ru8;  // Let value come from elsewhere; 20sep2012
-    act = 64;  // prevent rejection of selection; 24oct2011
- // act = 64;  // Commenting out on 20sep2012
+ // act = 64;  // prevent rejection of selection; 24oct2011
+ // act = 64;  // Commenting out on 20sep2012; 22sep2012
   }  // 24oct2011
 // if (verblock > 0) {  // 19aug2012
   if (verblock > 0 && vphraud == 0) {  // if no found verb; 20sep2012
@@ -1886,11 +1907,12 @@ function RuCog() {  // Russian cognition; 26jan2012
  
  
 function ThInk() {
-  PsiDecay();  // trying to reduce stray activation; 16oct2010
-  PsiDecay();  // Sharply cutting high-activation concepts; 20may2011
-  PsiDecay();  // trying to reduce stray activation;  8jun2011
-  PsiDecay();  // trying to reduce stray activation;  8jun2011
-  PsiDecay();  // test; remove; 3jul2011
+// PsiDecay();  // trying to reduce stray activation; 16oct2010
+// PsiDecay();  // Sharply cutting high-activation concepts; 20may2011
+// PsiDecay();  // trying to reduce stray activation;  8jun2011
+// PsiDecay();  // trying to reduce stray activation;  8jun2011
+// PsiDecay();  // test; remove; 3jul2011
+// PsiDecay();  // Commenting out; 26sep2012
   inert = (inert + 1); // but AudInput resets to zero; 18oct2011
   lurk = (lurk + 1); // AudListen() resets to zero; 29sep2010
   if (life==true) { // 29sep2010
@@ -2250,8 +2272,7 @@ function TuringTest() {
 function SeCurity() {
   TuringTest();
 // if (t > 160)  nonce = vault;  // Diagnostic display of all thought.
-// if (t > 160)  nonce = 503;  // special test on 23aug2012
-// nonce = 1;  // temporary; for full-view troubleshooting; 19sep012
+// nonce = 1;  // temporary; for full-view troubleshooting; 25sep012
 // if (t > 160)  nonce = 460;  // Only while re-coding RuBoot; 23jan2012
   if (t > (cns-64)) ReJuvenate();
   if (life == true) {
@@ -2521,6 +2542,8 @@ Fri.14sep2012 "ru120914" uses quasi-else-clause to call VerbGen().
 Sun.16sep2012 "ru120916" announces selection of a Russian verb-form.
 Wed.19sep2012 "ru120919" embeds verb of "to see" for sake of VisRecog.
 Fri.21sep2012 "ru120921" discards obsolete legacy VerbPhrase code.
+Sat.22sep2012 introduces special activations within KbTraversal.
+Wed.26sep2012 “ru120926” zeroes out “verblock” and “nounlock”.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

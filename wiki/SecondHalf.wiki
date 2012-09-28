@@ -919,13 +919,13 @@ function NounPhrase() {
     motjuste = psi4;  // let "pre" = motjuste?; test; 30oct2011
   }  // end of test for a positive verblock; 24oct2011
   RuReify();  // 5jan2012
-  for (i = t; i>midway; i--) {
-    ruLexicon[i].ruExam();  // 5jan2012
-    if (ru0 == 704) {  // accusative; 5jan2011
-      audme = ru8; // 5jan2012
-      break;
-    }
-  }
+  // for (i = t; i>midway; i--) {  // commenting out; 28sep2012
+  //   ruLexicon[i].ruExam();  // 5jan2012
+  //   if (ru0 == 704) {  // accusative; 5jan2011
+  //     audme = ru8; // 5jan2012 // commenting out; 28sep2012
+  //     break;  // commenting out; 28sep2012
+  //   }  // commenting out; 28sep2012
+  // }  // commenting out; 28sep2012
   abort = false;
   act = 0;  // Start with zero to look for en1 higher than act.
   defact = -8;  // for default comparisons with "50=I"; 29oct2011
@@ -1029,13 +1029,13 @@ function NounPhrase() {
             Psi[i].psiExam(); // avoid error-on-page; 18oct2011
             nphrnum = psi2; // 13aug2011
             objold = motjuste; // a test ICW slosh-over; 18oct2010
-            if (motjuste == 701) {  // 701=Ya; 5jan2012
-             if (nounlock == 0) {  // test; 25oct2011
-              motjuste = 704;  // 704=MENYA; 5jan2012
-              aud = audme; 
-              audjuste = audme;
-             }  // end of anti-substitution test; 25oct2011
-            }  // end of test for "701=Ya"; 5jan2012
+         // if (motjuste == 701) {  // 701=Ya; 5jan2012; 28sep2012
+         //  if (nounlock == 0) {  // test; 25oct2011; 28sep2012
+         //   motjuste = 704;  // 704=MENYA; 5jan2012; 28sep2012
+         //   aud = audme; // commenting out on 28sep2012
+         //   audjuste = audme; // commenting out on 28sep2012
+         //  }  // end of anti-substitution test; 25oct2011; 28sep2012
+         // }  // end of test for "701=Ya"; 5jan2012; 28sep2012
           }  // end of test for needing a direct object; 24oct2011
           if (psi1 > act) act = psi1;  // change the metric; 24oct2011
         }  // end of test for a higher activation; 24oct2011
@@ -2272,8 +2272,7 @@ function TuringTest() {
 function SeCurity() {
   TuringTest();
 // if (t > 160)  nonce = vault;  // Diagnostic display of all thought.
-// nonce = 1;  // temporary; for full-view troubleshooting; 25sep012
-// if (t > 160)  nonce = 460;  // Only while re-coding RuBoot; 23jan2012
+// nonce = 1;  // temporary; for full-view troubleshooting; 27sep2012
   if (t > (cns-64)) ReJuvenate();
   if (life == true) {
 apb=("AI 4U on KB psi #"+kbtv+" at t="+t+" is alive on cyc #"+rjc+" since " +dob+ ".");
@@ -2543,7 +2542,9 @@ Sun.16sep2012 "ru120916" announces selection of a Russian verb-form.
 Wed.19sep2012 "ru120919" embeds verb of "to see" for sake of VisRecog.
 Fri.21sep2012 "ru120921" discards obsolete legacy VerbPhrase code.
 Sat.22sep2012 introduces special activations within KbTraversal.
-Wed.26sep2012 “ru120926” zeroes out “verblock” and “nounlock”.
+Wed.26sep2012 "ru120926" zeroes out "verblock" and "nounlock".
+Thurs.27sep2012 shortens range of characters tested for verb-recog.
+Fri.28sep2012 "ru120928" discontinues use of "audme" variable.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

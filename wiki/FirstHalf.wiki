@@ -26,7 +26,7 @@ var audbase = 0;  // recall-vector for VerbGen(); 18jan2012
 var auddata = ("<b>" + "Auditory memory nodes" + "<\/b>" + "<BR>");
 auddata += ("krt pho act pov beg ctu audpsi");  // 8dec2009
 var audjuste = 0;
-var audme = 0;
+var audme = 0;  // 28sep2012: to be removed from all AI Minds
 var audpsi = 0; // 6dec2009 de-globalizing the "psi" variable 
 var audrec = 0; // 8dec2009 Replaces "psi" in AudRecog module.
 var audrun = 0; // Counter of loops through AudRecog(); 7jul2010 
@@ -317,7 +317,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "26sep12"; // for Transcript mode; wed26sep2012
+var vrsn = "28sep12"; // for Transcript mode; fri28sep2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -860,7 +860,6 @@ function OutBuffer() {  // for manipulation of SpeechAct words; 4jan2012
    b01=""; b02=""; b03=""; b04=""; b05=""; b06="";  // 5sep2102
    b07=""; b08=""; b09=""; b10=""; b11=""; b12="";  // 5sep2012
    b13=""; b14=""; b15=""; b16="";  // clear tabula rasa; 5sep2012
-
   if (c16>"") {  // if the AudBuffer full; 4jan2012
     b16=c16; b15=c15; b14=c14; b13=c13; b12=c12; b11=c11; 
     b10=c10; b09=c09; b08=c08; b07=c07; b06=c06; b05=c05; 
@@ -1293,6 +1292,7 @@ function OldConcept() {
       if (ru2 > 0) recnum = ru2;  // test; 22jan2012
       if (ru3 > 0) mfn = ru3; //  5jan2012
       if (ru4 > 0) dba = ru4; // for verb-recognition; 20sep2012
+   // if (ru4 > 0) dba = ru4; // Commenting out for test; 27sep2012
       if (ru5 > 0) fex = ru5; //  5jan2012
       if (ru6 > 0) pos = ru6; //  5jan2012
       if (ru7 > 0) fin = ru7; //  5jan2012
@@ -1314,7 +1314,8 @@ function OldConcept() {
   if (subjectflag == 1) dba = 1;  // nominative for subject; 31jan2012
   if (dirobj == 1) dba = 4;  // acc. for direct objects; 31jan2012
 // ruLexicon[t] = new ruNode(oldpsi,0,unk,mfn,dba,fex,pos,fin,aud);
-  ruLexicon[t] = new ruNode(oldpsi,0,unk,mfn,prsn,fex,pos,fin,aud);
+// ruLexicon[t] = new ruNode(oldpsi,0,unk,mfn,prsn,fex,pos,fin,aud);
+  ruLexicon[t] = new ruNode(oldpsi,0,unk,mfn,dba,fex,pos,fin,aud);
   mfn = 0;  // reset to prevent carry-over; test; 22jan2012
   if (pov == "{") oldpsi = fex;  // deglobalizing psi; 3jul2011
   if (pov == "#") oldpsi = fex;  // deglobalizing psi; 3jul2011
@@ -1651,7 +1652,8 @@ function AudListen() {
          b09=""; b10=""; b11=""; b12="";  // 18jan2012 
          b13=""; b14=""; b15=""; b16="";  // 18jan2012
       }  // end of nested if-clause; 18jan2012
-      if (b14==String.fromCharCode(1045)) {  // "E" 18jan2012
+   // if (b14==String.fromCharCode(1045)) {  // "E" 18jan2012
+   // if (b14==String.fromCharCode(1045)) {  // C-ing out 27sep2012
         if (b15==String.fromCharCode(1064)) {  // "SH" 18jan2012
           if (b16==String.fromCharCode(1068)) {  // "b" 18jan2012
             num = 1;  // singular verb form; 12jan2012
@@ -1662,8 +1664,10 @@ function AudListen() {
             b05=""; b06=""; b07=""; b08="";  // 12jan2012
             b09=""; b10=""; b11=""; b12="";  // 12jan2012 
             b13=""; b14=""; b15=""; b16="";  // 12jan2012
-      } } }  // end of nested if-clauses; 12jan2012
-      if (b15==String.fromCharCode(1045)) {  // "E" 18jan2012
+  //  } } }  // end of nested if-clauses; 12jan2012
+      } }  // end of nested if-clauses; 12jan2012; 27sep2012
+  //  if (b15==String.fromCharCode(1045)) {  // "E" 18jan2012
+  //  if (b15==String.fromCharCode(1045)) {  // out; 27sep2012
         if (b16==String.fromCharCode(1058)) {  // "T" 18jan2012
           num = 1;  // singular verb form; 18jan2012
           dba = 3;  // 3rd person verb form; 18jan2012
@@ -1673,7 +1677,8 @@ function AudListen() {
           b05=""; b06=""; b07=""; b08="";  // 18jan2012
           b09=""; b10=""; b11=""; b12="";  // 18jan2012 
           b13=""; b14=""; b15=""; b16="";  // 18jan2012
-      } }  // end of nested if-clauses; 18jan2012
+   // } }  // end of nested if-clauses; 18jan2012
+      }  // end of nested if-clauses; 18jan2012; 27sep2012
       if (b15==String.fromCharCode(1045)) {  // "E" 18jan2012
         if (b16==String.fromCharCode(1052)) {  // "M" 18jan2012
           num = 2;  // plural verb form; 18jan2012
@@ -2764,4 +2769,5 @@ t=351;c=1059; beg=0; ctu=0; audpsi=370;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 nru=370; mfn=0; dba=0; fex=370; pos=3; fin=370; aud=346;
 psi=370; num=0; pre=0; seq=0; rux=370; RuVocab(); InNativate();
+
 }}}

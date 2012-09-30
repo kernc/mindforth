@@ -248,50 +248,57 @@ t=453;c=1045; beg=0; ctu=0; audpsi=701;      // 19sep2012
 nru=701; mfn=0; dba=6; fex=701; pos=7; fin=707; aud=451;
 psi=701; num=1; pre=0; seq=0; rux=701; RuVocab(); InNativate();
 
+// 29sep2012 changing seq from 870 to 818:
 // 701 YA (I) pronoun; nom. sing. 19sep2012
-t=455;c=1071; beg=1; ctu=0; audpsi=701;      // 19sep2012
-     pho = String.fromCharCode(c); AudMem(); // 19sep2012
-nru=701; mfn=0; dba=1; fex=701; pos=7; fin=707; aud=455;
-psi=701; num=1; pre=0; seq=870; rux=701; RuVocab(); InNativate();
+// t=455;c=1071; beg=1; ctu=0; audpsi=701;      // 19sep2012
+//      pho = String.fromCharCode(c); AudMem(); // 19sep2012
+// nru=701; mfn=0; dba=1; fex=701; pos=7; fin=707; aud=455;
+// psi=701; num=1; pre=0; tqv=460; seq=818; rux=701; RuVocab(); InNativate();
 
+
+// 29sep2012: changing seq from 0 to 860 (MWISLIT'):
+// 29sep2012: inserting tqv=468
 // 818 MOGU ("can") verb; 1st pers. sing. 19sep2012
-t=457;c=1052; beg=1; ctu=1; audpsi=0;        // 19sep2012
-     pho = String.fromCharCode(c); AudMem(); //  9jan2012
-t=458;c=1054; beg=0; ctu=1; audpsi=0;        // 19sep2012
-     pho = String.fromCharCode(c); AudMem(); //  9jan2012
-t=459;c=1043; beg=0; ctu=1; audpsi=0;        // 19sep2012
-     pho = String.fromCharCode(c); AudMem(); //  9jan2012
-t=460;c=1059; beg=0; ctu=0; audpsi=816;      // 19sep2012
-     pho = String.fromCharCode(c); AudMem(); //  9jan2012
-nru=818; mfn=0; dba=1; fex=818; pos=8; fin=818; aud=457;
-psi=818; num=1; pre=0; seq=0; rux=818; RuVocab(); InNativate();
+// t=457;c=1052; beg=1; ctu=1; audpsi=0;        // 19sep2012
+//      pho = String.fromCharCode(c); AudMem(); //  9jan2012
+// t=458;c=1054; beg=0; ctu=1; audpsi=0;        // 19sep2012
+//      pho = String.fromCharCode(c); AudMem(); //  9jan2012
+// t=459;c=1043; beg=0; ctu=1; audpsi=0;        // 19sep2012
+//      pho = String.fromCharCode(c); AudMem(); //  9jan2012
+// t=460;c=1059; beg=0; ctu=0; audpsi=816;      // 19sep2012
+//      pho = String.fromCharCode(c); AudMem(); //  9jan2012
+// nru=818; mfn=0; dba=1; fex=818; pos=8; fin=818; aud=457;
+// psi=818; num=1; pre=0; tqv=468; seq=860; rux=818; RuVocab(); InNativate();
 
 // 860 MWISLIT' ("to think"); verb; infinitive; 19sep2012
-t=462;c=1052; beg=1; ctu=1; audpsi=0;        // 19sep2012
-     pho = String.fromCharCode(c); AudMem(); //  7jan2012
-t=463;c=1067; beg=0; ctu=1; audpsi=0;        // 19sep2012
-     pho = String.fromCharCode(c); AudMem(); //  7jan2012
-t=464;c=1057; beg=0; ctu=1; audpsi=0;        // 19sep2012
-     pho = String.fromCharCode(c); AudMem(); //  7jan2012
-t=465;c=1051; beg=0; ctu=1; audpsi=0;        // 19sep2012
-     pho = String.fromCharCode(c); AudMem(); //  7jan2012
-t=466;c=1048; beg=0; ctu=1; audpsi=860;  // 19sep2012 
-     pho = String.fromCharCode(c); AudMem(); //  7jan2012
-t=467;c=1058; beg=0; ctu=1; audpsi=860;  // 19sep2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-t=468;c=1068; beg=0; ctu=0; audpsi=860;  // 19sep2012
-     pho = String.fromCharCode(c); AudMem(); // 7jan2012
-nru=860; mfn=0; dba=0; fex=860; pos=8; fin=860; aud=462;
-psi=860; num=0; pre=0; seq=0; rux=860; RuVocab(); InNativate();
+// t=462;c=1052; beg=1; ctu=1; audpsi=0;        // 19sep2012
+//      pho = String.fromCharCode(c); AudMem(); //  7jan2012
+// t=463;c=1067; beg=0; ctu=1; audpsi=0;        // 19sep2012
+//      pho = String.fromCharCode(c); AudMem(); //  7jan2012
+// t=464;c=1057; beg=0; ctu=1; audpsi=0;        // 19sep2012
+//      pho = String.fromCharCode(c); AudMem(); //  7jan2012
+// t=465;c=1051; beg=0; ctu=1; audpsi=0;        // 19sep2012
+//      pho = String.fromCharCode(c); AudMem(); //  7jan2012
+// t=466;c=1048; beg=0; ctu=1; audpsi=860;  // 19sep2012 
+//      pho = String.fromCharCode(c); AudMem(); //  7jan2012
+// t=467;c=1058; beg=0; ctu=1; audpsi=860;  // 19sep2012
+//      pho = String.fromCharCode(c); AudMem(); // 7jan2012
+// t=468;c=1068; beg=0; ctu=0; audpsi=860;  // 19sep2012
+//      pho = String.fromCharCode(c); AudMem(); // 7jan2012
+// nru=860; mfn=0; dba=0; fex=860; pos=8; fin=860; aud=462;
+// psi=860; num=0; pre=0; seq=0; rux=860; RuVocab(); InNativate();
 
+// 29sep2012: Inserting tqv=479 to DUMAYESH:
 // 707 TY ("you") pronoun; familiar; nom. sing. 23jan2012
 t=470;c=1058; beg=1; ctu=1; audpsi=0;        // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
 t=471;c=1067; beg=0; ctu=0; audpsi=707;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
 nru=707; mfn=0; dba=1; fex=707; pos=7; fin=701; aud=470;
-psi=707; num=1; pre=0; seq=840; rux=707; RuVocab(); InNativate();
+psi=707; num=1; pre=0; tqv=479; seq=840; rux=707; RuVocab(); InNativate();
 
+// 29sep2012: changing seq from zero to 787:
+// 29sep2012: inserting tqv=490:
 // 840 DUMAYESH ("think"); verb; 2nd person sing. 19sep2012
 t=473;c=1044; beg=1; ctu=1; audpsi=0;        // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
@@ -308,7 +315,7 @@ t=478;c=1064; beg=0; ctu=1; audpsi=840;      // 19sep2012
 t=479;c=1068; beg=0; ctu=0; audpsi=840;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
 nru=840; mfn=0; dba=2; fex=840; pos=8; fin=840; aud=473; 
-psi=840;  num=1; pre=0; tqv=0;seq=0; rux=840; RuVocab(); InNativate();
+psi=840;  num=1; pre=0; tqv=0; tqv=490; seq=787; rux=840; RuVocab(); InNativate();
 
 // 787 CHTO-NIBUD (something) pronoun; acc. singular 23jan2012
 t=481;c=1063; beg=1; ctu=1; audpsi=0;        // 19sep2012
@@ -346,6 +353,8 @@ t=495;c=1048; beg=0; ctu=0; audpsi=587;      // 19sep2012
 nru=587; mfn=0; dba=1; fex=587; pos=5; fin=587; aud=492;
 psi=587; num=2; pre=0; seq=0; rux=587; RuVocab(); InNativate();
 
+// 30sep2012 Adding audpsi=890 at t=500:
+// 30sep2012 Adding audpsi=890 at t=501:
 // 890 CHITAYUT ("they read"); verb; 3rd pers. plural; 23jan2012
 t=497;c=1063; beg=1; ctu=1; audpsi=0;        // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
@@ -353,9 +362,9 @@ t=498;c=1048; beg=0; ctu=1; audpsi=0;        // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
 t=499;c=1058; beg=0; ctu=1; audpsi=0;        // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=500;c=1040; beg=0; ctu=1; audpsi=0;        // 19sep2012
+t=500;c=1040; beg=0; ctu=1; audpsi=890;        // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=501;c=1070; beg=0; ctu=1; audpsi=0;        // 19sep2012
+t=501;c=1070; beg=0; ctu=1; audpsi=890;        // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
 t=502;c=1058; beg=0; ctu=0; audpsi=890;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
@@ -376,12 +385,15 @@ t=508;c=1048; beg=0; ctu=0; audpsi=540;      // 19sep2012
 nru=540; mfn=2; dba=4; fex=540; pos=5; fin=540; aud=504;
 psi=540; num=2; pre=0; seq=0; rux=540; RuVocab(); InNativate();
 
+
+// 29sep2012: inserting tqv=518:
 // 701 YA (I) pronoun; nom. sing. 23jan2012
 t=510;c=1071; beg=1; ctu=0; audpsi=701;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
 nru=701; mfn=0; dba=1; fex=701; pos=7; fin=707; aud=510;
-psi=701; num=1; pre=0; seq=870; rux=701; RuVocab(); InNativate();
+psi=701; num=1; pre=0; tqv=518; seq=870; rux=701; RuVocab(); InNativate();
 
+// 29sep2012: changing tqv from 517 to 523 (TEBYA):
 // 870 PONIMAYU ("understand"); verb; 1st person sing; 19sep2012
 t=512;c=1055; beg=1; ctu=1; audpsi=0;        // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
@@ -398,7 +410,7 @@ t=517;c=1040; beg=0; ctu=1; audpsi=870;      // 19sep2012
 t=518;c=1070; beg=0; ctu=0; audpsi=870;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
 nru=870; mfn=0; dba=1; fex=870; pos=8; fin=870; aud=512;
-psi=870; num=1; pre=701; tqv=517; seq=707; rux=870; RuVocab(); InNativate();
+psi=870; num=1; pre=701; tqv=523; seq=707; rux=870; RuVocab(); InNativate();
 
 // 707 TEBYA ("you") pronoun; familiar; acc. sing. 23jan2012
 t=520;c=1058; beg=1; ctu=1; audpsi=0;        // 19sep2012
@@ -492,6 +504,8 @@ function KbTraversal() {
     psi = 707;    // Russian "Ty" for "you"; 11jan2012
     nacpsi = 707; // Russian "Ty" for "you"; 11jan2012
     qusub = 707;  // Russian "Ty" for "you"; 11jan2012
+    verblock = 0;  // reset any pre-existing value; 30sep2012
+    nounlock = 0;  // reset any pre-existing value; 30sep2012
     for (i = t; i>midway; i--) { // search backwards in time; 25sep2012
       Psi[i].psiExam(); // expose all values to change one; 25sep2012
       if (psi0 == 707) {  // test for specific concept; 25sep2012
@@ -515,6 +529,8 @@ function KbTraversal() {
     qusub = 571;  // in case a query will be made; 11jan2012
     subjpsi = 571;  // provisional subject of a query; 11jan2012
     nphrnum = 1;  // prescriptive for sing. ROBOT; 11jan2012
+    verblock = 0;  // reset any pre-existing value; 30sep2012
+    nounlock = 0;  // reset any pre-existing value; 30sep2012
     nounval = 62;
     defcon = nounval;  // force majeure into NounAct; 17nov2010
     NounAct();
@@ -526,6 +542,8 @@ function KbTraversal() {
     nacpsi = 701;  // 11jan2012
     qusub = 701;  // in case a query will be made; 11jan2012
     subjpsi = 701;  // provisional subject of a query; 11jan2012
+    verblock = 0;  // reset any pre-existing value; 30sep2012
+    nounlock = 0;  // reset any pre-existing value; 30sep2012
     nounval = 8;  // test; 27oct2011
     defcon = nounval;  // force majeure into NounAct; 17nov2010
     NounAct();
@@ -537,6 +555,8 @@ function KbTraversal() {
     nacpsi = 501;  // noun-activation-psi; 11jan2012
     qusub = 501;  // in case a query will be made; 11jan2012
     subjpsi = 501;  // provisional subject of a query; 11jan2012
+    verblock = 0;  // reset any pre-existing value; 30sep2012
+    nounlock = 0;  // reset any pre-existing value; 30sep2012
     nounval = 62;
     defcon = nounval;  // force majeure into NounAct; 17nov2010
     NounAct();
@@ -663,6 +683,7 @@ function SpeechAct() {  // output of a word as text or sound
 
  
 function AuxVerb() {  // 12jan2012
+  verblock = 0;  // reset for safety; 29sep2012
   // Removing code for English "DO" or "DOES"; 12jan2012
   // Saving AuxVerb() for Russian MOGU or KHOCHU; 12jan2012
 }  // End of AuxVerb()
@@ -966,7 +987,8 @@ function NounPhrase() {
        // if (psi1 > act && psi7 > 0) {  // seq-check; 25oct2011
        // if (psi1 > act) {  // without seq-check; test; 22jan2012
        // if (psi1 > act && psi7 > 0) {  // with seq-check; 16sep2012
-          if (psi1 > act) {  // without seq-check; 16sep2012
+       // if (psi1 > act) {  // without seq-check; 16sep2012
+          if (psi1 > act && psi7 > 0) {  // with seq-check; 30sep2012
             verblock = psi6;  // tqv of seq-concept; 24oct2011
             for (j = t; j>midway; --j) {  // 22jan2012
              ruLexicon[j].ruExam();  // examine Russian lexicon; 5jan2012
@@ -1073,15 +1095,22 @@ function NounPhrase() {
       nphrpos = 7;  // pronoun "I"; to prevent EnArticle; 14sep2011
       subjpsi = 701;  // use elsewhere; 5jan2012
       topic = 701;  // use elsewhere; 5jan2012
+      verblock = 0; // reset any pre-existing value; 30sep2012
+      vphraud = 0;  // reset any pre-existing value; 30sep2012
       for (i = t; i>midway; i--) {  // Look for "50=I"; 9jul2011
         Psi[i].psiExam(); // examine Psi array; 25oct2011
-        if (psi0 == 701 && psi7 > 0) {  // 5jan2012
-          if (psi1 > defact) {  // 25oct2011 
+     // if (psi0 == 701 && psi7 > 0) {  // 5jan2012
+     // if (psi0 == 701 && psi7 > 0) {  // Commenting out; 29sep2102
+        if (psi0 == 701 && psi1 > defact && psi7 > 0) {  // 
+       // if (psi1 > defact) {  // 25oct2011 
+       // if (psi1 > defact) {  // commenting out; 29sep2012
             tsels = i;  // retain time of subject; 25oct2011
             tseln = i;  // retain time of motjuste; 25oct2011
             verblock = psi6;  // lock onto valid verb; 25oct2011
+            vphraud = 0;  // reset any pre-existing value; 30sep2012
             break;  // test; 29oct2011
-          }  // end of test for higher-act ego-concept; 25oct2011
+       // }  // end of test for higher-act ego-concept; 25oct2011
+       // }  // commenting out as part of pair; 29sep2012
         }  // end of test for "701=YA" (I) with seq-check; 16sep2012
       }  // End of search for #701 "YA" (I); 16sep2012
       dba = 1;  // subject requires nominative case; 21jan2012
@@ -1538,6 +1567,9 @@ function VerbGen() {  // to create missing verb-forms; 18jan2012
 function VerbPhrase() {
   if (verblock > 0) {  // positive verblock? 24oct2011
     Psi[verblock].psiExam(); // expose all values to change one; 24oct2011
+    if (psi0==818) {  // test to intercept modal verb; 29sep2012
+      AuxVerb();  // test; 29sep2012
+    }  // end of test for 818=MOGU;  29sep2012
     nounlock = psi6;  // time-point of "seq" engram; 24oct2011
     gencon = 0;  // try to prevent VerbGen-call; 23aug2012
   }  // 24oct2011  
@@ -1595,21 +1627,22 @@ function VerbPhrase() {
               negjux = psi3;  // 13oct2011
             }  // end of test for 250=NYE; 17jan2012
           }  // end of test for positive activation; 15aug2011
-          if (verblock > 0) {  // if positive verblock exists; 24oct2011
-            if (i == verblock) {  // upon reaching engram; 24oct2011
-              motjuste = psi0;  // grab verblock psi; 24oct2011
-              act = 64;  // to pass threshold-test; 24oct2011
-              negjux = psi3;  // for negation of verb; 24oct2011
-              nounlock = psi6;  // after verb grab "seq"; 24oct2011
-              if (subjpsi==701) {  // 17jan2012
-                dba = 1;  // verb must be 1st person; 17jan2012
-                snu = 1;  // subject number; 22jan2012
-              }  // end of test for 1st person singular; 17jan2012
-              ruLexicon[i].ruExam();  // Russian lexicon;  5jan2012
-              vphraud = ru8;  // for SpeechAct;  5jan2012
-              break;  // prevent usurpation of pre-ordained seq; 7oct2011
-            }  // end of test for index = verblock; 24oct2011
-          }  // end of test for positive verblock; 24oct2011
+       // 30sep2012 Commenting out obsolete block of code:
+       // if (verblock > 0) {  // if positive verblock exists; 24oct2011
+       //   if (i == verblock) {  // upon reaching engram; 24oct2011
+       //     motjuste = psi0;  // grab verblock psi; 24oct2011
+       //     act = 64;  // to pass threshold-test; 24oct2011
+       //     negjux = psi3;  // for negation of verb; 24oct2011
+       //     nounlock = psi6;  // after verb grab "seq"; 24oct2011
+       //     if (subjpsi==701) {  // 17jan2012
+       //       dba = 1;  // verb must be 1st person; 17jan2012
+       //       snu = 1;  // subject number; 22jan2012
+       //     }  // end of test for 1st person singular; 17jan2012
+       //     ruLexicon[i].ruExam();  // Russian lexicon;  5jan2012
+       //     vphraud = ru8;  // for SpeechAct;  5jan2012
+       //     break;  // prevent usurpation of pre-ordained seq; 7oct2011
+       //   }  // end of test for index = verblock; 24oct2011
+       // }  // end of test for positive verblock; 24oct2011
           if (psi1 > 0) {  // positive activation? 24oct2011
             if (verblock==0) negjux = psi3; // negative be-verbs; 24oct2011
             tqv = psi6;  // underailable tqv; 24oct2011
@@ -1623,7 +1656,7 @@ function VerbPhrase() {
         }  // end of if-clause looking for higher activation
       } else continue;
   }  // end of search for "motjuste" in Psi array; 13aug2011
-  if (vphraud == 0) {  // if not substituted above; 29aug2012
+   if (vphraud == 0) {  // if not substituted above; 29aug2012
    for (i = t; i>midway; i--) {  // separate search for verb-form;
     ruLexicon[i].ruExam();  // examine Russian lexicon; 17jan2012
     if (motjuste != 0 && ru0 == motjuste) {  // look for motjuste; 17jan2012
@@ -1651,9 +1684,9 @@ function VerbPhrase() {
       vip = 0;  // reset for safety; 31jan2012
     break;  // test; 19jan2019
     }  // end of test for motjuste; 17jan2012
-  }  // end of loop in search of motjuste; 17jan2012
- }  // end of test against zero-vphraud; 29aug2012
-} // end of verblock-test to prevent false negations; 20oct2011
+   }  // end of loop in search of motjuste; 17jan2012
+  }  // end of test against zero-vphraud; 29aug2012
+ } // end of verblock-test to prevent false negations; 20oct2011
   if (verblock > 0) {  // 24oct2011
     Psi[verblock].psiExam(); // expose all values to change one; 24oct2011
     motjuste = psi0;  // verblock override of activational competition;
@@ -1717,17 +1750,20 @@ function VerbPhrase() {
       if (mfnflag > 0) {  // if masc. or fem.; 3aug2011
         WhoBe();  // ask WHO not WHAT; 3aug2011
         mfnflag = 0;  // reset after use; 3aug2011
+        verblock = 0;  // as if at end of VerbPhrase; 29sep2012
         return;  // abandon rest of VerbPhrase; 3aug2011
       }  // end of test to ask WHO instead of WHAT; 3aug2011
       qusub = subjpsi;  // as set in NounPhrase; 29oct2011
       qusubnum = snu;  // parameter for WhatBe; 24jan2012
       WhatBe();  // 19jun2011
+      verblock = 0;  // as if at end of VerbPhrase; 29sep2012
       return;  // abandon rest of VerbPhrase; 27jun2011
     }  // 19jun2011
     if (nphrnum == 2) {  // if plural subject; 27jun2011
       topic = subjpsi;  // supersede any default;  7jul2011
       WhatSDo();  // Russian What do Subjects Do? 10jan2012
       yncon = 1;  // delay yes-or-no ? until after input; 27jun2011 
+      verblock = 0;  // as if at end of VerbPhrase; 29sep2012
       return;  // abandon rest of VerbPhrase; 27jun2011
     }  // what-do-X-do as prelude to yes-or-no questions; 27jun2011
     else return;  // abort thought if number not known; 15aug2011
@@ -1738,12 +1774,14 @@ function VerbPhrase() {
         if (mfnflag > 0) {  // if masc. or fem.; 3aug2011
           WhoBe();  // ask WHO not WHAT; 3aug2011
           mfnflag = 0;  // reset after use; 3aug2011
+          verblock = 0;  // as if at end of VerbPhrase; 29sep2012
           return;  // abandon rest of VerbPhrase; 3aug2011
         }  // end of test to ask WHO instead of WHAT; 3aug2011
         qusub = subjpsi;  // as set in NounPhrase; 29oct2011
         qusubnum = snu;  // parameter for WhatBe; 24jan2012
         if (gencon == 0) {  // prevent double output; 19jan2012
           WhatBe();  // to ask a what-is question; 27jun2011
+          verblock = 0;  // as if at end of VerbPhrase; 29sep2012
           return;  // abandon rest of VerbPhrase; 27jun2011
         }  // 19jan2012
       }  // arbitrarily asking what-is builds ontology; 27jun2011
@@ -1752,6 +1790,7 @@ function VerbPhrase() {
         WhatSDo();  // Russian What do Subjects Do? 10jan2012
         topic = " ";  // reset for safety;  7jul2011
         yncon = 1;  // delay yes-or-no ? until after input; 27jun2011 
+        verblock = 0;  // as if at end of VerbPhrase; 29sep2012
         return;  // abandon rest of VerbPhrase; 27jun2011
       }  // what-do-X-do as prelude to yes-or-no questions; 27jun2011
       else return;  // abort thought if number not known; 15aug2011
@@ -1841,6 +1880,7 @@ function VerbPhrase() {
       if (svo3==0) {  // if SEE has no direct object; 25sep2011
         VisRecog();  // a challenge for robot AI coders 25sep2011
         SpeechAct();  // say default from VisRecog; 25sep2011
+        verblock = 0;  // as if at end of VerbPhrase; 29sep2012
         return;  // abandon rest of VerbPhrase; 25sep2011        
       }  // end of test for direct object; 25sep2011
     }  // end of test for "62=SEE" requiring VisRecog; 25sep2011
@@ -2229,8 +2269,7 @@ function TuringTest() {
     hardcopy = true;
     fyi = 1;
     now = new Date(); 
-    adcopy=
-("<font size='+2'>Dushka AI version "+vrsn+" on " +now+"<\/b><\/font>");
+    adcopy=("<font size='+2'>Dushka AI version "+vrsn+" on " +now+"<\/b><\/font>");
     document.all.souvenir.innerHTML = adcopy;  // 9jan2012
   }
   if (document.all["cb1"].checked == false) {
@@ -2273,6 +2312,7 @@ function SeCurity() {
   TuringTest();
 // if (t > 160)  nonce = vault;  // Diagnostic display of all thought.
 // nonce = 1;  // temporary; for full-view troubleshooting; 27sep2012
+  nonce = 1;  // temporary; for full-view troubleshooting; 29sep2012
   if (t > (cns-64)) ReJuvenate();
   if (life == true) {
 apb=("AI 4U on KB psi #"+kbtv+" at t="+t+" is alive on cyc #"+rjc+" since " +dob+ ".");
@@ -2394,8 +2434,8 @@ AiMind</a> -
  title="Russian AI User Manual in English">
 Manual</a> - 
 
- <a href="http://cyborg.blogspot.com/2012/08/aug23ruai.html" 
- title="23 August 2012 Russian AI Programming Journal">
+ <a href="http://cyborg.blogspot.com/2012/09/sep27ruai.html" 
+ title="27 September 2012 Russian AI Programming Journal">
 AI Lab Notes</a></b>
 </font></legend>
 <form name="modes">
@@ -2410,7 +2450,6 @@ AI Lab Notes</a></b>
 <input type="checkbox" name="cb3" onClick="TuringTest();"> 
  &#1044;&#1080;&#1072;&#1075;&#1085;&#1086;&#1089;&#1090;&#1080;&#1082;&#1072 - 
 <!-- Diagnostic -->
-
 
 <input type="checkbox" name="cb4" onClick="Shutdown();">
 <font color="fuchsia"><b>
@@ -2545,6 +2584,8 @@ Sat.22sep2012 introduces special activations within KbTraversal.
 Wed.26sep2012 "ru120926" zeroes out "verblock" and "nounlock".
 Thurs.27sep2012 shortens range of characters tested for verb-recog.
 Fri.28sep2012 "ru120928" discontinues use of "audme" variable.
+Sat.29sep2012 tightens up selection of subjects in NounPhrase.
+Sun.30sep2012 prevents carry-over of "verblock" and "vphraud" values.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

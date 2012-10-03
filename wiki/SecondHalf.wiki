@@ -255,7 +255,6 @@ psi=701; num=1; pre=0; seq=0; rux=701; RuVocab(); InNativate();
 // nru=701; mfn=0; dba=1; fex=701; pos=7; fin=707; aud=455;
 // psi=701; num=1; pre=0; tqv=460; seq=818; rux=701; RuVocab(); InNativate();
 
-
 // 29sep2012: changing seq from 0 to 860 (MWISLIT'):
 // 29sep2012: inserting tqv=468
 // 818 MOGU ("can") verb; 1st pers. sing. 19sep2012
@@ -384,8 +383,7 @@ t=508;c=1048; beg=0; ctu=0; audpsi=540;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
 nru=540; mfn=2; dba=4; fex=540; pos=5; fin=540; aud=504;
 psi=540; num=2; pre=0; seq=0; rux=540; RuVocab(); InNativate();
-
-
+ 
 // 29sep2012: inserting tqv=518:
 // 701 YA (I) pronoun; nom. sing. 23jan2012
 t=510;c=1071; beg=1; ctu=0; audpsi=701;      // 19sep2012
@@ -427,12 +425,12 @@ psi=707; num=1; pre=0; seq=0; rux=707; RuVocab(); InNativate();
 // 501 BOG (God) noun, singular; 9jan2012
 t=525;c=1041; beg=1; ctu=1; audpsi=0;        // 19sep2012
     pho = String.fromCharCode(c); AudMem();  //  9jan2012
-t=526;c=1054; beg=0; ctu=1; audpsi=0;        // 19sep2012
+t=526;c=1054; beg=0; ctu=1; audpsi=501;        // 19sep2012
      pho = String.fromCharCode(c); AudMem(); //  9jan2012
 t=527;c=1043; beg=0; ctu=0; audpsi=501;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); //  9jan2012
 nru=501; mfn=1; dba=1; fex=501; pos=5; fin=501; aud=525;
-psi=501; num=1; pre=0; seq=850; rux=501; RuVocab(); InNativate();
+psi=501;num=1;pre=0;tqv=533;seq=850;rux=501; RuVocab(); InNativate();
 
 // 850 ZNAYET ("knows"); verb; 3rd person sing. 19sep2012
 t=529;c=1047; beg=1; ctu=1; audpsi=0;        // 19sep2012
@@ -446,7 +444,7 @@ t=532;c=1045; beg=0; ctu=1; audpsi=850;      // 19sep2012
 t=533;c=1058; beg=0; ctu=0; audpsi=850;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
 nru=850; mfn=0; dba=3; fex=850; pos=8; fin=850; aud=529;
-psi=850; num=1; pre=0; seq=777; rux=850; RuVocab(); InNativate();
+psi=850; num=1; pre=0; tqv=537; seq=777; rux=850; RuVocab(); InNativate();
 
 // 777 VSYO (everything) pronoun; accusative singular 23jan2012
 t=535;c=1042; beg=1; ctu=1; audpsi=0;        // 19sep2012
@@ -1097,11 +1095,12 @@ function NounPhrase() {
       topic = 701;  // use elsewhere; 5jan2012
       verblock = 0; // reset any pre-existing value; 30sep2012
       vphraud = 0;  // reset any pre-existing value; 30sep2012
-      for (i = t; i>midway; i--) {  // Look for "50=I"; 9jul2011
+      for (i = t; i>midway; i--) {  // Look for "701=YA"; 3oct2012
         Psi[i].psiExam(); // examine Psi array; 25oct2011
      // if (psi0 == 701 && psi7 > 0) {  // 5jan2012
      // if (psi0 == 701 && psi7 > 0) {  // Commenting out; 29sep2102
-        if (psi0 == 701 && psi1 > defact && psi7 > 0) {  // 
+     // if (psi0 == 701 && psi1 > defact && psi7 > 0) {  // 3oct2012:
+        if (psi0 == 701 && psi1 > defact && psi6 > 0 && psi7 > 0) {  // 
        // if (psi1 > defact) {  // 25oct2011 
        // if (psi1 > defact) {  // commenting out; 29sep2012
             tsels = i;  // retain time of subject; 25oct2011
@@ -1112,6 +1111,14 @@ function NounPhrase() {
        // }  // end of test for higher-act ego-concept; 25oct2011
        // }  // commenting out as part of pair; 29sep2012
         }  // end of test for "701=YA" (I) with seq-check; 16sep2012
+        else {  // if not activated YA-engram found; 3oct2012
+          for (i = t; i>midway; i--) {  // Look for "701=YA"; 3oct2012
+            Psi[i].psiExam(); // examine Psi array; 3oct2012
+               if (psi0 == 701 && psi6 > 0) {  // 3oct2012
+                 verblock = psi6;  // default to most recent idea; 3oct2012
+               }  // end of test for 701=YA with verblock; 3oct2012
+          }  // end of secondary search; 3oct2012
+        }  // end of else-clause; 3oct2012
       }  // End of search for #701 "YA" (I); 16sep2012
       dba = 1;  // subject requires nominative case; 21jan2012
       subjpsi = 701;  // for use elsewhere;  5jan2012
@@ -1571,6 +1578,7 @@ function VerbPhrase() {
       AuxVerb();  // test; 29sep2012
     }  // end of test for 818=MOGU;  29sep2012
     nounlock = psi6;  // time-point of "seq" engram; 24oct2011
+ // vphract = 32;  // ensure utterance of verb; 3oct2012
     gencon = 0;  // try to prevent VerbGen-call; 23aug2012
   }  // 24oct2011  
   RuReify();  // 5jan2012
@@ -1592,7 +1600,7 @@ function VerbPhrase() {
       if (ru0==verbpsi && ru2==nphrnum && ru4==prsn) {  // 3sep2012
         vphraud = ru8;  // VerbPhrase auditory engram tag; 7sep2012
     //  gencon = 1;  // keep other verbs from SpeechAct; 5sep2012; 15sep2102
-        apb = "Activating auditory engram of verb #"+ru0+" at t = "+vphraud;
+        apb = "Fetching auditory engram of verb #"+ru0+" from t = "+vphraud;
         Voice();  // 15sep2012
         break;  // one instance is enough; 29aug2012
       }  // end of test to find regular or irregular verb-form; 10sep2012
@@ -1628,21 +1636,6 @@ function VerbPhrase() {
             }  // end of test for 250=NYE; 17jan2012
           }  // end of test for positive activation; 15aug2011
        // 30sep2012 Commenting out obsolete block of code:
-       // if (verblock > 0) {  // if positive verblock exists; 24oct2011
-       //   if (i == verblock) {  // upon reaching engram; 24oct2011
-       //     motjuste = psi0;  // grab verblock psi; 24oct2011
-       //     act = 64;  // to pass threshold-test; 24oct2011
-       //     negjux = psi3;  // for negation of verb; 24oct2011
-       //     nounlock = psi6;  // after verb grab "seq"; 24oct2011
-       //     if (subjpsi==701) {  // 17jan2012
-       //       dba = 1;  // verb must be 1st person; 17jan2012
-       //       snu = 1;  // subject number; 22jan2012
-       //     }  // end of test for 1st person singular; 17jan2012
-       //     ruLexicon[i].ruExam();  // Russian lexicon;  5jan2012
-       //     vphraud = ru8;  // for SpeechAct;  5jan2012
-       //     break;  // prevent usurpation of pre-ordained seq; 7oct2011
-       //   }  // end of test for index = verblock; 24oct2011
-       // }  // end of test for positive verblock; 24oct2011
           if (psi1 > 0) {  // positive activation? 24oct2011
             if (verblock==0) negjux = psi3; // negative be-verbs; 24oct2011
             tqv = psi6;  // underailable tqv; 24oct2011
@@ -1744,6 +1737,7 @@ function VerbPhrase() {
   Psi[tqv] = new psiNode(psi0,128,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
   node = 0;  // Reset tutorial verb display for showVerb().
   vphract = act;  // from highest-activation verb; 22jun2011
+  if (verblock > 0) vphract = 32;  // ensure utterance of verb; 3oct2012
   if (motjuste == 0) {
     tov = t;
     if (nphrnum == 1) {  // 19jun2011
@@ -1931,7 +1925,7 @@ function RuCog() {  // Russian cognition; 26jan2012
   NounPhrase();
   subjcall = 0;  // Reset for safety; 21may2011
   verbnum = nphrnum;
-  verbcall = 1;  
+  verbcall = 1; 
   VerbPhrase();  
   verbcall = 0;
   verbnum = 0;
@@ -1947,16 +1941,11 @@ function RuCog() {  // Russian cognition; 26jan2012
  
  
 function ThInk() {
-// PsiDecay();  // trying to reduce stray activation; 16oct2010
-// PsiDecay();  // Sharply cutting high-activation concepts; 20may2011
-// PsiDecay();  // trying to reduce stray activation;  8jun2011
-// PsiDecay();  // trying to reduce stray activation;  8jun2011
-// PsiDecay();  // test; remove; 3jul2011
 // PsiDecay();  // Commenting out; 26sep2012
   inert = (inert + 1); // but AudInput resets to zero; 18oct2011
   lurk = (lurk + 1); // AudListen() resets to zero; 29sep2010
-  if (life==true) { // 29sep2010
- apb=("Thinking at time "+t+" NLP loop #"+lurk+" KbTraversal = "+kbtv);
+  if (life==true) { // 2oct2012: Showing rejuvenations in next line: 
+ apb=("Time = "+t+"; thinking with NLP loop #"+lurk+"; ReJuvenate = "+rjc);
     Voice(); // speak the all-points-bulletin "apb"; 29sep2010
   }  // 29sep2010
   abort = false;  
@@ -2312,7 +2301,7 @@ function SeCurity() {
   TuringTest();
 // if (t > 160)  nonce = vault;  // Diagnostic display of all thought.
 // nonce = 1;  // temporary; for full-view troubleshooting; 27sep2012
-  nonce = 1;  // temporary; for full-view troubleshooting; 29sep2012
+//  nonce = 1;  // temporary; for full-view troubleshooting; 29sep2012
   if (t > (cns-64)) ReJuvenate();
   if (life == true) {
 apb=("AI 4U on KB psi #"+kbtv+" at t="+t+" is alive on cyc #"+rjc+" since " +dob+ ".");
@@ -2586,6 +2575,8 @@ Thurs.27sep2012 shortens range of characters tested for verb-recog.
 Fri.28sep2012 "ru120928" discontinues use of "audme" variable.
 Sat.29sep2012 tightens up selection of subjects in NounPhrase.
 Sun.30sep2012 prevents carry-over of "verblock" and "vphraud" values.
+Tues.2oct2012 displays ReJuvenate count of immortal Russian AI Mind.
+Wed.3oct2012 "ru121003" ensures subjects have a verb for VerbPhrase. 
 (end of HTML Change Log comments) --> 
 </html>
 }}}

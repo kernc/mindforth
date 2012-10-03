@@ -2,6 +2,8 @@
 #labels source
 
 {{{
+<html lang="ru">
+<head>
 <title>Russian Artificial Intelligence - Singularity Strong AI</title>
 <meta http-equiv="content-type" content="text/html; charset=windows-1251" />
 <meta name="description"
@@ -315,7 +317,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "30sep12"; // for Transcript mode; sun30sep2012
+var vrsn = "3oct12"; // for Transcript mode; wed3oct2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -2767,5 +2769,4 @@ t=351;c=1059; beg=0; ctu=0; audpsi=370;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 nru=370; mfn=0; dba=0; fex=370; pos=3; fin=370; aud=346;
 psi=370; num=0; pre=0; seq=0; rux=370; RuVocab(); InNativate();
-
 }}}

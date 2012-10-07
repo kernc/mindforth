@@ -946,8 +946,8 @@ function NounPhrase() {
   //   }  // commenting out; 28sep2012
   // }  // commenting out; 28sep2012
   abort = false;
-  act = 0;  // Start with zero to look for en1 higher than act.
-  defact = -8;  // for default comparisons with "50=I"; 29oct2011
+  act = 0;  // Start w. 0 to look for psi1 > act; 6oct2012
+  defact = -8;  // for default comparisons with "701=YA"; 6oct2012
   motjuste = 0;
   nphrnum = 0;  // prevent carry-overs; 24oct2011
   num = 0;   // without prejudice; 2sep2010
@@ -1588,6 +1588,18 @@ function VerbPhrase() {
   psi5 = 0; // 13aug2011
   motjuste = 0;
   if (verblock > 0) {  // already a verblock? 24oct2011
+    Psi[verblock].psiExam(); // to check for negation; 6oct2012
+    if (psi3==250) {  // if negated with 250=NYE (not); 6oct2012
+        for (i = t; i>midway; i--) { // search backwards 29jun2011
+          ruLexicon[i].ruExam();  // examine Russian lexicon; 6oct2012
+          if (ru0 == 250) {  // if 250=Nye is found; 6oct2012
+            aud = ru8;  // recall-vector of auditory engram; 6oct2012
+// alert("VPhr-neg: psi num prsn = "+psi0+" "+psi2+" "+prsn); // 6oct2012
+            break;  // finding one "NOT" is enough; 6oct2012
+          } // end of test for 250=NYE (NOT); 6oct2012
+        }  // end of search of Russian lexicon; 6oct2012
+        SpeechAct();  // speak or display the adverb "NOT"; 6oct2012
+    }  // end of test for 250=NOT negjux; 6oct2012
     ruLexicon[verblock].ruExam();  // examine row in array;  5jan2012
     verbpsi = ru0;  // grab the verbpsi; test; 28aug2012
     audbase = ru8;  // parameter for VerbGen to call AudBuffer; 29aug2012
@@ -1635,7 +1647,7 @@ function VerbPhrase() {
               negjux = psi3;  // 13oct2011
             }  // end of test for 250=NYE; 17jan2012
           }  // end of test for positive activation; 15aug2011
-       // 30sep2012 Commenting out obsolete block of code:
+
           if (psi1 > 0) {  // positive activation? 24oct2011
             if (verblock==0) negjux = psi3; // negative be-verbs; 24oct2011
             tqv = psi6;  // underailable tqv; 24oct2011
@@ -1733,6 +1745,7 @@ function VerbPhrase() {
       }  // End of loop finding verb-form; 20aug2012
     }  // end of override to find correct verb-form; 20aug2012
   }  // end of code for override of verblocked verbs; 19aug2012
+
   Psi[tqv].psiExam(); // examine array row at "tqv"; 24oct2011
   Psi[tqv] = new psiNode(psi0,128,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
   node = 0;  // Reset tutorial verb display for showVerb().
@@ -1789,20 +1802,7 @@ function VerbPhrase() {
       }  // what-do-X-do as prelude to yes-or-no questions; 27jun2011
       else return;  // abort thought if number not known; 15aug2011
     }  // end of test for vphract below 20=threshold; 15aug2011
-    if (negjux==250) {  // if negated with 250=NYE (not); 12jan2012
-   // unk = motjuste;  // temporary holding for if-clauses; 15aug2011
-   // if (unk != 57 && unk != 58 && unk != 66 && unk != 67) {
-     // AuxVerb();  // to say "DO" or "DOES"; 29jun2011
-        for (i = t; i>midway; i--) { // search backwards 29jun2011
-          ruLexicon[i].ruExam();  // examine Russian lexicon; 5jan2012
-          if (ru0 == 250) {  // if 250=Nye is found; 5jan2012
-            aud = ru8;  // recall-vector of auditory engram;  4jan2012
-            break;  // finding one "NOT" is enough; 29jun2011
-          } // end of test for 12=NOT; 29jun2011
-        }  // end of search of Russian lexicon; 5jan2012
-        SpeechAct();  // speak or display the adverb "NOT"; 29jun2011
-   // }  // end of test for no be-verb; 15aug2011 
-    }  // end of test for 250=NOT negjux; 5jan2012
+
     unk = motjuste;  // temporary holding for if-clauses; 15aug2011
     if (unk != 57 && unk != 58 && unk != 66 && unk != 67) {
       if (nphrnum==1) {  // if singular; 2sep2010
@@ -1855,14 +1855,14 @@ function VerbPhrase() {
     if (negjux==250) {  // if 250=Nye negates the verb-node; 5jan2012
       for (i = t; i>midway; i--) { // search backwards in time; 9aug2011
         ruLexicon[i].ruExam();  // examine the Russian lexicon; 5jan2012
-        if (ru0 == 250) {  // if 250=Nye is found; 5jan20p12
+        if (ru0 == 250) {  // if 250=Nye is found; 5jan2012
           aud = ru8;  // recall-vector of auditory engram; 5jan2012
           break;  // finding one "NOT" is enough; 9aug2011
         } // end of test for 250=Nye; 5jan2012
-      }  // end of search of English lexicon; 9aug2011
+      }  // end of search of Russian lexicon; 3oct2012
       SpeechAct();  // speak or display the adverb "NOT"; 9aug2011
       negjux = 0;  // reset for safety; 13oct2011
-    }  // end of test for 12=NOT negation; 9aug2011
+    }  // end of test for 250=NYE (NOT) negation; 9aug2011
   }  // end of test for a present-tense be-verb; 15aug2011
 //  motjuste = 0;
   psi = 0;
@@ -2576,7 +2576,9 @@ Fri.28sep2012 "ru120928" discontinues use of "audme" variable.
 Sat.29sep2012 tightens up selection of subjects in NounPhrase.
 Sun.30sep2012 prevents carry-over of "verblock" and "vphraud" values.
 Tues.2oct2012 displays ReJuvenate count of immortal Russian AI Mind.
-Wed.3oct2012 "ru121003" ensures subjects have a verb for VerbPhrase. 
+Wed.3oct2012 "ru121003" ensures subjects have a verb for VerbPhrase.
+Sat.6oct2012 implements comprehension and generation of negated verbs.
+Sun.7oct2012 "ru121007" addresses negation of putative Russian be-verbs.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

@@ -93,19 +93,19 @@ var dialog = "";
 var dirobj = 0;
 var dob = new Date();
 var edge = 0;
-var endata = ("<b>" + "English lexical fibers" + "<\/b>" + "<BR>");
-endata += ("krt nen act num mfn dba fex pos fin aud"); // 4jan2012
+// var endata = ("<b>" + "English lexical fibers" + "<\/b>" + "<BR>");
+// endata += ("krt nen act num mfn dba fex pos fin aud"); // 4jan2012
 var engram = "";
-var enx = 0;
-var en0 = 0; // "nen" for "n(umber)" in "En(glish)"; 4apr2010
-var en1 = 0; // "act(ivation)" level; 4apr2010
-var en2 = 0; // "num(ber)" since 12apr09B.html; 4apr2010
-var en3 = 0; // "mfn" being introduced as gender flag; 4apr2010
-var en4 = 0; // "dba" being introduced as case or person; 4jan2012
-var en5 = 0; // "fex" fiber-out from Psi array; 4apr2010; 4jan2012
-var en6 = 0; // "pos" part-of-speech flag; 4apr2010; 4jan2012
-var en7 = 0; // "fin" fiber-in to Psi array; 4apr2010; 4jan2012
-var en8 = 0; // "aud" recall-vector onset-tag; 4apr2010; 4jan2012
+// var enx = 0;
+// var en0 = 0; // "nen" for "n(umber)" in "En(glish)"; 4apr2010
+// var en1 = 0; // "act(ivation)" level; 4apr2010
+// var en2 = 0; // "num(ber)" since 12apr09B.html; 4apr2010
+// var en3 = 0; // "mfn" being introduced as gender flag; 4apr2010
+// var en4 = 0; // "dba" being introduced as case or person; 4jan2012
+// var en5 = 0; // "fex" fiber-out from Psi array; 4apr2010; 4jan2012
+// var en6 = 0; // "pos" part-of-speech flag; 4apr2010; 4jan2012
+// var en7 = 0; // "fin" fiber-in to Psi array; 4apr2010; 4jan2012
+// var en8 = 0; // "aud" recall-vector onset-tag; 4apr2010; 4jan2012
 var eot = 0;
 var equity = 0;
 var fex = 0;
@@ -289,6 +289,7 @@ var tobject = "";
 var topic = "";
 var topicnum = 0;  // grammatical number of question "topic"; 18oct2011
 var tov = 1;
+var tpbv = 0;  // time of putative be-verb;  7oct2012
 var tqv = 0;  // tempus quod vide for specific psi instance; 4oct2011
 var trouble = false;
 var tseln = 0;  // NounPhrase: time of selection of noun; 10may2011
@@ -305,7 +306,6 @@ var urpre = 0;  // original pre for swapping during function-calls.
 var urpsi = 0;
 var userline = "";
 var vacpsi = 0;  // de-globalized psi for VerbAct(); 1oct2010
-// var vault = 476; // size (time at end) of RuBoot; 10jan2012
 // var vault = 531; // size (time at end) of RuBoot; 23jan2012
 var vault = 538; // size (time at end) of RuBoot; 19sep2012
 var verbcept = 0;  // verb from perception not memory; 16sep2012
@@ -317,7 +317,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "3oct12"; // for Transcript mode; wed3oct2012
+var vrsn = "7oct12"; // for Transcript mode; sun7oct2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -1116,6 +1116,11 @@ function InStantiate() {
  // Psi[t] = new psiNode(800,0,num,0,prevtag,8,0,seq,800);  // 12feb2012
     // adding space for sake of finding "verblock"; test; 10sep2012
     Psi[t+1] = new psiNode(800,0,num,0,prevtag,8,0,seq,800);  // 10sep2012
+    tpbv = (t + 1);  // putative time-of-be-verb for negation;  7oct2012
+    if (seqneed == 8 && psi == 250) {  // test;  7oct2012
+      Psi[tpbv].psiExam();  // examine the Psi concept array;  7oct2012
+      Psi[tpbv] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,psi6,seq,psi8);
+    }  // end of check for entry of "NYE"; test;  7oct2012
  // ruLexicon[t] = new ruNode(nru,act,num,mfn,dba,fex,pos,fin,aud);
  // ruLexicon[t] = new ruNode(800,0,0,0,dba,800,8,800,t);
     // adding space for sake of finding "verblock"; test; 10sep2012
@@ -1127,6 +1132,13 @@ function InStantiate() {
    }  // end of test for external "*" POV; 12feb2012
   }  // end of test for SPACE-input during need for a verb; 11feb2w012
   if (prevpsi == 800 && seqneed == 5) {  // test; 14feb2012
+ // if (prevpsi==800 && psi==250) {  // NYE negation? 7oct2012
+ //   alert("InSt: possible negation of b-verb; pos = "+pos);  // 7oct2012
+ //   Psi[tpbv].psiExam();  // examine the Psi concept array;  7oct2012
+ //   Psi[tpbv] = new psiNode(psi,act,num,250,prevtag,pos,tqv,seq,rux);
+ //   jux = 250;  // test;  7oct2012
+ //   tpbv = 0;  // reset after use;  7oct2012
+ // }  // end of test for negated putative be-verb; 7oct2012
     if (prevpsi == 800 && pos == 8) { // if real verb follows pseudo-be-verb;
       seqneed = 8;  // the seq to the real verb is needed; 14feb2012
       prevpsi = 0;  // reset after using; 14feb2012
@@ -1134,7 +1146,8 @@ function InStantiate() {
   }  // end of test for wrong seqneed; 14feb2012
   if (seqneed==8) {  // if looking for a verb; 27jan2012
     if (pos==8) {  // if part-of-speech is verb; 27jan2012
-      jux = -1;  // a default to be reset for dir. obj; 29jan2012
+   // jux = -1;  // a default to be reset for dir. obj; 29jan2012
+      if (jux != 250) jux = 0;  // start of a jux-filter; 3oct2012
       seq = psi;  // because a verb has arrived; 27jan2012
       seqpos = pos;  // possibly for tqv; 27jan2012
       if (psi != 800) seqneed = 0; // skip imaginary BeVerb; 12feb2012
@@ -2391,7 +2404,7 @@ psi=791; num=1; pre=0; seq=0; rux=791; RuVocab(); InNativate();
 // 320 LI (whether) adverb; 9jan2012
 t=201;c=1051; beg=1; ctu=1; audpsi=0; 
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
-t=202;c=1048; beg=0; ctu=0; audpsi=250; 
+t=202;c=1048; beg=0; ctu=0; audpsi=320;  // fixed; 6oct2012 
      pho = String.fromCharCode(c); AudMem(); // 9jan2012
 nru=320; mfn=0; dba=0; fex=320; pos=3; fin=320; aud=201;
 psi=320; num=0; pre=0; seq=0; rux=320; RuVocab(); InNativate();

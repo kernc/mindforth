@@ -162,7 +162,8 @@ var nen = 0;
 var nlt = 5; 
 var node = 0;
 // var nonce = 1;
-var nonce = 538;  // = vault; to speed up Diagnostics; 21sep2012
+// var nonce = 538;  // = vault; to speed up Diagnostics; 21sep2012
+var nonce = 577;  // = vault; to speed up Diagnostics; 12oct2012
 var nounaud = 0;
 var nouncall = 0;  // Try not to show articles as subjects; 21may2011
 var nounduck = 0;
@@ -306,8 +307,8 @@ var urpre = 0;  // original pre for swapping during function-calls.
 var urpsi = 0;
 var userline = "";
 var vacpsi = 0;  // de-globalized psi for VerbAct(); 1oct2010
-// var vault = 531; // size (time at end) of RuBoot; 23jan2012
-var vault = 538; // size (time at end) of RuBoot; 19sep2012
+// var vault = 538; // size (time at end) of RuBoot; 19sep2012
+var vault = 577; // size (time at end) of RuBoot; 12oct2012
 var verbcept = 0;  // verb from perception not memory; 16sep2012
 var verblock = 0;  // for subject-noun to lock onto seq-verb; 13oct2011
 var verbnum = 0;
@@ -317,7 +318,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "7oct12"; // for Transcript mode; sun7oct2012
+var vrsn = "12oct12"; // for Transcript mode; fri12oct2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -488,7 +489,7 @@ function audDamp() {
 function Shutdown() {
   if (document.all["cb4"].checked == true) {
     life = false;
-apb = "You have halted the Dushka AI at Rejuvenation cycle #"+rjc+".";
+apb = "You have halted the Russian AI at Rejuvenation cycle #"+rjc+".";
     Voice();
   }
   if (document.all["cb4"].checked == false) {
@@ -531,7 +532,7 @@ function Transcript() {
     hardcopy = true;
     fyi = 1;
     now = new Date(); 
-adcopy=("<font size='+2'>Dushka AI version "+vrsn+" on " +now+"<\/b><\/font>");
+adcopy=("<font size='+2'>Russian AI version "+vrsn+" on " +now+"<\/b><\/font>");
     document.all.souvenir.innerHTML = adcopy;
   }
   Transcribe();
@@ -851,8 +852,9 @@ function ReActivate() { // re-activate recent nodes of a concept
 }  // end of ReActivate() 1oct2010
  
  
-function InNativate() { // quasi-instantiate EnBoot sequence; 23oct2011
-  Psi[t] = new psiNode(psi,0,num,0,pre,pos,tqv,seq,rux);
+function InNativate() { // quasi-instantiate RuBoot sequence; 12oct2012
+  Psi[t] = new psiNode(psi,0,num,jux,pre,pos,tqv,seq,rux);
+  jux = 0;  // prevent carry-overs; 12oct2012
 }  // end of InNativate(); 23oct2011
 
 
@@ -1132,13 +1134,14 @@ function InStantiate() {
    }  // end of test for external "*" POV; 12feb2012
   }  // end of test for SPACE-input during need for a verb; 11feb2w012
   if (prevpsi == 800 && seqneed == 5) {  // test; 14feb2012
- // if (prevpsi==800 && psi==250) {  // NYE negation? 7oct2012
+    if (prevpsi==800 && psi==250) {  // NYE negation? 7oct2012
  //   alert("InSt: possible negation of b-verb; pos = "+pos);  // 7oct2012
- //   Psi[tpbv].psiExam();  // examine the Psi concept array;  7oct2012
+      Psi[tpbv].psiExam();  // examine the Psi concept array;  7oct2012
  //   Psi[tpbv] = new psiNode(psi,act,num,250,prevtag,pos,tqv,seq,rux);
- //   jux = 250;  // test;  7oct2012
- //   tpbv = 0;  // reset after use;  7oct2012
- // }  // end of test for negated putative be-verb; 7oct2012
+      Psi[tpbv] = new psiNode(psi0,psi1,psi2,250,psi4,psi5,t,psi7,psi8);
+      jux = 250;  // test;  7oct2012
+      tpbv = 0;  // reset after use;  7oct2012
+    }  // end of test for negated putative be-verb; 7oct2012
     if (prevpsi == 800 && pos == 8) { // if real verb follows pseudo-be-verb;
       seqneed = 8;  // the seq to the real verb is needed; 14feb2012
       prevpsi = 0;  // reset after using; 14feb2012
@@ -2782,4 +2785,5 @@ t=351;c=1059; beg=0; ctu=0; audpsi=370;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 7jan2012
 nru=370; mfn=0; dba=0; fex=370; pos=3; fin=370; aud=346;
 psi=370; num=0; pre=0; seq=0; rux=370; RuVocab(); InNativate();
+
 }}}

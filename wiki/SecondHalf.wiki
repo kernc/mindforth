@@ -383,84 +383,178 @@ t=508;c=1048; beg=0; ctu=0; audpsi=540;      // 19sep2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
 nru=540; mfn=2; dba=4; fex=540; pos=5; fin=540; aud=504;
 psi=540; num=2; pre=0; seq=0; rux=540; RuVocab(); InNativate();
- 
-// 29sep2012: inserting tqv=518:
+
+// 12oct2012 571=ROBOTY 830=DYELAYUT 580=RABOTU
+// 571 ROBOTY ("robots"); noun; nominative plural; 12oct2012
+t=510;c=1056; beg=1; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=511;c=1054; beg=0; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=512;c=1041; beg=0; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=513;c=1054; beg=0; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=514;c=1058; beg=0; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=515;c=1067; beg=0; ctu=0; audpsi=571;      // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+nru=571; mfn=1; dba=1; fex=571; pos=5; fin=571; aud=510; 
+psi=571;  num=2; pre=0; tqv=522; seq=830; rux=571; RuVocab(); InNativate();
+
+// 830 DELAYUT ("they do"); verb; 3rd pers. plural; 12oct2012
+t=517;c=1044; beg=1; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=518;c=1045; beg=0; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=519;c=1051; beg=0; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=520;c=1040; beg=0; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=521;c=1070; beg=0; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=522;c=1058; beg=0; ctu=0; audpsi=830;      // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+nru=830; mfn=0; dba=3; fex=830; pos=8; fin=830; aud=517;  // 12oct2012
+psi=830;  num=2; pre=0; tqv=529; seq=580; rux=830; RuVocab(); InNativate();
+
+// 580 RABOTU (work) noun; acc. sing. fem.; 12oct2012
+t=524;c=1056; beg=1; ctu=1; audpsi=0;        // 12oct2012
+    pho = String.fromCharCode(c); AudMem();  // 12oct2012
+t=525;c=1040; beg=0; ctu=1; audpsi=0;        // 12oct2012
+    pho = String.fromCharCode(c); AudMem();  // 12oct2012
+t=526;c=1041; beg=0; ctu=1; audpsi=0;        // 12oct2012
+    pho = String.fromCharCode(c); AudMem();  // 12oct2012
+t=527;c=1054; beg=0; ctu=1; audpsi=0;        // 12oct2012
+    pho = String.fromCharCode(c); AudMem();  // 12oct2012
+t=528;c=1058; beg=0; ctu=1; audpsi=0;        // 12oct2012
+    pho = String.fromCharCode(c); AudMem();  // 12oct2012
+t=529;c=1059; beg=0; ctu=0; audpsi=582;      // 12oct2012
+    pho = String.fromCharCode(c); AudMem();  // 12oct2012
+nru=580; mfn=2; dba=4; fex=580; pos=5; fin=588; aud=524;  // 12oct2012
+psi=588; num=1; pre=0; seq=0; rux=580; RuVocab(); InNativate();
+
+// 12oct2012 701=YA 250=NYE 820=VEEZHU 760=NYICHEGO 
+// 12oct2012: inserting tqv=536:
+// 701 YA (I) pronoun; nom. sing.; 12oct2012
+t=531;c=1071; beg=1; ctu=0; audpsi=701;      // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+nru=701; mfn=0; dba=1; fex=701; pos=7; fin=707; aud=531;  // 12oct2012
+psi=701; num=1; pre=0; tqv=539; seq=820; rux=701; RuVocab(); InNativate();
+
+// 250 NYE (not) adverb for negation; 12oct2012
+t=533;c=1053; beg=1; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=534;c=1045; beg=0; ctu=0; audpsi=250;      // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+nru=250; mfn=0; dba=0; fex=250; pos=2; fin=250; aud=533;  // 12oct2012
+psi=250; num=0; pre=0; seq=0; rux=250; RuVocab(); InNativate();
+
+// 820 VEEZHU ("I see"); verb for VisRecog; 12oct2012
+t=536;c=1042; beg=1; ctu=1; audpsi=0;         // 12oct2012
+     pho = String.fromCharCode(c); AudMem();  // 12oct2012
+t=537;c=1048; beg=0; ctu=1; audpsi=0;         // 12oct2012
+     pho = String.fromCharCode(c); AudMem();  // 12oct2012
+t=538;c=1046; beg=0; ctu=1; audpsi=820;       // 12oct2012
+     pho = String.fromCharCode(c); AudMem();  // 12oct2012
+t=539;c=1059; beg=0; ctu=0; audpsi=820;       // 12oct2012
+     pho = String.fromCharCode(c); AudMem();  // 12oct2012
+nru=820; mfn=0; dba=1; fex=820; pos=8; fin=820; jux=250; aud=536; 
+psi=820; num=1; pre=0; tqv=546; seq=760; rux=820; RuVocab(); InNativate();
+
+// 760 NICHEGO ("nothing"); pronoun; 12oct2012
+t=541;c=1053; beg=1; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=542;c=1048; beg=0; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=543;c=1063; beg=0; ctu=1; audpsi=0;        // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=544;c=1045; beg=0; ctu=1; audpsi=0;        // 12oct2102
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=545;c=1043; beg=0; ctu=1; audpsi=0;        // 12oct2102
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+t=546;c=1054; beg=0; ctu=0; audpsi=760;      // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+nru=760; mfn=3; dba=2; fex=760; pos=7; fin=760; aud=541;  // 12oct2012
+psi=760; num=1; pre=0; seq=0; rux=760; RuVocab(); InNativate();
+
+// 12oct2012: inserting tqv=550:
 // 701 YA (I) pronoun; nom. sing. 23jan2012
-t=510;c=1071; beg=1; ctu=0; audpsi=701;      // 19sep2012
-     pho = String.fromCharCode(c); AudMem(); // 23jan2012
-nru=701; mfn=0; dba=1; fex=701; pos=7; fin=707; aud=510;
-psi=701; num=1; pre=0; tqv=518; seq=870; rux=701; RuVocab(); InNativate();
+t=548;c=1071; beg=1; ctu=0; audpsi=701;      // 12oct2012
+     pho = String.fromCharCode(c); AudMem(); // 12oct2012
+nru=701; mfn=0; dba=1; fex=701; pos=7; fin=707; aud=548;  // 12oct2012
+psi=701; num=1; pre=0; tqv=550; seq=870; rux=701; RuVocab(); InNativate();
 
 // 29sep2012: changing tqv from 517 to 523 (TEBYA):
+// 12oct2012: changing tqv from 523 to 558 (TEBYA):
 // 870 PONIMAYU ("understand"); verb; 1st person sing; 19sep2012
-t=512;c=1055; beg=1; ctu=1; audpsi=0;        // 19sep2012
+t=550;c=1055; beg=1; ctu=1; audpsi=0;        // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=513;c=1054; beg=0; ctu=1; audpsi=0;        // 19sep2012
+t=551;c=1054; beg=0; ctu=1; audpsi=0;        // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=514;c=1053; beg=0; ctu=1; audpsi=0;        // 19sep2012
+t=552;c=1053; beg=0; ctu=1; audpsi=0;        // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=515;c=1048; beg=0; ctu=1; audpsi=0;        // 19sep2012
+t=553;c=1048; beg=0; ctu=1; audpsi=0;        // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=516;c=1052; beg=0; ctu=1; audpsi=870;      // 19sep2012
+t=554;c=1052; beg=0; ctu=1; audpsi=870;      // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=517;c=1040; beg=0; ctu=1; audpsi=870;      // 19sep2012 
+t=555;c=1040; beg=0; ctu=1; audpsi=870;      // 12oct2012 
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=518;c=1070; beg=0; ctu=0; audpsi=870;      // 19sep2012
+t=556;c=1070; beg=0; ctu=0; audpsi=870;      // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-nru=870; mfn=0; dba=1; fex=870; pos=8; fin=870; aud=512;
-psi=870; num=1; pre=701; tqv=523; seq=707; rux=870; RuVocab(); InNativate();
+nru=870; mfn=0; dba=1; fex=870; pos=8; fin=870; aud=550;  // 12oct2012
+psi=870; num=1; pre=701; tqv=558; seq=707; rux=870; RuVocab(); InNativate();
 
 // 707 TEBYA ("you") pronoun; familiar; acc. sing. 23jan2012
-t=520;c=1058; beg=1; ctu=1; audpsi=0;        // 19sep2012
+t=558;c=1058; beg=1; ctu=1; audpsi=0;        // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=521;c=1045; beg=0; ctu=1; audpsi=0;        // 19sep2012
+t=559;c=1045; beg=0; ctu=1; audpsi=0;        // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=522;c=1041; beg=0; ctu=1; audpsi=0;        // 19sep2012
+t=560;c=1041; beg=0; ctu=1; audpsi=0;        // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=523;c=1071; beg=0; ctu=0; audpsi=707;      // 23jan2012
+t=561;c=1071; beg=0; ctu=0; audpsi=707;      // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-nru=707; mfn=0; dba=4; fex=707; pos=7; fin=701; aud=520;
+nru=707; mfn=0; dba=4; fex=707; pos=7; fin=701; aud=558;  // 12oct2012
 psi=707; num=1; pre=0; seq=0; rux=707; RuVocab(); InNativate();
 
 // 501 BOG (God) noun, singular; 9jan2012
-t=525;c=1041; beg=1; ctu=1; audpsi=0;        // 19sep2012
+t=563;c=1041; beg=1; ctu=1; audpsi=0;        // 12oct2012
     pho = String.fromCharCode(c); AudMem();  //  9jan2012
-t=526;c=1054; beg=0; ctu=1; audpsi=501;        // 19sep2012
+t=564;c=1054; beg=0; ctu=1; audpsi=501;      // 12oct2012
      pho = String.fromCharCode(c); AudMem(); //  9jan2012
-t=527;c=1043; beg=0; ctu=0; audpsi=501;      // 19sep2012
+t=565;c=1043; beg=0; ctu=0; audpsi=501;      // 12oct2012
      pho = String.fromCharCode(c); AudMem(); //  9jan2012
-nru=501; mfn=1; dba=1; fex=501; pos=5; fin=501; aud=525;
-psi=501;num=1;pre=0;tqv=533;seq=850;rux=501; RuVocab(); InNativate();
+nru=501; mfn=1; dba=1; fex=501; pos=5; fin=501; aud=563;  // 12oct2012
+psi=501;num=1;pre=0;tqv=571;seq=850;rux=501; RuVocab(); InNativate();
 
 // 850 ZNAYET ("knows"); verb; 3rd person sing. 19sep2012
-t=529;c=1047; beg=1; ctu=1; audpsi=0;        // 19sep2012
+t=567;c=1047; beg=1; ctu=1; audpsi=0;        // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=530;c=1053; beg=0; ctu=1; audpsi=0;        // 19sep2012
+t=568;c=1053; beg=0; ctu=1; audpsi=0;        // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=531;c=1040; beg=0; ctu=1; audpsi=850;      // 19sep2012
+t=569;c=1040; beg=0; ctu=1; audpsi=850;      // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=532;c=1045; beg=0; ctu=1; audpsi=850;      // 19sep2012
+t=570;c=1045; beg=0; ctu=1; audpsi=850;      // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=533;c=1058; beg=0; ctu=0; audpsi=850;      // 19sep2012
+t=571;c=1058; beg=0; ctu=0; audpsi=850;      // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-nru=850; mfn=0; dba=3; fex=850; pos=8; fin=850; aud=529;
-psi=850; num=1; pre=0; tqv=537; seq=777; rux=850; RuVocab(); InNativate();
+nru=850; mfn=0; dba=3; fex=850; pos=8; fin=850; aud=567;  // 12oct2012
+psi=850; num=1; pre=0; tqv=575; seq=777; rux=850; RuVocab(); InNativate();
 
 // 777 VSYO (everything) pronoun; accusative singular 23jan2012
-t=535;c=1042; beg=1; ctu=1; audpsi=0;        // 19sep2012
+t=573;c=1042; beg=1; ctu=1; audpsi=0;        // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=536;c=1057; beg=0; ctu=1; audpsi=0;        // 19sep2012
+t=574;c=1057; beg=0; ctu=1; audpsi=0;        // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-t=537;c=1025; beg=0; ctu=0; audpsi=777;      // 19sep2012
+t=575;c=1025; beg=0; ctu=0; audpsi=777;      // 12oct2012
      pho = String.fromCharCode(c); AudMem(); // 23jan2012
-nru=777; mfn=3; dba=4; fex=777; pos=7; fin=777; aud=535; 
+nru=777; mfn=3; dba=4; fex=777; pos=7; fin=777; aud=573;  // 12oct2012
 psi=777; num=1; pre=0; seq=0; rux=777; RuVocab(); InNativate();
-  t = 538;  // approximate source of "vault" value; 19sep2012
+// t = 538; // approximate source of "vault" value; 19sep2012
+  t = 577;  // approximate source of "vault" value; 12oct2012
   audpsi = 0;  // lest pass through AudInput to EnParser; 22aug2011
   indefartcon = 0;  // lest WHO trigger EnArticle; 17jun2011
   psi = 0;
   pre = 0;
-  t = (t+1);
   vault = t;
   t = (t+1);
   spt = t;
@@ -704,7 +798,8 @@ function WhatSVerb() {  // What Do Subjects Verb; 10jan2012
     }  // end of test to find "topic"; 10jan2012
   }  // end of backwards loop; 10jan2012
   SpeechAct();
-  if (verbpsi == 0) verbpsi = 820;  // 820=Delat' default;
+// if (verbpsi == 0) verbpsi = 820;  // 820=Delat' default;
+  if (verbpsi == 0) verbpsi = 830;  // 830=Delat' default; 12oct2012
   for (i = t; i>midway; i--) {
     ruLexicon[i].ruExam();
     if (ru0 == verbpsi) {  // if concept number of verb; 10jan2012
@@ -741,7 +836,8 @@ function WhatSDo() {  // modified from WhatAuxSDo(); 10jan2012
   flex1 = "";  // reset for safety; 10jan2012
   for (i = t; i>midway; i--) { 
     ruLexicon[i].ruExam();  
-    if (ru0 == 820) {  // 820=DELAT' ("do"); 10jan2012
+ // if (ru0 == 820) {  // 820=DELAT' ("do"); 10jan2012
+    if (ru0 == 830) {  // 830=DELAT' ("do"); 12oct2012
       aud = ru8; // 10jan2012
       break;  // exit loop after first find; 10jan2012
     } 
@@ -883,7 +979,8 @@ function AskUser() {  // selector of question formats; 13aug2010
       }  // end of test for 320=LI; 11jan2012
     }  // end of search loop; 11jan2012
     SpeechAct();  // speak word starting at "aud" location; 11jan2012
-    if (quverb == 0) quverb = 820;  // 820=DELAT' (do) by default.
+ // if (quverb == 0) quverb = 820;  // 820=DELAT' (do) by default.
+    if (quverb == 0) quverb = 830; // 830=DELAT' default; 12oct2012
     for (i = t; i>midway; i--) {  // seek yn query-verb; 30jun2011
       ruLexicon[i].ruExam();  // examine Russian lexicon; 11jan2012
       if (ru0 == quverb) {  // if yn query-verb found; 11jan2012
@@ -1594,7 +1691,6 @@ function VerbPhrase() {
           ruLexicon[i].ruExam();  // examine Russian lexicon; 6oct2012
           if (ru0 == 250) {  // if 250=Nye is found; 6oct2012
             aud = ru8;  // recall-vector of auditory engram; 6oct2012
-// alert("VPhr-neg: psi num prsn = "+psi0+" "+psi2+" "+prsn); // 6oct2012
             break;  // finding one "NOT" is enough; 6oct2012
           } // end of test for 250=NYE (NOT); 6oct2012
         }  // end of search of Russian lexicon; 6oct2012
@@ -1621,7 +1717,11 @@ function VerbPhrase() {
       gencon = 1;  // prevent usual call from VerbPhrase to SpeechAct.
       if (verbpsi != 800) {  // avoid be-verbs not spoken in Russian.
         phodex = 0;  // prevent carry-over values; 14sep2012
-        VerbGen(); // generate the verb-form needed to think in Russian.
+        if (verbpsi != 0) {  // prevent unwarrnated call; 12sep2012
+          apb = "Calling VerbGen to generate a form of verb #"+verbpsi; 
+          Voice();  // 12oct2012
+          VerbGen(); // generate the verb-form needed to think in Russian.
+        }  // end of test for no selected verb; 12oct2012
       }  // end of test to exclude unspoken Russian be-verbs; 25sep2012
     }  // end of quasi-else-clause to call VerbGen; 14sep2012
   }  // end of test for a positive verblock; 24oct2011
@@ -1696,15 +1796,9 @@ function VerbPhrase() {
     Psi[verblock].psiExam(); // expose all values to change one; 24oct2011
     motjuste = psi0;  // verblock override of activational competition;
     negjux = psi3;  // capture any "12=NOT" during override; 25oct2011
-    if (subjpsi==701) {  // 17jan2012
-       dba = 1;  // verb must be 1st person; 17jan2012
-    }  // end of test for 1st person singular; 17jan2012
- // ruLexicon[verblock].ruExam();  // examine Russian lexicon; 5jan2012
- // ruLexicon[verblock].ruExam();  // Ru-verbs not chosen thus; 20sep2012
- // vphraud = ru8;  // hold the auditory recall-vector;  5jan2012
- // vphraud = ru8;  // Let value come from elsewhere; 20sep2012
- // act = 64;  // prevent rejection of selection; 24oct2011
- // act = 64;  // Commenting out on 20sep2012; 22sep2012
+    if (subjpsi==701) dba = 1;  // 12oct2012
+    if (subjpsi==707) dba = 2;  // 12oct2012
+    if (subjpsi==713) dba = 3;  // 713="ON" (HE); 12oct2012
   }  // 24oct2011
 // if (verblock > 0) {  // 19aug2012
   if (verblock > 0 && vphraud == 0) {  // if no found verb; 20sep2012
@@ -1802,7 +1896,6 @@ function VerbPhrase() {
       }  // what-do-X-do as prelude to yes-or-no questions; 27jun2011
       else return;  // abort thought if number not known; 15aug2011
     }  // end of test for vphract below 20=threshold; 15aug2011
-
     unk = motjuste;  // temporary holding for if-clauses; 15aug2011
     if (unk != 57 && unk != 58 && unk != 66 && unk != 67) {
       if (nphrnum==1) {  // if singular; 2sep2010
@@ -1819,10 +1912,8 @@ function VerbPhrase() {
     if (motjuste==800) {  // 800=BWIT' (be); 11jan2012
       if (subjpsi==701) {  // 701=YA ("I"); 11jan2012
       }  // end of test for subject-psi 50=I; 13aug2011
-      if (subjpsi==707 || subjpsi==479) {  // fam. or formal; 11jan2012
-   // }  // end of test for 56=YOU; 15aug2011 
+      if (subjpsi==707 || subjpsi==479) {  // fam. or formal; 11jan2012 
       }  // end of test for 707 or 479 YOU; 3sep2012
- // }  // end of test for 58=BE; 13aug2011
     }  // end of test for 800="BWIT'" (be);  3sep2012
     vacpsi = motjuste;  // for VerbAct(); 18aug2011
     VerbAct();  // moved from below SpeechAct & old KB-inhib; 18aug2011
@@ -2258,7 +2349,7 @@ function TuringTest() {
     hardcopy = true;
     fyi = 1;
     now = new Date(); 
-    adcopy=("<font size='+2'>Dushka AI version "+vrsn+" on " +now+"<\/b><\/font>");
+    adcopy=("<font size='+2'>Russian AI version "+vrsn+" on " +now+"<\/b><\/font>");
     document.all.souvenir.innerHTML = adcopy;  // 9jan2012
   }
   if (document.all["cb1"].checked == false) {
@@ -2300,8 +2391,8 @@ function TuringTest() {
 function SeCurity() {
   TuringTest();
 // if (t > 160)  nonce = vault;  // Diagnostic display of all thought.
-// nonce = 1;  // temporary; for full-view troubleshooting; 27sep2012
-//  nonce = 1;  // temporary; for full-view troubleshooting; 29sep2012
+// nonce = 1;  // temporary; for full-view troubleshooting; 29sep2012
+// nonce = 469;  // temporary; during change of RuBoot; 12oct2012
   if (t > (cns-64)) ReJuvenate();
   if (life == true) {
 apb=("AI 4U on KB psi #"+kbtv+" at t="+t+" is alive on cyc #"+rjc+" since " +dob+ ".");
@@ -2579,6 +2670,8 @@ Tues.2oct2012 displays ReJuvenate count of immortal Russian AI Mind.
 Wed.3oct2012 "ru121003" ensures subjects have a verb for VerbPhrase.
 Sat.6oct2012 implements comprehension and generation of negated verbs.
 Sun.7oct2012 "ru121007" addresses negation of putative Russian be-verbs.
+Mon.8oct2012 implements non-putative negation of putative be-verbs.
+Fri.12oct2012 "ru121012" enlarges RuBoot for Kbtraversal and VisRecog.
 (end of HTML Change Log comments) --> 
 </html>
 }}}

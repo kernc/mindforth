@@ -74,8 +74,7 @@ var c16 = "";  // for AudBuffer();  4jan2012
 var caller = "none";
 var casus = "0";
 var city = 0;
-// var cns = 768;  // prevent bog-down; 15oct2010
-var cns = 1024;  // make room for thought; 8sep2012
+var cns = 1024;  // size of memory in central nervous system
 var coda = 128;
 var cognum = 0;  // grammatical number of cogpsi; 27oct2011
 var cogpsi = 0;  // new noun being learned; 18oct2011
@@ -93,19 +92,7 @@ var dialog = "";
 var dirobj = 0;
 var dob = new Date();
 var edge = 0;
-// var endata = ("<b>" + "English lexical fibers" + "<\/b>" + "<BR>");
-// endata += ("krt nen act num mfn dba fex pos fin aud"); // 4jan2012
 var engram = "";
-// var enx = 0;
-// var en0 = 0; // "nen" for "n(umber)" in "En(glish)"; 4apr2010
-// var en1 = 0; // "act(ivation)" level; 4apr2010
-// var en2 = 0; // "num(ber)" since 12apr09B.html; 4apr2010
-// var en3 = 0; // "mfn" being introduced as gender flag; 4apr2010
-// var en4 = 0; // "dba" being introduced as case or person; 4jan2012
-// var en5 = 0; // "fex" fiber-out from Psi array; 4apr2010; 4jan2012
-// var en6 = 0; // "pos" part-of-speech flag; 4apr2010; 4jan2012
-// var en7 = 0; // "fin" fiber-in to Psi array; 4apr2010; 4jan2012
-// var en8 = 0; // "aud" recall-vector onset-tag; 4apr2010; 4jan2012
 var eot = 0;
 var equity = 0;
 var fex = 0;
@@ -129,7 +116,6 @@ var img = "xoxoxoxox";
 var inbuffer = "";
 var indefartcon = 0;  // indefinite article condition; 19apr2011
 var indefmust = 0;  // force saying of "A" or "AN"; 23oct2011
-// var inert = 0;
 // var inert = 1;  // Until user presses a key; 20jul2011
 var inert = 0;  // for quick asking of a cogpsi question; 23oct2011
 var inhibcon = 0;  // flag for inhibition in InStantiate; 27oct2011
@@ -158,11 +144,8 @@ var motjuste = "";
 var muse = 1;
 var nacpsi = 0;  // noun-activand psi-concept for NounAct; 15sep2012
 var negjux = 0;  // flag for 12=NOT juxtaposed to a verb; 13oct2011
-var nen = 0;
 var nlt = 5; 
 var node = 0;
-// var nonce = 1;
-// var nonce = 538;  // = vault; to speed up Diagnostics; 21sep2012
 var nonce = 577;  // = vault; to speed up Diagnostics; 12oct2012
 var nounaud = 0;
 var nouncall = 0;  // Try not to show articles as subjects; 21may2011
@@ -243,7 +226,8 @@ var ru8 = 0; // "aud" recall-vector onset-tag; 5jan2012
 var seq = 0;
 var seq5aud = 0;  // being replaced by "seq7aud"; 13oct2011
 var seq7aud = 0;  // auditory engram for psi7 "seq"; 13oct2011
-var seq7enx = 0;  // SpreadAct(): for enLexicon search; 13oct2011
+// var seq7enx = 0;  // SpreadAct(): for enLexicon search; 13oct2011
+var seq7rux = 0;  // SpreadAct(): for ruLexicon search; 15oct2012
 var seqneed = 0;  // noun/pronoun or verb needed as a "seq"; 4oct2011
 var seqpos = 0;  // "seq" concept part-of-speech; 4oct2011
 var seqpsi = 0;  // for deglobalizing "seq" in SpreadAct(); 16sep2010
@@ -307,7 +291,6 @@ var urpre = 0;  // original pre for swapping during function-calls.
 var urpsi = 0;
 var userline = "";
 var vacpsi = 0;  // de-globalized psi for VerbAct(); 1oct2010
-// var vault = 538; // size (time at end) of RuBoot; 19sep2012
 var vault = 577; // size (time at end) of RuBoot; 12oct2012
 var verbcept = 0;  // verb from perception not memory; 16sep2012
 var verblock = 0;  // for subject-noun to lock onto seq-verb; 13oct2011
@@ -318,7 +301,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 31jan2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "12oct12"; // for Transcript mode; fri12oct2012
+var vrsn = "15oct12"; // for Transcript mode; mon15oct2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -613,10 +596,12 @@ function SpreadAct() {
                 Psi[k].psiExam();
                 if (psi0 == seqpsi) {  // deglobalized; 1oct2010
                   if (psi8 > 0) {  // after adding in "tqv"; 13oct2011
-                    seq7enx = psi8;  // Get seq enx as seq7enx; 13oct2011
+                 // seq7enx = psi8;  // Get seq enx as seq7enx; 13oct2011
+                    seq7rux = psi8;  // Get seq rux as seq7rux; 15oct2012
                     for (k=t; k>midway; --k) {
                       ruLexicon[k].ruExam();
-                      if (seq7enx == ru0) {  // 6jan2012
+                   // if (seq7enx == ru0) {  //  6jan2012
+                      if (seq7rux == ru0) {  // 15oct2012
                         seq7aud = ru8; // aud for psi7 "seq";  5jan2012
                       }
                     }
@@ -1013,7 +998,9 @@ function psiNode(psi,act,num,jux,pre,pos,tqv,seq,rux) { // 2jan2012
 
 
 function InStantiate() {
-  if (seqneed == 0) seqneed = 5;  // for dir.obj. of verb; 23aug2012
+// if (seqneed == 0) seqneed = 5;  // for dir.obj. of verb; 23aug2012
+// if (seqneed == 0) seqneed = 5;  // commenting out; test; 14oct2012
+  if (seqneed == 0 && dirobj == 1) seqneed = 5;  // 14oct2012
   if (precand > 0) pre = precand;
   if (ordo == 1) prevtag = 0;
   if (firstword==781) moot = 1;  // 781=CHTO (what); 11jan2012
@@ -1135,9 +1122,7 @@ function InStantiate() {
   }  // end of test for SPACE-input during need for a verb; 11feb2w012
   if (prevpsi == 800 && seqneed == 5) {  // test; 14feb2012
     if (prevpsi==800 && psi==250) {  // NYE negation? 7oct2012
- //   alert("InSt: possible negation of b-verb; pos = "+pos);  // 7oct2012
       Psi[tpbv].psiExam();  // examine the Psi concept array;  7oct2012
- //   Psi[tpbv] = new psiNode(psi,act,num,250,prevtag,pos,tqv,seq,rux);
       Psi[tpbv] = new psiNode(psi0,psi1,psi2,250,psi4,psi5,t,psi7,psi8);
       jux = 250;  // test;  7oct2012
       tpbv = 0;  // reset after use;  7oct2012
@@ -1208,12 +1193,13 @@ function InStantiate() {
   if (pos==6) seqneed = 5;  // if preposition need noun; 4oct2011
   if (pos==8) seqneed = 5;  // if verb need noun;  1feb2012
   recnum = 0;  // lest carry-over to other words; 20jul2011
+  dba = 0;  // reset for safety; test; 15oct2012
   seq = 0;
 } // End of InStantiate(); 4sep2010
 
 
 function ruExam() {  // transferred from ru120104 on 5jan2012
-  ru0 = this.nru;  // was "nen" in English; 2jan2012
+  ru0 = this.nru;
   ru1 = this.act;
   ru2 = this.num;
   ru3 = this.mfn; 
@@ -1226,7 +1212,7 @@ function ruExam() {  // transferred from ru120104 on 5jan2012
 
 
 function ruNode(nru,act,num,mfn,dba,fex,pos,fin,aud) {
-  this.nru = nru;  // was "nen" in English; 2jan2012
+  this.nru = nru;
   this.act = act;
   this.num = num;
   this.mfn = mfn;
@@ -1307,7 +1293,9 @@ function OldConcept() {
       if (ru2 > 0) unk = ru2; //  5jan2012
       if (ru2 > 0) recnum = ru2;  // test; 22jan2012
       if (ru3 > 0) mfn = ru3; //  5jan2012
-      if (ru4 > 0) dba = ru4; // for verb-recognition; 20sep2012
+   // if (ru4 > 0) dba = ru4; // for verb-recognition; 20sep2012
+   // if (ru4 > 0) dba = ru4; // not trustworthy for verbs; 15oct2012
+
    // if (ru4 > 0) dba = ru4; // Commenting out for test; 27sep2012
       if (ru5 > 0) fex = ru5; //  5jan2012
       if (ru6 > 0) pos = ru6; //  5jan2012
@@ -1315,22 +1303,13 @@ function OldConcept() {
     break;
     }
   }
- // if (pos == 8) unk = numsubj; // assume agreement; 18jun2011; 17jan2012
   if (oldpsi==57) tbev = t;  // 57=AM; 15aug2011
   if (oldpsi==58) tbev = t;  // 58=BE; 15aug2011
   if (oldpsi==66) tbev = t;  // 66=IS; 15aug2011
   if (oldpsi==67) tbev = t;  // 67=ARE; 15aug2011
   if (pos == 5 || pos == 7) dba = 1;  // default before changes; 29jan12  
-// if ((pos == 5 || pos == 7) && (lastword == true)) dba = 4; // 29jan12 
-// Commenting out the above line for SV/SVO input; 31jan2012
-// if (seqneed == 5 && pos == 5) {  // 29jan2012
-//  if  ((seqneed == 5) && (pos == 5 || pos == 7)) {  // 29jan2012
-//    dba = 4;  // accusative; 29jan2w012
-//  }  // 29jan2012
   if (subjectflag == 1) dba = 1;  // nominative for subject; 31jan2012
   if (dirobj == 1) dba = 4;  // acc. for direct objects; 31jan2012
-// ruLexicon[t] = new ruNode(oldpsi,0,unk,mfn,dba,fex,pos,fin,aud);
-// ruLexicon[t] = new ruNode(oldpsi,0,unk,mfn,prsn,fex,pos,fin,aud);
   ruLexicon[t] = new ruNode(oldpsi,0,unk,mfn,dba,fex,pos,fin,aud);
   mfn = 0;  // reset to prevent carry-over; test; 22jan2012
   if (pov == "{") oldpsi = fex;  // deglobalizing psi; 3jul2011
@@ -1492,6 +1471,10 @@ function AudRecog() {
                 psibase = aud5;
                 Psi[i].psiExam();  // 20jul2011
                 if (psi2 > 0) recnum = psi2;  // 20jul2011
+
+                ruLexicon[i].ruExam();  // look for dba; 15oct2012
+                if (ru4 > 0) dba = ru4; // verb-recognition; 15oct2012
+
                 Psi[i+1].psiExam();  // 20jul2011
                 if (psi2 > 0) recnum = psi2;  // 20jul2011                
                 actbase = aud1;
@@ -1885,6 +1868,7 @@ function AudInput() {
     audpsi = 0;
     aud5 = 0;  // test; remove; 15jan2012
     aud = 0;
+    dba = 0;  // reset for safety; test; 15oct2012
   } else {  // i.e., if AudRecog has not recognized word; 12may2011
  // if (len > 0) {
     if (len > 0 && pho != 32) {  // avoid 32=space-bar; 24jan2012

@@ -563,6 +563,7 @@ psi=777; num=1; pre=0; seq=0; rux=777; RuVocab(); InNativate();
   pho=" ";
   nru = 900; // to avoid confusion with verbs; 12jan2012 
   bias = 5;  // from MindForth; 15oct2010
+  dba = 0;  // prevent carry-overs; 14oct2012
   lurk = 0;  // 15oct2010
   mfn = 0;  // prevent carry-over; 15oct2010
   num = 0;
@@ -1333,12 +1334,7 @@ function NounPhrase() {
   }  // end of test to match subject-number and found noun; 26jan2012
   anset = 0;  // Safety measure reset to zero; 4may2011
   ghost = 0;
-  xthe = 0;  
-    urpsi = motjuste; // prepare to psi-damp; 18oct2010
-  urpsi = 0;  // reset for safety; 18oct2010
-  urpsi = objold; // prepare to psi-damp; 18oct2010
-// PsiDamp();  // Commenting out as a test; 29oct2011 
-  urpsi = 0;  // reset for safety; 18oct2010
+  xthe = 0;
   psi = 0;
   aud = audjuste; 
   SpeechAct();  // main call from NounPhrase to SpeechAct; 18may2011
@@ -1747,7 +1743,6 @@ function VerbPhrase() {
               negjux = psi3;  // 13oct2011
             }  // end of test for 250=NYE; 17jan2012
           }  // end of test for positive activation; 15aug2011
-
           if (psi1 > 0) {  // positive activation? 24oct2011
             if (verblock==0) negjux = psi3; // negative be-verbs; 24oct2011
             tqv = psi6;  // underailable tqv; 24oct2011
@@ -1759,7 +1754,9 @@ function VerbPhrase() {
             sloshmark = "+";  // for Tutorial display; 9aug2011
           }  // end of test for positive activation; 24oct2011
         }  // end of if-clause looking for higher activation
-      } else continue;
+  //  } else continue;
+      }  // test; 14oct2012
+  //  } else continue;  // commenting out as test; 14oct2012
   }  // end of search for "motjuste" in Psi array; 13aug2011
    if (vphraud == 0) {  // if not substituted above; 29aug2012
    for (i = t; i>midway; i--) {  // separate search for verb-form;
@@ -1839,7 +1836,6 @@ function VerbPhrase() {
       }  // End of loop finding verb-form; 20aug2012
     }  // end of override to find correct verb-form; 20aug2012
   }  // end of code for override of verblocked verbs; 19aug2012
-
   Psi[tqv].psiExam(); // examine array row at "tqv"; 24oct2011
   Psi[tqv] = new psiNode(psi0,128,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
   node = 0;  // Reset tutorial verb display for showVerb().
@@ -1867,7 +1863,9 @@ function VerbPhrase() {
       verblock = 0;  // as if at end of VerbPhrase; 29sep2012
       return;  // abandon rest of VerbPhrase; 27jun2011
     }  // what-do-X-do as prelude to yes-or-no questions; 27jun2011
-    else return;  // abort thought if number not known; 15aug2011
+    else {  // test; 14oct2012
+      return;  // abort thought if number not known; 14oct2012
+    }  // test; 14oct2012
   }  // End of test for zero motjuste; 2sep2010
   if (motjuste > 0) {  // if positive motjuste; 2sep2010
     if (vphract < 20) {  // threshold level also in MindForth; 26jun2011
@@ -1918,8 +1916,8 @@ function VerbPhrase() {
     vacpsi = motjuste;  // for VerbAct(); 18aug2011
     VerbAct();  // moved from below SpeechAct & old KB-inhib; 18aug2011
     aud = vphraud;  // transfer just before call; 28jun2011
- // if (aud==0) gencon = 1; WhatBe(); // test; 15sep2012
-    if (aud==0) return; // if no verb, abort the thought; 15sep2012
+ // if (aud==0) return; // if no verb, abort the thought; 15sep2012
+ // if (aud==0) return; // commenting out as test; 14oct2012
     if (gencon == 0) {  // if no call to VerbGen(); 19jan2012
       SpeechAct(); // main call from VerbPhrase to SpeechAct; 2sep2010
     }  // prevent speaking extra verb after VerbGen(); 19jan2012
@@ -1955,7 +1953,6 @@ function VerbPhrase() {
       negjux = 0;  // reset for safety; 13oct2011
     }  // end of test for 250=NYE (NOT) negation; 9aug2011
   }  // end of test for a present-tense be-verb; 15aug2011
-//  motjuste = 0;
   psi = 0;
   pho = " ";
   dirobj = 1;
@@ -1974,7 +1971,7 @@ function VerbPhrase() {
    verbpsi = 57;  // 14sep2011
    predflag = 1; // 16sep2010
   }  // 14sep2011
-  NounPhrase();
+  NounPhrase(); 
   predflag = 0;  // reset for safety; 16sep2010
   dirobj = 0;
   gencon = 0;  // prevent spurious VerbGen() calls; 23aug2012
@@ -2393,6 +2390,7 @@ function SeCurity() {
 // if (t > 160)  nonce = vault;  // Diagnostic display of all thought.
 // nonce = 1;  // temporary; for full-view troubleshooting; 29sep2012
 // nonce = 469;  // temporary; during change of RuBoot; 12oct2012
+  nonce = 469;  // temporary; to show the innate KB; 14oct2012
   if (t > (cns-64)) ReJuvenate();
   if (life == true) {
 apb=("AI 4U on KB psi #"+kbtv+" at t="+t+" is alive on cyc #"+rjc+" since " +dob+ ".");
@@ -2585,14 +2583,14 @@ Unclick Diagnostic prior to clicking on Transcript.
  
 <!-- The Diagnostic columns are present but invisible. -->
 <div id="psicolumn" style="position:absolute; left:1; top:310;
+width:250; height:140; background-color:clear">
+</div>
+ 
+<div id="rucolumn" style="position:absolute; left:250; top:310;
 width:240; height:140; background-color:clear">
 </div>
  
-<div id="rucolumn" style="position:absolute; left:240; top:310;
-width:240; height:140; background-color:clear">
-</div>
- 
-<div id="audcolumn" style="position:absolute; left:480; top:310;
+<div id="audcolumn" style="position:absolute; left:490; top:310;
 width:200; height:140; background-color:clear">
 </div>
  
@@ -2671,7 +2669,9 @@ Wed.3oct2012 "ru121003" ensures subjects have a verb for VerbPhrase.
 Sat.6oct2012 implements comprehension and generation of negated verbs.
 Sun.7oct2012 "ru121007" addresses negation of putative Russian be-verbs.
 Mon.8oct2012 implements non-putative negation of putative be-verbs.
-Fri.12oct2012 "ru121012" enlarges RuBoot for Kbtraversal and VisRecog.
+Fri.12oct2012 "ru121012" enlarges RuBoot for KbTraversal and VisRecog.
+Sun.14oct2012 solves problem of verbs not finding direct objects.
+Mon.15oct2012 "ru121015" prevents misrecognition of person of verbs.
 (end of HTML Change Log comments) --> 
 </html>
-}}}
+}}}}

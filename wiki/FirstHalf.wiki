@@ -297,7 +297,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 17oct2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "23oct12A"; // for Transcript mode; tue23oct2012
+var vrsn = "24oct12A"; // for Transcript mode; wed24oct2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -410,21 +410,9 @@ function PsiDecay() {  // replacement for old PsiDecay(); 14may2011
       if (actran > 0) psi1 = actran; // Differential act; 8jun2011
       actran = 0;  // Reset to zero for safety;  8jun2011
       --psi1;  // Decrement the psi1 activation-level; 8sep2010
-      if (psi0 == 7) psi1 = 0;   //  7=THE  8jun2011
-   // if (psi0 == 54) psi1 = 0;  // 54=WHAT  8jun2011
+      if (psi0 == 117) psi1 = 0;   //  117=THE; 24oct2012
       if (psi0 == 781) psi1 = 0;  // 781=WHAT; 23oct2012
-      if (psi0 == 59) psi1 = 0;  // 59=DO  8jun2011
       if (psi0 == 830) psi1 = 0;  // 830=DO; 23oct2012
-   // if (psi0 == 57) {  //  57=AM  8jun2011
-     // if (psi1 < 8) {  //  8jun2011
-     //   psi1 = 1;  // from MindForth; 8jun2011
-     // }  // 8jun2011
-   // }  // 8jun2011
-   // if (psi0 == 66) {  //  66=IS  8jun2011
-   //   if (psi1 > 8) {  //  8jun2011
-   //     psi1 = 1;  // from MindForth; 8jun2011
-   //   }  // 8jun2011
-   // }  // 8jun2011
       Psi[i] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
     } //  End of if-clause finding and reducing positive activations
     Psi[i].psiExam();  // test; REMOVE; 14jun2011
@@ -438,16 +426,10 @@ function PsiDecay() {  // replacement for old PsiDecay(); 14may2011
 
 function PsiDamp() {
   residuum = 16;
-  if (urpsi==57) urpsi = 58;  // 57=AM;  15aug2011
-  if (urpsi==66) urpsi = 58;  // 66=IS;  15aug2011
-  if (urpsi==67) urpsi = 58;  // 67=ARE; 15aug2011
-// if (urpsi==55) residuum = 1; // deemphasize WHO; 4sep2010
   for (i = t; i>midway; --i) {
     Psi[i].psiExam();
      if (urpsi > 0) {  // 20sep2006 To prevent needless dampings.
       if (psi0==urpsi) { 
-    // Psi[i].psiExam();  // testing; remove? 14jun2011
-    // Psi[i].psiExam();  // Commenting out on 29oct2011
     // if (psi1 > 0) {  // positive activation?; 8sep2010
        if (psi1 > -1) {  // positive activation?; 27oct2011
     Psi[i] = new psiNode(psi0,residuum,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
@@ -571,7 +553,6 @@ function SpreadAct() {
     for (j = zone; j > midway; --j) {
       Psi[j].psiExam();
         if (psi0 == prepsi) {  // deglobalized; 1oct2010
-       // psi1 = (psi1 + 1);
           psi1 = (psi1 + 8);  // from MindForth; for queries; 15aug2012
     Psi[j] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,psi6,psi7,psi8); 
       }
@@ -607,11 +588,9 @@ function SpreadAct() {
                     }
                     engram = "";
                     do {
-                   // audMemory[seq5aud].audExam();
                       audMemory[seq7aud].audExam();  // 13oct2011
                       engram += aud0;
                       ctu = aud4;
-                   // seq5aud = (seq5aud + 1);
                       seq7aud = (seq7aud + 1);  // 13oct2011
                     }
                     while (ctu == 1);
@@ -688,13 +667,10 @@ function NounAct() {
     for (i=(t + 1); i>midway; --i) {
       Psi[i].psiExam();
       if (psi0 == nacpsi) {  // nacpsi replaces psi; 13aug2010
-     // if (nounval > 0) {  // 
-     // if (psi > -1) {   // avoid inhibition; 27oct2011
         if (psi1 > -1) {   // avoid inhibition; 29oct2011
           psi1 = 26;  // start near a threshold level; 7jun2011
         }  //
         Psi[i] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
-     // if (psi0 == 54) {  // 54=WHAT; 7jun2011
         if (psi0 == 781) {  // 781=WHAT; 23oct2012
           PsiDecay();  // MindForth: await active subject; 13may2011
           PsiDecay();  // MindForth: await active subject;  7jun2011
@@ -707,15 +683,6 @@ function NounAct() {
         if (psi1 >  5) spike = 12;  // from MindForth; 25may2011
         if (psi1 > 10) spike = 24;  // from MindForth;  7jun2011
         if (psi1 > 15) spike = 26;  // from MindForth;  7jun2011
-     // if (psi1 > 20) spike = 28;  // from MindForth;  7jun2011
-     // if (psi1 > 25) spike = 30;  // from MindForth;  7jun2011
-     // if (psi1 > 30) spike = 32;  // from MindForth;  7jun2011
-     // if (psi1 > 35) spike = 34;  // from MindForth;  7jun2011
-     // if (psi1 > 40) spike = 36;  // from MindForth;  7jun2011
-     // if (psi1 > 45) spike = 38;  // from MindForth;  7jun2011
-     // if (psi1 > 50) spike = 40;  // from MindForth;  7jun2011
-     // if (psi1 > 55) spike = 42;  // from MindForth;  7jun2011
-     // if (psi1 > 60) spike = 44;  // from MindForth;  7jun2011
         if (psi1 > 20) spike = 27;  // 10jun2011
         if (psi1 > 25) spike = 28;  // 10jun2011
         if (psi1 > 30) spike = 29;  // 10jun2011
@@ -726,7 +693,6 @@ function NounAct() {
         if (psi1 > 55) spike = 34;  // 10jun2011
         if (psi1 > 60) spike = 35;  // 10jun2011
         if (seqpsi > 0) {  // if positive association;  7jun2011
-       // if (seqpsi == 55) {  // deglobalized; 1oct2010
           if (seqpsi == 791) {  // 791=who; 23oct2012
             spike = 1;  // de-activate 791=WHO; 23oct2012
           }  // end of test for 791=WHO; 23oct2012
@@ -749,7 +715,6 @@ function NounAct() {
 function VerbAct() {
   verbval = 15; // oppose stray activations;  7jun2011
   if (vacpsi > 0) {  // if a vacpsi exists;  7jun2011
- // cogpsi = vacpsi;  // from MindForth;  7jun2011
     oldpsi = vacpsi;  // deglobalized; 1oct2010
     if (vacpsi==57) vacpsi = 800;  //  AM becomes BE; 21oct2012
     if (vacpsi==66) vacpsi = 800;  //  IS becomes BE; 21oct2012
@@ -762,7 +727,6 @@ function VerbAct() {
            psi1 = (psi1 + verbval); // CUMULATIVE for slosh-over; 7jun2011
           }  // end of test for a moot query input; 22aug2011
          }  // end of test to skip inhibited nodes;  7jun2011
-      // if (psi0 == 54) {  // from MindFOrth; 54=WHAT  7jun2011
          if (psi0 == 781) {  // 781=WHAT; 23oct2012
            psi1 = 0;  // Set WHAT at zero activation; 7jun2011
          }  // End of test for 781=WHAT; 23oct2012
@@ -812,7 +776,6 @@ function ReActivate() { // re-activate recent nodes of a concept
   if (psi > 0) {
  // for (i=(t + 1); i>midway; --i) {
     for (i=tov; i>midway; --i) { // Omitting current input; 27oct2011
- // for (i=(t-12); i>midway; --i) { // test; change back; 14jun2011
       Psi[i].psiExam();
       if (psi0 == psi) {
        if (pov == "*") {  // Only during "*" external POV; 10may2011
@@ -823,9 +786,7 @@ function ReActivate() { // re-activate recent nodes of a concept
           else psi1 = psi1 + 35;  // full reactivation; 27oct2011
         }  // end of test for a moot query input; 22aug2011
         if (firstword==54) psi1 = 48;  // affirm queries; 1nov2011
-     // if (psi0 == 54) psi1 =  0; // 54=WHAT; 10nov2010
         if (psi0 == 781) psi1 =  0; // 781=WHAT; 23oct2012
-     // if (psi0 == 55) psi1 =  0; // 55=WHO; from MindForth; 4may2011
         if (psi0 == 791) psi1 =  0; // 791=WHO; 23oct2012
         if (psi0 == 59) psi1 =  0; // 59=DO; 10nov2010
         if (psi0 == 830) psi1 = 0; // 830=DO; 23oct2012
@@ -962,7 +923,6 @@ function OutBuffer() {  // for manipulation of SpeechAct words; 4jan2012
     b04="";  b03="";  b02="";  b01="";  // 4jan2012
     return;  // abandon remainder of function; 4jan2012
   }  // end of transfer of a 1-character word; 4jan2012
-//  alert("OutBuffer = "+b10+b11+b12+b13+b14+b15+b16); 
 }  // end of OutBuffer; 28dec2011
 
 
@@ -987,7 +947,6 @@ function AudBuffer() {  // for transfer of words to OutBuffer; 4jan2012
   if (phodex==14)  c14=abc;  // 4jan2012
   if (phodex==15)  c15=abc;  // 4jan2012
   if (phodex==16)  c16=abc;  // 4jan2012
-// alert("AudBuffer = "+c01+c02+c03+c04+c05+c06+c07+c08);  // 4jan2012
 }  // end of AudBuffer(); 4jan2012
 
 
@@ -998,12 +957,12 @@ function psiExam() {
   psi3 = this.jux;
   psi4 = this.pre;
   psi5 = this.pos;
-  psi6 = this.tqv;  // time-point for "verblock" or "nounlock"; 13oct2011
+  psi6 = this.tqv;  // time-point for "verblock" or "nounlock"
   psi7 = this.seq;  // subSEQuent concept; 13oct2011
   psi8 = this.enx;  // English-transfer tag; 13oct2011
 }
 
-function psiNode(psi,act,num,jux,pre,pos,tqv,seq,enx) { // "tqv" 13oct2011
+function psiNode(psi,act,num,jux,pre,pos,tqv,seq,enx) {
   this.psi = psi;
   this.act = act;
   this.num = num;
@@ -1020,8 +979,7 @@ function InStantiate() {
 // if (seqneed == 0) seqneed = 5;  // for dir.obj. of verb; 15aug2012
   if (seqneed == 0 && dirobj == 1) seqneed = 5;  // RuAi; 22oct2012
   if (precand > 0) pre = precand;
-  if (ordo == 1) prevtag = 0; 
-// if (firstword==54) moot = 1;  // "54=WHAT"; 1nov2011
+  if (ordo == 1) prevtag = 0;
   if (firstword==781) moot = 1;  // "781=WHAT"; 23oct2012
   if (firstword==59 || firstword==87) {  // 59=DO; 87=DOES; 22aug2011
     moot = 1;  // deprive queries of "pre" and "seq" tags; 22aug2011
@@ -1057,7 +1015,6 @@ function InStantiate() {
     }
   }
  if (t > 201) {
- // if (psi == 55) {
     if (psi == 791) {  // 791=WHO; 23oct2012
       whoskip = 1;
       act = 0;
@@ -1082,13 +1039,12 @@ function InStantiate() {
       singflag = 0;  // reset after use; 6nov2011
     }  // end of test for a noun; 6nov2011
   }  // end of test of singularity-flag; 6nov2011
-  if (psi==1 || psi==83) singflag = 1;  // after a(n); 6nov2011
-// if (psi==54) {  // Special handling of psi #54 WHAT; 19apr2011
+// if (psi==1 || psi==83) singflag = 1;  // after a(n); 6nov2011
+  if (psi==101 || psi==102) singflag = 1;  // after a(n); 24oct2012
   if (psi==781) {  // Special handling of psi #781 WHAT; 23oct2012
    indefartcon = 1;  // Set indefinite article condition; 19apr2011
     act = 0; // suppress "what" in queries; 16sep2010 
   }  // Changing from one line to multiple lines; 19apr2011
-// if (psi==55) {  // Special handling of psi #55 WHO; 19apr2011
   if (psi==791) {  // Special handling of psi #791 WHO; 23oct2012
     defartcon = 1;  // Set definite article condition; 19apr2011
     act = 0;  // To suppress "WHO" during answer; 19apr2011
@@ -1111,11 +1067,8 @@ function InStantiate() {
   act = 0;  // reset for safety; 27oct2011
   inhibcon = 0;  // reset for safety; 27oct2011
   instnum = num;  // instantiation num(ber); 27oct2011
-// if (jux == 12) jux = 0;  // reset after use; 24jul2011
   if (jux == 250) jux = 0;  // reset after use; 23oct2012
-// if (prejux == 12) { // 12=NOT from OldConcept; 24jul2011
   if (prejux == 250) { // 250=NOT from OldConcept; 23oct2012
- // jux = 12;  // set jux for next instantiand; 24jul2011
     jux = 250;  // set jux for next instantiand; 23oct2012
     prejux = 0;  // reset for safety; 24jul2011
   }  // end of post-instantiation test; 24jul2011
@@ -1125,10 +1078,8 @@ function InStantiate() {
   if (mfn == 0) mfnflag = 0;  // reset for safety; 3aug2011 
   preset = 0;
   prevtag = psi;
-// if (psi != 59) {  // skip auxiliary verb "59=DO"; 6oct2011
   if (psi != 830) {  // skip auxiliary verb "830=DO"; 23oct2012
-    if (psi != 87) {  // skip auxiliary verb "87=DOES"; 6oct2011
- // if (psi != 833) {  // skip auxiliary verb "833=DOES"; 23oct2012
+    if (psi != 833) {  // skip auxiliary verb "833=DOES"; 23oct2012
       if (seqneed==8) {  // if looking for a verb; 4oct2011
         if (pos==8) {  // if part-of-speech is verb; 4oct2011
           seq = psi;  // because a verb has arrived; 4oct2011
@@ -1182,10 +1133,8 @@ function InStantiate() {
   }  // 4oct2011
   if (pos==5 || pos==7) seqneed = 8;  // if noun need verb; 4oct2011
   if (pos==6) seqneed = 5;  // if preposition need noun; 4oct2011
-// if (psi != 59) {  // skip auxiliary verb "59=DO"; 7oct2011
   if (psi != 830) {  // skip auxiliary verb "830=DO"; 23oct2012
-    if (psi != 87) {  // skip auxiliary "87=DOES"; 8oct2011
- // if (psi != 833) {  // skip auxiliary "833=DOES"; 23oct2012
+    if (psi != 833) {  // skip auxiliary "833=DOES"; 23oct2012
       if (pos==8) seqneed = 5;  // if verb need noun; 4oct2011
     }  // end of test to skip auxiliary DOES; 7oct2011
   }  // end of test to skip auxiliary DO; 7oct2011
@@ -1237,8 +1186,6 @@ function EnParser() {
   if (pos == 5) bias = 8;
   if (pos == 7) bias = 8;  // from MindForth; 15oct2010
   if (pos == 8) bias = 5;
-// jux = psi;
-// jux = psi; // Commenting out lest ruin Y/N adjust; 22jun2011
 }  // End of EnParser()
 
 
@@ -1248,7 +1195,6 @@ function EnReify() {
     if (psi1 > 0) {
       lexact = psi1;  // from MindForth;  8jun2011
       num = psi2;  // from MindForth;  8jun2011
-  //  j = i;  // Instead of nesting;  8jun2011
       enLexicon[i].enExam();  // examine English array; 9aug2011
       enLexicon[i] = new enNode(en0,lexact,num,en3,en4,en5,en6,en7,en8);
     }  // end of test for a psi with positive activation; 9aug2011
@@ -1258,14 +1204,11 @@ function EnReify() {
 
 
 function KbRetro() {  // for yes-or-no answers; 29jun2011
-// if (oldpsi == 27 || oldpsi == 32) {  // if yes or no; 3jul2011
   if (oldpsi == 432 || oldpsi == 404) {  // if yes or no; 23oct2012
- // if (oldpsi == 27) {  // 27=NO;  3jul2011
     if (oldpsi == 404) {  // 404=NO; 23oct2012
       Psi[tkbv].psiExam(); // expose all values to change two; 3jul2011
       Psi[tkbv] = new psiNode(psi0,64,psi2,12,psi4,psi5,psi6,psi7,psi8);
     }  // End of test for "no" answer; 29jun2011
- // if (oldpsi == 32) {  // 32=YES;  3jul2011
     if (oldpsi == 432) { // 432=YES; 23oct2012
       Psi[tkbv].psiExam(); // expose all values to change one; 3jul2011
       Psi[tkbv] = new psiNode(psi0,64,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
@@ -1292,11 +1235,8 @@ function OldConcept() {
       if (en2 > 0) unk = en2; // 18jun2011
       if (en2 > 0) recnum = en2; // test; 19oct2012
       if (en3 > 0) mfn = en3; // 14jun2011
-   // if (en4 > 0) fex = en4; //  5apr2010
       if (en5 > 0) fex = en5; //  4jan2012
-   // if (en5 > 0) pos = en5; //  5apr2010
       if (en6 > 0) pos = en6; //  4jan2012
-   // if (en6 > 0) fin = en6; //  5apr2010
       if (en7 > 0) fin = en7; //  4jan2012
     break;
     }
@@ -1321,11 +1261,9 @@ function OldConcept() {
   if (pov == "}") oldpsi = fex;  // deglobalizing psi; 3jul2011
   if (pov == "*") oldpsi = fin;  // deglobalizing psi; 3jul2011
   enx = oldpsi;  // deglobalizing psi; 3jul2011
-// if (oldpsi==12) {  // 12=NOT; 15aug2011
   if (oldpsi==250) {  // 250=NOT; 23oct2012
      if (tbev > 0) {  // 15aug2011
        Psi[tbev].psiExam();  // examine Psi array at "tbev"; 15aug2011
-    // psi3 = 12;  // set verb "jux" to 12=NOT; 15aug2011
        psi3 = 250;  // set verb "jux" to 250=NOT; 23oct2012
        Psi[tbev] = new psiNode(psi0,psi1,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
        tbev = 0;  // reset for safety; 15aug2011
@@ -1341,15 +1279,11 @@ function OldConcept() {
     KbRetro();  // retroactively adjust knowledge base; 3jul2011
     kbcon = 0;  // reset for safety; 3jul2011
   }  // User has had one chance to answer yes-or-no question.
-// if (oldpsi == 54) act = 0;  // suppress WHAT for queries; 3jul2011
   if (oldpsi == 781) act = 0;  // suppress WHAT for queries; 23oct2012
-// if (oldpsi == 55) act = 0;  // Subactivate question "who"; 3jul2011
   if (oldpsi == 791) act = 0;  // Subactivate question "who"; 23oct2012
   if (oldpsi == 59) act = 8;  // Sub-activate auxiliary 59=DO 3jul2011
   if (oldpsi == 830) act = 8; // Sub-activate auxiliary 830=DO 23oct2012
-// if (oldpsi == 12) {  // upon recognition of 12=NOT; 24jul2011
   if (oldpsi == 250) {  // upon recognition of 250=NOT; 23oct2012
- // prejux = 12;  // flag for concept to be negated; 24jul2011
     prejux = 250;  // flag for concept to be negated; 23oct2012
   }  // end of test for input or ReEntry of 250=NOT; 23oct2012
   psi = oldpsi;  // from MindForth; 3jul2011
@@ -1390,7 +1324,6 @@ function NewConcept() {
   EnParser();
   if (pos == 5) {
     cogpsi = nen;  // for WhatBe; 18oct2011
- // cogpsinum = num;  // from InStantiate; 18oct2011
     cognum = instnum;  // from InStantiate; 27oct2011
     recon = 1;
     topic = nen;  // potentially a query "topic";  7jul2011
@@ -1419,7 +1352,6 @@ function VisRecog() {  // identification of objects seen by a robot
 }  // End of VisRecog(); return to VerbPhrase(); 25sep2011
 
 
-// http://cyborg.blogspot.com/2010/05/audrecog.html
 function AudRecog() {
   psi = 0;
   act = 8;
@@ -1571,7 +1503,6 @@ function AudMem() {
   if (beg == 1) onset = t;
   if (aud0 == " ") beg = 1;
   audMemory[t] = new audNode(pho,0,pov,beg,ctu,audpsi); // 8dec2009
-// if (ctu==0) quobj = audpsi; // for AskUser; test; 22jun2011
 }
 
 function Attention() {
@@ -1739,8 +1670,6 @@ function CR() {
   moot = 0;  // assuming end of moot user queries; 1nov2011
   ordo = 0;
   quiet = true;
-// output = "";  // end on-screen persistence of output; 6nov2011
-// outputplus = "";  // end on-screen persistence of output; 6nov2011
 }
 
 
@@ -1839,9 +1768,9 @@ psi=101;  num=1; pre=0; seq=0; enx=101; EnVocab(); InNativate();
 // ALL -- for machine reasoning logic 
 t=9; pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
 t=10; pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
-t=11; pho="L"; beg=0; ctu=0; audpsi=2; AudMem();
-nen=2; mfn=0; fex=2; pos=1; fin=2; aud=9; 
-psi=2;  num=0;  pre=0; seq=0; enx=2; EnVocab(); InNativate();
+t=11; pho="L"; beg=0; ctu=0; audpsi=123; AudMem(); // 24oct2012
+nen=123; mfn=0; fex=123; pos=1; fin=123; aud=9;    // 24oct2012
+psi=123;  num=0;  pre=0; seq=0; enx=123; EnVocab(); InNativate();
 
 // AN -- to be selected instead of "A" before a vowel 
 t=13;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
@@ -2473,5 +2402,16 @@ t=393;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
 t=394;pho="C"; beg=0; ctu=0; audpsi=588; AudMem(); // 23oct2012
 nen=588; num=1; mfn=0; dba=1; fex=588; pos=5; fin=588; aud=390; 
 psi=588; pre=800; tqv=0; seq=0; enx=588; EnVocab(); InNativate();
+
+// I -- for SelfReferentialThought 
+t=396;pho="I"; beg=1; ctu=0; audpsi=701; AudMem(); // 21oct2012
+nen=701; num=1; mfn=0; dba=1; fex=701; pos=5; fin=707; aud=396; 
+psi=701; pre=0; tqv=399; seq=800; enx=701; EnVocab(); InNativate();
+
+// AM -- 1st person singular of 800=BE; 21oct2012
+t=398;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
+t=399;pho="M"; beg=0; ctu=0; audpsi=800; AudMem();  // 21oct2012
+nen=800; num=0; mfn=0; dba=1; fex=800; pos=8; fin=800; aud=398; 
+psi=800; pre=701; tqv=405; seq=501; enx=800; EnVocab(); InNativate();
 
 }}}

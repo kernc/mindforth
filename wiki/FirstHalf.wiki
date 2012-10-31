@@ -75,7 +75,8 @@ var c16 = "";  // for AudBuffer();  4jan2012
 var caller = "none";
 var casus = "0";
 var city = 0;
-var cns = 768;  // prevent bog-down; 15oct2010
+// var cns = 768;  // prevent bog-down; 15oct2010
+var cns = 1024;  // accommodate enlarged EnBoot; 26oct2012
 var coda = 128;
 var cognum = 0;  // grammatical number of cogpsi; 27oct2011
 var cogpsi = 0;  // new noun being learned; 18oct2011
@@ -161,10 +162,10 @@ var negjux = 0;  // flag for 12=NOT juxtaposed to a verb; 13oct2011
 var nen = 0;
 var nlt = 5;
 var node = 0;
-var nonce = 1;
+var nonce = 661;  // for quick loading; 25oct2012
 var nounaud = 0;
 var nouncall = 0;  // Try not to show articles as subjects; 21may2011
-var nounduck = 0;
+var nounduck = 0; // Disregard prepositional-phrase nouns as subjects.
 var nounlock = 0;  // for a verb to lock onto a seq-noun; 13oct2011
 var nounval = 0;
 var nphrnum = 0;
@@ -242,6 +243,7 @@ var subjcall = 0;  // To avoid showSubject() of articles; 21may2011
 var subjectflag = 0;  // 9dec2009 For NounPhrase to call SelfRef.
 var subjnum = 0;  // for agreement with predicate nominative; 18may2011
 var subjold = 0;  // old subject as default candidate 29sep2010
+var subjprsn = 0; // possible holder of "dba" for input verbs; 31oct2012
 var subjpsi = 0;
 var sublen = 0;
 var subpsi = 0;
@@ -288,7 +290,8 @@ var urpre = 0;  // original pre for swapping during function-calls.
 var urpsi = 0;
 var userline = "";
 var vacpsi = 0;  // de-globalized psi for VerbAct(); 1oct2010
-var vault = 476; // size of EnBoot; 25sep2011
+// var vault = 476; // size of EnBoot; 25sep2011
+var vault = 611; // size of EnBoot; 25oct2011
 var verblock = 0;  // for subject-noun to lock onto seq-verb; 13oct2011
 var verbnum = 0;
 var verbpsi = 0;  // for transit into WhatAuxSVerb() 14jun2011
@@ -297,7 +300,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 17oct2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "24oct12A"; // for Transcript mode; wed24oct2012
+var vrsn = "31oct12A"; // for Transcript mode; wed31oct2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -517,7 +520,6 @@ function Transcript() {
   }
   if (hardcopy == false) html = "";
 }
-
 
 function psiList() {
   for (i = nonce; i < (t +1); i++) {
@@ -785,10 +787,10 @@ function ReActivate() { // re-activate recent nodes of a concept
           }  // end of test for inhibited concept; 27oct2011
           else psi1 = psi1 + 35;  // full reactivation; 27oct2011
         }  // end of test for a moot query input; 22aug2011
-        if (firstword==54) psi1 = 48;  // affirm queries; 1nov2011
+     // if (firstword==54) psi1 = 48;  // affirm queries; 1nov2011
+        if (firstword==781) psi1 = 48;  // 781=WHAT; 31oct2012
         if (psi0 == 781) psi1 =  0; // 781=WHAT; 23oct2012
         if (psi0 == 791) psi1 =  0; // 791=WHO; 23oct2012
-        if (psi0 == 59) psi1 =  0; // 59=DO; 10nov2010
         if (psi0 == 830) psi1 = 0; // 830=DO; 23oct2012
         if (psi0 == 66) psi1 =  8; // suppress 66=IS; 19jun2011
         if (psi0 == 95) psi1 =  8; // suppress 95=IT; 19jun2011
@@ -981,9 +983,6 @@ function InStantiate() {
   if (precand > 0) pre = precand;
   if (ordo == 1) prevtag = 0;
   if (firstword==781) moot = 1;  // "781=WHAT"; 23oct2012
-  if (firstword==59 || firstword==87) {  // 59=DO; 87=DOES; 22aug2011
-    moot = 1;  // deprive queries of "pre" and "seq" tags; 22aug2011
-  }  // end of test for a DO-query; 24oct2011
   if (firstword==830 || firstword==833) {  // 830=DO; 833=DOES; 23oct2011
     moot = 1;  // deprive queries of "pre" and "seq" tags; 23oct2012
   }  // end of test for a DO-query; 23oct2012
@@ -991,22 +990,16 @@ function InStantiate() {
     seq = 0;
     lastword = false;
   }
-  if (psi == 7) {
-    prevtag = 0;
-    seq = 0;
-  }
-  if (t > 201) {  
-    if (pos == 6) {
-      nounduck = 1;
-    }
-  }
- if (t > 201) {  
-    if (nounduck == 0) {
-      if (pos == 5) {
-        presubj = psi;
-      }
-    }
-  }
+  if (psi == 117) {  // Test for 117=THE article; 31oct2012
+    prevtag = 0;  // Prevent a definite association; 31oct2012
+    seq = 0;  // Prevent a definite association; 31oct2012
+  }  // End of test for "THE" from EnArticle(); 31oct2012
+  if (pos==6) nounduck = 1;  // Preposition? 31oct2012
+  if (nounduck == 0) {  // If no preposition precedes; 31oct2012
+    if (pos == 5) {  // If psi is a noun; 31oct2012
+      presubj = psi; // Pick only nouns as presubj; 31oct2012
+    }  // End of test for a noun; 31oct2012
+  }  // End of test of prep-phrase-noun avoidance flag.
   if (presubj > 0) {
     if (pos == 8) {
       prevtag = presubj;
@@ -1014,13 +1007,11 @@ function InStantiate() {
       if (nounduck == 1) nounduck = 0;
     }
   }
- if (t > 201) {
-    if (psi == 791) {  // 791=WHO; 23oct2012
-      whoskip = 1;
-      act = 0;
-    }
+  if (psi == 791) {  // 791=WHO; 23oct2012
+    whoskip = 1;
+    act = 0;
   }
-  if (t > 201) {
+  if (t > 201) {  // Obsolete trick to avoid EnBoot; 31qoct2012
     if (whoskip == 1) {
       if (psi == 57) presubj = 50;
       if (psi == 67) presubj = 0;
@@ -1063,6 +1054,9 @@ function InStantiate() {
  // if (inhibcon == 1) act = -16;  // test; 27oct2011
   }  // End of test for "#" internal POV;  1may2011
   if (seq == 0) tqv = 0; // avoid spurious carry-overs; 15aug2012
+  if (psi==701 || psi==707) num = 1; // sing. I or YOU 31oct2012
+  if (psi==713 || psi==719 || psi==725) num=1; // HE or SHE or IT
+  if (psi==731 || psi==737 || psi==743) num=2;  // WE; YOU; THEY
   Psi[t] = new psiNode(psi,act,num,jux,prevtag,pos,tqv,seq,enx);
   act = 0;  // reset for safety; 27oct2011
   inhibcon = 0;  // reset for safety; 27oct2011
@@ -1241,20 +1235,20 @@ function OldConcept() {
     break;
     }
   }
-  if (pos == 8) unk = numsubj; // assume agreement; 18jun2011
-  if (oldpsi==57) tbev = t;  // 57=AM; 15aug2011
-  if (oldpsi==58) tbev = t;  // 58=BE; 15aug2011
   if (oldpsi==800) tbev = t;  // 800=BE; 21oct2012
-  if (oldpsi==58) predflag = 1;  // 58=BE; to affect "dba"; 20oct2012
   if (oldpsi==800) predflag = 1;  // 800=BE; to affect "dba"; 21oct2012
-  if (oldpsi==66) tbev = t;  // 66=IS; 15aug2011
-  if (oldpsi==66) predflag = 1;  // 66=BE/IS; to affect "dba"; 20oct2012
-  if (oldpsi==67) tbev = t;  // 67=ARE; 15aug2011
-  if (oldpsi==67) predflag = 1;  // 67=BE/ARE; to affect "dba"; 20oct2012
-  if (pos == 5 || pos == 7) dba = 1; // default before changes; 19oct2012 
-  if (subjectflag == 1) dba = 1;  // nominative for subject; 19oct2012
-  if (dirobj == 1) dba = 4;  // acc. for direct objects; 19oct2012
-  if (predflag == 1) dba = 1;  // for predicate nominatives; 20oct2012
+  if (pos == 8) {  // if part-of-speech is verb; 31oct2012
+   unk = subjnum; // assume agreement; 18jun2011; 31oct2012
+   dba = prsn;  // 1, 2, or 3 for verbs; 31oct2012
+ // if (subjpsi==701) dba = 1;  // 1st prsn 701="I"; 31oct2012
+ // if (subjpsi==707) dba = 2;  // 2nd prsn 707=YOU; 31oct2012
+  } // end of test for a verb; 31oct2012
+  if (pos == 5 || pos == 7) { // making a group; test; 27oct2012
+    dba = 1; // default before changes; 19oct2012 
+    if (subjectflag == 1) dba = 1;  // nominative for subject; 19oct2012
+    if (dirobj == 1) dba = 4;  // acc. for direct objects; 19oct2012
+    if (predflag == 1) dba = 1;  // for predicate nominatives; 20oct2012
+  }  // end of co-dependent group to circumvent verbs; 27oct2012
   enLexicon[t] = new enNode(oldpsi," ",unk,mfn,dba,fex,pos,fin,aud);
   if (pov == "{") oldpsi = fex;  // deglobalizing psi; 3jul2011
   if (pov == "#") oldpsi = fex;  // deglobalizing psi; 3jul2011
@@ -1269,19 +1263,20 @@ function OldConcept() {
        tbev = 0;  // reset for safety; 15aug2011
      }  // end of test for positive time-of-beverb; 15aug2011
   }  // end of test for 250=NOT; 23oct2012
-  if (oldpsi == 16) {  // 16=WHY; deglobalizing psi; 3jul2011
+// if (oldpsi == 16) {  // 16=WHY; deglobalizing psi; 3jul2011
+  if (oldpsi == 370) {  // 370=WHY; 31oct2012
     act = 8;  // subactivate question "why".
-    questype = 16;  // Briefly keep track of what was asked,
+    questype = 370;  // 31oct2012: Keep track of "why" being asked,
     // so that ConJoin() may provide the conjunction "because".
   }  // End of test to deal with "why" questions.
-  if (oldpsi == 7) act = 0;  // 7=THE; deglobalizing psi; 3jul2011
+// if (oldpsi == 7) act = 0;  // 7=THE; deglobalizing psi; 3jul2011
+  if (oldpsi == 117) act = 0;  // 117=THE; 31oct2012
   if (kbcon > 0) {  // if user answers yes-or-no question; 3jul2011
     KbRetro();  // retroactively adjust knowledge base; 3jul2011
     kbcon = 0;  // reset for safety; 3jul2011
   }  // User has had one chance to answer yes-or-no question.
   if (oldpsi == 781) act = 0;  // suppress WHAT for queries; 23oct2012
   if (oldpsi == 791) act = 0;  // Subactivate question "who"; 23oct2012
-  if (oldpsi == 59) act = 8;  // Sub-activate auxiliary 59=DO 3jul2011
   if (oldpsi == 830) act = 8; // Sub-activate auxiliary 830=DO 23oct2012
   if (oldpsi == 250) {  // upon recognition of 250=NOT; 23oct2012
     prejux = 250;  // flag for concept to be negated; 23oct2012
@@ -1756,41 +1751,41 @@ t=1;pho="E"; beg=1; ctu=1; audpsi=0; AudMem();
 t=2;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
 t=3;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
 t=4;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=5;pho="R"; beg=0; ctu=0; audpsi=586; AudMem();  // 23oct2012
-nen=586; num=1; mfn=3; fex=586; pos=5; fin=586; aud=1; // 23oct2012
-psi=586; pre=0; seq=0; enx=586; EnVocab(); InNativate();
+t=5;pho="R"; beg=0; ctu=0; audpsi=586; AudMem();  // 25oct2012
+nen=586; mfn=3; dba=0; fex=586; pos=5; fin=586; aud=1;
+psi=586; num=1; pre=0; seq=0; enx=586; EnVocab(); InNativate();
 
 // A -- En(glish) Article for EnArticle module 
-t=7;pho="A"; beg=1; ctu=0; audpsi=101; AudMem();  // 23oct2012
-nen=101; mfn=0; fex=101; pos=1; fin=101; aud=7;   // 23oct2012
-psi=101;  num=1; pre=0; seq=0; enx=101; EnVocab(); InNativate();
+t=7;pho="A"; beg=1; ctu=0; audpsi=101; AudMem();  // 25oct2012
+nen=101; mfn=0; dba=0; fex=101; pos=1; fin=101; aud=7;
+psi=101; num=1; pre=0; seq=0; enx=101; EnVocab(); InNativate();
 
 // ALL -- for machine reasoning logic 
 t=9; pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
 t=10; pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
-t=11; pho="L"; beg=0; ctu=0; audpsi=123; AudMem(); // 24oct2012
-nen=123; mfn=0; fex=123; pos=1; fin=123; aud=9;    // 24oct2012
-psi=123;  num=0;  pre=0; seq=0; enx=123; EnVocab(); InNativate();
+t=11; pho="L"; beg=0; ctu=0; audpsi=123; AudMem(); // 25oct2012
+nen=123; mfn=0; dba=0; fex=123; pos=1; fin=123; aud=9;
+psi=123; num=0; pre=0; seq=0; enx=123; EnVocab(); InNativate();
 
 // AN -- to be selected instead of "A" before a vowel 
 t=13;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
-t=14;pho="N"; beg=0; ctu=0; audpsi=102; AudMem();  // 23oct2012
-nen=102; mfn=0; fex=102; pos=1; fin=102; aud=13;   // 23oct2012
-psi=102;  num=1; pre=0; seq=0; enx=102; EnVocab(); InNativate();
+t=14;pho="N"; beg=0; ctu=0; audpsi=102; AudMem();  // 25oct2012
+nen=102; mfn=0; dba=0; fex=102; pos=1; fin=102; aud=13;
+psi=102; num=1; pre=0; seq=0; enx=102; EnVocab(); InNativate();
 
 // AND -- for machine reasoning logic 
 t=16; pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
 t=17; pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
-t=18; pho="D"; beg=0; ctu=0; audpsi=302; AudMem();  // 23oct2012
-nen=302; mfn=0; fex=302; pos=3; fin=302; aud=16;    // 23oct2012
-psi=302;  num=0;  pre=0; seq=0; enx=302; EnVocab(); InNativate();
+t=18; pho="D"; beg=0; ctu=0; audpsi=302; AudMem(); // 25oct2012
+nen=302; mfn=0; dba=0; fex=302; pos=3; fin=302; aud=16;
+psi=302; num=0; pre=0; seq=0; enx=302; EnVocab(); InNativate();
 
 // ANY -- for machine reasoning logic 
 t=20; pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
 t=21; pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
-t=22; pho="Y"; beg=0; ctu=0; audpsi=111; AudMem();  // 23oct2012
-nen=111; mfn=0; fex=111; pos=1; fin=111; aud=20;    // 23oct2012
-psi=111;  num=0;  pre=0; seq=0; enx=111; EnVocab(); InNativate();
+t=22; pho="Y"; beg=0; ctu=0; audpsi=111; AudMem(); // 25oct2012
+nen=111; mfn=0; dba=0; fex=111; pos=1; fin=111; aud=20;
+psi=111; num=0;  pre=0; seq=0; enx=111; EnVocab(); InNativate();
 
 // ANYTHING -- a default direct object for AskUser()
 t=24; pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
@@ -1800,618 +1795,624 @@ t=27; pho="T"; beg=0; ctu=1; audpsi=0; AudMem();
 t=28; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
 t=29; pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
 t=30; pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
-t=31; pho="G"; beg=0; ctu=0; audpsi=711; AudMem();  // 23oct2012
-nen=711; mfn=0; fex=711; pos=5; fin=711; aud=24;    // 23oct2012
-psi=711;  num=0;  pre=0; seq=0; enx=711; EnVocab(); InNativate();
+t=31; pho="G"; beg=0; ctu=0; audpsi=711; AudMem(); // 25oct2012
+nen=711; mfn=0; dba=4; fex=711; pos=5; fin=711; aud=24;
+psi=711; num=1; pre=0; seq=0; enx=711; EnVocab(); InNativate();
 
-// ARE -- 2nd person singular of 800=BE; 21oct2012
-t=33; pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
-t=34; pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
-t=35; pho="E"; beg=0; ctu=0; audpsi=800; AudMem();  // 21oct2012
-nen=800; mfn=0; dba=2; fex=800; pos=8; fin=800; aud=33; 
-psi=800;  num=1;  pre=0; seq=0; enx=800; EnVocab(); InNativate();
+// BAD -- adjective for EnAdjective module 
+t=33; pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
+t=34; pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=35; pho="D"; beg=0; ctu=0; audpsi=186; AudMem(); // 25oct2012
+nen=186; mfn=0; dba=0; fex=186; pos=1; fin=186; aud=33;
+psi=186; num=0; pre=0; seq=0; enx=186; EnVocab(); InNativate();
 
-// ARE -- 3rd person plural of 800=BE; 21oct2012
-t=37; pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
-t=38; pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
-t=39; pho="E"; beg=0; ctu=0; audpsi=800; AudMem();  // 21oct2012
-nen=800; mfn=0; dba=3; fex=800; pos=8; fin=800; aud=37; 
-psi=800;  num=3;  pre=0; seq=0; enx=800; EnVocab(); InNativate();
-
-// // BAD -- adjective for EnAdjective module 
-// t=37; pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
-// t=38; pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
-// t=39; pho="D"; beg=0; ctu=0; audpsi=186; AudMem();  // 23oct2012
-// nen=186; mfn=0; fex=186; pos=1; fin=186; aud=37;    // 23oct2012
-// psi=186;  num=0;  pre=0; seq=0; enx=186; EnVocab(); InNativate();
-
-// BE -- for SelfReferentialThought;
-t=41;pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
-t=42;pho="E"; beg=0; ctu=0; audpsi=800; AudMem(); // 21oct2012
-nen=800; mfn=0; dba=0; fex=800; pos=8; fin=800; aud=41; 
+// BE -- infinitive impersonal form of 800=BE; 25oct2012
+t=37;pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
+t=38;pho="E"; beg=0; ctu=0; audpsi=800; AudMem(); // 21oct2012
+nen=800; mfn=0; dba=0; fex=800; pos=8; fin=800; aud=37; 
 psi=800; num=0; pre=0; seq=0; enx=800; EnVocab(); InNativate();
 
-// BECAUSE -- for machine reasoning logic 
-t=44;pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
-t=45;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=46;pho="C"; beg=0; ctu=1; audpsi=0; AudMem();
-t=47;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
-t=48;pho="U"; beg=0; ctu=1; audpsi=0; AudMem();
-t=49;pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
-t=50;pho="E"; beg=0; ctu=0; audpsi=344; AudMem();  // 23oct2012
-nen=344; mfn=0; fex=344; pos=3; fin=344; aud=44;   // 23oct2012
-psi=344;  num=0; pre=0; seq=0; enx=344; EnVocab(); InNativate();
+// AM -- 1st person singular I-form of 800=BE; 25oct2012
+t=40;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
+t=41;pho="M"; beg=0; ctu=0; audpsi=800; AudMem();  // 21oct2012
+nen=800; mfn=0; dba=1; fex=800; pos=8; fin=800; aud=409; 
+psi=800;num=1;pre=0;tqv=0;seq=0;enx=800;EnVocab();InNativate();
+
+// ARE -- 2nd person singular YOU-form of 800=BE; 25oct2012
+t=43; pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
+t=44; pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=45; pho="E"; beg=0; ctu=0; audpsi=800; AudMem();  // 21oct2012
+nen=800; mfn=0; dba=2; fex=800; pos=8; fin=800; aud=43; 
+psi=800; num=1; pre=0; seq=0; enx=800; EnVocab(); InNativate();
+
+// IS -- 3rd person singular HE-SHE-IT-form of 800=BE; 25oct2012
+t=47;pho="I"; beg=1; ctu=1; audpsi=0; AudMem();
+t=48;pho="S"; beg=0; ctu=0; audpsi=800; AudMem();  // 22oct2012
+nen=800; mfn=0; dba=3; fex=800; pos=8; fin=800; aud=47; 
+psi=800; num=1; pre=0; seq=0; enx=800; EnVocab(); InNativate();
+
+// ARE -- 1st person plural WE-form of 800=BE; 25oct2012
+t=50; pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
+t=51; pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=52; pho="E"; beg=0; ctu=0; audpsi=800; AudMem();  // 21oct2012
+nen=800; mfn=0; dba=1; fex=800; pos=8; fin=800; aud=50; 
+psi=800; num=2;  pre=0; seq=0; enx=800; EnVocab(); InNativate();
+
+// ARE -- 2nd person plural YOU-form of 800=BE; 25oct2012
+t=54; pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
+t=55; pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=56; pho="E"; beg=0; ctu=0; audpsi=800; AudMem();  // 25oct2012
+nen=800; mfn=0; dba=2; fex=800; pos=8; fin=800; aud=54; 
+psi=800; num=2;  pre=0; seq=0; enx=800; EnVocab(); InNativate();
+
+// ARE -- 3rd person plural THEY-form of 800=BE; 25oct2012
+t=58; pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
+t=59; pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=60; pho="E"; beg=0; ctu=0; audpsi=800; AudMem();  // 25oct2012
+nen=800; mfn=0; dba=3; fex=800; pos=8; fin=800; aud=58; 
+psi=800; num=2;  pre=0; seq=0; enx=800; EnVocab(); InNativate();
+
+// BECAUSE -- conjunction for machine reasoning logic 
+t=62;pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
+t=63;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=64;pho="C"; beg=0; ctu=1; audpsi=0; AudMem();
+t=65;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=66;pho="U"; beg=0; ctu=1; audpsi=0; AudMem();
+t=67;pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
+t=68;pho="E"; beg=0; ctu=0; audpsi=344; AudMem(); // 25oct2012
+nen=344; mfn=0; dba=0; fex=344; pos=3; fin=344; aud=62;
+psi=344; num=0; pre=0; seq=0; enx=344; EnVocab(); InNativate();
 
 // BECOME -- essential intransitive verb 
-t=52;pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
-t=53;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=54;pho="C"; beg=0; ctu=1; audpsi=0; AudMem();
-t=55;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=56;pho="M"; beg=0; ctu=1; audpsi=0; AudMem();
-t=57;pho="E"; beg=0; ctu=0; audpsi=808; AudMem();  // 23oct2012
-nen=808; mfn=0; fex=808; pos=8; fin=808; aud=52;   // 23oct2012
-psi=808;  num=0; pre=0; seq=0; enx=808; EnVocab(); InNativate();
+t=70;pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
+t=71;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=72;pho="C"; beg=0; ctu=1; audpsi=0; AudMem();
+t=73;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=74;pho="M"; beg=0; ctu=1; audpsi=0; AudMem();
+t=75;pho="E"; beg=0; ctu=0; audpsi=808; AudMem(); // 25oct2012
+nen=808; mfn=0; dba=0; fex=808; pos=8; fin=808; aud=70;
+psi=808; num=0; pre=0; seq=0; enx=808; EnVocab(); InNativate();
 
 // BOY -- always masculine noun for use with gender flags 
-t=59;pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
-t=60;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=61;pho="Y"; beg=0; ctu=0; audpsi=521; AudMem();  // 23oct2012
-nen=521; mfn=1; fex=521; pos=5; fin=521; aud=59;   // 23oct2012
+t=77;pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
+t=78;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=79;pho="Y"; beg=0; ctu=0; audpsi=521; AudMem(); // 25oct2012
+nen=521; mfn=1; dba=0; fex=521; pos=5; fin=521; aud=77; 
 psi=521; num=1; pre=0; seq=0; enx=521; EnVocab(); InNativate();
 
 // BUT -- conjunction for ConJoin module 
-t=63; pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
-t=64; pho="U"; beg=0; ctu=1; audpsi=0; AudMem();
-t=65; pho="T"; beg=0; ctu=0; audpsi=305; AudMem();  // 23oct2012
-nen=305; mfn=0; fex=305; pos=3; fin=305; aud=63;    // 23oct2012
-psi=305;  num=0;  pre=0; seq=0; enx=305; EnVocab(); InNativate();
+t=81; pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
+t=82; pho="U"; beg=0; ctu=1; audpsi=0; AudMem();
+t=83; pho="T"; beg=0; ctu=0; audpsi=305; AudMem(); // 25oct2012
+nen=305; mfn=0; dba=0; fex=305; pos=3; fin=305; aud=63;
+psi=305; num=0; pre=0; seq=0; enx=305; EnVocab(); InNativate();
 
 // CHESS -- important singular AI noun ending in "S"
-t=67; pho="C"; beg=1; ctu=1; audpsi=0; AudMem();
-t=68; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=69; pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=70; pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
-t=71; pho="S"; beg=0; ctu=0; audpsi=564; AudMem();  // 23oct2012
-nen=564; mfn=0; fex=564; pos=5; fin=564; aud=67;    // 23oct2012
-psi=564;  num=1;  pre=0; seq=0; enx=564; EnVocab(); InNativate();
+t=85; pho="C"; beg=1; ctu=1; audpsi=0; AudMem();
+t=86; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=87; pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=88; pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
+t=89; pho="S"; beg=0; ctu=0; audpsi=564; AudMem(); // 25oct2012
+nen=564; mfn=0; dba=0; fex=564; pos=5; fin=564; aud=85;
+psi=564; num=1; pre=0; seq=0; enx=564; EnVocab(); InNativate();
 
 // CHILD -- example of irregular noun for a polyglot AI Mind
-t=73; pho="C"; beg=1; ctu=1; audpsi=0; AudMem();
-t=74; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=75; pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=76; pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
-t=77; pho="D"; beg=0; ctu=0; audpsi=525; AudMem();  // 23oct2012
-nen=525; mfn=0; fex=525; pos=5; fin=525; aud=73;    // 23oct2012
-psi=525;  num=1;  pre=0; seq=0; enx=525; EnVocab(); InNativate();
+t=91; pho="C"; beg=1; ctu=1; audpsi=0; AudMem();
+t=92; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=93; pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=94; pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
+t=95; pho="D"; beg=0; ctu=0; audpsi=525; AudMem(); // 25oct2012
+nen=525; mfn=0; dba=0; fex=525; pos=5; fin=525; aud=91;
+psi=525; num=1; pre=0; seq=0; enx=525; EnVocab(); InNativate();
 
-// CHILDREN -- requires special handling in NounPhrase module
-t=79; pho="C"; beg=1; ctu=1; audpsi=0; AudMem();
-t=80; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=81; pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=82; pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
-t=83; pho="D"; beg=0; ctu=1; audpsi=0; AudMem();
-t=84; pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
-t=85; pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=86; pho="N"; beg=0; ctu=0; audpsi=526; AudMem();  // 23oct2012
-nen=526; mfn=0; fex=526; pos=5; fin=526; aud=79;    // 23oct2012
-psi=526;  num=2;  pre=0; seq=0; enx=526; EnVocab(); InNativate();
+// CHILDREN -- irregular plural for retrieval by parameters
+t=97; pho="C"; beg=1; ctu=1; audpsi=0; AudMem();
+t=98; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=99; pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=100; pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
+t=101; pho="D"; beg=0; ctu=1; audpsi=0; AudMem();
+t=102; pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=103; pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=104; pho="N"; beg=0; ctu=0; audpsi=526; AudMem(); // 25oct2012
+nen=526; mfn=0; dba=0; fex=526; pos=5; fin=526; aud=97;
+psi=526; num=2; pre=0; seq=0; enx=526; EnVocab(); InNativate();
 
 // DATA -- always plural noun in correction of modern usage 
-t=88;pho="D"; beg=1; ctu=1; audpsi=0; AudMem();
-t=89;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
-t=90;pho="T"; beg=0; ctu=1; audpsi=0; AudMem();
-t=91;pho="A"; beg=0; ctu=0; audpsi=599; AudMem();  // 23oct2012
-nen=599; mfn=0; fex=599; pos=5; fin=599; aud=88;    // 23oct2012
+t=106;pho="D"; beg=1; ctu=1; audpsi=0; AudMem();
+t=107;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=108;pho="T"; beg=0; ctu=1; audpsi=0; AudMem();
+t=109;pho="A"; beg=0; ctu=0; audpsi=599; AudMem(); // 25oct2012
+nen=599; mfn=0; dba=0; fex=599; pos=5; fin=599; aud=106;
 psi=599; num=2; pre=0; seq=0; enx=599; EnVocab(); InNativate();
 
-// DO -- essential for AuxVerb module 
-t=93;pho="D"; beg=1; ctu=1; audpsi=0; AudMem();
-t=94;pho="O"; beg=0; ctu=0; audpsi=830; AudMem();  // 23oct2012
-nen=830; mfn=0; fex=830; pos=8; fin=830; aud=93;   // 23oct2012
+// DO -- infinitive form of verb essential for AuxVerb module 
+t=111;pho="D"; beg=1; ctu=1; audpsi=0; AudMem();
+t=112;pho="O"; beg=0; ctu=0; audpsi=830; AudMem(); // 25oct2012
+nen=830; mfn=0; dba=0; fex=830; pos=8; fin=830; aud=111;
 psi=830; num=0; pre=0; seq=0; enx=830; EnVocab(); InNativate();
 
-// DOES -- essential for AuxVerb module 
-t=96;pho="D"; beg=1; ctu=1; audpsi=0; AudMem();
-t=97;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=98;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=99;pho="S"; beg=0; ctu=0; audpsi=833; AudMem();  // 23oct2012
-nen=833; mfn=0; dba=3; fex=833; pos=8; fin=833; aud=96;
+// DO -- 1st person singular I-form of auxiliary verb
+t=114;pho="D"; beg=1; ctu=1; audpsi=0; AudMem();
+t=115;pho="O"; beg=0; ctu=0; audpsi=830; AudMem(); // 25oct2012
+nen=830; mfn=0; dba=1; fex=830; pos=8; fin=830; aud=114;
+psi=830; num=1; pre=0; seq=0; enx=830; EnVocab(); InNativate();
+
+// DO -- 2nd person singular YOU-form of auxiliary verb
+t=117;pho="D"; beg=1; ctu=1; audpsi=0; AudMem();
+t=118;pho="O"; beg=0; ctu=0; audpsi=830; AudMem(); // 25oct2012
+nen=830; mfn=0; dba=2; fex=830; pos=8; fin=830; aud=117;
+psi=830; num=1; pre=0; seq=0; enx=830; EnVocab(); InNativate();
+
+// DOES -- 3rd person singular HE-SHE-IT-form of auxiliary verb
+t=120;pho="D"; beg=1; ctu=1; audpsi=0; AudMem();
+t=121;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=122;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=123;pho="S"; beg=0; ctu=0; audpsi=833; AudMem(); // 25oct2012
+nen=833; mfn=0; dba=3; fex=833; pos=8; fin=833; aud=120;
 psi=833;  num=1; pre=0; seq=0; enx=833; EnVocab(); InNativate();
 
+// DO -- 1st person plural WE-form of auxiliary verb
+t=125;pho="D"; beg=1; ctu=1; audpsi=0; AudMem();
+t=126;pho="O"; beg=0; ctu=0; audpsi=830; AudMem(); // 25oct2012
+nen=830; mfn=0; dba=1; fex=830; pos=8; fin=830; aud=125; 
+psi=830; num=2; pre=0; seq=0; enx=830; EnVocab(); InNativate();
+
+// DO -- 2nd person plural YOU-form of auxiliary verb
+t=128;pho="D"; beg=1; ctu=1; audpsi=0; AudMem();
+t=129;pho="O"; beg=0; ctu=0; audpsi=830; AudMem(); // 25oct2012
+nen=830; mfn=0; dba=2; fex=830; pos=8; fin=830; aud=128;
+psi=830; num=2; pre=0; seq=0; enx=830; EnVocab(); InNativate();
+
+// DO -- 3rd person plural THEY-form of auxiliary verb
+t=131;pho="D"; beg=1; ctu=1; audpsi=0; AudMem();
+t=132;pho="O"; beg=0; ctu=0; audpsi=830; AudMem(); // 25oct2012
+nen=830; mfn=0; dba=3; fex=830; pos=8; fin=830; aud=131;
+psi=830; num=2; pre=0; seq=0; enx=830; EnVocab(); InNativate();
+
 // DOING -- high word-frequency verb participle  
-t=101;pho="D"; beg=1; ctu=1; audpsi=0; AudMem();
-t=102;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=103;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=104;pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
-t=105;pho="G"; beg=0; ctu=0; audpsi=183; AudMem(); // 23oct2012
-nen=183; mfn=0; fex=183; pos=1; fin=183; aud=101;  // 23oct2012
+t=134;pho="D"; beg=1; ctu=1; audpsi=0; AudMem();
+t=135;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=136;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=137;pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
+t=138;pho="G"; beg=0; ctu=0; audpsi=183; AudMem(); // 25oct2012
+nen=183; mfn=0; dba=0; fex=183; pos=1; fin=183; aud=134;
 psi=183; num=0; pre=0; seq=0; enx=183; EnVocab(); InNativate();
 
 // ELSE -- adverb to be ignored as part of input queries
-t=107;pho="E"; beg=1; ctu=1; audpsi=0; AudMem();
-t=108;pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
-t=109;pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
-t=110;pho="E"; beg=0; ctu=0; audpsi=266; AudMem(); // 23oct2012
-nen=266; mfn=0; fex=266; pos=2; fin=266; aud=107;  // 23oct2012
-psi=266;  num=0; pre=0; seq=0; enx=266; EnVocab(); InNativate();
+t=140;pho="E"; beg=1; ctu=1; audpsi=0; AudMem();
+t=141;pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
+t=142;pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
+t=143;pho="E"; beg=0; ctu=0; audpsi=266; AudMem(); // 25oct2012
+nen=266; mfn=0; dba=0; fex=266; pos=2; fin=266; aud=140;
+psi=266; num=0; pre=0; seq=0; enx=266; EnVocab(); InNativate();
 
 // FOR -- preposition for EnPrep module 
-t=112; pho="F"; beg=1; ctu=1; audpsi=0; AudMem();
-t=113; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=114; pho="R"; beg=0; ctu=0; audpsi=640; AudMem(); // 23oct2012
-nen=640; mfn=0; fex=640; pos=6; fin=640; aud=112;   // 23oct2012
-psi=640; num=0;  pre=0; seq=0; enx=640; EnVocab(); InNativate();
+t=145; pho="F"; beg=1; ctu=1; audpsi=0; AudMem();
+t=146; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=147; pho="R"; beg=0; ctu=0; audpsi=640; AudMem(); // 25oct2012
+nen=640; mfn=0; dba=0; fex=640; pos=6; fin=640; aud=145;
+psi=640; num=0; pre=0; seq=0; enx=640; EnVocab(); InNativate();
 
 // FRIEND -- for coding assignment of ad-hoc gender tags
-t=116;pho="F"; beg=1; ctu=1; audpsi=0; AudMem();
-t=117;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
-t=118;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=119;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=120;pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
-t=121;pho="D"; beg=0; ctu=0; audpsi=517; AudMem(); // 23oct2012
-nen=517; mfn=0; fex=517; pos=5; fin=517; aud=116;  // 23oct2012
+t=149;pho="F"; beg=1; ctu=1; audpsi=0; AudMem();
+t=150;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=151;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=152;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=153;pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
+t=154;pho="D"; beg=0; ctu=0; audpsi=517; AudMem(); // 25oct2012
+nen=517; mfn=0; dba=0; fex=517; pos=5; fin=517; aud=149;
 psi=517; num=1; pre=0; seq=0; enx=517; EnVocab(); InNativate();
 
 // GIRL -- always feminine noun for use with gender flags )
-t=123;pho="G"; beg=1; ctu=1; audpsi=0; AudMem();
-t=124;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=125;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
-t=126;pho="L"; beg=0; ctu=0; audpsi=522; AudMem(); // 23oct2012
-nen=522; mfn=2; fex=522; pos=5; fin=522; aud=123;  // 23oct2012
+t=156;pho="G"; beg=1; ctu=1; audpsi=0; AudMem();
+t=157;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=158;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=159;pho="L"; beg=0; ctu=0; audpsi=522; AudMem(); // 25oct2012
+nen=522; mfn=2; dba=0; fex=522; pos=5; fin=522; aud=123;
 psi=522; num=1; pre=0; seq=0; enx=522; EnVocab(); InNativate();
 
 // GOD -- masculine noun important for philosophy of AI
-t=128;pho="G"; beg=1; ctu=1; audpsi=0; AudMem();
-t=129;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=130;pho="D"; beg=0; ctu=0; audpsi=533; AudMem(); // 23oct2012
-nen=533; mfn=1; fex=533; pos=5; fin=533; aud=128;  // 23oct2012
+t=161;pho="G"; beg=1; ctu=1; audpsi=0; AudMem();
+t=162;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=163;pho="D"; beg=0; ctu=0; audpsi=533; AudMem(); // 25oct2012
+nen=533; mfn=1; dba=0; fex=533; pos=5; fin=533; aud=161;
 psi=533; num=1; pre=0; seq=0; enx=533; EnVocab(); InNativate();
 
 // GOOD -- adjective for EnAdjective module 
-t=132;pho="G"; beg=1; ctu=1; audpsi=0; AudMem();
-t=133;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=134;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=135;pho="D"; beg=0; ctu=0; audpsi=140; AudMem(); // 23oct2012
-nen=140; mfn=0; fex=140; pos=1; fin=140; aud=132;  // 23oct2012
+t=165;pho="G"; beg=1; ctu=1; audpsi=0; AudMem();
+t=166;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=167;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=168;pho="D"; beg=0; ctu=0; audpsi=140; AudMem(); // 25oct2012
+nen=140; mfn=0; fex=140; pos=1; fin=140; aud=165;
 psi=140; num=0; pre=0; seq=0; enx=140; EnVocab(); InNativate();
 
-// HAS -- high word-frequency irregular verb form 
-t=137; pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
-t=138; pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
-t=139; pho="S"; beg=0; ctu=0; audpsi=810; AudMem(); // 23oct2012
-nen=810; mfn=0; dba=3; fex=810; pos=8; fin=810; aud=137; 
-psi=810; num=1;  pre=0; seq=0; enx=810; EnVocab(); InNativate();
- 
 // HAVE -- irregular high word-frequency verb  
-t=141;pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
-t=142;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
-t=143;pho="V"; beg=0; ctu=1; audpsi=0; AudMem();
-t=144;pho="E"; beg=0; ctu=0; audpsi=810; AudMem();  // 23oct2012
-nen=810; mfn=0; dba=0; fex=810; pos=8; fin=810; aud=141;
+t=170;pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
+t=171;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=172;pho="V"; beg=0; ctu=1; audpsi=0; AudMem();
+t=173;pho="E"; beg=0; ctu=0; audpsi=810; AudMem(); // 25oct2012
+nen=810; mfn=0; dba=0; fex=810; pos=8; fin=810; aud=170;
 psi=810;  num=0; pre=0; seq=0; enx=810; EnVocab(); InNativate();
 
-// HE -- high word-frequency pronoun  
-t=146;pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
-t=147;pho="E"; beg=0; ctu=0; audpsi=713; AudMem(); // 23oct2012
-nen=713; mfn=1; dba=1; fex=713; pos=7; fin=713; aud=146; 
-psi=713;  num=1; pre=0; seq=0; enx=713; EnVocab(); InNativate();
+// HAS -- high word-frequency irregular verb form 
+t=175; pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
+t=176; pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=177; pho="S"; beg=0; ctu=0; audpsi=810; AudMem(); // 23oct2012
+nen=810; mfn=0; dba=3; fex=810; pos=8; fin=810; aud=175; 
+psi=810; num=1;  pre=0; seq=0; enx=810; EnVocab(); InNativate();
 
-// HELLO -- for human-computer interaction 
-t=149;pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
-t=150;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=151;pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
-t=152;pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
-t=153;pho="O"; beg=0; ctu=0; audpsi=450; AudMem(); // 23oct2012
-nen=450; mfn=0; fex=450; pos=4; fin=450; aud=149;  // 23oct2012
+// HE -- nominative form of high word-frequency pronoun  
+t=179;pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
+t=180;pho="E"; beg=0; ctu=0; audpsi=713; AudMem(); // 25oct2012
+nen=713; mfn=1; dba=1; fex=713; pos=7; fin=713; aud=179; 
+psi=713; num=1; pre=0; seq=0; enx=713; EnVocab(); InNativate();
+
+// HIS -- genitive form of personal pronoun  
+t=182; pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
+t=183; pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=184; pho="S"; beg=0; ctu=0; audpsi=113; AudMem(); // 25oct2012
+nen=113; mfn=1; dba=2; fex=113; pos=1; fin=113; aud=182; 
+psi=113; num=1; pre=0; seq=0; enx=113; EnVocab(); InNativate();
+
+// HIM -- dative indirect-object form of personal pronoun
+t=186; pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
+t=187; pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=188; pho="M"; beg=0; ctu=0; audpsi=713; AudMem(); // 25oct2012
+nen=713; mfn=1; dba=3; fex=713; pos=7; fin=713; aud=186; 
+psi=713; num=1; pre=0; seq=0; enx=713; EnVocab(); InNativate();
+
+// HIM -- accusative direct-object form of personal pronoun
+t=190; pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
+t=191; pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=192; pho="M"; beg=0; ctu=0; audpsi=713; AudMem(); // 25oct2012
+nen=713; mfn=1; dba=4; fex=713; pos=7; fin=713; aud=190; 
+psi=713; num=1; pre=0; seq=0; enx=713; EnVocab(); InNativate();
+
+// HELLO -- interjection for human-computer interaction 
+t=194;pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
+t=195;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=196;pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
+t=197;pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
+t=198;pho="O"; beg=0; ctu=0; audpsi=450; AudMem(); // 25oct2012
+nen=450; mfn=0; dba=0; fex=450; pos=4; fin=450; aud=194;
 psi=450; num=0; pre=0; seq=0; enx=450; EnVocab(); InNativate();
 
-// HER -- high word-frequency pronoun  
-t=155; pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
-t=156; pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=157; pho="R"; beg=0; ctu=0; audpsi=719; AudMem(); // 23oct2012
-nen=719; mfn=2; dba=4; fex=719; pos=7; fin=719; aud=155; 
-psi=719; num=0;  pre=0; seq=0; enx=719; EnVocab(); InNativate();
-
 // HERE -- adverb for discussion of physical location
-t=159;pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
-t=160;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=161;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
-t=162;pho="E"; beg=0; ctu=0; audpsi=201; AudMem(); // 23oct2012
-nen=201; mfn=0; fex=201; pos=2; fin=201; aud=159; 
-psi=201; num=1; pre=0; seq=0; enx=201; EnVocab(); InNativate();
-
-// HIM -- high word-frequency pronoun; 5apr2010
-t=164; pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
-t=165; pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=166; pho="M"; beg=0; ctu=0; audpsi=713; AudMem(); // 23oct2012
-nen=713; mfn=1; dba=4; fex=713; pos=7; fin=713; aud=164; 
-psi=713;  num=1;  pre=0; seq=0; enx=713; EnVocab(); InNativate();
-
-// HIS -- adjective of high word-frequency pronoun  
-t=168; pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
-t=169; pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=170; pho="S"; beg=0; ctu=0; audpsi=113; AudMem(); // 23oct2012
-nen=113; mfn=0; fex=113; pos=1; fin=113; aud=168; 
-psi=113; num=0;  pre=0; seq=0; enx=113; EnVocab(); InNativate();
+t=200;pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
+t=201;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=202;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=203;pho="E"; beg=0; ctu=0; audpsi=201; AudMem(); // 25oct2012
+nen=201; mfn=0; dba=0; fex=201; pos=2; fin=201; aud=200; 
+psi=201; num=0; pre=0; seq=0; enx=201; EnVocab(); InNativate();
 
 // HOW -- adverb for EnAdverb module 
-t=172; pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
-t=173; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=174; pho="W"; beg=0; ctu=0; audpsi=209; AudMem(); // 23oct2012
-nen=209; mfn=0; fex=209; pos=2; fin=209; aud=172;   // 23oct2012
+t=205; pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
+t=206; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=207; pho="W"; beg=0; ctu=0; audpsi=209; AudMem(); // 25oct2012
+nen=209; mfn=0; fex=209; pos=2; fin=209; aud=205;
 psi=209; num=0;  pre=0; seq=0; enx=209; EnVocab(); InNativate();
 
+// I -- nominative subject-form of personal pronoun; 25oct2012
+t=209;pho="I"; beg=1; ctu=0; audpsi=701; AudMem(); // 25oct2012
+nen=701; mfn=0; dba=1; fex=701; pos=5; fin=707; aud=209; 
+psi=701;num=1;pre=0;tqv=399;seq=800;enx=701;EnVocab();InNativate();
+
+// MINE -- genitive form of personal pronoun; 25oct2012
+t=211;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
+t=212;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=213;pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
+t=214;pho="E"; beg=0; ctu=0; audpsi=123; AudMem(); // 25oct2012
+nen=701; mfn=0; dba=2; fex=701; pos=1; fin=707; aud=211; 
+psi=701; num=1; pre=0; seq=0; enx=701; EnVocab(); InNativate();
+
+// ME -- dative indirect-object form of personal pronoun; 25oct2012
+t=216;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
+t=217;pho="E"; beg=0; ctu=0; audpsi=701; AudMem(); // 25oct2012
+nen=701; mfn=0; dba=3; fex=701; pos=7; fin=707; aud=216;
+psi=701;num=1;pre=849;tqv=0;seq=0;enx=701;EnVocab();InNativate();
+
+// ME -- accusative direct-object form of personal pronoun
+t=219;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
+t=220;pho="E"; beg=0; ctu=0; audpsi=701; AudMem(); // 25oct2012
+nen=701; mfn=0; dba=4; fex=701; pos=7; fin=707; aud=219;
+psi=701;num=1;pre=849;tqv=0;seq=0;enx=701;EnVocab();InNativate();
+
 // IF -- for machine reasoning logic 
-t=176;pho="I"; beg=1; ctu=1; audpsi=0; AudMem();
-t=177;pho="F"; beg=0; ctu=0; audpsi=390; AudMem(); // 23oct2012
-nen=390; mfn=0; fex=390; pos=3; fin=390; aud=176;  // 23oct2012
-psi=390;  num=0; pre=0; seq=0; enx=390; EnVocab(); InNativate();
+t=222;pho="I"; beg=1; ctu=1; audpsi=0; AudMem();
+t=223;pho="F"; beg=0; ctu=0; audpsi=390; AudMem(); // 23oct2012
+nen=390; mfn=0; dba=0; fex=390; pos=3; fin=390; aud=222;
+psi=390; num=0; pre=0; seq=0; enx=390; EnVocab(); InNativate();
 
 // IN -- preposition for EnPrep module 
-t=179;pho="I"; beg=1; ctu=1; audpsi=0; AudMem();
-t=180;pho="N"; beg=0; ctu=0; audpsi=639; AudMem(); // 23oct2012
-nen=639; mfn=0; fex=639; pos=6; fin=639; aud=179;  // 23oct2012
+t=225;pho="I"; beg=1; ctu=1; audpsi=0; AudMem();
+t=226;pho="N"; beg=0; ctu=0; audpsi=639; AudMem(); // 25oct2012
+nen=639; mfn=0; fex=639; pos=6; fin=639; aud=225;
 psi=639; num=0; pre=0; seq=0; enx=639; EnVocab(); InNativate();
 
-// IS -- for machine reasoning logic 
-t=182;pho="I"; beg=1; ctu=1; audpsi=0; AudMem();
-t=183;pho="S"; beg=0; ctu=0; audpsi=800; AudMem();  // 22oct2012
-nen=800; mfn=0; dba=3; fex=800; pos=8; fin=800; aud=182; 
-psi=800;  num=1; pre=0; seq=0; enx=800; EnVocab(); InNativate();
+// IT -- nominative subject-form of personal pronoun; 25oct2012
+t=228;pho="I"; beg=1; ctu=1; audpsi=0; AudMem();
+t=229;pho="T"; beg=0; ctu=0; audpsi=725; AudMem(); // 25oct2012
+nen=725; mfn=3; dba=1; fex=725; pos=7; fin=725; aud=228; 
+psi=725; num=1; pre=0; seq=0; enx=725; EnVocab(); InNativate();
 
-// IT -- high word-frequency pronoun 
-t=185;pho="I"; beg=1; ctu=1; audpsi=0; AudMem();
-t=186;pho="T"; beg=0; ctu=0; audpsi=725; AudMem(); // 23oct2012
-nen=725; mfn=3; dba=1; fex=725; pos=7; fin=725; aud=185; 
-psi=725;  num=1; pre=0; seq=0; enx=725; EnVocab(); InNativate();
+// ITS -- genitive form of personal pronoun; 25oct2012
+t=231;pho="I"; beg=1; ctu=1; audpsi=0; AudMem();
+t=232;pho="T"; beg=0; ctu=1; audpsi=0; AudMem();
+t=233;pho="S"; beg=0; ctu=0; audpsi=725; AudMem(); // 25oct2012
+nen=725; mfn=3; dba=2; fex=725; pos=7; fin=725; aud=231; 
+psi=725; num=1; pre=0; seq=0; enx=725; EnVocab(); InNativate();
+
+// IT -- dative indirect-object form of personal pronoun; 25oct2012 
+t=235;pho="I"; beg=1; ctu=1; audpsi=0; AudMem();
+t=236;pho="T"; beg=0; ctu=0; audpsi=725; AudMem(); // 25oct2012
+nen=725; mfn=3; dba=3; fex=725; pos=7; fin=725; aud=235; 
+psi=725; num=1; pre=0; seq=0; enx=725; EnVocab(); InNativate();
+
+// IT -- accusative direct-object form of personal pronoun
+t=238;pho="I"; beg=1; ctu=1; audpsi=0; AudMem();
+t=239;pho="T"; beg=0; ctu=0; audpsi=725; AudMem(); // 25oct2012
+nen=725; mfn=3; dba=4; fex=725; pos=7; fin=725; aud=238; 
+psi=725; num=1; pre=0; seq=0; enx=725; EnVocab(); InNativate();
 
 // KNOW -- germane to artificial intelligence 
-t=188;pho="K"; beg=1; ctu=1; audpsi=0; AudMem();
-t=189;pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
-t=190;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=191;pho="W"; beg=0; ctu=0; audpsi=850; AudMem(); // 23oct2012
-nen=850; mfn=0; fex=850; pos=8; fin=850; aud=188;  // 23oct2012
-psi=850;  num=0; pre=0; seq=0; enx=850; EnVocab(); InNativate();
+t=241;pho="K"; beg=1; ctu=1; audpsi=0; AudMem();
+t=242;pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
+t=243;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=244;pho="W"; beg=0; ctu=0; audpsi=850; AudMem(); // 25oct2012
+nen=850; mfn=0; dba=0; fex=850; pos=8; fin=850; aud=241;
+psi=850; num=0; pre=0; seq=0; enx=850; EnVocab(); InNativate();
 
 // MAN -- always masculine noun for use with gender flags 
-t=193;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
-t=194;pho="A"; beg=0; ctu=1; audpsi=0; AudMem(); // 23oct2012
-t=195;pho="N"; beg=0; ctu=0; audpsi=543; AudMem(); // 23oct2012
-nen=543; mfn=1; dba=1; fex=543; pos=5; fin=543; aud=193;  // 23oct2012
+t=246;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
+t=247;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=248;pho="N"; beg=0; ctu=0; audpsi=543; AudMem(); // 25oct2012
+nen=543; mfn=1; dba=1; fex=543; pos=5; fin=543; aud=246;
 psi=543; num=1; pre=0; seq=0; enx=543; EnVocab(); InNativate();
 
+// MEN -- irregular plural for retrieval by parameters
+t=250;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
+t=251;pho="E"; beg=0; ctu=0; audpsi=0; AudMem();
+t=252;pho="N"; beg=0; ctu=0; audpsi=543; AudMem(); // 25oct2012
+nen=543; mfn=1; dba=0; fex=543; pos=5; fin=543; aud=250;
+psi=543; num=2; pre=0; seq=0; enx=543; EnVocab(); InNativate();
+
 // MAYBE -- adverb response as alternative to YES or NO
-t=197;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
-t=198;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
-t=199;pho="Y"; beg=0; ctu=1; audpsi=0; AudMem();
-t=200;pho="B"; beg=0; ctu=1; audpsi=0; AudMem();
-t=201;pho="E"; beg=0; ctu=0; audpsi=270; AudMem(); // 23oct2012
-nen=270; mfn=0; fex=270; pos=2; fin=270; aud=197;  // 23oct2012
-psi=270;  num=0; pre=0; seq=0; enx=270; EnVocab(); InNativate();
+t=254;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
+t=255;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=256;pho="Y"; beg=0; ctu=1; audpsi=0; AudMem();
+t=257;pho="B"; beg=0; ctu=1; audpsi=0; AudMem();
+t=258;pho="E"; beg=0; ctu=0; audpsi=270; AudMem(); // 25oct2012
+nen=270; mfn=0; dba=0; fex=270; pos=2; fin=270; aud=254;
+psi=270; num=0; pre=0; seq=0; enx=270; EnVocab(); InNativate();
 
 // MEDIA -- always plural noun in correction of modern usage 
-t=203;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
-t=204;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=205;pho="D"; beg=0; ctu=1; audpsi=0; AudMem();
-t=206;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=207;pho="A"; beg=0; ctu=0; audpsi=584; AudMem(); // 23oct2012
-nen=584; mfn=0; fex=584; pos=5; fin=584; aud=203;  // 23oct2012
+t=260;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
+t=261;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=262;pho="D"; beg=0; ctu=1; audpsi=0; AudMem();
+t=263;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=264;pho="A"; beg=0; ctu=0; audpsi=584; AudMem(); // 25oct2012
+nen=584; mfn=0; dba=0; fex=584; pos=5; fin=584; aud=260;
 psi=584; num=2; pre=0; seq=0; enx=584; EnVocab(); InNativate();
 
-// MEN -- for special treatment in NounPhrase as irregular )
-// t=209;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
-// t=210;pho="E"; beg=0; ctu=0; audpsi=0; AudMem();
-// t=211;pho="N"; beg=0; ctu=0; audpsi=543; AudMem(); // 23oct2012
-// nen=543; mfn=1; fex=543; pos=5; fin=543; aud=209;  // 23oct2012
-// psi=543; num=2; pre=0; seq=0; enx=543; EnVocab(); InNativate();
+// MY -- adjective for personal pronoun "I"; 25oct2012
+t=266;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
+t=267;pho="Y"; beg=0; ctu=0; audpsi=181; AudMem(); // 25oct2012
+nen=181; mfn=0; dba=0; fex=181; pos=1; fin=182; aud=266;
+psi=181; num=0; pre=0; seq=0; enx=181; EnVocab(); InNativate();
 
-// MY -- for SelfReferentialThought 
-t=213;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
-t=214;pho="Y"; beg=0; ctu=0; audpsi=181; AudMem(); // 23oct2012
-nen=181; mfn=0; fex=181; pos=1; fin=182; aud=213;  // 23oct2012
-psi=181;  num=0; pre=0; seq=0; enx=181; EnVocab(); InNativate();
-
-// NO -- for human-computer interaction 
-t=216;pho="N"; beg=1; ctu=1; audpsi=0; AudMem();
-t=217;pho="O"; beg=0; ctu=0; audpsi=404; AudMem(); // 23oct2012
-nen=404; mfn=0; fex=404; pos=4; fin=404; aud=216;  // 23oct2012
-psi=404;  num=0; pre=0; seq=0; enx=404; EnVocab(); InNativate();
+// NO -- interjection for human-computer interaction 
+t=269;pho="N"; beg=1; ctu=1; audpsi=0; AudMem();
+t=270;pho="O"; beg=0; ctu=0; audpsi=404; AudMem(); // 25oct2012
+nen=404; mfn=0; dba=0; fex=404; pos=4; fin=404; aud=269;
+psi=404; num=0; pre=0; seq=0; enx=404; EnVocab(); InNativate();
 
 // NOT -- for machine reasoning logic 
-t=219; pho="N"; beg=1; ctu=1; audpsi=0; AudMem();
-t=220; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=221; pho="T"; beg=0; ctu=0; audpsi=250; AudMem(); // 23oct2012
-nen=250; mfn=0; fex=250; pos=2; fin=250; aud=219;   // 23oct2012
-psi=250;  num=0;  pre=0; seq=0; enx=250; EnVocab(); InNativate();
+t=272; pho="N"; beg=1; ctu=1; audpsi=0; AudMem();
+t=273; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=274; pho="T"; beg=0; ctu=0; audpsi=250; AudMem(); // 25oct2012
+nen=250; mfn=0; dba=0; fex=250; pos=2; fin=250; aud=272;
+psi=250; num=0;  pre=0; seq=0; enx=250; EnVocab(); InNativate();
 
 // NOTHING --  VisRecog default for what the AI Mind sees
-t=223; pho="N"; beg=1; ctu=1; audpsi=0; AudMem();
-t=224; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=225; pho="T"; beg=0; ctu=1; audpsi=0; AudMem();
-t=226; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=227; pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=228; pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
-t=229; pho="G"; beg=0; ctu=0; audpsi=760; AudMem(); // 23oct2012
-nen=760; mfn=0; fex=760; pos=7; fin=760; aud=223;   // 23oct2012
-psi=760;  num=0;  pre=0; seq=0; enx=760; EnVocab(); InNativate();
+t=276; pho="N"; beg=1; ctu=1; audpsi=0; AudMem();
+t=277; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=278; pho="T"; beg=0; ctu=1; audpsi=0; AudMem();
+t=279; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=280; pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=281; pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
+t=282; pho="G"; beg=0; ctu=0; audpsi=760; AudMem(); // 25oct2012
+nen=760; mfn=0; dba=0; fex=760; pos=7; fin=760; aud=276;
+psi=760; num=1; pre=0; seq=0; enx=760; EnVocab(); InNativate();
 
 // OF -- preposition for EnPrep module 
-t=231;pho="O"; beg=1; ctu=1; audpsi=0; AudMem();
-t=232;pho="F"; beg=0; ctu=0; audpsi=604; AudMem(); // 23oct2012
-nen=604; mfn=0; fex=604; pos=6; fin=604; aud=231;  // 23oct2012
+t=284;pho="O"; beg=1; ctu=1; audpsi=0; AudMem();
+t=285;pho="F"; beg=0; ctu=0; audpsi=604; AudMem(); // 25oct2012
+nen=604; mfn=0; fex=604; pos=6; fin=604; aud=284;
 psi=604;  num=0; pre=0; seq=0; enx=604; EnVocab(); InNativate();
 
 // OR -- for machine reasoning logic  
-t=234;pho="O"; beg=1; ctu=1; audpsi=0; AudMem();
-t=235;pho="R"; beg=0; ctu=0; audpsi=324; AudMem(); // 23oct2012
-nen=324; mfn=0; fex=324; pos=3; fin=324; aud=234;  // 23oct2012
-psi=324;  num=0; pre=0; seq=0; enx=324; EnVocab(); InNativate();
+t=287;pho="O"; beg=1; ctu=1; audpsi=0; AudMem();
+t=288;pho="R"; beg=0; ctu=0; audpsi=324; AudMem(); // 25oct2012
+nen=324; mfn=0; dba=0; fex=324; pos=3; fin=324; aud=287;
+psi=324; num=0; pre=0; seq=0; enx=324; EnVocab(); InNativate();
 
-// OUR -- for SelfReferentialThought 
-t=237; pho="O"; beg=1; ctu=1; audpsi=0; AudMem();
-t=238; pho="U"; beg=0; ctu=1; audpsi=0; AudMem();
-t=239; pho="R"; beg=0; ctu=0; audpsi=186; AudMem(); // 23oct2012
-nen=186; mfn=0; fex=186; pos=1; fin=182; aud=237;   // 23oct2012
-psi=186; num=0;  pre=0; seq=0; enx=186; EnVocab(); InNativate();
+// OUR -- adjective for personal pronoun "WE"; 25oct2012
+t=290; pho="O"; beg=1; ctu=1; audpsi=0; AudMem();
+t=291; pho="U"; beg=0; ctu=1; audpsi=0; AudMem();
+t=292; pho="R"; beg=0; ctu=0; audpsi=186; AudMem(); // 25oct2012
+nen=186; mfn=0; dba=0; fex=186; pos=1; fin=182; aud=290;
+psi=186; num=0; pre=0; seq=0; enx=186; EnVocab(); InNativate();
 
 // PEOPLE -- establish as plural for EnParser 
-t=241;pho="P"; beg=1; ctu=1; audpsi=0; AudMem();
-t=242;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=243;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=244;pho="P"; beg=0; ctu=1; audpsi=0; AudMem();
-t=245;pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
-t=246;pho="E"; beg=0; ctu=0; audpsi=587; AudMem(); // 23oct2012
-nen=587; mfn=0; fex=587; pos=5; fin=587; aud=241; 
-psi=587;  num=2; pre=0; seq=0; enx=587; EnVocab(); InNativate();
+t=294;pho="P"; beg=1; ctu=1; audpsi=0; AudMem();
+t=295;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=296;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=297;pho="P"; beg=0; ctu=1; audpsi=0; AudMem();
+t=298;pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
+t=299;pho="E"; beg=0; ctu=0; audpsi=587; AudMem(); // 25oct2012
+nen=587; mfn=0; dba=0; fex=587; pos=5; fin=587; aud=294; 
+psi=587; num=2; pre=0; seq=0; enx=587; EnVocab(); InNativate();
 
 // PERSON -- for ad-hoc gender tags and robot philosophy 
-t=248;pho="P"; beg=1; ctu=1; audpsi=0; AudMem();
-t=249;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=250;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
-t=251;pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
-t=252;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=253;pho="N"; beg=0; ctu=0; audpsi=537; AudMem(); // 23oct2012
-nen=537; mfn=0; fex=537; pos=5; fin=537; aud=248;  // 23oct2012
+t=301;pho="P"; beg=1; ctu=1; audpsi=0; AudMem();
+t=302;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=303;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=304;pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
+t=305;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=306;pho="N"; beg=0; ctu=0; audpsi=537; AudMem(); // 25oct2012
+nen=537; mfn=0; dba=0; fex=537; pos=5; fin=537; aud=301;
 psi=537; num=1; pre=0; seq=0; enx=537; EnVocab(); InNativate();
 
-// PLEASE -- for human-computer interaction 
-t=255;pho="P"; beg=1; ctu=1; audpsi=0; AudMem();
-t=256;pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
-t=257;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=258;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
-t=259;pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
-t=260;pho="E"; beg=0; ctu=0; audpsi=410; AudMem(); // 23oct2012
-nen=410; mfn=0; fex=410; pos=4; fin=410; aud=255;  // 23oct2012
+// PLEASE -- interjection for human-computer interaction 
+t=308;pho="P"; beg=1; ctu=1; audpsi=0; AudMem();
+t=309;pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
+t=310;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=311;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=312;pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
+t=313;pho="E"; beg=0; ctu=0; audpsi=410; AudMem(); // 25oct2012
+nen=410; mfn=0; fex=410; pos=4; fin=410; aud=308;
 psi=410;  num=0; pre=0; seq=0; enx=410; EnVocab(); InNativate();
 
 // SEE -- lets VisRecog report non-KB direct objects.
-t=262; pho="S"; beg=1; ctu=1; audpsi=0; AudMem();
-t=263; pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=264; pho="E"; beg=0; ctu=0; audpsi=820; AudMem(); // 23oct2012
-nen=820; mfn=0; fex=820; pos=8; fin=820; aud=262;   // 23oct2012
+t=315; pho="S"; beg=1; ctu=1; audpsi=0; AudMem();
+t=316; pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=317; pho="E"; beg=0; ctu=0; audpsi=820; AudMem(); // 25oct2012
+nen=820; mfn=0; dba=0; fex=820; pos=8; fin=820; aud=315;
 psi=820; num=0; pre=0; seq=0; enx=820; EnVocab(); InNativate();
 
-// SHE -- high word-frequency pronoun 
-t=266; pho="S"; beg=1; ctu=1; audpsi=0; AudMem();
-t=267; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=268; pho="E"; beg=0; ctu=0; audpsi=719; AudMem(); // 23oct2012
-nen=719; mfn=2; dba=1; fex=719; pos=7; fin=719; aud=266; 
+// SHE -- nominative subject-form of personal pronoun; 25oct2012
+t=319; pho="S"; beg=1; ctu=1; audpsi=0; AudMem();
+t=320; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=321; pho="E"; beg=0; ctu=0; audpsi=719; AudMem(); // 25oct2012
+nen=719; mfn=2; dba=1; fex=719; pos=7; fin=719; aud=319; 
 psi=719; num=1; pre=0; seq=0; enx=719; EnVocab(); InNativate();
 
-// SOME -- for machine reasoning logic 
-t=270;pho="S"; beg=1; ctu=1; audpsi=0; AudMem();
-t=271;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=272;pho="M"; beg=0; ctu=1; audpsi=0; AudMem();
-t=273;pho="E"; beg=0; ctu=0; audpsi=123; AudMem(); // 23oct2012
-nen=123; mfn=0; fex=123; pos=1; fin=123; aud=270; 
-psi=123;  num=0; pre=0; seq=0; enx=123; EnVocab(); InNativate();
+// HERS -- genitive form of personal pronoun; 25oct2012
+t=323; pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
+t=324; pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=325; pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=326; pho="S"; beg=0; ctu=0; audpsi=719; AudMem(); // 25oct2012
+nen=719; mfn=2; dba=2; fex=719; pos=7; fin=719; aud=323; 
+psi=719; num=1;  pre=0; seq=0; enx=719; EnVocab(); InNativate();
+
+// HER -- dative indirect-object form of pers. pron. 25oct2012
+t=328; pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
+t=329; pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=330; pho="R"; beg=0; ctu=0; audpsi=719; AudMem(); // 25oct2012
+nen=719; mfn=2; dba=3; fex=719; pos=7; fin=719; aud=328; 
+psi=719; num=1;  pre=0; seq=0; enx=719; EnVocab(); InNativate();
+
+// HER -- accusative direct-object form of pers. pron. 25oct2012 
+t=332; pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
+t=333; pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=334; pho="R"; beg=0; ctu=0; audpsi=719; AudMem(); // 25oct2012
+nen=719; mfn=2; dba=4; fex=719; pos=7; fin=719; aud=332; 
+psi=719; num=1;  pre=0; seq=0; enx=719; EnVocab(); InNativate();
+
+// SOME -- adjective for machine reasoning logic 
+t=336;pho="S"; beg=1; ctu=1; audpsi=0; AudMem();
+t=337;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=338;pho="M"; beg=0; ctu=1; audpsi=0; AudMem();
+t=339;pho="E"; beg=0; ctu=0; audpsi=123; AudMem(); // 25oct2012
+nen=123; mfn=0; dba=0; fex=123; pos=1; fin=123; aud=336; 
+psi=123; num=0; pre=0; seq=0; enx=123; EnVocab(); InNativate();
 
 // THAT -- high word-frequency pronoun  
-t=275;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
-t=276;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=277;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
-t=278;pho="T"; beg=0; ctu=0; audpsi=745; AudMem(); // 23oct2012
-nen=745; mfn=0; fex=745; pos=7; fin=745; aud=275; 
-psi=745; num=0; pre=0; seq=0; enx=745; EnVocab(); InNativate();
+t=341;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
+t=342;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=343;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=344;pho="T"; beg=0; ctu=0; audpsi=745; AudMem(); // 25oct2012
+nen=745; mfn=0; dba=0; fex=745; pos=7; fin=745; aud=341; 
+psi=745; num=1; pre=0; seq=0; enx=745; EnVocab(); InNativate();
 
 // THE -- EnArticle highest-frequency English word 
-t=280; pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
-t=281; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=282; pho="E"; beg=0; ctu=0; audpsi=117; AudMem(); // 23oct2012
-nen=117; mfn=0; fex=117; pos=1; fin=117; aud=280;   // 23oct2012
-psi=117; num=0;  pre=0; seq=0; enx=117; EnVocab(); InNativate();
+t=346;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
+t=347;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=348;pho="E"; beg=0; ctu=0; audpsi=117; AudMem(); // 25oct2012
+nen=117; mfn=0; fex=117; pos=1; fin=117; aud=346;
+psi=117; num=0; pre=0; seq=0; enx=117; EnVocab(); InNativate();
 
-// THEIR -- high word-frequency pronoun  
-t=284;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
-t=285;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=286;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=287;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=288;pho="R"; beg=0; ctu=0; audpsi=188; AudMem(); // 23oct2012
-nen=188; mfn=0; fex=188; pos=1; fin=188; aud=284;  // 23oct2012
-psi=188;  num=0; pre=0; seq=0; enx=188; EnVocab(); InNativate();
-
-// THEM -- high word-frequency pronoun  
-t=290;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
-t=291;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=292;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=293;pho="M"; beg=0; ctu=0; audpsi=746; AudMem(); // 23oct2012
-nen=746; mfn=0; dba=4; fex=746; pos=7; fin=746; aud=290;
-psi=746; num=2; pre=0; seq=0; enx=746; EnVocab(); InNativate();
+// THEIR -- adjective for personal pronoun "THEY"; 25oct2012
+t=350;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
+t=351;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=352;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=353;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=354;pho="R"; beg=0; ctu=0; audpsi=188; AudMem(); // 25oct2012
+nen=188; mfn=0; dba=0; fex=188; pos=1; fin=188; aud=350;
+psi=188; num=0; pre=0; seq=0; enx=188; EnVocab(); InNativate();
 
 // THEN -- for machine reasoning logic  
-t=295;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
-t=296;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=297;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=298;pho="N"; beg=0; ctu=0; audpsi=213; AudMem(); // 23oct2012
-nen=213; mfn=0; fex=213; pos=2; fin=213; aud=295;  // 23oct2012
-psi=213;  num=0; pre=0; seq=0; enx=213; EnVocab(); InNativate();
+t=356;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
+t=357;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=358;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=359;pho="N"; beg=0; ctu=0; audpsi=213; AudMem(); // 25oct2012
+nen=213; mfn=0; dba=0; fex=213; pos=2; fin=213; aud=356;
+psi=213; num=0; pre=0; seq=0; enx=213; EnVocab(); InNativate();
 
 // THERE -- adverb for discussion of physical location 
-t=300;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
-t=301;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=302;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=303;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
-t=304;pho="E"; beg=0; ctu=0; audpsi=205; AudMem(); // 23oct2012
-nen=205; mfn=0; fex=205; pos=2; fin=205; aud=300;  // 23oct2012
+t=361;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
+t=362;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=363;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=364;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=365;pho="E"; beg=0; ctu=0; audpsi=205; AudMem(); // 25oct2012
+nen=205; mfn=0; dba=0; fex=205; pos=2; fin=205; aud=361;
 psi=205; num=0; pre=0; seq=0; enx=205; EnVocab(); InNativate();
 
-// THEY -- high word-frequency pronoun  
-t=306;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
-t=307;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=308;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=309;pho="Y"; beg=0; ctu=0; audpsi=743; AudMem(); // 23oct2012
-nen=743; mfn=0; dba=1; fex=743; pos=7; fin=743; aud=306; 
+// THEY -- nominative subject-form of pers. pronoun; 25oct2012
+t=367;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
+t=368;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=369;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=370;pho="Y"; beg=0; ctu=0; audpsi=743; AudMem(); // 23oct2012
+nen=743; mfn=0; dba=1; fex=743; pos=7; fin=743; aud=367; 
 psi=743;  num=2; pre=0; seq=0; enx=743; EnVocab(); InNativate();
 
+// THEIRS -- genitive form of personal pronoun; 25oct2012 
+t=372;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
+t=373;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=374;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=375;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=376;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=377;pho="S"; beg=0; ctu=0; audpsi=743; AudMem(); // 31oct2012
+nen=743; mfn=0; dba=2; fex=743; pos=7; fin=743; aud=372;
+psi=743; num=2; pre=0; seq=0; enx=743; EnVocab(); InNativate();
+
+// THEM -- dative indirect-object form of pers. pron. 25oct2012
+t=379;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
+t=380;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=381;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=382;pho="M"; beg=0; ctu=0; audpsi=743; AudMem(); // 31oct2012
+nen=743; mfn=0; dba=3; fex=743; pos=7; fin=743; aud=379;
+psi=743; num=2; pre=0; seq=0; enx=743; EnVocab(); InNativate();
+
+// THEM -- acc. direct-object form of pers. pron. 25oct2012
+t=384;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
+t=385;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=386;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=387;pho="M"; beg=0; ctu=0; audpsi=743; AudMem(); // 31oct2012
+nen=743; mfn=0; dba=4; fex=743; pos=7; fin=743; aud=384;
+psi=743; num=2; pre=0; seq=0; enx=743; EnVocab(); InNativate();
+
 // THINK -- germane to artificial intelligence  
-t=311;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
-t=312;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=313;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=314;pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
-t=315;pho="K"; beg=0; ctu=0; audpsi=840; AudMem(); // 23oct2012
-nen=840; mfn=0; fex=840; pos=8; fin=840; aud=311;  // 23oct2012
+t=389;pho="T"; beg=1; ctu=1; audpsi=0; AudMem();
+t=390;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=391;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=392;pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
+t=393;pho="K"; beg=0; ctu=0; audpsi=840; AudMem(); // 25oct2012
+nen=840; mfn=0; dba=0; fex=840; pos=8; fin=840; aud=389;
 psi=840; num=0; pre=0; seq=0; enx=840; EnVocab(); InNativate();
 
-// US -- for SelfReferentialThought 
-t=317;pho="U"; beg=1; ctu=1; audpsi=0; AudMem();
-t=318;pho="S"; beg=0; ctu=0; audpsi=734; AudMem(); // 23oct2012
-nen=734; mfn=0; dba=4; fex=734; pos=7; fin=707; aud=317; 
-psi=734; num=2; pre=0; seq=0; enx=734; EnVocab(); InNativate();
-
-// WE -- for SelfReferentialThought 
-t=320;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
-t=321;pho="E"; beg=0; ctu=0; audpsi=731; AudMem(); // 23oct2012
-nen=731; mfn=0; dba=1; fex=731; pos=7; fin=707; aud=320; 
+// WE -- nominative subject-form of personal pronoun; 25oct2012
+t=395;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
+t=396;pho="E"; beg=0; ctu=0; audpsi=731; AudMem(); // 25oct2012
+nen=731; mfn=0; dba=1; fex=731; pos=7; fin=737; aud=395; 
 psi=731; num=2; pre=0; seq=0; enx=731; EnVocab(); InNativate();
 
-// WHAT -- for SelfReferentialThought 
-t=323;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
-t=324;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=325;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
-t=326;pho="T"; beg=0; ctu=0; audpsi=781; AudMem(); // 23oct2012
-nen=781; mfn=3; fex=781; pos=7; fin=781; aud=323;  // 23oct2012
-psi=781; num=1; pre=0; seq=0; enx=781; EnVocab(); InNativate();
-
-// WHEN -- for SelfReferentialThought 
-t=328;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
-t=329;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=330;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=331;pho="N"; beg=0; ctu=0; audpsi=263; AudMem(); // 23oct2012
-nen=263; mfn=0; fex=263; pos=2; fin=263; aud=328;  // 23oct2012
-psi=263; num=0; pre=0; seq=0; enx=263; EnVocab(); InNativate();
-
-// WHERE -- for SelfReferentialThought 
-t=333;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
-t=334;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=335;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=336;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
-t=337;pho="E"; beg=0; ctu=0; audpsi=245; AudMem(); // 23oct2012
-nen=245; mfn=0; fex=245; pos=2; fin=245; aud=333;  // 23oct2012
-psi=245; num=0; pre=0; seq=0; enx=245; EnVocab(); InNativate();
-
-// WHO -- for SelfReferentialThought 
-t=339; pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
-t=340; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=341; pho="O"; beg=0; ctu=0; audpsi=791; AudMem(); // 23oct2012
-nen=791; mfn=0; dba=1; fex=791; pos=7; fin=791; aud=339; 
-psi=791; num=0;  pre=0; seq=0; enx=791; EnVocab(); InNativate();
-
-// WHOM -- for AI to ask grammatically correct questions 
-t=343;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
-t=344;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=345;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=346;pho="M"; beg=0; ctu=0; audpsi=794; AudMem(); // 23oct2012
-nen=794; mfn=0; dba=4; fex=794; pos=7; fin=794; aud=343; 
-psi=794; num=0; pre=0; seq=0; enx=794; EnVocab(); InNativate();
-
-// WHY -- for machine reasoning logic; 5apr2010
-t=348; pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
-t=349; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
-t=350; pho="Y"; beg=0; ctu=0; audpsi=370; AudMem(); // 23oct2012
-nen=370; mfn=0; fex=370; pos=2; fin=370; aud=348; 
-psi=370; num=0;  pre=0; seq=0; enx=370; EnVocab(); InNativate();
-
-// WITH -- preposition for EnPrep module 
-t=352;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
-t=353;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=354;pho="T"; beg=0; ctu=1; audpsi=0; AudMem();
-t=355;pho="H"; beg=0; ctu=0; audpsi=680; AudMem(); // 23oct2012
-nen=680; mfn=0; fex=680; pos=6; fin=680; aud=352;  // 23oct2012
-psi=680; num=0; pre=0; seq=0; enx=680; EnVocab(); InNativate();
-
-// WOMAN -- always feminine noun for use with gender flags 
-t=357;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
-t=358;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=359;pho="M"; beg=0; ctu=1; audpsi=0; AudMem();
-t=360;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
-t=361;pho="N"; beg=0; ctu=0; audpsi=515; AudMem(); // 23oct2012
-nen=515; mfn=2; fex=515; pos=5; fin=515; aud=357;  // 23oct2012
-psi=515; num=1; pre=0; seq=0; enx=515; EnVocab(); InNativate();
-
-// WOMEN --  for special treatment in NounPhrase as irregular
-t=363;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
-t=364;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=365;pho="M"; beg=0; ctu=1; audpsi=0; AudMem();
-t=366;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=367;pho="N"; beg=0; ctu=0; audpsi=515; AudMem(); // 23oct2012
-nen=515; mfn=2; fex=515; pos=5; fin=515; aud=363;  // 23oct2012
-psi=515; num=2; pre=0; seq=0; enx=515; EnVocab(); InNativate();
-
-// YES -- for human-computer interaction 
-t=369; pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
-t=370; pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=371; pho="S"; beg=0; ctu=0; audpsi=432; AudMem(); // 23oct2012
-nen=432; mfn=0; fex=432; pos=4; fin=432; aud=369;   // 23oct2012
-psi=432; num=0; pre=0; seq=0; enx=432; EnVocab(); InNativate();
-
-// YOU -- for SelfReferentialThought 
-t=373; pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
-t=374; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=375; pho="U"; beg=0; ctu=0; audpsi=707; AudMem();  // 21oct2012
-nen=707; mfn=0; dba=1; fex=707; pos=7; fin=707; aud=373; 
-psi=707;  num=0;  pre=0; seq=0; enx=707; EnVocab(); InNativate();
-
-
-// YOUR -- for SelfReferentialThought; 5apr2010
-t=377;pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
-t=378;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=379;pho="U"; beg=0; ctu=1; audpsi=0; AudMem();
-t=380;pho="R"; beg=0; ctu=0; audpsi=182; AudMem(); // 23oct2012
-nen=182; mfn=0; fex=182; pos=1; fin=181; aud=377;  // 23oct2012
-psi=182;  num=0; pre=0; seq=0; enx=182; EnVocab(); InNativate();
-
-// YOU -- for SelfReferentialThought 
-t=382;pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
-t=383;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=384;pho="U"; beg=0; ctu=0; audpsi=707; AudMem();  // 21oct2012
-nen=707; num=1; mfn=0; dba=1; fex=707; pos=7; fin=701; aud=382; // 19oct2012
-psi=707; pre=0; tqv=388; seq=800; enx=707; EnVocab(); InNativate();
-
-// ARE -- essential intransitive verb -- 800 from Dushka; 21oct2012
-t=386;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
-t=387;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
-t=388;pho="E"; beg=0; ctu=0; audpsi=800; AudMem();
-nen=800; num=0; mfn=0; dba=2; fex=800; pos=8; fin=800; aud=386; 
-psi=800; pre=707; tqv=394; seq=588; enx=800; EnVocab(); InNativate();
-
-// MAGIC -- for testing purposes 
-t=390;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
-t=391;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
-t=392;pho="G"; beg=0; ctu=1; audpsi=0; AudMem();
-t=393;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=394;pho="C"; beg=0; ctu=0; audpsi=588; AudMem(); // 23oct2012
-nen=588; num=1; mfn=0; dba=1; fex=588; pos=5; fin=588; aud=390; 
-psi=588; pre=800; tqv=0; seq=0; enx=588; EnVocab(); InNativate();
-
-// I -- for SelfReferentialThought 
-t=396;pho="I"; beg=1; ctu=0; audpsi=701; AudMem(); // 21oct2012
-nen=701; num=1; mfn=0; dba=1; fex=701; pos=5; fin=707; aud=396; 
-psi=701; pre=0; tqv=399; seq=800; enx=701; EnVocab(); InNativate();
-
-// AM -- 1st person singular of 800=BE; 21oct2012
-t=398;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
-t=399;pho="M"; beg=0; ctu=0; audpsi=800; AudMem();  // 21oct2012
-nen=800; num=0; mfn=0; dba=1; fex=800; pos=8; fin=800; aud=398; 
-psi=800; pre=701; tqv=405; seq=501; enx=800; EnVocab(); InNativate();
+// OURS -- genitive form of personal pronoun; 25oct2012
+t=398;pho="O"; beg=1; ctu=1; audpsi=0; AudMem();
+t=399;pho="U"; beg=0; ctu=1; audpsi=0; AudMem();
+t=400;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=401;pho="S"; beg=0; ctu=0; audpsi=731; AudMem(); // 31oct2012
+nen=731; mfn=0; dba=2; fex=731; pos=7; fin=737; aud=398; 
+psi=731; num=2; pre=0; seq=0; enx=731; EnVocab(); InNativate();
 
 }}}

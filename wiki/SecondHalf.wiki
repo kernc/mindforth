@@ -2,136 +2,355 @@
 #labels source
 
 {{{
-// ANDRU -- for SelfReferentialThought; 5apr2010
-t=401;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
-t=402;pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
-t=403;pho="D"; beg=0; ctu=1; audpsi=0; AudMem();
-t=404;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
-t=405;pho="U"; beg=0; ctu=0; audpsi=501; AudMem(); // 23oct2012
-nen=501; num=0; mfn=1; dba=1; fex=501; pos=5; fin=501; aud=401;
-psi=501; pre=800; tqv=0; seq=0; enx=501; EnVocab(); InNativate();
+// US -- dative indirect-object form of pers. pron. 25oct2012
+t=403;pho="U"; beg=1; ctu=1; audpsi=0; AudMem();
+t=404;pho="S"; beg=0; ctu=0; audpsi=731; AudMem(); // 31oct2012
+nen=731; mfn=0; dba=3; fex=731; pos=7; fin=737; aud=403; 
+psi=731; num=2; pre=0; seq=0; enx=731; EnVocab(); InNativate();
 
-// I -- innate KB-item for testing inhibition of idea-pairs
-t=407;pho="I"; beg=1; ctu=0; audpsi=701; AudMem();
-nen=701; num=1; mfn=0; dba=1; fex=701; pos=7; fin=701; aud=407; 
-psi=701; pre=0; tqv=410; seq=800; enx=701; EnVocab(); InNativate();
+// US -- accusative direct-object form of pers. pron. 25oct2012
+t=406;pho="U"; beg=1; ctu=1; audpsi=0; AudMem();
+t=407;pho="S"; beg=0; ctu=0; audpsi=731; AudMem(); // 31oct2012
+nen=731; mfn=0; dba=4; fex=731; pos=7; fin=737; aud=406; 
+psi=731; num=2; pre=0; seq=0; enx=731; EnVocab(); InNativate();
 
-// AM -- 1st person singular of 800=BE; 21oct2012
-t=409;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
-t=410;pho="M"; beg=0; ctu=0; audpsi=800; AudMem();  // 21oct2012
-nen=800; num=1; mfn=0; dba=1; fex=57; pos=8; fin=800; aud=409; 
-psi=800; pre=701; tqv=418; seq=571; enx=800; EnVocab(); InNativate();
+// WHAT -- nominative pronoun for SelfReferentialThought 
+t=409;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
+t=410;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=411;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=412;pho="T"; beg=0; ctu=0; audpsi=781; AudMem(); // 25oct2012
+nen=781; mfn=3; dba=1; fex=781; pos=7; fin=781; aud=409;
+psi=781; num=1; pre=0; seq=0; enx=781; EnVocab(); InNativate();
 
-// A -- En(glish) Article for EnArticle module 
-t=412;pho="A"; beg=1; ctu=0; audpsi=101; AudMem(); // 23oct2012
-nen=101; num=1; mfn=0; dba=0; fex=101; pos=1; fin=101; aud=412; 
-psi=101; pre=0; tqv=0; seq=571; enx=101; EnVocab(); InNativate();
+// WHAT -- accusative pronoun for SelfReferentialThought 
+t=414;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
+t=415;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=416;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=417;pho="T"; beg=0; ctu=0; audpsi=781; AudMem(); // 25oct2012
+nen=781; mfn=3; dba=4; fex=781; pos=7; fin=781; aud=414;
+psi=781; num=1; pre=0; seq=0; enx=781; EnVocab(); InNativate();
 
-// ROBOT -- important for target user base 
-t=414;pho="R"; beg=1; ctu=1; audpsi=0; AudMem();
-t=415;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=416;pho="B"; beg=0; ctu=1; audpsi=0; AudMem();
-t=417;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=418;pho="T"; beg=0; ctu=0; audpsi=571; AudMem(); // 23oct2012
-nen=571; num=1; mfn=0; dba=1; fex=571; pos=5; fin=571; aud=414; 
-psi=571; pre=800; tqv=0; seq=0; enx=571; EnVocab(); InNativate();
+// WHEN -- for SelfReferentialThought 
+t=419;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
+t=420;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=421;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=422;pho="N"; beg=0; ctu=0; audpsi=263; AudMem(); // 25oct2012
+nen=263; mfn=0; dba=0; fex=263; pos=2; fin=263; aud=419;
+psi=263; num=0; pre=0; seq=0; enx=263; EnVocab(); InNativate();
 
-// I -- innate KB-item for testing inhibition of idea-pairs
-t=420;pho="I"; beg=1; ctu=0; audpsi=701; AudMem();  // 21oct2012
-nen=701; num=1; mfn=0; dba=1; fex=701; pos=7; fin=701; aud=420; 
-psi=701; pre=0; tqv=423; seq=800; enx=701; EnVocab(); InNativate();
+// WHERE -- for SelfReferentialThought 
+t=424;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
+t=425;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=426;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=427;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=428;pho="E"; beg=0; ctu=0; audpsi=245; AudMem(); // 25oct2012
+nen=245; mfn=0; dba=0; fex=245; pos=2; fin=245; aud=424;
+psi=245; num=0; pre=0; seq=0; enx=245; EnVocab(); InNativate();
 
-// AM -- 1st person singular of 800=BE; 21oct2012
-t=422;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
-t=423;pho="M"; beg=0; ctu=0; audpsi=800; AudMem();  // 21oct2012
-nen=800; num=0; mfn=0; dba=1; fex=800; pos=8; fin=800; aud=422; 
-psi=800; pre=701; tqv=432; seq=104; enx=800; EnVocab(); InNativate();
+// WHO -- for SelfReferentialThought 
+t=430;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
+t=431;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=432;pho="O"; beg=0; ctu=0; audpsi=791; AudMem(); // 25oct2012
+nen=791; mfn=0; dba=1; fex=791; pos=7; fin=791; aud=430; 
+psi=791; num=1; pre=0; seq=0; enx=791; EnVocab(); InNativate();
 
-// A -- En(glish) Article for EnArticle module 
-t=425;pho="A"; beg=1; ctu=0; audpsi=101; AudMem(); // 23oct2012
-nen=101; num=1; mfn=0; dba=0; fex=101; pos=1; fin=101; aud=425; 
-psi=101; pre=0; tqv=0; seq=537; enx=101; EnVocab(); InNativate();
+// WHOSE -- for AI to ask grammatically correct questions 
+t=434;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
+t=435;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=436;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=437;pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
+t=438;pho="E"; beg=0; ctu=0; audpsi=794; AudMem(); // 25oct2012
+nen=794; mfn=0; dba=2; fex=794; pos=7; fin=794; aud=434; 
+psi=794; num=1; pre=0; seq=0; enx=794; EnVocab(); InNativate();
 
-// PERSON -- for ad-hoc gender tags and robot philosophy 
-t=427;pho="P"; beg=1; ctu=1; audpsi=0; AudMem();
-t=428;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=429;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
-t=430;pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
-t=431;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=432;pho="N"; beg=0; ctu=0; audpsi=537; AudMem(); // 23oct2012
-nen=537; num=1; mfn=0; dba=1; fex=537; pos=5; fin=537; aud=427; 
-psi=537; pre=800; tqv=0; seq=0; enx=537; EnVocab(); InNativate();  
+// WHOM -- for AI to ask grammatically correct questions 
+t=440;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
+t=441;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=442;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=443;pho="M"; beg=0; ctu=0; audpsi=794; AudMem(); // 25oct2012
+nen=794; mfn=0; dba=3; fex=794; pos=7; fin=794; aud=440; 
+psi=794; num=1; pre=0; seq=0; enx=794; EnVocab(); InNativate();
+
+// WHOM -- for AI to ask grammatically correct questions 
+t=445;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
+t=446;pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=447;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=448;pho="M"; beg=0; ctu=0; audpsi=794; AudMem(); // 25oct2012
+nen=794; mfn=0; dba=4; fex=794; pos=7; fin=794; aud=445; 
+psi=794; num=1; pre=0; seq=0; enx=794; EnVocab(); InNativate();
+
+// WHY -- for machine reasoning logic; 5apr2010
+t=450; pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
+t=451; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
+t=452; pho="Y"; beg=0; ctu=0; audpsi=370; AudMem(); // 25oct2012
+nen=370; mfn=0; dba=0; fex=370; pos=2; fin=370; aud=450; 
+psi=370; num=0; pre=0; seq=0; enx=370; EnVocab(); InNativate();
+
+// WITH -- preposition for EnPrep module 
+t=454;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
+t=455;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=456;pho="T"; beg=0; ctu=1; audpsi=0; AudMem();
+t=457;pho="H"; beg=0; ctu=0; audpsi=680; AudMem(); // 25oct2012
+nen=680; mfn=0; dba=0; fex=680; pos=6; fin=680; aud=454;
+psi=680; num=0; pre=0; seq=0; enx=680; EnVocab(); InNativate();
+
+// WOMAN -- always feminine noun for use with gender flags 
+t=459;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
+t=460;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=461;pho="M"; beg=0; ctu=1; audpsi=0; AudMem();
+t=462;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=463;pho="N"; beg=0; ctu=0; audpsi=515; AudMem(); // 25oct2012
+nen=515; mfn=2; dba=0; fex=515; pos=5; fin=515; aud=459;
+psi=515; num=1; pre=0; seq=0; enx=515; EnVocab(); InNativate();
+
+// WOMEN --  for special treatment in NounPhrase as irregular
+t=465;pho="W"; beg=1; ctu=1; audpsi=0; AudMem();
+t=466;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=467;pho="M"; beg=0; ctu=1; audpsi=0; AudMem();
+t=468;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=469;pho="N"; beg=0; ctu=0; audpsi=515; AudMem(); // 25oct2012
+nen=515; mfn=2; dba=0; fex=515; pos=5; fin=515; aud=465;
+psi=515; num=2; pre=0; seq=0; enx=515; EnVocab(); InNativate();
+
+// YES -- interjection for human-computer interaction 
+t=471; pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
+t=472; pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=473; pho="S"; beg=0; ctu=0; audpsi=432; AudMem(); // 25oct2012
+nen=432; mfn=0; dba=0; fex=432; pos=4; fin=432; aud=471;
+psi=432; num=0; pre=0; seq=0; enx=432; EnVocab(); InNativate();
+
+// YOU -- nominative singular of personal pronoun; 25oct2012
+t=475; pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
+t=476; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=477; pho="U"; beg=0; ctu=0; audpsi=707; AudMem();  // 25oct2012
+nen=707; mfn=0; dba=1; fex=707; pos=7; fin=707; aud=475; 
+psi=707; num=1;  pre=0; seq=0; enx=707; EnVocab(); InNativate();
+
+// YOURS -- genitive singular of personal pronoun; 25oct2012
+t=479; pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
+t=480; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=481; pho="U"; beg=0; ctu=1; audpsi=0; AudMem();
+t=482; pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=483; pho="S"; beg=0; ctu=0; audpsi=707; AudMem();  // 25oct2012
+nen=707; mfn=0; dba=2; fex=707; pos=7; fin=707; aud=479; 
+psi=707; num=1; pre=0; seq=0; enx=707; EnVocab(); InNativate();
+
+// YOU -- dative singular of personal pronoun; 25oct2012
+t=485; pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
+t=486; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=487; pho="U"; beg=0; ctu=0; audpsi=707; AudMem();  // 25oct2012
+nen=707; mfn=0; dba=3; fex=707; pos=7; fin=707; aud=485; 
+psi=707; num=1; pre=0; seq=0; enx=707; EnVocab(); InNativate();
+
+// YOU -- accusative singular of personal pronoun; 25oct2012
+t=489; pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
+t=490; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=491; pho="U"; beg=0; ctu=0; audpsi=707; AudMem();  // 25oct2012
+nen=707; mfn=0; dba=4; fex=707; pos=7; fin=707; aud=489; 
+psi=707; num=1; pre=0; seq=0; enx=707; EnVocab(); InNativate();
+
+// YOU -- nominative plural of personal pronoun; 25oct2012
+t=493; pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
+t=494; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=495; pho="U"; beg=0; ctu=0; audpsi=707; AudMem();  // 25oct2012
+nen=737; mfn=0; dba=1; fex=737; pos=7; fin=731; aud=493; 
+psi=737; num=2;  pre=0; seq=0; enx=737; EnVocab(); InNativate();
+
+// YOURS -- genitive plural of personal pronoun; 25oct2012
+t=497; pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
+t=498; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=499; pho="U"; beg=0; ctu=1; audpsi=0; AudMem();
+t=500; pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=501; pho="S"; beg=0; ctu=0; audpsi=707; AudMem();  // 25oct2012
+nen=737; mfn=0; dba=2; fex=737; pos=7; fin=731; aud=497; 
+psi=737; num=2; pre=0; seq=0; enx=737; EnVocab(); InNativate();
+
+// YOU -- dative plural of personal pronoun; 25oct2012
+t=503; pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
+t=504; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=505; pho="U"; beg=0; ctu=0; audpsi=707; AudMem();  // 25oct2012
+nen=737; mfn=0; dba=3; fex=737; pos=7; fin=731; aud=503; 
+psi=737; num=2; pre=0; seq=0; enx=737; EnVocab(); InNativate();
+
+// YOU -- accusative plural of personal pronoun; 25oct2012
+t=507; pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
+t=508; pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=509; pho="U"; beg=0; ctu=0; audpsi=707; AudMem();  // 25oct2012
+nen=737; mfn=0; dba=4; fex=737; pos=7; fin=731; aud=507; 
+psi=737; num=2; pre=0; seq=0; enx=737; EnVocab(); InNativate();
+
+// YOUR -- adjective for personal pronoun "YOU"; 25oct2012
+t=511;pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
+t=512;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=513;pho="U"; beg=0; ctu=1; audpsi=0; AudMem();
+t=514;pho="R"; beg=0; ctu=0; audpsi=182; AudMem(); // 25oct2012
+nen=182; mfn=0; dba=0; fex=182; pos=1; fin=181; aud=511;
+psi=182; num=0; pre=0; seq=0; enx=182; EnVocab(); InNativate();
+
+// YOU -- for SelfReferentialThought 
+t=516;pho="Y"; beg=1; ctu=1; audpsi=0; AudMem();
+t=517;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=518;pho="U"; beg=0; ctu=0; audpsi=707; AudMem();  // 25oct2012
+nen=707; mfn=0; dba=1; fex=707; pos=7; fin=701; aud=516; //
+psi=707;num=1;pre=0;tqv=522;seq=800;enx=707;EnVocab();InNativate();
+
+// ARE -- essential intransitive verb -- 800 from Dushka; 21oct2012
+t=520;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
+t=521;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=522;pho="E"; beg=0; ctu=0; audpsi=800; AudMem();
+nen=800; mfn=0; dba=2; fex=800; pos=8; fin=800; aud=520; 
+psi=800;num=1;pre=707;tqv=528;seq=588;enx=800;EnVocab();InNativate();
+
+// MAGIC -- for testing purposes 
+t=524;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
+t=525;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=526;pho="G"; beg=0; ctu=1; audpsi=0; AudMem();
+t=527;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=528;pho="C"; beg=0; ctu=0; audpsi=588; AudMem(); // 25oct2012
+nen=588; mfn=0; dba=1; fex=588; pos=5; fin=588; aud=524; 
+psi=588;num=1;pre=800;tqv=0;seq=0;enx=588;EnVocab();InNativate();
 
 // I -- for SelfReferentialThought 
-t=434;pho="I"; beg=1; ctu=0; audpsi=701; AudMem();  // 21oct2012
-nen=701; num=1; mfn=0; dba=1; fex=701; pos=7; fin=707; aud=434;
-psi=701; pre=0; tqv=439; seq=895; enx=701; EnVocab(); InNativate();
+t=530;pho="I"; beg=1; ctu=0; audpsi=701; AudMem(); // 25oct2012
+nen=701; mfn=0; dba=1; fex=701; pos=5; fin=707; aud=530; 
+psi=701;num=1;pre=0;tqv=533;seq=800;enx=701;EnVocab();InNativate();
+
+// AM -- 1st person singular of 800=BE; 21oct2012
+t=532;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
+t=533;pho="M"; beg=0; ctu=0; audpsi=800; AudMem();  // 25oct2012
+nen=800; mfn=0; dba=1; fex=800; pos=8; fin=800; aud=532; 
+psi=800;num=1; pre=701;tqv=539;seq=501;enx=800;EnVocab();InNativate();
+
+// ANDRU -- for SelfReferentialThought; 5apr2010
+t=535;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
+t=536;pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
+t=537;pho="D"; beg=0; ctu=1; audpsi=0; AudMem();
+t=538;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=539;pho="U"; beg=0; ctu=0; audpsi=501; AudMem(); // 25oct2012
+nen=501; mfn=1; dba=1; fex=501; pos=5; fin=501; aud=535;
+psi=501;num=1;pre=800;tqv=0;seq=0;enx=501;EnVocab();InNativate();
+
+// I -- innate KB-item for testing inhibition of idea-pairs
+t=541;pho="I"; beg=1; ctu=0; audpsi=701; AudMem();
+nen=701; mfn=0; dba=1; fex=701; pos=7; fin=701; aud=541; 
+psi=701;num=1;pre=0;tqv=544;seq=800;enx=701;EnVocab();InNativate();
+
+// AM -- 1st person singular of 800=BE; 21oct2012
+t=543;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
+t=544;pho="M"; beg=0; ctu=0; audpsi=800; AudMem(); // 25oct2012
+nen=800; mfn=0; dba=1; fex=57; pos=8; fin=800; aud=543; 
+psi=800;num=1;pre=701;tqv=552;seq=571;enx=800;EnVocab();InNativate();
+
+// A -- En(glish) Article for EnArticle module 
+t=546;pho="A"; beg=1; ctu=0; audpsi=101; AudMem(); // 25oct2012
+nen=101; mfn=0; dba=0; fex=101; pos=1; fin=101; aud=546; 
+psi=101;num=1;pre=0;tqv=552;seq=571;enx=101;EnVocab();InNativate();
+
+// ROBOT -- important for target user base 
+t=548;pho="R"; beg=1; ctu=1; audpsi=0; AudMem();
+t=549;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=550;pho="B"; beg=0; ctu=1; audpsi=0; AudMem();
+t=551;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=552;pho="T"; beg=0; ctu=0; audpsi=571; AudMem(); // 25oct2012
+nen=571; mfn=0; dba=1; fex=571; pos=5; fin=571; aud=548; 
+psi=571; num=1; pre=800; tqv=0; seq=0; enx=571; EnVocab(); InNativate();
+
+// I -- innate KB-item for testing inhibition of idea-pairs
+t=554;pho="I"; beg=1; ctu=0; audpsi=701; AudMem();  // 25oct2012
+nen=701; mfn=0; dba=1; fex=701; pos=7; fin=701; aud=554; 
+psi=701;num=1;pre=0;tqv=557;seq=800;enx=701;EnVocab();InNativate();
+
+// AM -- 1st person singular of 800=BE; 21oct2012
+t=556;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
+t=557;pho="M"; beg=0; ctu=0; audpsi=800; AudMem();  // 25oct2012
+nen=800; mfn=0; dba=1; fex=800; pos=8; fin=800; aud=556; 
+psi=800;num=1;pre=701;tqv=566;seq=537;enx=800;EnVocab();InNativate();
+
+// A -- En(glish) Article for EnArticle module 
+t=559;pho="A"; beg=1; ctu=0; audpsi=101; AudMem(); // 25oct2012
+nen=101; mfn=0; dba=0; fex=101; pos=1; fin=101; aud=559; 
+psi=101;num=1;pre=0;tqv=566;seq=537;enx=101;EnVocab();InNativate();
+
+// PERSON -- for ad-hoc gender tags and robot philosophy 
+t=561;pho="P"; beg=1; ctu=1; audpsi=0; AudMem();
+t=562;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=563;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
+t=564;pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
+t=565;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=566;pho="N"; beg=0; ctu=0; audpsi=537; AudMem(); // 25oct2012
+nen=537; mfn=0; dba=1; fex=537; pos=5; fin=537; aud=561; 
+psi=537;num=1;pre=800;tqv=0;seq=0;enx=537;EnVocab();InNativate();  
+
+// I -- for SelfReferentialThought 
+t=568;pho="I"; beg=1; ctu=0; audpsi=701; AudMem(); // 25oct2012
+nen=701; mfn=0; dba=1; fex=701; pos=7; fin=707; aud=568;
+psi=701;num=1;pre=0;tqv=573;seq=895;enx=701;EnVocab();InNativate();
 
 // HELP -- socially significant common verb 
-t=436;pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
-t=437;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=438;pho="L"; beg=0; ctu=1; audpsi=895; AudMem();  // 23oct2012
-t=439;pho="P"; beg=0; ctu=0; audpsi=895; AudMem();  // 23oct2012
-nen=895; num=1; mfn=0; dba=1; fex=895; pos=8; fin=895; aud=436; 
-psi=895; pre=701; tqv=444; seq=72; enx=895; EnVocab(); InNativate();
+t=570;pho="H"; beg=1; ctu=1; audpsi=0; AudMem();
+t=571;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=572;pho="L"; beg=0; ctu=1; audpsi=895; AudMem();
+t=573;pho="P"; beg=0; ctu=0; audpsi=895; AudMem(); // 25oct2012
+nen=895; mfn=0; dba=1; fex=895; pos=8; fin=895; aud=570; 
+psi=895;num=1;pre=701;tqv=578;seq=72;enx=895;EnVocab();InNativate();
 
 // KIDS -- noun lends itself to educational purposes 
-t=441;pho="K"; beg=1; ctu=1; audpsi=0; AudMem();
-t=442;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=443;pho="D"; beg=0; ctu=1; audpsi=0; AudMem();
-t=444;pho="S"; beg=0; ctu=0; audpsi=528; AudMem(); // 23oct2012
-nen=528; num=2; dba=4; mfn=0; dba=4; fex=528; pos=5; fin=528; aud=441; 
-psi=528; pre=895; tqv=0; seq=0; enx=528; EnVocab(); InNativate();
+t=575;pho="K"; beg=1; ctu=1; audpsi=0; AudMem();
+t=576;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=577;pho="D"; beg=0; ctu=1; audpsi=0; AudMem();
+t=578;pho="S"; beg=0; ctu=0; audpsi=528; AudMem(); // 25oct2012
+nen=528; mfn=0; dba=4; fex=528; pos=5; fin=528; aud=575; 
+psi=528;num=2;pre=895;tqv=0;seq=0;enx=528;EnVocab();InNativate();
 
 // KIDS -- noun lends itself to educational purposes 
-t=446;pho="K"; beg=1; ctu=1; audpsi=0; AudMem();
-t=447;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
-t=448;pho="D"; beg=0; ctu=1; audpsi=0; AudMem();
-t=449;pho="S"; beg=0; ctu=0; audpsi=528; AudMem(); // 23oct2012
-nen=528; num=2; dba=1; mfn=0; dba=1; fex=528; pos=5; fin=72; aud=446; 
-psi=528; pre=0; tqv=454; seq=835; enx=528; EnVocab(); InNativate();
+t=580;pho="K"; beg=1; ctu=1; audpsi=0; AudMem();
+t=581;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
+t=582;pho="D"; beg=0; ctu=1; audpsi=0; AudMem();
+t=583;pho="S"; beg=0; ctu=0; audpsi=528; AudMem(); // 25oct2012
+nen=528; mfn=0; dba=1; fex=528; pos=5; fin=72; aud=580; 
+psi=528;num=2;pre=0;tqv=588;seq=835;enx=528;EnVocab();InNativate();
 
 // MAKE -- common verb of high word-frequency 
-t=451;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
-t=452;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
-t=453;pho="K"; beg=0; ctu=1; audpsi=0; AudMem();
-t=454;pho="E"; beg=0; ctu=0; audpsi=835; AudMem(); // 23oct2012
-nen=835; num=0; mfn=0; dba=3; fex=835; pos=8; fin=835; aud=451; 
-psi=835; pre=528; tqv=461; seq=571; enx=835; EnVocab(); InNativate();
+t=585;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
+t=586;pho="A"; beg=0; ctu=1; audpsi=0; AudMem();
+t=587;pho="K"; beg=0; ctu=1; audpsi=0; AudMem();
+t=588;pho="E"; beg=0; ctu=0; audpsi=835; AudMem(); // 25oct2012
+nen=835; mfn=0; dba=3; fex=835; pos=8; fin=835; aud=585; 
+psi=835;num=2;pre=528;tqv=595;seq=571;enx=835;EnVocab();InNativate();
 
 // ROBOTS -- important for target user base 
-t=456;pho="R"; beg=1; ctu=1; audpsi=0; AudMem();
-t=457;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=458;pho="B"; beg=0; ctu=1; audpsi=0; AudMem();
-t=459;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=460;pho="T"; beg=0; ctu=1; audpsi=0; AudMem();
-t=461;pho="S"; beg=0; ctu=0; audpsi=571; AudMem(); // 23oct2012
-nen=571; num=2; mfn=0; dba=4; fex=571; pos=5; fin=571; aud=456; 
-psi=571; pre=835; tqv=468; seq=0; enx=571; EnVocab(); InNativate();
+t=590;pho="R"; beg=1; ctu=1; audpsi=0; AudMem();
+t=591;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=592;pho="B"; beg=0; ctu=1; audpsi=0; AudMem();
+t=593;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=594;pho="T"; beg=0; ctu=1; audpsi=0; AudMem();
+t=595;pho="S"; beg=0; ctu=0; audpsi=571; AudMem(); // 25oct2012
+nen=571; mfn=0; dba=4; fex=571; pos=5; fin=571; aud=590; 
+psi=571; num=2; pre=835; tqv=0; seq=0; enx=571; EnVocab(); InNativate();
 
 // ROBOTS -- important for target user base 
-t=463;pho="R"; beg=1; ctu=1; audpsi=0; AudMem();
-t=464;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=465;pho="B"; beg=0; ctu=1; audpsi=0; AudMem();
-t=466;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=467;pho="T"; beg=0; ctu=1; audpsi=0; AudMem();
-t=468;pho="S"; beg=0; ctu=0; audpsi=571; AudMem(); // 23oct2012
-nen=571; num=2; mfn=0; dba=1; fex=571; pos=5; fin=571; aud=463; 
-psi=571; pre=0; tqv=0; seq=849; enx=571; EnVocab(); InNativate();
+t=597;pho="R"; beg=1; ctu=1; audpsi=0; AudMem();
+t=598;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=599;pho="B"; beg=0; ctu=1; audpsi=0; AudMem();
+t=600;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
+t=601;pho="T"; beg=0; ctu=1; audpsi=0; AudMem();
+t=602;pho="S"; beg=0; ctu=0; audpsi=571; AudMem(); // 25oct2012
+nen=571; mfn=0; dba=1; fex=571; pos=5; fin=571; aud=597; 
+psi=571;num=2;pre=0;tqv=607;seq=849;enx=571;EnVocab();InNativate();
 
 // NEED -- common verb used for describing goals 
-t=470;pho="N"; beg=1; ctu=1; audpsi=0; AudMem();
-t=471;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=472;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
-t=473;pho="D"; beg=0; ctu=0; audpsi=849; AudMem(); // 23oct2012
-nen=849; num=0; mfn=0; dba=3; fex=849; pos=8; fin=849; aud=470; 
-psi=849; pre=571; tqv=476; seq=701; enx=849; EnVocab(); InNativate();
+t=604;pho="N"; beg=1; ctu=1; audpsi=0; AudMem();
+t=605;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=606;pho="E"; beg=0; ctu=1; audpsi=0; AudMem();
+t=607;pho="D"; beg=0; ctu=0; audpsi=849; AudMem(); // 25oct2012
+nen=849; mfn=0; dba=3; fex=849; pos=8; fin=849; aud=604; 
+psi=849;num=2;pre=571;tqv=610;seq=701;enx=849;EnVocab();InNativate();
 
 // ME -- for SelfReferentialThought 
-t=475;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
-t=476;pho="E"; beg=0; ctu=0; audpsi=701; AudMem();  // 21oct2012
-nen=701; num=1; mfn=0; dba=4; fex=701; pos=7; fin=707; aud=475; // 19oct2012
-psi=701; pre=849; tqv=0; seq=0; enx=701; EnVocab(); InNativate();
+t=609;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
+t=610;pho="E"; beg=0; ctu=0; audpsi=701; AudMem(); // 25oct2012
+nen=701; mfn=0; dba=4; fex=701; pos=7; fin=707; aud=609;
+psi=701;num=1;pre=849;tqv=0;seq=0;enx=701;EnVocab();InNativate();
   audpsi = 0;  // lest pass through AudInput to EnParser; 22aug2011
   indefartcon = 0;  // lest WHO trigger EnArticle; 17jun2011
   psi = 0;
@@ -192,6 +411,7 @@ function KbTraversal() {
     qusub = 571;  // 571=ROBOT; 23oct2012
     subjpsi = 571;  // 571=ROBOT; 23oct2012
     nphrnum = 2;  // prescriptive for plural ROBOTS; 17jun2011
+    snu = 2;  // for sake of parameter-search; 26oct2012
     nounval = 62;
     defcon = nounval;  // force majeure into NounAct; 17nov2010
     NounAct();
@@ -495,7 +715,6 @@ function WhatAuxSDo() {
   tov = t;
   for (i = t; i>midway; i--) {
     enLexicon[i].enExam();
- // if (en0 == 54) {  // 54=WHAT; 27jun2011
     if (en0 == 781) {  // 781=WHAT; 23oct2012
       aud = en8; // 4jan2012
       break;  // exit loop after first find;  7jul2011
@@ -545,55 +764,69 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 1oct2010
   }  // end of loop in search of 791=WHO; 23oct2012
   SpeechAct();  // say word starting at "aud" value; 13aug2010
   if (subjpsi==50) prsn=1; // 1st person "I";  2sep2010
+  if (subjpsi==701) prsn=1; // 1st person "I"; 30oct2012
   if (subjpsi==53) prsn=1; // 1st person "WE"  2sep2010
+  if (subjpsi==731) prsn=1; // 1st person "WE" 30oct2012
   if (subjpsi==56) prsn=2; // 2nd person YOU;  2sep2010
+  if (subjpsi==707) prsn=2; // 2nd person YOU; 30oct2012
+  if (subjpsi==737) prsn=2; // 2nd person YOU; 30oct2012
   if (subjpsi==49) prsn=3; // 3rd person HE;   2sep2010
-  if (subjpsi==713) prsn=3; // 3rd person HE; 23oct2012
+  if (subjpsi==713) prsn=3; // 3rd person HE;  23oct2012
   if (subjpsi==80) prsn=3; // 3rd person SHE;  2sep2010
+  if (subjpsi==719) prsn=3; // 3rd person SHE; 30oct2012
   if (subjpsi==95) prsn=3; // 3rd person IT;   2sep2010
+  if (subjpsi==725) prsn=3; // 3rd person IT; 30oct2012
   if (subjpsi==52) prsn=3; // 3rd person THEY; 2sep2010
+  if (subjpsi==743) prsn=3; // 3rd person THEY; 30oct2012
   if (prsn == 3) {  // only for 3rd person; 3aug2011
     for (i = t; i>midway; i--) { // look for 66=IS;  3aug2011
       enLexicon[i].enExam();  // examine English lexicon; 3aug2011
-      if (en0 == 66) {  // if 66=IS is found;  3aug2011
+   // if (en0 == 66) {  // if 66=IS is found;  3aug2011
+      if (en0==800 && en2==1 && en4==3) {  // parameters 30oct2012
         aud = en8;  // assign most recent recall-tag; 4jan2012
         break;  // exit the loop after first find; 3aug2011
-      }  // end of test for 66=IS; 3aug2011
-    }  // end of loop in search of 66=IS; 3aug2011
+      }  // end of test for 3rd person singular "IS"; 30oct2012
+    }  // end of loop in search of 800=IS; 30oct2012
     SpeechAct();  // say word starting at "aud" value; 3aug2011
   }  // end of test for third person; 3aug2011
-  if (subjpsi==50) {  // 50=I; 13aug2010
+// if (subjpsi==50) {  // 50=I; 13aug2010
+  if (subjpsi==701) {  // 701=I; 30oct2012
     for (i = t; i>midway; i--) { // look for 57=AM; 13aug2010
       enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-      if (en0 == 57) {  // if 57=AM is found; 13aug2010
-        verbpsi = 57;  // for EnArticle; 14sep2011
+   // if (en0 == 57) {  // if 57=AM is found; 13aug2010
+      if (en0==800 && en2==1 && en4==1) {  // parameters; 30oct2012
+   //  verbpsi = 57;  // for EnArticle; 14sep2011
+       verbpsi = 800;  // for EnArticle; 30oct2012
         aud = en8;  // assign most recent recall-tag;  4jan2012
         break;  // exit the loop after first find; 13aug2010
-      }  // end of test for 57=AM; 13aug2010
-    }  // end of loop in search of 57=AM; 13aug2010
+      }  // end of test for 1st person singular "AM"; 30oct2012
+    }  // end of loop in search of 800=AM; 30oct2012
     SpeechAct();  // say word starting at "aud" value; 13aug2010
-  } // end of test for subjpsi 50=I; 13aug2010
-  if (subjpsi==56) {  // 56=YOU; 13aug2010
+  } // end of test for subjpsi 701=I; 30oct2012
+// if (subjpsi==56) {  // 56=YOU; 13aug2010
+  if (subjpsi==707) {  // 707=YOU; 30oct2012
     prsn = 2;  // second person; 1oct2010
-    for (i = t; i>midway; i--) { // look for 67=ARE; 13aug2010
+    for (i = t; i>midway; i--) { // look for 800=ARE; 30oct2012
       enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-      if (en0 == 67) {  // if 67=ARE is found; 13aug2010
+   // if (en0 == 67) {  // if 67=ARE is found; 13aug2010
+      if (en0==800 && en2==1 && en4==2) {  // 2nd p. sing 30oct2012
         aud = en8;  // assign most recent recall-tag;  4jan2012
         break;  // exit the loop after first find; 13aug2010
-      }  // end of test for 67=ARE; 13aug2010
-    }  // end of loop in search of 67=ARE; 13aug2010
+      }  // end of test for 800=ARE; 30oct2012
+    }  // end of loop in search of 800=ARE; 30oct2012
     SpeechAct();  // say word starting at "aud" value; 13aug2010
-  } // end of test for subjpsi 56=YOU; 13aug2010
+  } // end of test for subjpsi 707=YOU; 30oct2012
   if (subjpsi==713) {  // 713=HE; 23oct2012
     nphrnum = 1;  // singular; 1octo2010
     prsn = 3;  // third person; 1oct2010
     for (i = t; i>midway; i--) { // look for 66=IS; 13aug2010
       enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-      if (en0 == 66) {  // if 66=IS is found; 13aug2010
+   // if (en0 == 66) {  // if 66=IS is found; 13aug2010
+      if (en0==800 && en2==1 && en4==3) {  // "IS"? 30oct2012
         aud = en8;  // assign most recent recall-tag;  4jan2012
         break;  // exit the loop after first find; 13aug2010
-      }  // end of test for 66=IS; 13aug2010
-    }  // end of loop in search of 66=IS; 13aug2010
+      }  // end of test for 800=IS; 30oct2012
+    }  // end of loop in search of 800=IS; 30oct2012
     SpeechAct();  // say word starting at "aud" value; 13aug2010
   } // end of test for subjpsi 713=HE; 23oct2012
   if (subjpsi==719) {  // 719=SHE; 23oct2012
@@ -601,23 +834,25 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 1oct2010
     prsn = 3;  // third person; 1oct2010
     for (i = t; i>midway; i--) { // look for 66=IS; 13aug2010
       enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-      if (en0 == 66) {  // if 66=IS is found; 13aug2010
+   // if (en0 == 66) {  // if 66=IS is found; 13aug2010
+      if (en0==800 && en2==1 && en4==3) {  // "IS"? 30oct2012
         aud = en8;  // assign most recent recall-tag;  4jan2012
         break;  // exit the loop after first find; 13aug2010
-      }  // end of test for 66=IS; 13aug2010
-    }  // end of loop in search of 66=IS; 13aug2010
+      }  // end of test for 800=IS; 30oct2012
+    }  // end of loop in search of 800=IS; 30oct2012
     SpeechAct();  // say word starting at "aud" value; 13aug2010
-  } // end of test for subjpsi 80=SHE; 1oct2010
+  } // end of test for subjpsi 719=SHE; 30oct2012
   if (subjpsi==725) {  // 725=IT; 24oct2012
     nphrnum = 1;  // singular; 1octo2010
     prsn = 3;  // third person; 1oct2010
     for (i = t; i>midway; i--) { // look for 66=IS; 13aug2010
       enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-      if (en0 == 66) {  // if 66=IS is found; 13aug2010
+   // if (en0 == 66) {  // if 66=IS is found; 13aug2010
+      if (en0==800 && en2==1 && en4==3) {  // "IS"? 30oct2012
         aud = en8;  // assign most recent recall-tag;  4jan2012
         break;  // exit the loop after first find; 13aug2010
-      }  // end of test for 66=IS; 13aug2010
-    }  // end of loop in search of 66=IS; 13aug2010
+      }  // end of test for 800=IS; 30oct2012
+    }  // end of loop in search of 800=IS; 30oct2012
     SpeechAct();  // say word starting at "aud" value; 13aug2010
   } // end of test for subjpsi 725=IT; 24oct2012
   if (subjpsi==743) {  // 743=THEY; 24oct2012
@@ -625,11 +860,12 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 1oct2010
     prsn = 3;  // third person; 1oct2010
     for (i = t; i>midway; i--) { // look for 67=ARE; 13aug2010
       enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-      if (en0 == 67) {  // if 67=ARE is found; 13aug2010
+   // if (en0 == 67) {  // if 67=ARE is found; 13aug2010
+      if (en0==800 && en2==2 && en4==3) {  // 3rd p. pl. 30oct2012
         aud = en8;  // assign most recent recall-tag;  4jan2012
         break;  // exit the loop after first find; 13aug2010
-      }  // end of test for 67=ARE; 13aug2010
-    }  // end of loop in search of 67=ARE; 13aug2010
+      }  // end of test for 800=ARE; 30oct2012
+    }  // end of loop in search of 800=ARE; 30oct2012
     SpeechAct();  // say word starting at "aud" value; 13aug2010
   } // end of test for subjpsi 743=THEY; 24oct2012
   if (nphrpos==5) {  // for plural nouns; 13aug2010
@@ -638,11 +874,12 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 1oct2010
       prsn = 3;  // third person; 1oct2010
       for (i = t; i>midway; i--) { // look for 67=ARE; 13aug2010
         enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-        if (en0 == 67) {  // if 67=ARE is found; 13aug2010
+     // if (en0 == 67) {  // if 67=ARE is found; 13aug2010
+        if (en0==800 && en2==2 && en4==3) {  // 3rd p.pl. 30oct2012
           aud = en8;  // assign most recent recall-tag;  4jan2012
           break;  // exit the loop after first find; 13aug2010
-        }  // end of test for 67=ARE; 13aug2010
-      }  // end of loop in search of 67=ARE; 13aug2010
+        }  // end of test for 800=ARE; 30oct2012
+      }  // end of loop in search of 800=ARE; 30oct2012
       SpeechAct();  // say word starting at "aud" value; 13aug2010
     }  // end of test for plural noun-phrase number; 3aug2011
   } // end of test for plural nouns; 1oct2010
@@ -671,44 +908,45 @@ function WhatBe() {  // what AM/IS/ARE Subjects; 18oct2011
     }  // 19jun2011
   }  // end of search loop; 19jun2011
   SpeechAct();  // 19jun2011
-  if (qusub == 50) {  // "50-I"; 27oct2011
-    for (i = t; i>midway; i--) { // look for 57=AM; 18oct2011
+  if (qusub == 701) {  // 701=I; 28oct2012
+    for (i = t; i>midway; i--) { // look for be-verb; 28oct2012
       enLexicon[i].enExam();  // examine English lexicon; 18oct2011
-      if (en0 == 57) {  // if 57=AM is found; 18octl2011
-        verbpsi = 57;  // for EnArticle; 18oct2011  
-        aud = en8;  // assign most recent recall-tag;  4jan2012
-        break;  // exit the loop after first find; 18oct2011
-      }  // end of test for 57=AM; 18oct2011
-    }  // end of loop in search of 57=AM; 18oct2011
+      if (en0==800 && en2==1 && en4==1) { 
+       // verbpsi = 57;  // for EnArticle; 18oct2011  
+          verbpsi = 800;  // for EnArticle; 28oct2012 
+          aud = en8;  // assign most recent recall-tag; 4jan2012
+          break;  // exit the loop after first find; 18oct2011
+      }  // end of test for 800=BE; 28oct2012
+    }  // end of loop in search of 800=AM; 28oct2012
     SpeechAct();  // say word starting at "aud" value; 18oct2011
-  }  // end of test for "50=I" query-subject; 27oct2011
-// if (qusubnum == 1){  // if singular query-number; 1nov2011
+  }  // end of test for "701=I" query-subject; 28oct2012
   if (qusubnum < 2){  // if singular query-number; 6nov2011
-    if (qusub != 50 && qusub != 56) {  // not I or YOU; 1nov2011
-      for (i = t; i>midway; i--) { // look for 66=IS; 18oct2011
+    if (qusub != 701 && qusub != 707) {  // not I or YOU; 28oct2012
+      for (i = t; i>midway; i--) { // look for be-verb; 28oct2012
         enLexicon[i].enExam();  // examine English lexicon; 18oct2011
-        if (en0 == 66) {  // if 66=IS is found; 18oct2011
+        if (en0==800 && en2==1 && en4==3) {  // "IS"? 28oct2012
           aud = en8;  // assign most recent recall-tag;  4jan2012
           if (qusubnum==1) {  // but not zero; 6nov2011
             indefmust = 1; // to say "IS A"; 23oct2011
           }  // end of test for "1" singular; 6nov2011
           break;  // exit the loop after first find; 18oct2011
-        }  // end of test for 66=IS; 18oct2011
-      }  // end of loop in search of 66=IS; 18oct2011
+        }  // end of test for be-verb "IS"; 28oct2012
+      }  // end of loop in search of "IS"; 28oct2012
       SpeechAct();  // say word starting at "aud" value; 18oct2011
       artnum = qusubnum;  // parameter for EnArticle; 6nov2011
       EnArticle();  // chance for "A" or "THE"; 27oct2011
       artnum = -1;  // not 0 or 1 or 2; 6nov2011
-    }  // end of test for 50=I or 56=YOU; 1nov2011
+    }  // end of test for 701=I or 707=YOU; 28oct2012
   }  // end of test for singular query-subject; 27oct2011
-   if (qusubnum == 2 || qusub == 56) {  // plural or YOU; 29oct2011
-      for (i = t; i>midway; i--) { // look for 67=ARE; 18oct2011
+   if (qusubnum == 2 || qusub == 707) {  // plural or YOU; 28oct2012
+      for (i = t; i>midway; i--) { // look for be-verb ARE; 28oct2012
         enLexicon[i].enExam();  // examine English lexicon; 18oct2011
-        if (en0 == 67) {  // if 67=ARE is found; 18oct2011
+     // if (en0==800 && en2==2 && en4==3) {  // for 3rd person plural
+        if (en0==800 && en2==qusubnum && en4==prsn) {  // 28oct2012
           aud = en8;  // assign most recent recall-tag;  4jan2012
           break;  // exit the loop after first find; 18oct2011
-        }  // end of test for 67=ARE; 18oct2011
-      }  // end of loop in search of 67=ARE; 18oct2011
+        }  // end of test for be-verb "ARE"; 28oct2012
+      }  // end of loop in search of "ARE"; 28oct2012
       SpeechAct();  // say word starting at "aud" value; 18oct2011
   }  // end of test for plural query-subject; 27oct2011
   for (i = t; i>midway; i--) { // 19jun2011
@@ -816,23 +1054,6 @@ function AskUser() {  // selector of question formats; 13aug2010
   recon = 0;  // 
   bias = 5;  // restore expectation of a noun; 30jun2011
 }  // End of AskUser(); return to EnCog(); 20sep2011
-
-
-function SelfRef() {  // 9dec2009 from MindForth AI
-  if (subjectflag==1) {  // 9dec2009 NounPhrase seeks a subject 
-    if (motjuste==65) {  // 9dec2009 If candidate is 65=ME 
-      motjuste = 50;  // 9dec2009 Change 65=ME to 50=I 
-      for (i = t; i>midway; i--) {  // Look backwards for 50="I".
-        enLexicon[i].enExam();  // Inspect the English nodes.
-        if (en0 == 50) {  // If the #50 concept "I" is found...
-          aud = en8;  // Auditory recall-vector for "I"; 4jan2012
-          break;  // Use the most recent engram of "I".
-        }  // End of search for #50 "I".
-      }  // End of loop finding the word "I".
-      SpeechAct();   // Speak or display the word "I".
-    }  // 9dec2009 End of test for "ME" proposed as subject.
-  }  // 9dec2009 End of test for subjectflag
-}  // End of SelfRef; return to NounPhrase module.
 
 
 function NounPhrase() {
@@ -1217,19 +1438,12 @@ function ConJoin() {
 
 
 function VerbGen() {  // for using parameters to fetch verb-engrams
-  if (subjpsi==50) dba = 1;  // "50=I" is first-person; 17oct2012
   if (subjpsi==701) dba = 1;  // "701=I" is first-person; 21oct2012
-  if (subjpsi==56) dba = 2;  // "56=YOU" is second-person; 17oct2012
   if (subjpsi==707) dba = 2;  // "707=YOU" is second-person; 21oct2012
-  if (subjpsi==49) dba = 3;  // "49=HE" is third-person; 17oct2012
   if (subjpsi==713) dba = 3;  // "713=HE" is third-person; 21oct2012
-  if (subjpsi==80) dba = 3;  // "80=SHE" is third-person; 17oct2012
   if (subjpsi==719) dba = 3;  // "719=SHE" is third-person; 21oct2012
-  if (subjpsi==95) dba = 3;  // "95=IT" is third-person; 17oct2012
   if (subjpsi==725) dba = 3;  // "725=IT" is third-person; 21oct2012
-  if (subjpsi==53) dba = 1;  // "53=WE" is first-person; 17oct2012
   if (subjpsi==731) dba = 1;  // "731=WE" is first-person; 21oct2012
-  if (subjpsi==52) dba = 3;  // "52=THEY" is third-person; 17oct2012
   if (subjpsi==743) dba = 3;  // "743=THEY" is third-person; 21oct2012
 // alert("VerbGen: subjpsi audbase = "+subjpsi+" "+audbase);
   do {  // first loop fills in AudBuffer; 18oct2012
@@ -1473,7 +1687,7 @@ function VerbPhrase() {
   psi = 0;
   verbcall = 1;
   vphract = 0;  // for validity of threshold-tests; 15aug2011
-  vphraud = 0;  // prevent spurious carry-overs; 24oct2011
+// vphraud = 0;  // prevent spurious carry-overs; 24oct2011
  if (verblock == 0) {  // prevent false negations; 24oct2011
   if (subjpsi==701) dba = 1; // From RuAi; must be 1st person 21oct2012
   for (i = t; i>midway; i--) {
@@ -1525,8 +1739,8 @@ function VerbPhrase() {
     Psi[verblock].psiExam(); // expose all values to change one; 24oct2011
     motjuste = psi0;  // verblock override of activational competition;
     negjux = psi3;  // capture any "12=NOT" during override; 25oct2011
-    enLexicon[verblock].enExam();  // examine English lexicon; 24oct2011
-    vphraud = en8;  // hold the auditory recall-vector;  4jan2012
+//  enLexicon[verblock].enExam();  // examine English lexicon; 24oct2011
+//  vphraud = en8;  // hold the auditory recall-vector;  4jan2012
     act = 64;  // prevent rejection of selection; 24oct2011
   }  // 24oct2011
   Psi[tqv].psiExam(); // examine array row at "tqv"; 24oct2011
@@ -1616,29 +1830,7 @@ function VerbPhrase() {
     if (unk == 57 || unk == 58 || unk == 66 || unk == 67) {  // 29oct2011
       predflag = 1;  // for sake of NounPhrase; 29oct2011
     }  // end of two-step be-verb substitution; 29oct2011
-    if (motjuste==800) {  // 800=BE; 21oct2012
-      if (subjpsi==701) {  // 701=I; 21oct2012
-        for (i = t; i>midway; i--) {  // search backwards; 13aug2011
-          enLexicon[i].enExam();  // examine English lexicon; 13aug2011
-          if (en0 == 800) {  // 57=AM; 800=BE; 21oct2012
-            urpsi = 800;  // for PsiDamp; 21oct2012
-            verbpsi = 800;  // for EnArticle; 21oct2012
-            vphraud = en8;  // for call to SpeechAct;  4jan2012
-            break;  // finding recent "AM" is enough; 13aug2011
-          } // end of test for 57=AM; 13aug2011
-        }  // end of search of En array; 13aug2011
-      }  // end of test for subject-psi 50=I; 13aug2011
-      if (subjpsi==56) {  // 56=YOU; 15aug2011
-        for (i = t; i>midway; i--) {  // search backwards; 15aug2011
-          enLexicon[i].enExam();  // examine English lexicon; 15aug2011
-          if (en0 == 67) {  // 67=ARE; 15aug2011
-            urpsi = 67;  // for PsiDamp; 15aug2011
-            vphraud = en8;  // for call to SpeechAct;  4jan2012
-            break;  // finding recent "ARE" is enough; 15aug2011
-          } // end of test for 67=ARE; 15aug2011
-        }  // end of search of En array; 15aug2011
-      }  // end of test for 56=YOU; 15aug2011 
-    }  // end of test for 58=BE; 13aug2011
+    // removing obsolete be-verb-test code; 26oct2012
     vacpsi = motjuste;  // for VerbAct(); 18aug2011
     VerbAct();  // moved from below SpeechAct & old KB-inhib; 18aug2011
     aud = vphraud;  // transfer just before call; 28jun2011
@@ -2133,6 +2325,8 @@ function SeCurity() {
   TuringTest();
   if (t > 160)  nonce = vault;  // Diagnostic display of all thought.
 // nonce = 381;  // to view innate KB for testing; 19oct2012
+// nonce = 1;  // show changes being made to EnBoot; 25oct2012
+  nonce = vault;  // for quicker loading; 25oct2012
   if (t > (cns-64)) ReJuvenate();
   if (life == true) {
 apb=("AI 4U on KB psi #"+kbtv+" at t="+t+" is alive on cyc #"+rjc+" since " +dob+ ".");
@@ -2281,7 +2475,8 @@ Theory</a>
 
 <div id="mouth" style="position:static;
  background-color:silver; height:35">
-Output of the Modular AI Mind will appear here.
+When thinking begins, enter your input below. <br />
+If this message remains here, the AI has failed to load.
 </div>
 
 <form onSubmit="if (this.submitted) return true; else {CR(); return false;};">
@@ -2344,83 +2539,6 @@ width:200; height:140; background-color:clear">
 <input type="hidden" value="0" id="ufo" />
 
 </body><!-- Change Log comments of the HTML variety:
-Tues."19oct10A.html" invites users to fill AI KB and then query the KB.
-Wed. "20oct10A.html" is saved version of not-yet-cleaned-up 19oct10A.
-Wed. "10nov10A.html" improves performance with be-verb input & queries.
-Thur "11nov10A.html" is 10nov10A.html after deletion of diagnostics.
-Fri. "12nov10A.html" partially restores Tutorial showObject() display.
-Mon. "15nov10A.html" restores KbTraversal() to function interestingly.
-Tues "19apr11A.html" improves WHO-query and WHAT-query responses.
-Sun.  "1may11A.html" sets zero act(ivation) for ReEntry concepts.
-Wed.  "4may11A.html" is bugfix of WHO problem and distinguishes A/AN.
-Tues "10may11A.html" introduces "tseln" and "tselv" for inhibition.
-Thur "12may11A.html" inhibits retrieved engram at source and at present.
-Fri. "13may11A.html" uses differential instead of linear PsiDecay.
-Wed. "18may11A.html" retrieves auditory engram only of correct num(ber).
-Fri. "20may11A.html" says which concepts are activated by KbTraversal().
-Sat. "21may11A.html" mitigates showSubject() & showObject() of articles.
-Mon. "23may11A.html" removes EnArticle bug interfering with showSubject.
-Tues "24may11A.html" implements inhibition of verbs after KB-retrieval.
-Wed. "25may11A.html" restores thinking in meandering chains of thought.
-Fri. "27may11A.html" assumes plural number if input noun ends in "s".
-Mon. "30may11A.html" answers questions from knowledge base (KB).
-Tues. "7jun11A.html" gives valid answers to knowledge base queries.
-Wed.  "8jun11A.html" troubleshoots failure of old nodes to be selected.
-Wed.  "8jun11B.html" is code from which diagnostics have been deleted.
-Fri. "10jun11A.html" lets queries predominate in spreading activation.
-Tues "14jun11A.html" solves problem of uninhibited predicate nominative.
-Tues "14jun11B.html" introduces WhatAuxSVerb() to ask user questions.
-Fri. "17jun11B.html" removes glitches from deterministic no-input run.
-Sat. "18jun11A.html" fixes a bug where OldConcept corrupts "num" value.
-Sun. "19jun11A.html" calls WhatBe() when no verb is found for a subject.
-Wed. "22jun11A.html" implements retroactive KB adjustment for Yes or No.
-Wed. "22jun11B.html" generates negation of sentence after input of "no".
-Sun. "26jun11A.html" queries first about plural nouns and then yes-or-no.
-Mon. "27jun11A.html" prepares to incorporate NegSvo() within VerbPhrase.
-Tues "28jun11A.html" builds up negation within VerbPhrase() mind-module.
-Wed. "29jun11A.html" introduces KbRetro() to adjust the knowledge base.
-Thur "30jun11A.html  rotates KbTraversal concepts for yes-or-no queries.
-Sun.  "3jul11A.html" coordinates KbRetro with MindForth implementation.
-Tues. "5jul11A.html" is before clean-up by removal of diagnostic code.
-Tues. "5jul11B.html" improves WhatBe() to handle nouns and pronouns.
-Thurs "7jul11A.html" is before clean-up by removal of diagnostic code.
-Thurs "7jul11B.html" uses a default query-verb of "DO" in AskUser().
-Sat.  "9jul11A.html" defaults to self-concept "I" if no noun is active.
-Mon. "11jul11A.html" fixes "undefined" bug from 22aug08A.html ReJuvenate.
-Wed. "13jul11A.html" lowers NounAct threshold so objects become subjects.
-Thur "14jul11A.jtml" was an attempt to take up slack space in ReJuvenate.
-Thur "14jul11T.html" was a special "Test" JSAI to re-establish "{" edge.
-Fri. "15jul11A.html" has EnCog insert "{" edge formerly inserted by SVO.
-Sat. "16jul11A.html" displays complete record of thought in Diagnostic.
-Sat. "16jul11B.html" solves BeVerb() bug of creation of a pseudo-verb.
-Tues "19jul11A.html" adds 110=ANYTHING and 111=CHESS to EnBoot sequence.
-Wed. "20jul11A.html" uses recnum to preserve known grammatical num(ber).
-Wed.  "3aug11A.html" for two-step BeVerb instantiates AM IS ARE as 58=BE. 
-Tues. "9aug11A.html" disregards Psi number during EnReify() transfer.
-Thur "11aug11A.html" in VerbAct() converts "AM IS ARE" to "58=BE".
-Sat. "13aug11A.html" shifts NLP generation from En(glish) to Psi array.
-Mon. "15aug11A.html" implements "12=NOT" negation for verbs of being.
-Thur "18aug11A.html" clears stray activation on verbs with VerbClear.
-Sun. "21aug11A.html" adds irregular noun plurals to EnBoot sequence.
-Mon. "22aug11A.html" prevents disruptive activation of query concepts.
-Wed. "14sep11A.html" enhances EnArticle() for multiple "indefartcon".
-Tues "20sep11A.html" makes predicate nominative agree with "subjnum".
-Sun. "25sep11A.html" after "I SEE" calls VisRecog coding challenge.
-Tues. "4oct11A.html" in InStantiate assigns "seq" tags more reliably.
-Fri.  "7oct11A.html" comprehends and remembers input of negated verbs.
-Thur "13oct11A.html" inserts "tqv" into Psi flag-panel before "seq".
-Tues "18oct11A.html" uses "cogpsi" to ask questions about new nouns.
-Sun. "23oct11A.html" uses InNativate against corruption during EnBoot.
-Mon. "24oct11A.html" preemptively thinks with "verblock" and "nounlock".
-Wed. "26oct11A.html" removes AI-Complete diagnostic "alert" messages.
-Thur "27oct11A.html" improves the WhatBe module with outside parameters.
-Fri. "28oct11A.html" troubleshoots VerbPhrase calling the WhatBe module.
-Sat. "29oct11A.html" streamlines WhatBe for parameters from VerbPhrase.
-Sat. "29oct11B.html" with neural inhibition cycles through "I" defaults.
-Sun. "30oct11A.html" removes diagnostic alert boxes; converses better.
-Tues. "1nov11A.html" augments ability to answer WHAT-queries from KB.
-Sun.  "6nov11A.html" uses "0" and "1" as singular to control use of "A".
-Sat. "12nov11A.html" implements special handling of irregular nouns.
 Wed.  "4jan12A.html" includes AudBuffer/OutBuffer and "dba" variable.
 Mon. "30jul12A.html" uses Tutorial display to show IdeaPlex time-points.
 Fri. "17aug12A.html" in NounPhrase() forces proper "nounlock" pronouns.
@@ -2433,6 +2551,12 @@ Mon. "21oct12T.html" special test version solves wrong-nounlock bug.
 Mon. "22oct12A.html" solves nounlock bug and removes commented-out code.
 Tues "23oct12A.html" completes the switch to three-digit concept numbers.
 Wed. "24oct12A.html" deletes commented-out material and streamlines AI.
+Thur "25oct12A.html" expands the EnBoot sequence for search-by-parameter.
+Fri. "26oct12A.html" cns=1024; removes obsolete VerbPhrase be-verb test.
+Sat. "27oct12A.html" changes OldConcept() to prevent false "dba" values.
+Mon. "29oct12A.html" reconfigures WhatBe using 3-digit concept numbers.
+Tues "30oct12T.html" reconfigures WhoBe using 3-digit concept numbers.
+Wed. "31oct12A.html" tightens up the storage of searchable parameters.
 (end of HTML Change Log comments) -->
 </html>
 }}}

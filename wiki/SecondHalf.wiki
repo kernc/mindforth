@@ -578,7 +578,8 @@ function EnArticle() {
    if (nphrnum == 1) {  // If number is singular; 4may2011
     if (motjuste != ghost) {  // From MindForth AI; 19apr2011
       if (subjnum == 1) {  // if singular subject; 14sep2011
-        if (verbpsi == 57 || verbpsi == 66) {  // AM or IS; 14sep2011
+     // if (verbpsi == 57 || verbpsi == 66) {  // AM or IS; 14sep2011
+        if (verbpsi == 800) {  // 800=BE (AM; IS; ARE);  2nov2012
           indefartcon = 1;  // permit indefinite article "A"; 14sep2011
         }  // end of test for 57=AM or 66=IS singular verbs; 14sep2011
       }  // end of test for non-zero singular subject; 14sep2011
@@ -638,24 +639,26 @@ function AuxVerb() {
  if (subjnum == 1 && prsn == 3) {  // singular num(ber)?  20jul2011
     for (i = t; i>midway; i--) { 
       enLexicon[i].enExam();
-      if (en0 == 87) {  // 87=DOES  14jun2011
+   // if (en0 == 87) {  // 87=DOES  14jun2011
+      if (en0==830 && en2==1 && en4==3) {  // 830=DO;  2nov2012
         aud = en8;  // auditory recall-vector;  4jan2012
         break;
       }  // end of test for #87=DOES  14jun2011
     }  // end of backwards loop;  14jun2011
     SpeechAct();
-  }  // end of test for singular number; 14jun2011
+  }  // end of test for 3rd person singular;  2nov2012
   else {  // use DO otherwise; 22jun2011
     for (i = t; i>midway; i--) { 
       enLexicon[i].enExam();
-      if (en0 == 830) {  // 830=DO; 23oct2012
+   // if (en0 == 830) {  // 830=DO; 23oct2012
+      if (en0 == 830 && en2 != 1) {  // 830=DO;  2nov2012
         aud = en8; // 4jan2012
         break;
       }  // end of test for #830=DO; 23oct2012
     }  // end of backwards loop;  14jun2011
     SpeechAct();
   }  // end of else-clause;  22jun2011
-}  // End of AuxVerb(); return to [SelfRef?] VerbPhrase WhatAuxSDo.
+}  // End of AuxVerb(); return to VerbPhrase or WhatAuxSDo.
 
 
 function WhatAuxSVerb() {  // What Do Subjects Verb; 14jun2011
@@ -737,9 +740,9 @@ function WhatAuxSDo() {
   SpeechAct(); 
   flex1 = "";  // reset for safety; 14sep2011
   for (i = t; i>midway; i--) { 
-    enLexicon[i].enExam();  
- // if (en0 == 59) {  // 59=DO;  27jun2011
-    if (en0 == 830) {  // 830=DO; 23oct2012
+    enLexicon[i].enExam();
+ // if (en0 == 830) {  // 830=DO; 23oct2012
+    if (en0 == 830 && en2 != 1) {  // 830=DO;  2nov2012
       aud = en8; // 4jan2012
       break;  // exit loop after first find;  7jul2011
     } 
@@ -763,25 +766,17 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 1oct2010
     }  // end of test for 791=WHO; 23oct2012
   }  // end of loop in search of 791=WHO; 23oct2012
   SpeechAct();  // say word starting at "aud" value; 13aug2010
-  if (subjpsi==50) prsn=1; // 1st person "I";  2sep2010
   if (subjpsi==701) prsn=1; // 1st person "I"; 30oct2012
-  if (subjpsi==53) prsn=1; // 1st person "WE"  2sep2010
   if (subjpsi==731) prsn=1; // 1st person "WE" 30oct2012
-  if (subjpsi==56) prsn=2; // 2nd person YOU;  2sep2010
   if (subjpsi==707) prsn=2; // 2nd person YOU; 30oct2012
   if (subjpsi==737) prsn=2; // 2nd person YOU; 30oct2012
-  if (subjpsi==49) prsn=3; // 3rd person HE;   2sep2010
   if (subjpsi==713) prsn=3; // 3rd person HE;  23oct2012
-  if (subjpsi==80) prsn=3; // 3rd person SHE;  2sep2010
   if (subjpsi==719) prsn=3; // 3rd person SHE; 30oct2012
-  if (subjpsi==95) prsn=3; // 3rd person IT;   2sep2010
   if (subjpsi==725) prsn=3; // 3rd person IT; 30oct2012
-  if (subjpsi==52) prsn=3; // 3rd person THEY; 2sep2010
   if (subjpsi==743) prsn=3; // 3rd person THEY; 30oct2012
   if (prsn == 3) {  // only for 3rd person; 3aug2011
     for (i = t; i>midway; i--) { // look for 66=IS;  3aug2011
       enLexicon[i].enExam();  // examine English lexicon; 3aug2011
-   // if (en0 == 66) {  // if 66=IS is found;  3aug2011
       if (en0==800 && en2==1 && en4==3) {  // parameters 30oct2012
         aud = en8;  // assign most recent recall-tag; 4jan2012
         break;  // exit the loop after first find; 3aug2011
@@ -789,13 +784,10 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 1oct2010
     }  // end of loop in search of 800=IS; 30oct2012
     SpeechAct();  // say word starting at "aud" value; 3aug2011
   }  // end of test for third person; 3aug2011
-// if (subjpsi==50) {  // 50=I; 13aug2010
   if (subjpsi==701) {  // 701=I; 30oct2012
-    for (i = t; i>midway; i--) { // look for 57=AM; 13aug2010
+    for (i = t; i>midway; i--) { // look for "AM";  2nov2012
       enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-   // if (en0 == 57) {  // if 57=AM is found; 13aug2010
       if (en0==800 && en2==1 && en4==1) {  // parameters; 30oct2012
-   //  verbpsi = 57;  // for EnArticle; 14sep2011
        verbpsi = 800;  // for EnArticle; 30oct2012
         aud = en8;  // assign most recent recall-tag;  4jan2012
         break;  // exit the loop after first find; 13aug2010
@@ -803,12 +795,10 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 1oct2010
     }  // end of loop in search of 800=AM; 30oct2012
     SpeechAct();  // say word starting at "aud" value; 13aug2010
   } // end of test for subjpsi 701=I; 30oct2012
-// if (subjpsi==56) {  // 56=YOU; 13aug2010
   if (subjpsi==707) {  // 707=YOU; 30oct2012
     prsn = 2;  // second person; 1oct2010
     for (i = t; i>midway; i--) { // look for 800=ARE; 30oct2012
       enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-   // if (en0 == 67) {  // if 67=ARE is found; 13aug2010
       if (en0==800 && en2==1 && en4==2) {  // 2nd p. sing 30oct2012
         aud = en8;  // assign most recent recall-tag;  4jan2012
         break;  // exit the loop after first find; 13aug2010
@@ -819,9 +809,8 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 1oct2010
   if (subjpsi==713) {  // 713=HE; 23oct2012
     nphrnum = 1;  // singular; 1octo2010
     prsn = 3;  // third person; 1oct2010
-    for (i = t; i>midway; i--) { // look for 66=IS; 13aug2010
+    for (i = t; i>midway; i--) { // look for "IS";  2nov2012
       enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-   // if (en0 == 66) {  // if 66=IS is found; 13aug2010
       if (en0==800 && en2==1 && en4==3) {  // "IS"? 30oct2012
         aud = en8;  // assign most recent recall-tag;  4jan2012
         break;  // exit the loop after first find; 13aug2010
@@ -834,7 +823,6 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 1oct2010
     prsn = 3;  // third person; 1oct2010
     for (i = t; i>midway; i--) { // look for 66=IS; 13aug2010
       enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-   // if (en0 == 66) {  // if 66=IS is found; 13aug2010
       if (en0==800 && en2==1 && en4==3) {  // "IS"? 30oct2012
         aud = en8;  // assign most recent recall-tag;  4jan2012
         break;  // exit the loop after first find; 13aug2010
@@ -847,7 +835,6 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 1oct2010
     prsn = 3;  // third person; 1oct2010
     for (i = t; i>midway; i--) { // look for 66=IS; 13aug2010
       enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-   // if (en0 == 66) {  // if 66=IS is found; 13aug2010
       if (en0==800 && en2==1 && en4==3) {  // "IS"? 30oct2012
         aud = en8;  // assign most recent recall-tag;  4jan2012
         break;  // exit the loop after first find; 13aug2010
@@ -860,7 +847,6 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 1oct2010
     prsn = 3;  // third person; 1oct2010
     for (i = t; i>midway; i--) { // look for 67=ARE; 13aug2010
       enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-   // if (en0 == 67) {  // if 67=ARE is found; 13aug2010
       if (en0==800 && en2==2 && en4==3) {  // 3rd p. pl. 30oct2012
         aud = en8;  // assign most recent recall-tag;  4jan2012
         break;  // exit the loop after first find; 13aug2010
@@ -869,12 +855,10 @@ function WhoBe() {  // for asking WHO IS-AM-ARE; 1oct2010
     SpeechAct();  // say word starting at "aud" value; 13aug2010
   } // end of test for subjpsi 743=THEY; 24oct2012
   if (nphrpos==5) {  // for plural nouns; 13aug2010
- // nphrnum = 2;  // plural; 1oct2010
     if (nphrnum == 2) {  // if plural; 3aug2011
       prsn = 3;  // third person; 1oct2010
       for (i = t; i>midway; i--) { // look for 67=ARE; 13aug2010
         enLexicon[i].enExam();  // examine English lexicon; 13aug2010
-     // if (en0 == 67) {  // if 67=ARE is found; 13aug2010
         if (en0==800 && en2==2 && en4==3) {  // 3rd p.pl. 30oct2012
           aud = en8;  // assign most recent recall-tag;  4jan2012
           break;  // exit the loop after first find; 13aug2010
@@ -944,6 +928,7 @@ function WhatBe() {  // what AM/IS/ARE Subjects; 18oct2011
      // if (en0==800 && en2==2 && en4==3) {  // for 3rd person plural
         if (en0==800 && en2==qusubnum && en4==prsn) {  // 28oct2012
           aud = en8;  // assign most recent recall-tag;  4jan2012
+          verbnum = 2;  // in favor of carry-over;  2nov2012
           break;  // exit the loop after first find; 18oct2011
         }  // end of test for be-verb "ARE"; 28oct2012
       }  // end of loop in search of "ARE"; 28oct2012
@@ -979,7 +964,8 @@ function AskUser() {  // selector of question formats; 13aug2010
   if (ynverb == 0) {  // ask y/n question only once; 30jun2011
     ynverb = quverb;  // isolate at start; 30jun2011
     if (kbyn == 1) {  // from KbTraversal; 30jun2011
-      qusub = 56;  // 56=YOU to ask questions about; 30jun2011
+   // qusub = 56;  // 56=YOU to ask questions about; 30jun2011
+      qusub = 707;  // 707=YOU to ask questions about;  2nov2012
       prsn = 2;  // YOU is second person; 30jun2011
       numsubj = 1;  // assume YOU is singular; 30jun2011
       subjnum = 1;  // assume YOU is singular; 20jul2011
@@ -1064,13 +1050,13 @@ function NounPhrase() {
     motjuste = psi4;  // let "pre" = motjuste?; test; 30oct2011
   }  // end of test for a positive verblock; 24oct2011
   EnReify();
-  for (i = t; i>midway; i--) {
-    enLexicon[i].enExam();
-    if (en0 == 65) {
-      audme = en8; // 4jan2012
-      break;
-    }
-  }
+// for (i = t; i>midway; i--) {
+//   enLexicon[i].enExam();
+//   if (en0 == 65) {
+//     audme = en8; // 4jan2012
+//     break;
+//  }
+// }
   abort = false;
   act = 0;  // Start with zero to look for en1 higher than act.
   defact = -8;  // for default comparisons with "50=I"; 29oct2011
@@ -1238,12 +1224,9 @@ function NounPhrase() {
   }  // end of threshold-test; 18oct2011
  }  // end of test for absence of pre-ordained nounlock; 24oct2011
   if (nounlock > 0) {  // from MindForth; if positive; 17aug2012
- // if (motjuste == 50) {  // if 50=I is indicated; 17aug2012
-//  if (motjuste == 701) {  // if 701=I is indicated; 21oct2012
-   // for (i = t; i>midway; i--) {  // Look backwards for 65=ME; 17aug2012
+//  if (motjuste == 701) {  // if 701=I is indicated; 21oct201
 //    for (i = t; i>midway; i--) {  // Look backwards for 701=ME; 21oct2012
 //      enLexicon[i].enExam(); // examine English lexicon; 17aug2012
-     // if (en0 == 65) {  // If #65 "ME" found; 17aug2012
 //      if (en0 == 701) {  // If #701 "I" found; 21oct2012
 //       if (en4 == 4) {  // if "dba" is 4=acc.; 21oct2012
 //        audjuste = en8;  // "ME" engram 17aug2012
@@ -1252,7 +1235,6 @@ function NounPhrase() {
 //      }  // End of search for #65 "ME"; 17aug2012
 //    }  // End of loop finding word "YOU"; 17aug2012
 //  }  // from MindForth; end of special override for 65=ME; 17aug2012
- // if (motjuste == 56) {  // if 56=YOU is needed; 17aug2012
     if (motjuste == 707) {  // if 707=YOU is needed; 24oct2012
       for (i = t; i>midway; i--) { // Look backwards for 707=YOU; 24oct2012
         enLexicon[i].enExam(); // examine English lexicon; 17aug2012
@@ -1418,11 +1400,12 @@ function NounPhrase() {
   motjuste = 0;
   nounlock = 0;  // after causing selection of VPhr seq-noun; 24oct2011
   psi = 0;
-}  // End of NounPhrase; return to BeVerb, VerbPhrase, or EnCog
+}  // End of NounPhrase; return to VerbPhrase, or EnCog; 2nov2012
 
 
 function ConJoin() {
-  if (questype == 16) {
+// if (questype == 16) {
+  if (questype == 370) {  // 370=WHY;  2nov2012
     conj = 344;  // 344=BECAUSE; 23oct2012
   } else conj = 302;  // 302=AND; 23oct2012
   for (i = t; i>midway; i--) {
@@ -1445,7 +1428,6 @@ function VerbGen() {  // for using parameters to fetch verb-engrams
   if (subjpsi==725) dba = 3;  // "725=IT" is third-person; 21oct2012
   if (subjpsi==731) dba = 1;  // "731=WE" is first-person; 21oct2012
   if (subjpsi==743) dba = 3;  // "743=THEY" is third-person; 21oct2012
-// alert("VerbGen: subjpsi audbase = "+subjpsi+" "+audbase);
   do {  // first loop fills in AudBuffer; 18oct2012
     audMemory[audbase].audExam();  // 18oct2012
     pho = aud0;  // 18oct2012
@@ -1794,8 +1776,9 @@ function VerbPhrase() {
       else return;  // abort thought if number not known; 15aug2011
     }  // end of test for vphract below 20=threshold; 15aug2011
     if (negjux==250) {  // if verb is negated with 250=NOT; 23oct2012
-      unk = motjuste;  // temporary holding for if-clauses; 15aug2011
-      if (unk != 57 && unk != 58 && unk != 66 && unk != 67) {
+   // unk = motjuste;  // temporary holding for if-clauses; 15aug2011
+   // if (unk != 57 && unk != 58 && unk != 66 && unk != 67) {
+      if (motjuste != 800) {  // if other than an 800=BE verb; 2nov2012
         AuxVerb();  // to say "DO" or "DOES"; 29jun2011
         for (i = t; i>midway; i--) { // search backwards 29jun2011
           enLexicon[i].enExam();  // examine English lexicon; 29jun2011
@@ -2557,6 +2540,8 @@ Sat. "27oct12A.html" changes OldConcept() to prevent false "dba" values.
 Mon. "29oct12A.html" reconfigures WhatBe using 3-digit concept numbers.
 Tues "30oct12T.html" reconfigures WhoBe using 3-digit concept numbers.
 Wed. "31oct12A.html" tightens up the storage of searchable parameters.
+Thurs "1nov12A.html" introduces "audnum" to deglobalize "num" variable.
+Mon.  "5nov12A.html" uses "holdnum" for agreement of subjects and verbs.
 (end of HTML Change Log comments) -->
 </html>
 }}}

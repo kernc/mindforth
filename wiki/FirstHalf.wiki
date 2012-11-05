@@ -28,6 +28,7 @@ var auddata = ("<b>" + "Auditory memory nodes" + "<\/b>" + "<BR>");
 auddata += ("krt pho act pov beg ctu audpsi");  // 8dec2009
 var audjuste = 0;
 var audme = 0;
+var audnum = 0;  // de-globalizing the "num" variable;  4nov2012
 var audpsi = 0; // 6dec2009 de-globalizing the "psi" variable 
 var audrec = 0; // 8dec2009 Replaces "psi" in AudRecog module.
 var audrun = 0; // Counter of loops through AudRecog(); 7jul2010 
@@ -124,6 +125,7 @@ var glot = 1;  // flag for which language to think in; 9jul2011
 var greet = 5;  // for speedier testing; 29oct2011
 var hardcopy = false;
 var holdaud = 0;
+var holdnum = 0;  // transfer from subject to verb;  4nov2012
 var html = "";
 var i = 0;
 var img = "xoxoxoxox";
@@ -300,7 +302,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 17oct2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "31oct12A"; // for Transcript mode; wed31oct2012
+var vrsn = "5nov12A"; // for Transcript mode; mon5nov2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -398,7 +400,6 @@ function PsiClear() {
 
 
 function PsiDecay() {  // replacement for old PsiDecay(); 14may2011
-// return;  // drastic test measure; REMOVE; 14jun2011
   actran = 0;  // preserve-inhibition test; 14jun2011
   for (i = t; i>midway; --i) {
     Psi[i].psiExam();
@@ -448,7 +449,7 @@ function PsiDamp() {
 function EnDamp() {  // Wiki-page form of name; 4may2011
   for (i = (t + 1); i>midway; --i) {
     enLexicon[i].enExam();
-    enLexicon[i] = new enNode(en0," ",en2,en3,en4,en5,en6,en7,en8);
+    enLexicon[i] = new enNode(en0,"0",en2,en3,en4,en5,en6,en7,en8);
   }
 }
 
@@ -787,7 +788,6 @@ function ReActivate() { // re-activate recent nodes of a concept
           }  // end of test for inhibited concept; 27oct2011
           else psi1 = psi1 + 35;  // full reactivation; 27oct2011
         }  // end of test for a moot query input; 22aug2011
-     // if (firstword==54) psi1 = 48;  // affirm queries; 1nov2011
         if (firstword==781) psi1 = 48;  // 781=WHAT; 31oct2012
         if (psi0 == 781) psi1 =  0; // 781=WHAT; 23oct2012
         if (psi0 == 791) psi1 =  0; // 791=WHO; 23oct2012
@@ -1026,11 +1026,11 @@ function InStantiate() {
   }
   if (singflag==1) {  // if set recently; 6nov2011
     if (pos==5) {  // after "a(n)" wait for a noun; 6nov2011
-      num = 1;  // even if previously "0" by default; 6nov2011
+  //  num = 1;  // even if previously "0" by default; 6nov2011
+  //  num = 1;  // Commenting out as a test; 2nov2012
       singflag = 0;  // reset after use; 6nov2011
     }  // end of test for a noun; 6nov2011
   }  // end of test of singularity-flag; 6nov2011
-// if (psi==1 || psi==83) singflag = 1;  // after a(n); 6nov2011
   if (psi==101 || psi==102) singflag = 1;  // after a(n); 24oct2012
   if (psi==781) {  // Special handling of psi #781 WHAT; 23oct2012
    indefartcon = 1;  // Set indefinite article condition; 19apr2011
@@ -1040,23 +1040,20 @@ function InStantiate() {
     defartcon = 1;  // Set definite article condition; 19apr2011
     act = 0;  // To suppress "WHO" during answer; 19apr2011
   }  // End of test for psi #791 WHO; 23oct2012
+  if (psi==701 || psi==707) num = 1; // sing. I or YOU 31oct2012
+  if (psi==713 || psi==719 || psi==725) num=1; // HE or SHE or IT
+  if (psi==731 || psi==737 || psi==743) num=2;  // WE; YOU; THEY
   if (pov == "*") {  // If POV is external; 20jul2011
     if (pos == 5) {  // If external noun comes in; 20jul2011
-       if (recnum > 0) {  // If positive recog-num; 20jul2011
-         num = recnum;  // Override num(ber); 20jul2011
-         recnum = 0;  // reset for safety; 20jul2011
-       }  // End of test for positive recog-num; 20jul2011
        quobj = psi;  // query-object for AskUser; 18aug2011
     }  // End of test for a noun; 20jul2011
   }  // End of test for external "*" point-of-view; 20jul2011
   if (pov == "#") {  // If POV is ASCII 35 "#" internal; 1may2011
     act = 0; // 0 activation for ReEntry concepts; 1may2011
- // if (inhibcon == 1) act = -16;  // test; 27oct2011
   }  // End of test for "#" internal POV;  1may2011
   if (seq == 0) tqv = 0; // avoid spurious carry-overs; 15aug2012
-  if (psi==701 || psi==707) num = 1; // sing. I or YOU 31oct2012
-  if (psi==713 || psi==719 || psi==725) num=1; // HE or SHE or IT
-  if (psi==731 || psi==737 || psi==743) num=2;  // WE; YOU; THEY
+  num = audnum;  // pass for storage;  4nov2012  
+  if (pos==8 && holdnum > 0) num = holdnum;  // agreement; 5nov2012
   Psi[t] = new psiNode(psi,act,num,jux,prevtag,pos,tqv,seq,enx);
   act = 0;  // reset for safety; 27oct2011
   inhibcon = 0;  // reset for safety; 27oct2011
@@ -1171,14 +1168,13 @@ function EnVocab() { // storing "act" and "dba"; 4jan2012
 
 
 function EnParser() {
-  bias = 5;
+  bias = 5; 
   act = 30;  // MindForth: Activate lower than ReActivate; 8jun2011
   if (pov == "*") {  // only during external input; 15oct2010
     act = (act - ordo); // reduce S-V-O act's; 15oct2010
   }  // end of test for external POV; 15oct2010
   InStantiate();
-  if (pos == 5) bias = 8;
-  if (pos == 7) bias = 8;  // from MindForth; 15oct2010
+  if (pos == 5 || pos == 7) bias = 8;  // 4nov2012
   if (pos == 8) bias = 5;
 }  // End of EnParser()
 
@@ -1188,9 +1184,10 @@ function EnReify() {
     Psi[i].psiExam();
     if (psi1 > 0) {
       lexact = psi1;  // from MindForth;  8jun2011
-      num = psi2;  // from MindForth;  8jun2011
+   // num = psi2;  // from MindForth;  8jun2011
+   // num = psi2;  // Commenting out and changing enNode; 5nov2012
       enLexicon[i].enExam();  // examine English array; 9aug2011
-      enLexicon[i] = new enNode(en0,lexact,num,en3,en4,en5,en6,en7,en8);
+      enLexicon[i] = new enNode(en0,lexact,en2,en3,en4,en5,en6,en7,en8);
     }  // end of test for a psi with positive activation; 9aug2011
     lexact = 0;  // reset for safety; 8jun2011
   }  // end of looping through the Psi concept array;  9aug2011
@@ -1221,13 +1218,15 @@ function KbRetro() {  // for yes-or-no answers; 29jun2011
 }  // End of KbRetro(); return to OldConcept(); 30jun2011
 
 
-function OldConcept() {
+function OldConcept() { 
   act = 28;  // from MindForth; test;  8jun2011
   for (i=t; i>midway; --i) {
     enLexicon[i].enExam();
     if (en0 == oldpsi) {  // conformance with MindForth; 8jul2011
-      if (en2 > 0) unk = en2; // 18jun2011
-      if (en2 > 0) recnum = en2; // test; 19oct2012
+   // if (en2 > 0) unk = en2; // 18jun2011
+   // if (en2 > 0) num = en2; //  2nov2012
+   // if (en2 > 0) recnum = en2; // test; 19oct2012
+   // if (en2 > 0) Excommenting above as test; 2nov2012
       if (en3 > 0) mfn = en3; // 14jun2011
       if (en5 > 0) fex = en5; //  4jan2012
       if (en6 > 0) pos = en6; //  4jan2012
@@ -1235,21 +1234,35 @@ function OldConcept() {
     break;
     }
   }
-  if (oldpsi==800) tbev = t;  // 800=BE; 21oct2012
-  if (oldpsi==800) predflag = 1;  // 800=BE; to affect "dba"; 21oct2012
-  if (pos == 8) {  // if part-of-speech is verb; 31oct2012
-   unk = subjnum; // assume agreement; 18jun2011; 31oct2012
-   dba = prsn;  // 1, 2, or 3 for verbs; 31oct2012
- // if (subjpsi==701) dba = 1;  // 1st prsn 701="I"; 31oct2012
- // if (subjpsi==707) dba = 2;  // 2nd prsn 707=YOU; 31oct2012
-  } // end of test for a verb; 31oct2012
   if (pos == 5 || pos == 7) { // making a group; test; 27oct2012
-    dba = 1; // default before changes; 19oct2012 
+    dba = 1; // default before changes; 19oct2012
     if (subjectflag == 1) dba = 1;  // nominative for subject; 19oct2012
     if (dirobj == 1) dba = 4;  // acc. for direct objects; 19oct2012
     if (predflag == 1) dba = 1;  // for predicate nominatives; 20oct2012
+    subjprsn = 3;  // default before conditional changes;  2nov2012
+    if (oldpsi==701) subjprsn = 1;  // "I" for EnVocab();  1nov2012
+    if (oldpsi==707) subjprsn = 2;  // YOU for EnVocab();  1nov2012
+    if (oldpsi==713) subjprsn = 3;  //  HE for EnVocab();  1nov2012
+    if (oldpsi==719) subjprsn = 3;  // SHE for EnVocab();  1nov2012
+    if (oldpsi==725) subjprsn = 3;  //  IT for EnVocab();  1nov2012
+    if (oldpsi==731) subjprsn = 1;  //  WE for EnVocab();  1nov2012
+    if (oldpsi==737) subjprsn = 2;  // YOU for EnVocab();  1nov2012
+    if (oldpsi==743) subjprsn = 3; // THEY for EnVocab();  1nov2012
   }  // end of co-dependent group to circumvent verbs; 27oct2012
-  enLexicon[t] = new enNode(oldpsi," ",unk,mfn,dba,fex,pos,fin,aud);
+  if (oldpsi==800) tbev = t;  // 800=BE; 21oct2012
+  if (oldpsi==800) predflag = 1;  // 800=BE; to affect "dba"; 21oct2012
+  if (pov == "*") {  // Only during "*" external POV;  1nov2012
+    if (pos == 8) {  // if part-of-speech is verb; 31oct2012
+      dba = 3;  // a default; test; 1nov2012
+      if (subjprsn==1) dba = 1;  // 1st prsn I or WE;  1nov2012
+      if (subjprsn==2) dba = 2;  // 2nd prsn "YOU"; 1nov2012
+      if (subjprsn==3) dba = 3;  // 3rd prsn; 2nov2012
+     } // end of test for a verb;  2nov2012
+  }  // end of test for external POV; 2nov2012
+  num = audnum;  // pass for storage;  5nov2012
+  if (pos==8) num = holdnum;  //  4nov2012
+  if (pos==5) holdnum = audnum;  // transfer to verb;  4nov2012
+  enLexicon[t] = new enNode(oldpsi,"0",num,mfn,dba,fex,pos,fin,aud);
   if (pov == "{") oldpsi = fex;  // deglobalizing psi; 3jul2011
   if (pov == "#") oldpsi = fex;  // deglobalizing psi; 3jul2011
   if (pov == "}") oldpsi = fex;  // deglobalizing psi; 3jul2011
@@ -1263,13 +1276,11 @@ function OldConcept() {
        tbev = 0;  // reset for safety; 15aug2011
      }  // end of test for positive time-of-beverb; 15aug2011
   }  // end of test for 250=NOT; 23oct2012
-// if (oldpsi == 16) {  // 16=WHY; deglobalizing psi; 3jul2011
   if (oldpsi == 370) {  // 370=WHY; 31oct2012
     act = 8;  // subactivate question "why".
     questype = 370;  // 31oct2012: Keep track of "why" being asked,
     // so that ConJoin() may provide the conjunction "because".
   }  // End of test to deal with "why" questions.
-// if (oldpsi == 7) act = 0;  // 7=THE; deglobalizing psi; 3jul2011
   if (oldpsi == 117) act = 0;  // 117=THE; 31oct2012
   if (kbcon > 0) {  // if user answers yes-or-no question; 3jul2011
     KbRetro();  // retroactively adjust knowledge base; 3jul2011
@@ -1282,6 +1293,9 @@ function OldConcept() {
     prejux = 250;  // flag for concept to be negated; 23oct2012
   }  // end of test for input or ReEntry of 250=NOT; 23oct2012
   psi = oldpsi;  // from MindForth; 3jul2011
+  if (pos==5) num = audnum;  // 5nov2012
+  if (pos==8) num = holdnum;  //  4nov2012
+  if (pos==5) holdnum = audnum;  // transfer to verb;  4nov2012
   EnParser();
   pos = 0;
   if (pov == "*") {
@@ -1310,12 +1324,25 @@ function NewConcept() {
   act = 24;
   pos = bias;
   if (predflag == 1 && pos == 5) dba = 1;  // noun; 20oct2012
-// if (predflag == 1 && pos == 7) dba = 1;  // pron; 20oct2012
+  if (pov == "*") {  // if new psi, probably external POV anyway
+    if (pos == 8) {  // if part-of-speech is verb; 1nov2012
+      dba = 3;  // a default; test; 1nov2012
+      if (subjprsn==1) dba = 1;  // 1st prsn I or WE;  1nov2012
+      if (subjprsn==2) dba = 2;  // 2nd prsn 707=YOU;  1nov2012
+      if (subjprsn==3) dba = 3;  // 3rd prsn;  2nov2012
+    }  // end of test for input of a verb;  1nov2012
+  }  // end of test for external POV; 1nov2012
+  if (pos==5) num = audnum;  // pass for storage;  4nov2012
+  if (pos==8) num = holdnum;  //  4nov2012
+  if (pos==5) holdnum = audnum;  // transfer to verb;  4nov2012
   EnVocab();
   dba = 0;  // reset after storing value; 19oct2012
   fin = 0;
   fex = 0;
   enx = nen;
+  if (pos==5) num = audnum;  // pass for storage;  4nov2012
+  if (pos==8) num = holdnum;  //  4nov2012
+  if (pos==5) holdnum = audnum;  // transfer to verb;  4nov2012
   EnParser();
   if (pos == 5) {
     cogpsi = nen;  // for WhatBe; 18oct2011
@@ -1323,6 +1350,7 @@ function NewConcept() {
     recon = 1;
     topic = nen;  // potentially a query "topic";  7jul2011
     quobj = nen;  // for AskUser; test; 22jun2011
+//  bias = 8;  // to expect a verb;  4nov2012
   }
   if (pos == 8) quverb = nen;  // for AskUser; test; 22jun2011
   if (kbcon > 0) {  // if user answers yes-or-no question; 3jul2011
@@ -1338,10 +1366,11 @@ function VisRecog() {  // identification of objects seen by a robot
   if (svo3==0) {  // if no direct object is available; 25sep2011
     for (i = t; i>midway; i--) {  // search for an automatic default
       enLexicon[i].enExam();  // examine the English lexicon; 25sep2011
-      if (en0 == 51) {  // 51=NOTHING  25sep2011
+   // if (en0 == 51) {  // 51=NOTHING  25sep2011
+      if (en0 == 760) {  // 760=NOTHING (without a camera);  2nov2012
         aud = en8; // hold address for SpeechAct;  4jan2011
         break;  // search no further after finding engram; 25sep2011
-      }  // end of test for default "51=NOTHING"; 25sep2011
+      }  // end of test for default "760=NOTHING";  2nov2012
     }  // end of English lexicon search loop; 25sep2011
   }  // end of test for zero direct object; 25sep2011
 }  // End of VisRecog(); return to VerbPhrase(); 25sep2011
@@ -1458,8 +1487,9 @@ function AudRecog() {
       num = 2;
     }
  // else num = 1;  // Commenting out on 6nov2011
-    else num = 0;  // a default quasi-singular; 6nov2011
-    if (recnum > 0) num = recnum;  // override; 20jul2011
+ //  else num = 0;  // a default quasi-singular; 6nov2011
+    else num = 1;  // a default quasi-singular;  2nov2012
+ // if (recnum > 0) num = recnum;  // override; 20jul2011
   }
   audpsi = psi;  // 9dec2009 For transfer from AudRecog() to AudMem()
   stemgap = 0;  // safety measure; 25sep2011
@@ -1500,6 +1530,7 @@ function AudMem() {
   audMemory[t] = new audNode(pho,0,pov,beg,ctu,audpsi); // 8dec2009
 }
 
+
 function Attention() {
   brain = false;
   danger = false;
@@ -1510,6 +1541,7 @@ function Attention() {
     skip = skip+1;
   }
 }
+
 
 function AudListen() {
   quiet = false;
@@ -1550,8 +1582,8 @@ function AudListen() {
     if (eot == 13) {
       beg = 1;
       c = 32;
-   // output = "";  // end on-screen persistence of output; 6nov2011
-   // outputplus = "";  // end on-screen persistence of output; 6nov2011
+  // output = "";  // end on-screen persistence of output; 6nov2011
+  // outputplus = "";  // end on-screen persistence of output; 6nov2011
     }
     if (c == 32) { // From CR or space-bar; 12jul2010.
       audrun = 1;  // Reset to 1 at end of word; 12jul2010.
@@ -1563,21 +1595,25 @@ function AudListen() {
     ctu = 1;
     pho = pho.toUpperCase();
     if (bias == 5) {  // If expecting a noun; 27may2011
-       if (c == 83 || c == 115) { // "s" or "S"; 27may2011
-         num = 2;  // Set num(ber) to plural; 27may2011
-       }  // End of test for "s" or "S"; 27may2011
-       if (c > 0) {  // Disregard empty pho; 27may2011
-         if (c != 32) {  //  Disregard SPACE; 27may2011
-           if (c != 13) {  // Disregard CR; 27may2011
-             if (c != 115) {  // If not "s"; 27may2011
-               if (c != 83) {  // If not "S"; 27may2011
-              // num = 1;  // Assume singular number; 27may2011
-                 num = 0;  // Default singular is 0; 6nov2011
-               }  // If last letter not "S"; 27may2011
-             }  // If last letter not "s"; 27may2011
-           }  // End of test for carriage-return; 27may2011
-         }  // End of test for SPACE; 27may2011
-       }  // End of test for empty pho; 27may2011
+   // num = 1;  // start with default singular; 2nov2012
+      if (c == 83 || c == 115) { // "s" or "S"; 27may2011
+        num = 2;  // Set num(ber) to plural; 27may2011
+        audnum = 2;  // Set num(ber) to plural; 4nov2012
+      }  // End of test for "s" or "S"; 27may2011
+      if (c > 0) {  // Disregard empty pho; 27may2011
+        if (c != 32) {  //  Disregard SPACE; 27may2011
+          if (c != 13) {  // Disregard CR; 27may2011
+            if (c != 115) {  // If not "s"; 27may2011
+              if (c != 83) {  // If not "S"; 27may2011
+             // num = 1;  // Assume singular number; 27may2011
+             // num = 0;  // Default singular is 0; 6nov2011
+                num = 1;  // Assume singular number; 2nov2012
+                audnum = 1;  // Assume singular;  4nov2012
+              }  // If last letter not "S"; 27may2011
+            }  // If last letter not "s"; 27may2011
+          }  // End of test for carriage-return; 27may2011
+        }  // End of test for SPACE; 27may2011
+      }  // End of test for empty pho; 27may2011
     }  // End of test for bias towards a noun; 27may2011
     onset = (spt + 1);
     if (onset == t) beg = 1;
@@ -1590,7 +1626,7 @@ function AudListen() {
     pho = " ";
     return true;
   }
-}  // End of AudListen(); 29sep2010
+}  // End of event-driven AudListen(); 4nov2012
 
 
 function Tab() {
@@ -1658,6 +1694,7 @@ function CR() {
   audrun = 1; // Reset to 1 at CR end of input; 12jul2010.
   beg = 1;  // no "if CR 13" is required within CR().
   eot = 13; // for use in AudListen() to indicate CR.
+  holdnum = 0;  // reset for safety;  4nov2012
   c = 32;   // as if SPACE-BAR "32" were pressed
   AudInput();
   eot = 0;
@@ -2415,4 +2452,4 @@ t=401;pho="S"; beg=0; ctu=0; audpsi=731; AudMem(); // 31oct2012
 nen=731; mfn=0; dba=2; fex=731; pos=7; fin=737; aud=398; 
 psi=731; num=2; pre=0; seq=0; enx=731; EnVocab(); InNativate();
 
-}}}
+}}}}

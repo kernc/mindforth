@@ -302,7 +302,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 17oct2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "5nov12A"; // for Transcript mode; mon5nov2012
+var vrsn = "7nov12A"; // for Transcript mode; wed7nov2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -1040,9 +1040,6 @@ function InStantiate() {
     defartcon = 1;  // Set definite article condition; 19apr2011
     act = 0;  // To suppress "WHO" during answer; 19apr2011
   }  // End of test for psi #791 WHO; 23oct2012
-  if (psi==701 || psi==707) num = 1; // sing. I or YOU 31oct2012
-  if (psi==713 || psi==719 || psi==725) num=1; // HE or SHE or IT
-  if (psi==731 || psi==737 || psi==743) num=2;  // WE; YOU; THEY
   if (pov == "*") {  // If POV is external; 20jul2011
     if (pos == 5) {  // If external noun comes in; 20jul2011
        quobj = psi;  // query-object for AskUser; 18aug2011
@@ -1052,7 +1049,10 @@ function InStantiate() {
     act = 0; // 0 activation for ReEntry concepts; 1may2011
   }  // End of test for "#" internal POV;  1may2011
   if (seq == 0) tqv = 0; // avoid spurious carry-overs; 15aug2012
-  num = audnum;  // pass for storage;  4nov2012  
+  num = audnum;  // pass for storage;  4nov2012 
+  if (psi==701 || psi==707) num = 1; // sing. I or YOU 31oct2012
+  if (psi==713 || psi==719 || psi==725) num=1; // HE or SHE or IT
+  if (psi==731 || psi==737 || psi==743) num=2;  // WE; YOU; THEY 
   if (pos==8 && holdnum > 0) num = holdnum;  // agreement; 5nov2012
   Psi[t] = new psiNode(psi,act,num,jux,prevtag,pos,tqv,seq,enx);
   act = 0;  // reset for safety; 27oct2011
@@ -1168,7 +1168,7 @@ function EnVocab() { // storing "act" and "dba"; 4jan2012
 
 
 function EnParser() {
-  bias = 5; 
+ // bias = 5; 
   act = 30;  // MindForth: Activate lower than ReActivate; 8jun2011
   if (pov == "*") {  // only during external input; 15oct2010
     act = (act - ordo); // reduce S-V-O act's; 15oct2010
@@ -1184,8 +1184,6 @@ function EnReify() {
     Psi[i].psiExam();
     if (psi1 > 0) {
       lexact = psi1;  // from MindForth;  8jun2011
-   // num = psi2;  // from MindForth;  8jun2011
-   // num = psi2;  // Commenting out and changing enNode; 5nov2012
       enLexicon[i].enExam();  // examine English array; 9aug2011
       enLexicon[i] = new enNode(en0,lexact,en2,en3,en4,en5,en6,en7,en8);
     }  // end of test for a psi with positive activation; 9aug2011
@@ -1296,7 +1294,7 @@ function OldConcept() {
   if (pos==5) num = audnum;  // 5nov2012
   if (pos==8) num = holdnum;  //  4nov2012
   if (pos==5) holdnum = audnum;  // transfer to verb;  4nov2012
-  EnParser();
+  EnParser();  // leads to psiNode storage by InStantiate()
   pos = 0;
   if (pov == "*") {
     urpre = pre;
@@ -1325,6 +1323,9 @@ function NewConcept() {
   pos = bias;
   if (predflag == 1 && pos == 5) dba = 1;  // noun; 20oct2012
   if (pov == "*") {  // if new psi, probably external POV anyway
+    if (pos == 5) {  // 6nov2012
+      dba = 1;  // a default at first;  6nov2012
+    }  // end of test for noun or pronoun; 6nov2012
     if (pos == 8) {  // if part-of-speech is verb; 1nov2012
       dba = 3;  // a default; test; 1nov2012
       if (subjprsn==1) dba = 1;  // 1st prsn I or WE;  1nov2012
@@ -1335,7 +1336,7 @@ function NewConcept() {
   if (pos==5) num = audnum;  // pass for storage;  4nov2012
   if (pos==8) num = holdnum;  //  4nov2012
   if (pos==5) holdnum = audnum;  // transfer to verb;  4nov2012
-  EnVocab();
+  EnVocab();  // creates new enLexicon node;  6nov2012
   dba = 0;  // reset after storing value; 19oct2012
   fin = 0;
   fex = 0;
@@ -1343,7 +1344,7 @@ function NewConcept() {
   if (pos==5) num = audnum;  // pass for storage;  4nov2012
   if (pos==8) num = holdnum;  //  4nov2012
   if (pos==5) holdnum = audnum;  // transfer to verb;  4nov2012
-  EnParser();
+  EnParser();  // leads to psiNode storage by InStantiate()
   if (pos == 5) {
     cogpsi = nen;  // for WhatBe; 18oct2011
     cognum = instnum;  // from InStantiate; 27oct2011
@@ -2452,4 +2453,4 @@ t=401;pho="S"; beg=0; ctu=0; audpsi=731; AudMem(); // 31oct2012
 nen=731; mfn=0; dba=2; fex=731; pos=7; fin=737; aud=398; 
 psi=731; num=2; pre=0; seq=0; enx=731; EnVocab(); InNativate();
 
-}}}}
+}}}

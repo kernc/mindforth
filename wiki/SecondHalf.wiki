@@ -1050,13 +1050,6 @@ function NounPhrase() {
     motjuste = psi4;  // let "pre" = motjuste?; test; 30oct2011
   }  // end of test for a positive verblock; 24oct2011
   EnReify();
-// for (i = t; i>midway; i--) {
-//   enLexicon[i].enExam();
-//   if (en0 == 65) {
-//     audme = en8; // 4jan2012
-//     break;
-//  }
-// }
   abort = false;
   act = 0;  // Start with zero to look for en1 higher than act.
   defact = -8;  // for default comparisons with "50=I"; 29oct2011
@@ -1097,16 +1090,17 @@ function NounPhrase() {
           posflag = psi5; // AskUser discriminand; 13aug2011
           if (psi1 > act && psi7 > 0) {  // seq-check; 25oct2011
             verblock = psi6;  // tqv of seq-concept; 24oct2011
-            for (j = t; j>midway; --j) {  // from Russian AI; 21oct2012
-              enLexicon[j].enExam();  // examine English lexicon; 21oct2012
-              if (en0 == motjuste) {  // from Russian AI; 21oct2012
-                if (en2 == snu && en4 == 1) {  // dba must be "1"; 21oct2012
-                 audjuste = en8;  // avoid the spurious; 21oct2012
-               }  // from Russian AI; 21oct2012  
-              }  // from Russian AI; 21oct2012
-             }  // end of search of enLexicon; 21oct2012
-       //   enLexicon[i].enExam();  // examine English lexicon; 24oct2011
-       //   audjuste = en8;  // avoid the spurious; 24oct2011; 4jan2012
+        //  for (j = t; j>midway; --j) {  // from Russian AI; 21oct2012
+        //    enLexicon[j].enExam();  // examine English lexicon; 21oct2012
+        //    if (en0 == motjuste) {  // from Russian AI; 21oct2012
+        //      if (en2 == snu && en4 == 1) {  // dba must be "1"; 21oct2012
+        //       audjuste = en8;  // avoid the spurious; 21oct2012
+        //     }  // from Russian AI; 21oct2012  
+        //    }  // from Russian AI; 21oct2012
+        //   }  // end of search of enLexicon; 21oct2012
+            // 6nov2012 Commenting out 8 lines above, uncommenting 2 lines:
+            enLexicon[i].enExam();  // examine English lexicon; 24oct2011
+            audjuste = en8;  // avoid the spurious; 24oct2011; 4jan2012
             if (motjuste == 701) {  // guarantee "I"; 21oct2012
               for (i = t; i>midway; i--) {  //search backwards; 25oct2011
                 enLexicon[i].enExam(); // examine English lexicon; 25oct2011
@@ -1165,29 +1159,29 @@ function NounPhrase() {
       }  // end of test for 0=subjectflag; test; 24oct2011
     }  // End of test of for a noun or pronoun; 24oct2011
   }  // End of backwards search for most active "motjuste"; 25may2011
-     for (i = t; i>midway; i--) {  // 13aug2011
-      enLexicon[i].enExam();      // 13aug2011
-      if (en0 == motjuste) {      // 13aug2011
-        if (predflag==1) {  // only for predicate nominatives; 20sep2011
-         if (nounlock == 0) {  // in absence of nounlock; 25oct2011
-          if (en2==subjnum) {  // num(ber) agreement? 20sep2011
-            audjuste = en8;  // set auditory recall-vector;  4jan2012
-            break;  // one auditory engram is enough; 20sep2011 
-          }  // end of test for agreement in num(ber); 20sep2011
-         }  // end of test for absence of nounlock; 25oct2011
-        }  // end of test for positive "predflag"; 20sep2011
-        else  // for normal direct objects; 20sep2011
-          if (verblock == 0) {  // if no verblock; 25oct2011
-            audjuste = en8;  // for NounPhrase SpeechAct;  4jan2012
-            break;  // one auditory engram is enough; 20sep2011
-          }  // end of test for absence of verblock; 25oct2011
-      }  // end of test for motjuste; 13aug2011
-    }  // end of backwards loop; 13aug2011
+  for (i = t; i>midway; i--) {  // 13aug2011
+    enLexicon[i].enExam();      // 13aug2011
+    if (en0 == motjuste) {      // 13aug2011
+      if (predflag==1) {  // only for predicate nominatives; 20sep2011
+       if (nounlock == 0) {  // in absence of nounlock; 25oct2011
+        if (en2==subjnum) {  // num(ber) agreement? 20sep2011
+          audjuste = en8;  // set auditory recall-vector;  4jan2012
+          break;  // one auditory engram is enough; 20sep2011 
+        }  // end of test for agreement in num(ber); 20sep2011
+       }  // end of test for absence of nounlock; 25oct2011
+      }  // end of test for positive "predflag"; 20sep2011
+      else  // for normal direct objects; 20sep2011
+        if (verblock == 0) {  // if no verblock; 25oct2011
+          audjuste = en8;  // for NounPhrase SpeechAct;  4jan2012
+          break;  // one auditory engram is enough; 20sep2011
+      }  // end of test for absence of verblock; 25oct2011
+    }  // end of test for motjuste; 13aug2011
+  }  // end of backwards loop; 13aug2011
   star = 0;
   node = 0;
   ufo = 0;
- if (nounlock == 0) {  // if no nounlock override; 24oct2011
-  if (act < 20) {  // if no subject of thought is found; 21aug2011
+  if (nounlock == 0) {  // if no nounlock override; 24oct2011
+   if (act < 20) {  // if no subject of thought is found; 21aug2011
     if (subjectflag==1) {  // default to "I" only as subject 18oct2011
       motjuste = 701; // default concept of an AI Mind; 21oct2012
       nphrpos = 7;  // pronoun "I"; to prevent EnArticle; 14sep2011
@@ -1221,8 +1215,8 @@ function NounPhrase() {
         }  // End of search for "701=I"; 21oct2012
       }  // end of English lexicon search loop; 29oct2011
     }  // end of test for "I" to become subj. not obj. 18oct2011
-  }  // end of threshold-test; 18oct2011
- }  // end of test for absence of pre-ordained nounlock; 24oct2011
+   }  // end of threshold-test; 18oct2011
+  }  // end of test for absence of pre-ordained nounlock; 24oct2011
   if (nounlock > 0) {  // from MindForth; if positive; 17aug2012
 //  if (motjuste == 701) {  // if 701=I is indicated; 21oct201
 //    for (i = t; i>midway; i--) {  // Look backwards for 701=ME; 21oct2012
@@ -1421,6 +1415,7 @@ function ConJoin() {
 
 
 function VerbGen() {  // for using parameters to fetch verb-engrams
+  // alert("VerbGen: audbase = "+audbase);  // test; 7nov2012
   if (subjpsi==701) dba = 1;  // "701=I" is first-person; 21oct2012
   if (subjpsi==707) dba = 2;  // "707=YOU" is second-person; 21oct2012
   if (subjpsi==713) dba = 3;  // "713=HE" is third-person; 21oct2012
@@ -1644,8 +1639,12 @@ function VerbPhrase() {
   motjuste = 0;
   if (verblock > 0) {  // already a verblock? 24oct2011
     enLexicon[verblock].enExam();  // examine row in array; 24oct2011
-    verbpsi = en0;  // obtian the lexical verbpsi; 17oct2012
+    verbpsi = en0;  // obtain the lexical verbpsi; 17oct2012
     audbase = en8;  // parameter for VerbGen to call AudBuffer; 17oct2012
+    if (subjpsi==701 || subjpsi==731) prsn=1; // I or WE 7nov2012
+    if (subjpsi==707 || subjpsi==737) prsn=2; // "YOU"   7nov2012
+    if (subjpsi==713 || subjpsi==719) prsn=3; // HE; SHE 7nov2012
+    if (subjpsi==725 || subjpsi==743) prsn=3; // IT THEY 7nov2012
     dba = prsn;  // parameter for VerbGen; 17oct2012
     vphraud = 0;  // until a known verb is found; 17oct2012
     for (i = t; i>midway; i--) {  // search for verb-form; 17oct2012
@@ -1776,8 +1775,6 @@ function VerbPhrase() {
       else return;  // abort thought if number not known; 15aug2011
     }  // end of test for vphract below 20=threshold; 15aug2011
     if (negjux==250) {  // if verb is negated with 250=NOT; 23oct2012
-   // unk = motjuste;  // temporary holding for if-clauses; 15aug2011
-   // if (unk != 57 && unk != 58 && unk != 66 && unk != 67) {
       if (motjuste != 800) {  // if other than an 800=BE verb; 2nov2012
         AuxVerb();  // to say "DO" or "DOES"; 29jun2011
         for (i = t; i>midway; i--) { // search backwards 29jun2011
@@ -1790,8 +1787,9 @@ function VerbPhrase() {
         SpeechAct();  // speak or display the adverb "NOT"; 29jun2011
      }  // end of test for no be-verb; 15aug2011 
     }  // end of test for 12=NOT negjux; 13oct2011
-    unk = motjuste;  // temporary holding for if-clauses; 15aug2011
-    if (unk != 57 && unk != 58 && unk != 66 && unk != 67) {
+ // unk = motjuste;  // temporary holding for if-clauses; 15aug2011
+ // if (unk != 57 && unk != 58 && unk != 66 && unk != 67) {
+    if (motjuste != 800) {  // if other than an 800=BE verb; 7nov2012
       if (nphrnum==1) {  // if singular; 2sep2010
         if (prsn==3) {  // 3rd person? 10may2011
           flex1 = "S";  // xfer to SpeechAct(); 14sep2011
@@ -1809,11 +1807,11 @@ function VerbPhrase() {
         }  // end of search of English lexicon; 15aug2011
       }  // end of test for 3rd person singular; 15aug2011
     }  // end of special handling of 70=HAVE; 15aug2011
-    unk = motjuste;  // temporary holding for if-clauses; 29odt2011
-    if (unk == 57 || unk == 58 || unk == 66 || unk == 67) {  // 29oct2011
+ // unk = motjuste;  // temporary holding for if-clauses; 29odt2011
+ // if (unk == 57 || unk == 58 || unk == 66 || unk == 67) {  // 29oct2011
+    if (motjuste == 800) {  // any form of 800=BE;  7nov2012
       predflag = 1;  // for sake of NounPhrase; 29oct2011
     }  // end of two-step be-verb substitution; 29oct2011
-    // removing obsolete be-verb-test code; 26oct2012
     vacpsi = motjuste;  // for VerbAct(); 18aug2011
     VerbAct();  // moved from below SpeechAct & old KB-inhib; 18aug2011
     aud = vphraud;  // transfer just before call; 28jun2011
@@ -1837,8 +1835,9 @@ function VerbPhrase() {
   Psi[tselv].psiExam(); // expose all values to change one; 8jun2011
   Psi[tselv] = new psiNode(psi0,-32,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
   tselv = 0;  // Reset after use; 24may2011; 8jun2011
-  unk = motjuste;  // temporary holding for if-clauses; 15aug2011
-  if (unk == 57 || unk == 58 || unk == 66 || unk == 67) {  // 15aug2011
+// unk = motjuste;  // temporary holding for if-clauses; 15aug2011
+// if (unk == 57 || unk == 58 || unk == 66 || unk == 67) {  // 15aug2011
+  if (motjuste == 800) {  // any form of 800=BE;  7nov2012
     predflag = 1;  // 20sep2011
     if (negjux==250) {  // if 250=NOT negates the verb-node; 23oct2012
       for (i = t; i>midway; i--) { // search backwards in time; 9aug2011
@@ -1868,19 +1867,21 @@ function VerbPhrase() {
   psi = 0;
   pho = " ";
   dirobj = 1;
-  if (subjpsi==50) {  // only for subject "50=I"; 25sep2011
-    if (motjuste==62) {  // only for verb "62=SEE"; 25sep2011
+// if (subjpsi==50) {  // only for subject "50=I"; 25sep2011
+  if (subjpsi==701) {  // only for subject "701=I"; 7nov2012
+ // if (motjuste==62) {  // only for verb "62=SEE"; 25sep2011
+    if (motjuste==820) {  // only for verb "820=SEE";  7nov2012
       if (svo3==0) {  // if SEE has no direct object; 25sep2011
         VisRecog();  // a challenge for robot AI coders 25sep2011
         SpeechAct();  // say default from VisRecog; 25sep2011
         return;  // abandon rest of VerbPhrase; 25sep2011        
       }  // end of test for direct object; 25sep2011
-    }  // end of test for "62=SEE" requiring VisRecog; 25sep2011
-  }  // end of test for "50=I" subject of verb; 25sep2011
-  if (motjuste == 57) {  // 14sep2011
-   verbpsi = 57;  // 14sep2011
-   predflag = 1; // 16sep2010
-  }  // 14sep2011
+    }  // end of test for "820=SEE" requiring VisRecog; 7nov2012
+  }  // end of test for "701=I" subject of verb; 7nov2012
+// if (motjuste == 57) {  // 14sep2011
+//   verbpsi = 57;  // 14sep2011
+//   predflag = 1; // 16sep2010
+// }  // 14sep2011
   NounPhrase();
   predflag = 0;  // reset for safety; 16sep2010
   dirobj = 0;
@@ -2463,7 +2464,7 @@ If this message remains here, the AI has failed to load.
 </div>
 
 <form onSubmit="if (this.submitted) return true; else {CR(); return false;};">
-<b>The Mind activates an idea from a specific time-point in the 
+<b>The AI Mind activates an idea from a specific time-point in the 
 IdeaPlex.</b><br />
 <input type="text" name="ear" value="" size="80" onKeyDown="AudListen()">
 </form>
@@ -2542,6 +2543,8 @@ Tues "30oct12T.html" reconfigures WhoBe using 3-digit concept numbers.
 Wed. "31oct12A.html" tightens up the storage of searchable parameters.
 Thurs "1nov12A.html" introduces "audnum" to deglobalize "num" variable.
 Mon.  "5nov12A.html" uses "holdnum" for agreement of subjects and verbs.
+Tues. "6nov12A.html" improves storage of "dba" from NewConcept module.
+Wed.  "7nov12A.html" uses pronoun apparatus for search in VerbPhrase().
 (end of HTML Change Log comments) -->
 </html>
 }}}

@@ -292,7 +292,6 @@ var urpre = 0;  // original pre for swapping during function-calls.
 var urpsi = 0;
 var userline = "";
 var vacpsi = 0;  // de-globalized psi for VerbAct(); 1oct2010
-// var vault = 476; // size of EnBoot; 25sep2011
 var vault = 611; // size of EnBoot; 25oct2011
 var verblock = 0;  // for subject-noun to lock onto seq-verb; 13oct2011
 var verbnum = 0;
@@ -302,7 +301,7 @@ var verbcall = 0;
 var vip = 0;  // special ID for verb created by VerbGen; 17oct2012
 var vphract = 0;  // verb phrase activation level 22jun2011
 var vphraud = 0;  // holds aud-fetch for SpeechAct; 28jun2011
-var vrsn = "7nov12A"; // for Transcript mode; wed7nov2012
+var vrsn = "12nov12A"; // for Transcript mode; mon12nov2012
 var vpos = 0;
 var wxdflag = 0;  // for inhibition of what-do-X-DO queries; 16sep2010
 var wxvflag = 0;  // for inhibition of what-do-X-VERB queries; 16sep2010
@@ -1833,8 +1832,8 @@ t=27; pho="T"; beg=0; ctu=1; audpsi=0; AudMem();
 t=28; pho="H"; beg=0; ctu=1; audpsi=0; AudMem();
 t=29; pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
 t=30; pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
-t=31; pho="G"; beg=0; ctu=0; audpsi=711; AudMem(); // 25oct2012
-nen=711; mfn=0; dba=4; fex=711; pos=5; fin=711; aud=24;
+t=31; pho="G"; beg=0; ctu=0; audpsi=711; AudMem(); // 11nov2012
+nen=711; mfn=0; dba=4; fex=711; pos=7; fin=711; aud=24;
 psi=711; num=1; pre=0; seq=0; enx=711; EnVocab(); InNativate();
 
 // BAD -- adjective for EnAdjective module 
@@ -1852,8 +1851,8 @@ psi=800; num=0; pre=0; seq=0; enx=800; EnVocab(); InNativate();
 
 // AM -- 1st person singular I-form of 800=BE; 25oct2012
 t=40;pho="A"; beg=1; ctu=1; audpsi=0; AudMem();
-t=41;pho="M"; beg=0; ctu=0; audpsi=800; AudMem();  // 21oct2012
-nen=800; mfn=0; dba=1; fex=800; pos=8; fin=800; aud=409; 
+t=41;pho="M"; beg=0; ctu=0; audpsi=800; AudMem();  // 11nov2012
+nen=800; mfn=0; dba=1; fex=800; pos=8; fin=800; aud=40; 
 psi=800;num=1;pre=0;tqv=0;seq=0;enx=800;EnVocab();InNativate();
 
 // ARE -- 2nd person singular YOU-form of 800=BE; 25oct2012
@@ -1914,15 +1913,15 @@ psi=808; num=0; pre=0; seq=0; enx=808; EnVocab(); InNativate();
 // BOY -- always masculine noun for use with gender flags 
 t=77;pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
 t=78;pho="O"; beg=0; ctu=1; audpsi=0; AudMem();
-t=79;pho="Y"; beg=0; ctu=0; audpsi=521; AudMem(); // 25oct2012
-nen=521; mfn=1; dba=0; fex=521; pos=5; fin=521; aud=77; 
-psi=521; num=1; pre=0; seq=0; enx=521; EnVocab(); InNativate();
+t=79;pho="Y"; beg=0; ctu=0; audpsi=589; AudMem(); // 11nov2012
+nen=589; mfn=1; dba=0; fex=589; pos=5; fin=589; aud=77; 
+psi=589; num=1; pre=0; seq=0; enx=589; EnVocab(); InNativate();
 
 // BUT -- conjunction for ConJoin module 
 t=81; pho="B"; beg=1; ctu=1; audpsi=0; AudMem();
 t=82; pho="U"; beg=0; ctu=1; audpsi=0; AudMem();
-t=83; pho="T"; beg=0; ctu=0; audpsi=305; AudMem(); // 25oct2012
-nen=305; mfn=0; dba=0; fex=305; pos=3; fin=305; aud=63;
+t=83; pho="T"; beg=0; ctu=0; audpsi=305; AudMem(); // 11nov2012
+nen=305; mfn=0; dba=0; fex=305; pos=3; fin=305; aud=81;
 psi=305; num=0; pre=0; seq=0; enx=305; EnVocab(); InNativate();
 
 // CHESS -- important singular AI noun ending in "S"
@@ -2016,7 +2015,7 @@ t=138;pho="G"; beg=0; ctu=0; audpsi=183; AudMem(); // 25oct2012
 nen=183; mfn=0; dba=0; fex=183; pos=1; fin=183; aud=134;
 psi=183; num=0; pre=0; seq=0; enx=183; EnVocab(); InNativate();
 
-// ELSE -- adverb to be ignored as part of input queries
+// ELSE -- adverb for machine reasoning logic; 11nov2012
 t=140;pho="E"; beg=1; ctu=1; audpsi=0; AudMem();
 t=141;pho="L"; beg=0; ctu=1; audpsi=0; AudMem();
 t=142;pho="S"; beg=0; ctu=1; audpsi=0; AudMem();
@@ -2045,9 +2044,9 @@ psi=517; num=1; pre=0; seq=0; enx=517; EnVocab(); InNativate();
 t=156;pho="G"; beg=1; ctu=1; audpsi=0; AudMem();
 t=157;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
 t=158;pho="R"; beg=0; ctu=1; audpsi=0; AudMem();
-t=159;pho="L"; beg=0; ctu=0; audpsi=522; AudMem(); // 25oct2012
-nen=522; mfn=2; dba=0; fex=522; pos=5; fin=522; aud=123;
-psi=522; num=1; pre=0; seq=0; enx=522; EnVocab(); InNativate();
+t=159;pho="L"; beg=0; ctu=0; audpsi=510; AudMem(); // 11nov2012
+nen=510; mfn=2; dba=0; fex=510; pos=5; fin=510; aud=156;
+psi=510; num=1; pre=0; seq=0; enx=510; EnVocab(); InNativate();
 
 // GOD -- masculine noun important for philosophy of AI
 t=161;pho="G"; beg=1; ctu=1; audpsi=0; AudMem();
@@ -2139,21 +2138,21 @@ psi=701;num=1;pre=0;tqv=399;seq=800;enx=701;EnVocab();InNativate();
 t=211;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
 t=212;pho="I"; beg=0; ctu=1; audpsi=0; AudMem();
 t=213;pho="N"; beg=0; ctu=1; audpsi=0; AudMem();
-t=214;pho="E"; beg=0; ctu=0; audpsi=123; AudMem(); // 25oct2012
-nen=701; mfn=0; dba=2; fex=701; pos=1; fin=707; aud=211; 
+t=214;pho="E"; beg=0; ctu=0; audpsi=701; AudMem(); // 11nov2012
+nen=701; mfn=0; dba=2; fex=701; pos=7; fin=707; aud=211; 
 psi=701; num=1; pre=0; seq=0; enx=701; EnVocab(); InNativate();
 
 // ME -- dative indirect-object form of personal pronoun; 25oct2012
 t=216;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
 t=217;pho="E"; beg=0; ctu=0; audpsi=701; AudMem(); // 25oct2012
 nen=701; mfn=0; dba=3; fex=701; pos=7; fin=707; aud=216;
-psi=701;num=1;pre=849;tqv=0;seq=0;enx=701;EnVocab();InNativate();
+psi=701;num=1;pre=0;tqv=0;seq=0;enx=701;EnVocab();InNativate();
 
 // ME -- accusative direct-object form of personal pronoun
 t=219;pho="M"; beg=1; ctu=1; audpsi=0; AudMem();
 t=220;pho="E"; beg=0; ctu=0; audpsi=701; AudMem(); // 25oct2012
 nen=701; mfn=0; dba=4; fex=701; pos=7; fin=707; aud=219;
-psi=701;num=1;pre=849;tqv=0;seq=0;enx=701;EnVocab();InNativate();
+psi=701;num=1;pre=0;tqv=0;seq=0;enx=701;EnVocab();InNativate();
 
 // IF -- for machine reasoning logic 
 t=222;pho="I"; beg=1; ctu=1; audpsi=0; AudMem();

@@ -578,7 +578,6 @@ function EnArticle() {
    if (nphrnum == 1) {  // If number is singular; 4may2011
     if (motjuste != ghost) {  // From MindForth AI; 19apr2011
       if (subjnum == 1) {  // if singular subject; 14sep2011
-     // if (verbpsi == 57 || verbpsi == 66) {  // AM or IS; 14sep2011
         if (verbpsi == 800) {  // 800=BE (AM; IS; ARE);  2nov2012
           indefartcon = 1;  // permit indefinite article "A"; 14sep2011
         }  // end of test for 57=AM or 66=IS singular verbs; 14sep2011
@@ -896,7 +895,6 @@ function WhatBe() {  // what AM/IS/ARE Subjects; 18oct2011
     for (i = t; i>midway; i--) { // look for be-verb; 28oct2012
       enLexicon[i].enExam();  // examine English lexicon; 18oct2011
       if (en0==800 && en2==1 && en4==1) { 
-       // verbpsi = 57;  // for EnArticle; 18oct2011  
           verbpsi = 800;  // for EnArticle; 28oct2012 
           aud = en8;  // assign most recent recall-tag; 4jan2012
           break;  // exit the loop after first find; 18oct2011
@@ -1074,21 +1072,22 @@ function NounPhrase() {
     Psi[i].psiExam(); // examine Psi array for most active concept.
     if (psi5 == 5 || psi5 == 7) {  // Logical OR; 13aug2011
       if (subjectflag == 1) {  // selecting a subject? 24oct2011
-     // if (psi1 > act) {  // If psi1 is higher than "act"; 13aug2011
-        if (psi1 > act && psi6 > 0) {  // tqv-check; 24oct2011
+        if (psi1 > act && psi7 > 0) {  // seq; 5dec2012
           if (psi7 > 0) {  // Testing for seq-concept; 24oct2011
             tsels = i;  // retain time of subject; 24oct2011
             tseln = i;  // time of selected noun; 10may2011
             motjuste = psi0; // store psi-tag of noun/pronoun; 13aug2011
+            subjpsi = psi0;  // for parameter-searches; 5dec2012
             nphrnum = psi2;  // 13aug2011
             subjnum = psi2;  // for AuxVerb DOES or DO; 13aug2011
           }  // for subjects; 24oct2011
-          subjpsi = psi0;  // 13aug2011
+       // subjpsi = psi0;  // 13aug2011 // moved outside loop; 5dec2012
           subjnum = psi2;  // for AuxVerb DOES or DO; 13aug2011
           putnum = psi2;  // putative num for verb; 24oct2011
           nphrpos = psi5;  // NounPhrase part-of-speech; 13aug2011
           posflag = psi5; // AskUser discriminand; 13aug2011
-          if (psi1 > act && psi7 > 0) {  // seq-check; 25oct2011
+       // if (psi1 > act && psi7 > 0) {  // seq-check; 25oct2011
+          if (psi1 > act && psi6 > 0 && psi7 > 0) {  // seq-check; 5dec2012
             verblock = psi6;  // tqv of seq-concept; 24oct2011
         //  for (j = t; j>midway; --j) {  // from Russian AI; 21oct2012
         //    enLexicon[j].enExam();  // examine English lexicon; 21oct2012
@@ -1105,25 +1104,30 @@ function NounPhrase() {
               for (i = t; i>midway; i--) {  //search backwards; 25oct2011
                 enLexicon[i].enExam(); // examine English lexicon; 25oct2011
                 if (en0 == 701) {  // "701=I"; 21oct2012
-                  audjuste = en8;  // auditory recall-vector;  4jan2012
-                  break; // one I-engram is enough; 25oct2011
-                }  // end of test for "50=I";  25oct2011
+                  if (en4==1) {  // dba=1 nominative? 5dec2012
+                    audjuste = en8;  // auditory recall-vector;  4jan2012
+                    break; // one I-engram is enough; 25oct2011
+                  }  // end of test for nominative dba=1;  5dec2012
+                }  // end of test for "701=I";  5dec2012
               }  // end of backwards loop; 25oct2011
-            }  // end of test for "50=I"; 25oct2011
+            }  // end of test for "701=I";  5dec2012
             if (motjuste == 707) {  // guarantee 707=YOU; 21oct2012
               for (i = t; i>midway; i--) {  //search backwards; 25oct2011
                 enLexicon[i].enExam(); // examine English lexicon; 25oct2011
                 if (en0 == 707) {  // "707=YOU"; 21oct2012
-                  audjuste = en8;  // auditory recall-vector;  4jan2012
-                  break; // one I-engram is enough; 25oct2011
-                }  // end of test for "56=YOU";  25oct2011
+                  if (en4==1) {  // dba=1; nominative; 5dec2012
+                    audjuste = en8;  // auditory recall-vector;  4jan2012
+                    break; // one I-engram is enough; 25oct2011
+                  }  // end of test for nominative dba=1; 5dec2012
+                }  // end of test for "707=YOU";  5dec2012
               }  // end of backwards loop; 25oct20112011
-            }  // end of test for "56=YOU"; 25oct2011
+            }  // end of test for "707=YOU";  5dec2012
             if (en6 == 5) prsn = 3; // assume 3rd prsn noun;  4jan2012
             act = psi1; // after passing seq-check; 24oct2011
           }  // prevent false motjuste; 24oct2011
         }  // End of test for a higher activation; 24oct2011
       }  // end of test for 1=subjectflag; 24oct2011
+    if (nounlock==0) {  // if no pre-existing selection;  5dec2012
       if (subjectflag == 0) {  // i.e., dir.obj or pred.nom; 24oct2011
         if (psi1 > act) {  // If psi1 is higher than "act"; 24oct2011
           tseln = i;  // retain time of motjuste; 24oct2011
@@ -1137,7 +1141,7 @@ function NounPhrase() {
               break;  // prevent usurpation of pre-ordained seq 24oct2011
             } // end of test for index = nounlock; 24oct2011
           }  // end of test for positive nounlock; 24oct2011
-          subjpsi = psi0;  // 24oct2011
+       // subjpsi = psi0;  // 24oct2011; moved lower; 5dec2012 
           nphrnum = psi2;  // 24oct2011
           putnum = psi2;   // putative num for verb; 24oct2011
           nphrpos = psi5;  // NounPhrase part-of-speech; 24oct2011
@@ -1157,8 +1161,10 @@ function NounPhrase() {
           if (psi1 > act) act = psi1;  // change the metric; 24oct2011
         }  // end of test for a higher activation; 24oct2011
       }  // end of test for 0=subjectflag; test; 24oct2011
+     }  // end of test for pre-existing nounlock;  5dec2012
     }  // End of test of for a noun or pronoun; 24oct2011
   }  // End of backwards search for most active "motjuste"; 25may2011
+  if (subjectflag==1) subjpsi = motjuste;  // from Wotan AI; 5dec2012
   for (i = t; i>midway; i--) {  // 13aug2011
     enLexicon[i].enExam();      // 13aug2011
     if (en0 == motjuste) {      // 13aug2011
@@ -1335,7 +1341,7 @@ function NounPhrase() {
     artnum = nphrnum;  // parameter for EnArticle; 6nov2011
     EnArticle();  // say "A" or "THE"; 14sep2011
    }  // 14sep2011
-  aud = audjuste; 
+  aud = audjuste;
   SpeechAct();  // main call from NounPhrase to SpeechAct; 18may2011
   if (dirobj==1 || predflag==1) {  // d.o. OR pred.nom. 30may2011
     Psi[t].psiExam(); // expose all values to change one; 14jun2011
@@ -1632,7 +1638,7 @@ function VerbPhrase() {
     Psi[verblock].psiExam(); // expose all values to change one; 24oct2011
     nounlock = psi6;  // time-point of "seq" engram; 24oct2011
     gencon = 0;  // try to prevent VerbGen-call; 17oct2012
-  }  // 24oct2011  
+  }  // 24oct2011
   EnReify();
   act = 0;  // Start with zero to look for psi1 higher than act.
   aud = 0;
@@ -1708,7 +1714,6 @@ function VerbPhrase() {
           enLexicon[i].enExam();  // 13aug2011
           verbpsi = en0;  // for EnArticle; test; 14sep2011
           vphraud = en8;  // auditory recall-vector;  4jan2012
-
           for (j = t; j>midway; --j) {  // parameter-search; 12nov2012
             enLexicon[j].enExam();  // examine English lexicon; 12nov2102
             if (en0==verbpsi && en2==nphrnum && en4==prsn) {  // 12nov2012
@@ -1716,7 +1721,6 @@ function VerbPhrase() {
               break;  // one instance is enough; 12nov2012
             }  // end of test to find correct form; 12nov2012
           }  // end of backwards loop; 12nov2012
-
           Psi[i].psiExam(); // Check for negation on psi3; 29jun2011
           act = psi1; // To test for a higher psi1; 15aug2011
           if (act > 8) {
@@ -1842,8 +1846,6 @@ function VerbPhrase() {
   Psi[tselv].psiExam(); // expose all values to change one; 8jun2011
   Psi[tselv] = new psiNode(psi0,-32,psi2,psi3,psi4,psi5,psi6,psi7,psi8);
   tselv = 0;  // Reset after use; 24may2011; 8jun2011
-// unk = motjuste;  // temporary holding for if-clauses; 15aug2011
-// if (unk == 57 || unk == 58 || unk == 66 || unk == 67) {  // 15aug2011
   if (motjuste == 800) {  // any form of 800=BE;  7nov2012
     predflag = 1;  // 20sep2011
     if (negjux==250) {  // if 250=NOT negates the verb-node; 23oct2012
@@ -1858,7 +1860,6 @@ function VerbPhrase() {
       negjux = 0;  // reset for safety; 13oct2011
     }  // end of test for 250=NOT negation; 23oct2012
   }  // end of test for a present-tense be-verb; 15aug2011
-// if (motjuste == 57) {  // 57=AM; 9aug2011
   if (motjuste == 800) {  // any be-verb; 12nov2012
     if (negjux==250) {  // if 250=NOT negates the verb-node; 23oct2012
       for (i = t; i>midway; i--) { // search backwards in time; 9aug2011
@@ -1871,11 +1872,11 @@ function VerbPhrase() {
       SpeechAct();  // speak or display the adverb "NOT"; 9aug2011
       negjux = 0;  // reset for safety; 13oct2011
     }  // end of test for 250=NOT negation; 23oct2011
-// }  // end of test for be-verb 57=AM; 9aug2011
   }  // end of test for be-verb 800=BE; 12nov2012
   psi = 0;
   pho = " ";
   dirobj = 1;
+// dirobj = 1;  // commenting out as not always true; 5dec2012
   if (subjpsi==701) {  // only for subject "701=I"; 7nov2012
     if (motjuste==820) {  // only for verb "820=SEE";  7nov2012
       if (svo3==0) {  // if SEE has no direct object; 25sep2011
@@ -2194,7 +2195,6 @@ function showObject() {
   query.appendChild(answer);
 }
 
-
 function wipeSubject(oldnouns) {
   var istr = document.getElementById("cosmos");
   var zilch = document.getElementById(oldnouns);
@@ -2409,17 +2409,6 @@ function MainLoop() {
 <fieldset>
 <legend><font color="navy"><b>
 Control Panel - 
-
- <a href="http://www.amazon.com/The-Art-Meme-ebook/dp/B007ZI66FS/" 
- title="E-book: The Art of the Meme" 
- style="text-decoration:none;">
-AI Memes</a> - 
-
-
- <a href="http://cyborg.blogspot.com/2011/01/aiapp.html"
- title="AI applications for mobile devices and tablet computers">
-AiApp</a> - 
-
  <a href="http://aimind-i.com" 
  title="Franks AI Mind by Frank J. Russo in Win32Forth">
 AiMind-i.com</a> - 
@@ -2434,9 +2423,14 @@ Chatbots</a> -
 Manual</a> - 
 
  <a href="http://www.scn.org/~mentifex/Dushka.html"
- title="Dushka -- the beginnings of a Russian AI Mind"
+ title="Dushka -- Russian AI Mind"
  style="text-decoration:none;">
 &#1044;&#1091;&#1096;&#1082;&#1072;</a> - 
+
+ <a href="http://www.scn.org/~mentifex/DeKi.txt"
+ title="64-bit Linux Supercomputer AI in German"
+ style="text-decoration:none;">
+Wotan</a> - 
 
  <a href="http://www.scn.org/~mentifex/mindforth.txt"
  title="in Win32Forth or 64-bit iForth for supercomputers"
@@ -2446,7 +2440,12 @@ MindForth</a> -
  <a href="http://mind.sourceforge.net/theory5.html"
  title="theory of cognitivity for artificial intelligence"
  style="text-decoration:none;">
-Theory</a>
+Theory</a> - 
+
+ <a href="http://www.listbox.com/subscribe/?list_id=303"
+ title="Discuss AGI on the AGI Mailing List"
+ style="text-decoration:none;">
+User Support</a>
 </b>
 </font></legend>
 <form name="modes">
@@ -2550,6 +2549,7 @@ Tues. "6nov12A.html" improves storage of "dba" from NewConcept module.
 Wed.  "7nov12A.html" uses pronoun apparatus for search in VerbPhrase().
 Sun. "11nov12A.html" corrects minor bugs found in coding of MindForth.
 Mon. "12nov12A.html" uses secondary search with parameters for a verb.
+WEd.  "5dec12A.html" has "nounlock" lead to predicate nominatives.
 (end of HTML Change Log comments) -->
 </html>
 }}}

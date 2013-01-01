@@ -10,13 +10,13 @@ This MindForth changelog archive shows the development of the AI
 Mind over time. Each entry begins with a version identifier 
 consisting of the calendar date and a letter of the alphabet 
 to indicate any multiple versions created on the same date. 
-Each version ends in ".f" or ".F" for loading into Win32Forth. 
+Each version ends in ".f" or ".F" for loading into Win32Forth or for changing into ".frt" and loading into 64-bit [http://store.kagi.com/cgi-bin/store.cgi?storeID=AMP_Live iForth] to run on a 64-bit [http://cyborg.blogspot.com/2009/11/linux.html Linux] SuperComputer.
+
 Only changes deemed significant at the time were 
 recorded in the changelog. Individual releases of MindForth may 
 include a changelog with only recent entries. Any fork or bifurcation 
 in the development of MindForth may cause the splitting of the 
-changelog into two divergent channels through time. 
-
+changelog into two divergent channels through time. The German artificial intelligence [http://www.scn.org/~mentifex/DeKi.txt Wotan] has its own, separate changelog near the start of the Deki.txt AI source code.
 
 === Entries === 
 
@@ -335,6 +335,138 @@ changelog into two divergent channels through time.
 \  6nov10A.F is 5nov10A.F with diagnostics commented out.
 \  7nov10A.F psi-damps be-verbs to reduce stray activation.
 \  9nov10A.F is 7nov10A.F with diagnostics commented out.
+\ 25feb11A.F removes obsolete query-flags and query code.
+\ 15apr11A.F improves WHO-query and WHAT-query responses.
+\ 25apr11A.F sets zero act(ivation) for ReEntry concepts.
+\  3may11A.F coordinates InStantiate and ReActivate "WHO".
+\  7may11A.F inhibits transitive verbs after thinking them.
+\  8may11A.F improves VerbPhrase use of inflectional "S".
+\ 16may11A.F uses differential instead of linear PsiDecay.
+\ 26may11A.F assumes plural number if noun ends in "S".
+\ 29may11A.F answers questions from knowledge base (KB).
+\  1jun11A.F was abandoned after code veered into disarray.
+\  6jun11A.F gives valid answers to knowledge base queries.
+\ 12jun11A.F introduces WhatAuxSVerb to ask user questions.
+\ 19jun11A.F calls WhatBe if no verb is found for a subject.
+\ 23jun11A.F has AskUser begin asking yes-or-no questions.
+\ 24jun11A.F converts KbTraversal concepts to query-subjects.
+\ 25jun11A.F in VerbPhrase eliminates need for NegSvo module.
+\ 25jun11B.F organizes AuxVerb module for use with negation.
+\  2jul11A.F introduces KbRetro to adjust the knowledge base.
+\ 19jul11A.F uses recnum to recognize CHESS as singular noun.
+\ 20jul11A.F removes obsolete NegSvo in favor of VerbPhrase.
+\ 21jul11A.F uses diagnostic messages to debug negation code.
+\ 21jul11B.F uses prejux to carry NOT over onto verb engram.
+\ 27jul11A.F introduces "aftjux" for negation of be-verbs.
+\ 28jul11A.F introduces "tsels" for inhibition of subjects.
+\ 29jul11A.F adjusts activations for negation of be-verbs.
+\ 30jul11A.F streamlines the EnCog English cognition module.
+\  2aug11A.F troubleshoots EnBoot with diagnostic messages.
+\  2aug11B.F instantiates AM, IS, & ARE as psi "58=BE" verbs.
+\  4aug11A.F debugs spurious-predicate-nominative problem.
+\  4aug11B.F puts cumulative SpreadAct spikes only on verbs.
+\  5aug11A.F in VerbPhrase removes redundant NOT negation.
+\  5aug11B.F adjusts activation-levels for direct objects.
+\  6aug11A.F assigns number for both input and re-entry.
+\  6aug11B.F improves the function of the AskUser module.
+\  7aug11A.F repatriates BeVerb into the VerbPhrase module.
+\  8aug11A.F disregards Psi number during EnReify transfer.
+\ 10aug11A.F is before removal of diagnostics messages.
+\ 10aug11B.F in VerbAct converts "AM IS ARE" to "58=BE".
+\ 11aug11A.F uses new variables "notjux" and "skipseq".
+\ 12aug11A.F uses diagnostic messages for radical change.
+\ 12aug11B.F shifts NLP generation from en{ to psi{ array.
+\ 13aug11A.F prepares for English or German irregular verbs.
+\ 14aug11A.F psi-damps 58=BE after thinking AM or IS or ARE.
+\ 15aug11A.F improves threshold-test branching in VerbPhrase.
+\ 16aug11A.F defaults to self-concept I if no noun is active.
+\ 16aug11B.F has two-step be-verb substitution in VerbPhrase.
+\ 17aug11A.F eliminates activation on non-selected concepts.
+\ 18aug11A.F clears stray activation on nouns with NounClear.
+\ 19aug11A.F adds irregular noun plurals to EnBoot sequence.
+\ 20aug11A.F prevents disruptive activation of query concepts.
+\ 21aug11A.F improves NounPhrase defaulting to "I" concept.
+\ 24aug11A.F eliminates BeVerb and SubjectClear mind-modules.
+\ 25aug11A.F improves operation of AskUser module defaults.
+\ 27aug11A.F uses query-moot and seq-check for AI thinking.
+\ 28aug11A.F is a test of locking verbs with their objects.
+\ 29aug11A.F stops ReActivate interfering with inhibition.
+\  1sep11A.F includes Web links for crowd-sourcing the AI.
+\  3sep11A.F makes NounAct pass over inhibited concepts.
+\  7sep11A.F prepares for disparate "proxcon" reactivation.
+\  8sep11A.F removes subj-verb and verb-obj locks to debug.
+\  9sep11A.F implements disparate reactivation of prox-psi.
+\ 11sep11A.F solves double-subject bug in NounPhrase module.
+\ 12sep11A.F introduces idea of "AN" as "A" plus "flex1".
+\ 13sep11A.F enhances EnArticle for multiple "indefartcon".
+\ 14sep11A.F after IF THEN comments-in major Forth URL links.
+\ 16sep11A.F treats 0 and 1 as singular grammatical num(ber).
+\ 18sep11A.F reinstates NounPhrase code to seek "audjuste".
+\ 19sep11A.F makes predicate nominative agree with "subjnum".
+\ 22sep11A.F after "I SEE" calls VisRecog coding challenge.
+\ 28sep11A.F introduces "tqv" for locking in "seq" concepts.
+\ 29sep11A.F uses "tqv" to ensure verb-direct-object lock.
+\ 30sep11A.F introduces "seqpos" to track seq part-of-speech.
+\  1oct11A.F uses "seqpos" to skip articles to set tqv-point.
+\  1oct11B.F from verb skips intervening words to assign seq.
+\  2oct11A.F finds even remote "seq" for nouns and for verbs.
+\  3oct11A.F uses InNativate against corruption during EnBoot.
+\  5oct11A.F replaces "skipseq" mechanism with "seqneed" code.
+\  6oct11A.F lets NounPhrase select subjects after seq-check.
+\  6oct11B.F streamlines subject-selection inside NounPhrase.
+\  6oct11C.F comprehends and remembers input of negated verbs.
+\  7oct11A.F after subject reliably picks knowledge-base verb.
+\  8oct11A.F uses verblock and nounlock to retrieve KB info.
+\  9oct11A.F debugs verblock to pass activation threshold-test.
+\  9oct11B.F activates specific engrams of default ego-concept.
+\ 10oct11A.F improves WhatBe for asking a question by default.
+\ 11oct11A.F assures correct num(ber) influence on EnArticle.
+\ 12oct11A.F inserts "tqv" into Psi flag-panel before "seq".
+\ 14oct11A.F corrects faulty num(ber) storage in En{ array.
+\ 15oct11A.F improves upon thinking by the default ego "I".
+\ 16oct11A.F in ThInk rotates through KbTraversal questions.
+\ 17oct11A.F uses "cogpsi" to ask questions about new nouns.
+\ 19oct11A.F preemptively follows "nounlock" in NounPhrase.
+\ 20oct11A.F preemptively follows "verblock" in VerbPhrase.
+\ 21oct11A.F fixes minor parameter problems in the AI-Complete.
+\ 22oct11A.F uses "cognum" to select "IS" or "ARE" in WhatBe.
+\ 23oct11A.F fixes spurious subject-selection in NounPhrase.
+\ 24oct11A.F turns "moot" on and off in WhatBe and WhoBe.
+\ 25oct11A.F latches onto "12=NOT" during verblock override.
+\  4nov11A.F uses 0 and 1 as singular to control use of "A".
+\ 10nov11A.F implements special handling of irregular nouns.
+\ 28jun12A.F adds extra activation to verbs in InStantiate.
+\ 29jun12A.F implements Mind as a natural-language IdeaPlex.
+\  1jul12A.F uses "tsn" variable to solve "seqneed" problem.
+\  4jul12A.F corrects fundamental flaw in the EnBoot module.
+\ 17jul12A.F introduces "scn" and "pcn" num(ber) variables.
+\ 20jul12A.F debugs the function of the WhatBe mind-module.
+\ 22jul12A.F debugs the function of the WhoBe mind-module
+\ 26jul12A.F prevents ascribing of robot output to humans.
+\ 27jul12A.F after verb attaches "seq" of a direct object.
+\ 29jul12A.F prevents unwarranted "S" as ending of verbs.
+\  1aug12A.F handles "tqv" in InStantiate, WhatBe, WhoBe.
+\  3aug12A.F doubles "cns" to 2048 for response to queries.
+\ 10aug12A.F uses retroactive SpreadAct for query-response.
+\ 11aug12A.F corrects SeCurity problem affecting "midway".
+\ 12aug12A.F removes obsolete comments in many AI modules.
+\ 13aug12A.F isolates value of "cns" so users may change it.
+\ 14aug12A.F performs mutatis mutandis of "tqv" in ReJuvenate.
+\ 15aug12A.F in NounPhrase forces proper "nounlock" pronouns.
+\ 16aug12A.F cleans up code for NounPhrase pronoun overrides.
+\  8nov12A.F renumbers EnBoot sequence as with JavaScript AI.
+\ 10nov12A.F replaces two-digit concept numbers with 3-digit.
+\ 10nov12B.F comments out old 2-digits in favor of 3-digits.
+\ 11nov12A.F uses parameters to find nominative form of "I".
+\ 12nov12A.F moves input words through AudBuffer and OutBuffer.
+\ 15nov12A.F stubs in the VerbGen module for generating verbs.
+\ 20dec12A.F introduces InFerence module for machine reasoning.
+\ 21dec12A.F troubleshoots InFerence with diagnostic messages.
+\ 22dec12A.F finds alternate auditory engrams for inferences.
+\ 25dec12A.F achieves inferences about new input not held in KB.
+\ 27dec12A.F feeds inference into AskUser for a yes-or-no query.
+\ 28dec12A.F displays internal mental time and ReJuvenate count.
+\ 29dec12A.F asks user to confirm or deny inference; adjusts KB.
 }}}
 
 
@@ -346,12 +478,18 @@ http://en.wikipedia.org/wiki/Changelog
 
 http://en.wikipedia.org/wiki/Internet_Archive 
 
+http://www.amazon.com/The-Art-Meme-ebook/dp/B007ZI66FS 
+
+http://www.scn.org/~mentifex/DeKi.txt 
+
+http://www.scn.org/~mentifex/Dushka.html 
+
 http://www.scn.org/~mentifex/mindforth.txt
 
 
 === MemeSpace === 
 
-AdminisTrivia AiEvolution AiTree CodeBase CodeComplete DailyMiracle DeBug EnTelEchy ForthMindTextFile FreeWare MainLoop MfPj MileStones MindForth MindGrid MindModule MindRexx OldestLivingAiMind OpenSource OutReach PortingOfCode RoadMap RoBot SeedAi TextBook TimeLine ToDo TwItter UseNet UserManual WebLog 
+AdminisTrivia AiEvolution AiTree AskUser CodeBase CodeComplete DeBug DeFault EnTelEchy FreeWare InFerence KbRetro MainLoop MfPj MileStones MindForth MindGrid MindModule MindRexx OldestLivingAiMind OpenSource  ParaMeter PortingOfCode RoadMap TextBook TimeLine ToDo TwItter UseNet UserManual 
 
 
 === AI For You === 

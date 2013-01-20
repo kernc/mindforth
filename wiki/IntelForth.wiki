@@ -1,0 +1,31 @@
+#summary 64-bit commercial iForth for Linux supercomputer AI Minds
+#labels 64-bit,codebase,iForth,Linux,progman,standards,supercomputer
+
+AiEvolution AiStandards SuperComputer Win32Forth
+
+== Introduction ==
+
+IntelForth is a wiki-name for the 64-bit iForth version 
+of the [http://en.wikipedia.org/wiki/Forth_(programming_language) Forth programming language]. The longer name IntelForth is automatically a clickable link among the wiki-pages, whereas iForth is not automatically clickable. 
+
+== Importance == 
+
+The Intel Forth version of Forth is important for MentiFex-class AI Minds 
+because iForth permits [http://www.scn.org/~mentifex/mindforth.txt MindForth] or the [http://www.scn.org/~mentifex/DeKi.txt German Wotan AI] to run on a 64-bit [http://cyborg.blogspot.com/2009/11/linux.html Linux] SuperComputer, and to be both larger in code-size and lengthier in artificial (alife) life-span. These advantages are so substantial that AI coders or maintainers should seriously consider moving to a 64-bit platform and to 64-bit iForth wherever possible.
+
+== Availability == 
+
+Intel Forth (iForth) seems currently to cost about one hundred euros 
+from the [http://store.kagi.com/cgi-bin/store.cgi?storeID=AMP_Live online sales site], where there is a choice of currencies to be used for making the purchase. The product is delivered over the Web and requires [http://www.winzip.com WinZip] for unpackaging and installation on a host computer. 
+
+== Operation == 
+
+The running of [http://www.scn.org/~mentifex/mindforth.txt MindForth] in English or the [http://www.scn.org/~mentifex/DeKi.txt Wotan] German artificial intelligence is somewhat different in iForth than in Win32Forth. A typical invocation of the AI software in iForth involves entering commands like the following. 
+
+{{{
+C:\dfwforth\ifwinnt\bin>iwserver.exe include iforth.prf 
+FORTH> include mind.frt 
+FORTH> MainLoop 
+}}}
+
+Otherwise the same [http://www.scn.org/~mentifex/mindforth.txt Forthmind code] that runs in Win32Forth should run also in iForth with only minimal tweaking. Any problems enountered could be reported in UseNet newsgroups such as [http://groups.google.com/group/comp.lang.forth comp.lang.forth] or [http://groups.google.com/group/de.comp.lang.forth de.comp.lang.forth] for speakers of German.

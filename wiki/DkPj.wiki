@@ -1,9 +1,9 @@
 #summary German Artificial Intelligence Programming Journal
-#labels DeKi,Forth,German,MFPJ,Notes
+#labels DeKi,DKPJ,Forth,German,Notes
 
 == Abstract ==
 
-The DeKi Programming Journal (DKPJ) is both a tool in coding German [http://www.scn.org/~mentifex/DeKi.txt Wotan] open-source artificial intelligence (AI) and an archival record of the history of how the German Supercomputer AI evolved over time. 
+The DeKi Programming Journal (DKPJ) is both a tool in coding German [http://www.scn.org/~mentifex/DeKi.txt Wotan] open-source artificial intelligence (AI) and an archival record of the history of how the German SuperComputer AI evolved over time. 
 
 
 == Fri.16.NOV.2012 -- Merging the English and German Source Code ==
@@ -74,9 +74,7 @@ Minds, apparently the [http://www.scn.org/~mentifex/Dushka.html Russian AI], eas
 
 == Wed.21.NOV.2012 -- Verb-Negation Needs Work ==
 
-In the German Wotan AI, we need to move away from the 
-English way of negating verbs and implement the negation 
-of verbs in German without using an auxiliary verb. 
+In the German Wotan AI, we need to move away from the English way of negating verbs and implement the negation of verbs in German without using an auxiliary verb. 
 
 
 == Thurs.22.NOV.2012 -- Restricting Output with Negative Logic ==
@@ -116,3 +114,30 @@ the word "nicht" for "not" will often come not before but after the verb, it bec
 English verbs of being are negated retroactively, and so we can perhaps treat German verbs in general as if they were like English verbs of being for purposes of retroactive negation. Just as we had the variable "tbev" for "time of be-verb", so we make up a variable "tdzw" for "time of deutsches Zeitwort" or "time of German verb". 
 
 After we use "tdzw" to store 250=NICHT as the negational "jux" on a German verb, now in VerbPhrase we need to change the code that used an English auxiliary verb to negate a sentence and simply put 250=NICHT after a negated German verb. We will worry later about whether the direct object is a pronoun or not. 
+
+== Sat.26.JAN.2013 -- Enlarging the DeBoot Sequence == 
+
+We will try to enlarge the bootstrap sequence with "MAENNER ARBEITEN" in order to demonstrate the storage and retrieval of ideas which have a subject and a verb but no direct object. This feature has recently been added to the English MindForth AI. Using the verb "ARBEITEN" will also help in getting the VerbGen module to deal properly with German verbs that have a stem ending in "T". We will also add to DeBoot the sentence "FRAUEN HABEN EIN KIND" to serve as a premise for machine reasoning with the InFerence module. If someone enters "EVA IST EINE FRAU," the AI should make an InFerence and ask, "HAT EVA EIN KIND". 
+
+
+== Sat.26.JAN.2013 -- Verbs without Objects == 
+
+From the English MindForth AI we import the "transcon" code for simple ideas of subject and verb but no object or predicate nominative. It turns out that the DeKi German AI is having difficulty in recognizing some words, so the new algorithm is basically functional but errors creep in when the AI makes erroneous recognitions. We may need to make sure that the AudRecog module is working in the same way for both English MindForth and German Wotan AI. 
+
+
+== Wed.30.JAN.2013 -- Implementing German AI InFerence == 
+
+Today we are porting the InFerence module from the English MindForth AI into the German Wotan AI. First we drag-and-drop the entire InFerence module from the 24jan13A.F MindForth into the Wotan DeKi source code immediately after the VerbPhrase module. Then we enter the current date at the end of the InFerence comments. Until we declare seven variables (prednom; seqverb; seqtqv; inft; subjnom; dobseq; becon), the German AI will not even "fload". Then it does not create a Psi-array record of any inference, because we have declared the seven variables but we have not yet used them where they belong outside of the InFerence module itself. 
+
+== Thurs.31.JAN.2013 -- Troubleshooting the InFerence Module == 
+
+Yesterday in the Wotan German AI we implemented the InFerence module from the English MindForth AI, but we need to continue troubleshooting the German AI functionality because the AI was creating silent inferences with only a subject and a verb but not yet the direct object of the verb. 
+
+
+== Fri.1.FEB.2013 -- Asking Users to Confirm an Inference == 
+
+The Wotan German AI seems to be inserting the wrong "tqv" retroactively across the boundary between sentences, when we type in "eva ist eine frau" in order to trigger an inference. A contributing factor is the code at the start of InStantiate which converts any zero "seqneed" to a 5=noun seqneed by default. It may be time to comment out that code. When we comment out the line setting "tqv" to 5=noun by default, suddenly the AI makes the correct silent InFerence, but we do not know if anything else has gone wrong that was depending on the line 
+of code that has been commented out. 
+
+Then we discover that AskUser is not posing a question based on the silent inference because there is a left-over requirement for a plural noun-phrase number ("nphrnum"). When we comment out that requirement, as we did earlier in the English MindForth AI, we get not the ideal question of "HAT EVA EIN KIND?" but rather the faulty output of "HABEN EVA IRRTUM". This AskUser output is nevertheless gratifying and encouraging, because it reveals that a silent inference has been made, and that the German Wotan AI is trying to ask a yes-or-no question so that a human user will either confirm or refute the InFerence. 
+

@@ -3,6 +3,10 @@
 
 AskUser EnArticle ParaMeter
 
+== Calling by parameter ==
+
+When a search-loop is trying to find a German noun, such as the direct object of a query in AskUser, it makes sense to call DeArticle from the same nested depth of the search which is using each ParaMeter to find the German noun. When the search reveals the case and number of the noun being found, these parameters can be passed along with a call to DeArticle. Since a "LEAVE" statement terminates the loop, there will not be mulitple calls to DeArticle resulting in a kind of stuttering in German.
+
 == Code from German DeKi.txt ==
 
 {{{

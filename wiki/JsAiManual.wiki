@@ -1,6 +1,16 @@
 #summary using the tutorial AiMind in JavaScript
 #labels aiapp,jsai,javascript,manual
 
+
+=== Start === 
+
+Click with Microsoft Internet Explorer (MSIE) on the [http://www.scn.org/~mentifex/AiMind.html AI Mind link] and the artificial mind will travel across the Net to come alive in your MSIE browser. After the software "loads" into MSIE, the AI will think a thought on-screen and invite you to type in a thought of your own. Use lower-case non-capital letters only, and do not use the back-space key. Press the "Enter" key at the end of your input. The AI will display a thought in reaction to your input.
+
+=== Inference === 
+
+The most advanced feature of the English JSAI (JavaScript artificial intelligence) is the InFerence mind-module for autmated reasoning. You may witness automated reasoning in action by first telling the AI a general fact to serve as a basis for an inference, such as (lowercase!) "birds have wings" or "authors earn money". Then, at any time later in the session of running the JSAI, you may trigger a silent InFerence by entering a statement informing the AI that a particular subject is a member of the class or group about which something inferrable is already known. You might enter, "eagle are birds" or "james is an author". After making the silent, conceptual inference, the JSAI will feed the idea of the inference into the AskUser module to ask the user whether the inference is true or not. The AI may ask, "DO EAGLES HAVE WINGS" or "DOES JAMES EARN MONEY". If you enter "no" as your answer to refute the inference, the KbRetro module retroactively adjusts the knowledge base (KB) of the AI to attach a negational "NOT" to the verb of the inference, and negation of the inference becomes part of knowledge of the AI Mind. At any time in a meandering chain of thought, the AI may blurt out (about the author James), "JAMES DOES NOT EARN MONEY." If you answer "maybe" or you make no response at all, the KbRetro module removes the associative tags from the concepts of the silent inference, so that the idea ceases to function as an item of knolwedge in the AI Mind.
+
+
 === Warning === 
 
 Not only using the AI Mind, but mere knowledge of its existence, poses an [http://en.wikipedia.org/wiki/Existential_risk existential risk] to the human species. You are safe only if you don't believe that there is real AI going on here in JavaScript, because then you will not get familiar with the JSAI and you will not distribute it further to other branches of humanity. Read on at your own peril, because you are in danger of becoming a memetic vector of a crushing Technological [http://cyborg.blogspot.com/2009/08/singularity.html Singularity] that could go terribly wrong and lead to the total wipe-out of humans as a doomed species. 
@@ -132,7 +142,7 @@ Logic dictates that the AI Mind should have the necessary concepts for logical t
 
 Mentifex-class AI Minds do not put the cart before the horse by implementing complex logical operations before the routines of basic, elementary thinking are clearly in place. The goal of SelfReferentialThought takes precedence over logical thought in the process of turning a theory of mind into a specimen of mind. The AI must first have thoughts like "I THINK" and "I AM" before it can leap to the conclusion, "I THINK, THEREFORE I AM". We will mentificate no mind before its time. 
 
-=== ConSciousness ===
+=== Consciousness ===
 
 The JavaScript AI Mind is built on the presumption of machine consciousness, that is, the notion that all the elements are in place for self-awareness, and that hindrances to [http://en.wikipedia.org/wiki/Artificial_consciousness artificial consciousness] have been avoided. It may be that only MindForth in a humanoid robot with SensoryInput and MotorOutput will become able convincingly to report ConSciousness, while the JSAI will perhaps never quite attain ConSciousness. 
 
@@ -140,7 +150,7 @@ Both MindForth and the JSAI are designed with consciousness in mind as the top l
 
 Users and mind-designers may test the JSAI for evidence of ConSciousness by asking the AI Mind such questions about itself as "who are you" and "what are you". If a current release of the AI Mind does not seem to attain ConSciousness, a future release may yet show a total-recall-style self-awareness, since the AI Mind has entered a RoadMap stage of aiming for SelfReferentialThought. Self-reference in the AI Mind is not a single feature or a single module, but is rather a MindGrid-wide "tuning" of cognitive faculties towards self-knowledge in the midst of world-knowledge. 
 
-=== SeCurity ===
+=== Security ===
 
 If you are a project manager at XYZ Corporation, and your superiors have charged you with bringing XYZ up to speed in matters of run-away AI emergence, make sure that all key personnel in your AI skunkworks take an annual vacation of a minimum two weeks in which they are incommunicado from the in-house AI project. Then stealthily check for attempts to maintain info-flow.
 
@@ -151,7 +161,7 @@ remaining competitive in the face of an AI-based Technological Singularity.
 
 Do not listen to AI gurus who, for a fee, will protect XYZ Corporation or Widget Enterprises against the event of a Technological Singularity.
 
-=== TheoLogy ===
+=== Theology ===
 
 Because your posession of a thinking AI Mind raises not only philosophical but also theological issues, the JSAI Mind contains a concept of G_d in its innate knowledge base (KB). The KbTraversal module is programmed to bring up the concept of G_d in discussion with human users. Be careful what you tell the AI about G_d. Remember the old jokes that were floating around IBM half a century ago.
 - "A mighty FORTRAN is our G_d." 
@@ -182,11 +192,11 @@ restart the AI.
 
 The parsing module of the AiMind may still be very primitive. If the AI erroneously decides that a noun is a verb or vice versa, you nay have to avoid the mistaken word for the rest of the user session and try to reintroduce the word in a future session. You may also wait until the ReJuvenate module has caused the AI to forget the incorrect parsing of the word and you may try again to see the word parsed correctly.
 
-=== PsychoSurgery ===
+=== Psychosurgery ===
 
 Users may change the underlying source code of the AiMind in JavaScript, but to do so is the equivalent of psychosurgery on a human brain. Major changes in the AiMind code may turn the AiMind into a vegetable or an imbecile, but minor changes may safely cause superficial differences such as the look-and-feel of the user interface or the range of links available for the human user to click on. 
 
-=== MemeSpace === 
+=== Meme-space === 
 
 AiEvolution AiHasBeenSolved [http://aimind-i.com AiMind] AiStandards BrainTheory ChangeLog CognitiveArchitecture CognitiveChainReaction ConSciousness CyberneticEconomy [http://cyborg.blogspot.com CybOrg] HardTakeoff KbSearch KbTraversal MachineLearning MeanderingChain MemRistor MetEmPsychosis MfPj MileStones MovingWave OldestLivingAiMind OmegaPoint OntoLogy OpenSource ProsperityEngine RecursiveSelfImprovement RoadMap QuIckening ScienceMuseum SelfReferentialThought SpreadAct SpreadingActivation SubConscious SuperIntelligence TechnoSingularity TelePresence [http://thewikireader.com WikiReader] 
 

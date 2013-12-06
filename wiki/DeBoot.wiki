@@ -1,7 +1,7 @@
 #summary Deutsch bootstrap for German artificial intelligence
-#labels bootstrap,DeKi,diagram,German,module,Wotan
+#labels bootstrap,diagram,German,module,Wotan
 
-DkPj EnBoot WortSchatz
+EnBoot UnterTan WortSchatz
 
 === Diagram === 
 
@@ -34,7 +34,7 @@ DkPj EnBoot WortSchatz
 
 === Purpose === 
 
-The purpose of the German bootstrap "DeBoot" module is to load a basic German vocabulary into the AI Mind at the start of each session of running the AI software. Some artificial intelligence enthusiasts may object that an AI should learn all its vocabulary from experience with the world, as human babies do. Although such a way of learning is preferable to having an innate vocabulary, the AI software will first need to become far more sophisticated before it is powerful enough to function as a _tabula rasa_ or blank slate that is genetically able to learn what it needs to know. MindForth and the German DeKi need the innate bootstrap vocabulary to function as a proof-of-concept AI that can primitively think and learn. 
+The purpose of the German bootstrap "DeBoot" module is to load a basic German vocabulary or WortSchatz into the [http://ai.neocities.org German AI] at the start of each session of running the AI software. Some artificial intelligence enthusiasts may object that an AI should learn all its vocabulary from experience with the world, as human babies do. Although such a way of learning is preferable to having an innate vocabulary, the AI software will first need to become far more sophisticated before it is powerful enough to function as a _tabula rasa_ or blank slate that is genetically able to learn what it needs to know. [http://www.nlg-wiki.org/systems/Mind.Forth MindForth] and the [http://ai.neocities.org/DeKi.txt German AI program] need the innate bootstrap vocabulary to function as a proof-of-concept AI that can primitively think and learn. 
 
 === Inclusion === 
 
@@ -47,7 +47,7 @@ The purpose of the German bootstrap "DeBoot" module is to load a basic German vo
     4 t !  84 pho !  0 beg !  1 ctu !   0 audpsi ! AudMem \ T
     5 t !  85 pho !  0 beg !  1 ctu !   0 audpsi ! AudMem \ U
     6 t !  77 pho !  0 beg !  0 ctu ! 523 audpsi ! AudMem \ M
-523 dnr !   3 mfn !  1 dba ! 123 fex !  5 pos ! 523 fin !  1 aud !
+523 dnr !   3 mfn !  1 dba ! 523 fex !  5 pos ! 523 fin !  1 aud !
 523 psi !   1 num !  0 pre !  0 seq ! 523 dex ! DeVocab InNativate
 
   ( 7: 205=ABER "however" adverb;  2dec2011 )
@@ -1769,14 +1769,14 @@ The purpose of the German bootstrap "DeBoot" module is to load a basic German vo
 535 dnr !   1 mfn !  1 dba ! 535 fex ! 5 pos ! 535 fin ! 1101 aud !
 535 psi !   1 num !  0 pre !  0 seq ! 535 dex ! DeVocab InNativate
 
-( 1107: 525=KINDER  "children" noun; plural; 5dec2011 )
+( 1107: 525=KINDER  "children" noun; plural; 5dec2011; 11mar2013 )
  1108 t !  75 pho !  1 beg !   1 ctu !   0 audpsi ! AudMem \ K
  1109 t !  73 pho !  0 beg !   1 ctu !   0 audpsi ! AudMem \ I
  1110 t !  78 pho !  0 beg !   1 ctu !   0 audpsi ! AudMem \ N
  1111 t !  68 pho !  0 beg !   1 ctu !   0 audpsi ! AudMem \ D
  1112 t !  69 pho !  0 beg !   1 ctu !   0 audpsi ! AudMem \ E
  1113 t !  82 pho !  0 beg !   0 ctu ! 525 audpsi ! AudMem \ R
-525 dnr !   0 mfn !  1 dba ! 525 fex ! 5 pos ! 525 fin ! 1108 aud !
+525 dnr !   3 mfn !  1 dba ! 525 fex ! 5 pos ! 525 fin ! 1108 aud !
 525 psi !   2 num !  0 pre ! 1120 tqv ! 838 seq ! 525 dex !
  DeVocab InNativate  0 jux !    0 tqv ! \ reset 28nov2012
 
@@ -1844,12 +1844,12 @@ The purpose of the German bootstrap "DeBoot" module is to load a basic German vo
 533 psi !   1 num !  0 pre ! 1162 tqv ! 848 seq ! 533 dex !
  DeVocab InNativate  0 jux !    0 tqv ! \ reset 28nov2012
 
-( 1156: 848=SPIELT "plays" 2nd pers. sing; 28nov2012 )
+( 1156: 848=SPIELT "plays" 2nd pers. sing; 26jan2013 )
  1157 t !  83 pho !  1 beg !  1 ctu !   0 audpsi ! AudMem \ S
  1158 t !  80 pho !  0 beg !  1 ctu !   0 audpsi ! AudMem \ P
  1159 t !  73 pho !  0 beg !  1 ctu !   0 audpsi ! AudMem \ I
  1160 t !  69 pho !  0 beg !  1 ctu !   0 audpsi ! AudMem \ E
- 1161 t !  76 pho !  0 beg !  1 ctu !   0 audpsi ! AudMem \ L
+ 1161 t !  76 pho !  0 beg !  1 ctu ! 848 audpsi ! AudMem \ L
  1162 t !  84 pho !  0 beg !  0 ctu ! 848 audpsi ! AudMem \ T
 848 dnr ! 0 mfn ! 3 dba ! 250 jux ! 848 fex ! 8 pos ! 848 fin ! 1157 aud !
 848 psi ! 1 num ! 533 pre ! 1176 tqv ! 577 seq ! 848 dex !
@@ -1874,6 +1874,67 @@ The purpose of the German bootstrap "DeBoot" module is to load a basic German vo
  1176 t !  76 pho !  0 beg !   0 ctu ! 577 audpsi ! AudMem \ L
 577 dnr !   0 mfn !  4 dba ! 577 fex ! 5 pos ! 577 fin ! 1170 aud !
 577 psi !   2 num ! 848 pre !  0 seq ! 577 dex ! DeVocab InNativate
+
+( 1177 543=MAENNER  "men" noun; plural; nom. 31jan2013 )
+ 1178 t !  77 pho !  1 beg !   1 ctu !   0 audpsi ! AudMem \ M
+ 1179 t !  65 pho !  0 beg !   1 ctu !   0 audpsi ! AudMem \ A
+ 1180 t !  69 pho !  0 beg !   1 ctu !   0 audpsi ! AudMem \ E
+ 1181 t !  78 pho !  0 beg !   1 ctu !   0 audpsi ! AudMem \ N
+ 1182 t !  78 pho !  0 beg !   1 ctu !   0 audpsi ! AudMem \ N
+ 1183 t !  69 pho !  0 beg !   1 ctu !   0 audpsi ! AudMem \ E
+ 1184 t !  82 pho !  0 beg !   0 ctu ! 543 audpsi ! AudMem \ R
+543 dnr !   1 mfn !  1 dba ! 543 fex ! 5 pos ! 543 fin ! 1178 aud !
+543 psi !   2 num !  0 pre ! 1193 tqv ! 888 seq ! 543 dex !
+DeVocab InNativate   0 jux !    0 tqv ! \ reset 26jan2013
+
+( 1185: 888=ARBEITEN  "work" verb; 26jan2013 )
+ 1186 t !  65 pho !  1 beg !  1 ctu !   0 audpsi ! AudMem \ A
+ 1187 t !  82 pho !  0 beg !  1 ctu !   0 audpsi ! AudMem \ R
+ 1188 t !  66 pho !  0 beg !  1 ctu !   0 audpsi ! AudMem \ B
+ 1189 t !  69 pho !  0 beg !  1 ctu !   0 audpsi ! AudMem \ E
+ 1190 t !  73 pho !  0 beg !  1 ctu !   0 audpsi ! AudMem \ I
+ 1191 t !  84 pho !  0 beg !  1 ctu !   0 audpsi ! AudMem \ T
+ 1192 t !  69 pho !  0 beg !  1 ctu !   0 audpsi ! AudMem \ E
+ 1193 t !  78 pho !  0 beg !  0 ctu ! 888 audpsi ! AudMem \ N
+888 dnr !   0 mfn !  3 dba ! 888 fex ! 8 pos ! 888 fin ! 1186 aud !
+888 psi !   2 num ! 543 pre ! 0 tqv ! 0 seq ! 888 dex !
+ DeVocab InNativate   0 jux ! 0 tqv ! \ reset 26jan2013
+
+( 1194: 515=FRAUEN  "women" noun; plural; 31jan2013 )
+ 1195 t !  70 pho !  1 beg !    1 ctu !   0 audpsi ! AudMem \ F
+ 1196 t !  82 pho !  0 beg !    1 ctu !   0 audpsi ! AudMem \ R
+ 1197 t !  65 pho !  0 beg !    1 ctu !   0 audpsi ! AudMem \ A
+ 1198 t !  85 pho !  0 beg !    1 ctu !   0 audpsi ! AudMem \ U
+ 1199 t !  69 pho !  0 beg !    1 ctu !   0 audpsi ! AudMem \ E
+ 1200 t !  78 pho !  0 beg !    0 ctu ! 515 audpsi ! AudMem \ N
+515 dnr !   2 mfn !  1 dba !  515 fex ! 5 pos ! 515 fin ! 1195 aud !
+515 psi !   2 num !  0 pre ! 1206 tqv ! 810 seq ! 515 dex !
+DeVocab InNativate   0 jux ! 0 tqv ! \ reset 26jan2013
+
+( 1201: 810=HABEN  "have" irregular verb; 31jan2013 )
+ 1202 t !  72 pho !   1 beg !    1 ctu !   0 audpsi ! AudMem \ H
+ 1203 t !  65 pho !   0 beg !    1 ctu !   0 audpsi ! AudMem \ A
+ 1204 t !  66 pho !   0 beg !    1 ctu !   0 audpsi ! AudMem \ B
+ 1205 t !  69 pho !   0 beg !    1 ctu !   0 audpsi ! AudMem \ E
+ 1206 t !  78 pho !   0 beg !    0 ctu ! 810 audpsi ! AudMem \ N
+810 dnr !   0 mfn !   3 dba !  810 fex ! 8 pos ! 810 fin ! 1202 aud !
+810 psi !   2 num ! 515 pre ! 1215 tqv ! 525 seq ! 810 dex !
+DeVocab InNativate  0 jux !    0 tqv ! \ reset 26jan2013
+
+( 1207: 101=EIN  "a" article; dba acc. neuter. sing. 26jan2013 )
+ 1208 t !  69 pho !  1 beg !   1 ctu !   0 audpsi ! AudMem \ E
+ 1209 t !  73 pho !  0 beg !   1 ctu !   0 audpsi ! AudMem \ I
+ 1210 t !  78 pho !  0 beg !   0 ctu ! 101 audpsi ! AudMem \ N
+101 dnr !   3 mfn !  4 dba ! 101 fex ! 1 pos  ! 101 fin ! 1208 aud !
+101 psi !   1 num !  0 pre !   0 seq ! 101 dex ! DeVocab InNativate
+
+( 1211: 525=KIND  "child" noun; acc. neuter singular; 26jan2013 )
+ 1212 t !  75 pho !   1 beg !   1 ctu !   0 audpsi ! AudMem \ K
+ 1213 t !  73 pho !   0 beg !   1 ctu !   0 audpsi ! AudMem \ I
+ 1214 t !  78 pho !   0 beg !   1 ctu !   0 audpsi ! AudMem \ N
+ 1215 t !  68 pho !   0 beg !   0 ctu ! 525 audpsi ! AudMem \ D
+525 dnr !   3 mfn !   4 dba ! 525 fex ! 5 pos ! 525 fin ! 1212 aud !
+525 psi !   1 num ! 810 pre !   0 seq ! 525 dex ! DeVocab InNativate
 }}}
 
 === Rationale === 
@@ -1892,8 +1953,7 @@ is not automatically a list of the most frequent German words. The primitive AI 
 
 === Evolution === 
 
-The vocabulary of the German-speaking artificial intelligence DeKi may be expected to increase and grow in several ways. Initially the AI programmers will add new words as needed for the implementation of new AI functionality. Human users will teach the AI new words during each session of running the AI software, but the AI 
-will not remember words taught to it from session to session, unless an AI Mind installation is made to store files of knowledge gained, or unless the AI coders and maintainers notice important words which ought to be added to the innate vocabulary of the AI. Eventually there should be an attempt automatically to include the entire German lexicon in every session of running the AI Mind. At that point, the AI will comprehend user input much better and without the confusion that results when the AI does not know, for example, whether an incoming word is a noun or an adjective. 
+The vocabulary of the German-speaking artificial intelligence Wotan may be expected to increase and grow in several ways. Initially the AI programmers will add new words as needed for the implementation of new AI functionality. Human users will teach the AI new words during each session of running the AI software, but the AI will not remember words taught to it from session to session, unless an AI Mind installation is made to store files of knowledge gained, or unless the AI coders and maintainers notice important words which ought to be added to the innate vocabulary of the AI. Eventually there should be an attempt automatically to include the entire German lexicon in every session of running the AI Mind. At that point, the AI will comprehend user input much better and without the confusion that results when the AI does not know, for example, whether an incoming word is a noun or an adjective. 
 
 === Expansion === 
 
@@ -1906,9 +1966,13 @@ Expanding the DeBoot sequence involves various considerations.
   * Incrementing value of "den" at end of DeBoot. 
 
 
-
-
 === Resources === 
+
+  * http://ai.neocities.org
+
+  * http://ai.neocities.org/DeKi.txt
+
+  * http://ai.neocities.org/untertan.html
 
   * http://de.wikipedia.org/wiki/Cyc 
 
@@ -1922,26 +1986,34 @@ Expanding the DeBoot sequence involves various considerations.
 
   * http://store.kagi.com/cgi-bin/store.cgi?storeID=AMP_Live¤cy=USD 
 
+  * http://www.amazon.com/dp/B00GX2B8F0
+
+  * http://www.amazon.de/dp/B00GX2B8F0
+
   * http://www.amazon.de/exec/obidos/ASIN/0595259227/ 
 
   * http://www.dfki.de 
+
+  * http://www.nlg-wiki.org/systems/Wotan
+
+  * http://www.ofai.at
 
   * http://www.ranks.nl/stopwords/german.html 
 
 === Memespace === 
 
-[http://cyborg.blogspot.com/2011/01/aiapp.html AiApp] [http://www.ai-forum.org/topic.asp?forum_id=1&topic_id=8385 AiForum] [http://aimind-i.com AiMind] AskUser BrainTheory ChangeLog [http://www.chatbots.org/ai_zone/viewthread/240/ ChatBots] CognitiveArchitecture 
-[http://cognitiveatlas.org CognitiveAtlas] CognitiveAtlas ConSciousness [http://cyborg.blogspot.com CybOrg] DeFault DeKiManual DfKi DisAmbiguation EnBoot [http://hackerspaces.org/wiki/ HackerSpaces] InFerence IntelForth KbRetro KbSearch [http://cyborg.blogspot.com/2009/11/linux.html LinuxAi] MainLoop [http://www.makerbot.com MakerBot] MasPar MfPj NumBer OpenCog ReJuvenate [http://www.rentacoder.com RentaCoder] [http://cyborg.blogspot.com/2009/09/sciencemuseum.html ScienceMuseum] 
+[http://cyborg.blogspot.com/2011/01/aiapp.html AiApp] [http://www.ai-forum.org/topic.asp?forum_id=1&topic_id=8385 AiForum] [http://ai.neocities.org/AiMind.html AiMind] AskUser BrainTheory ChangeLog [http://www.chatbots.org/ai_zone/viewthread/240/ ChatBots] CognitiveArchitecture 
+[http://cognitiveatlas.org CognitiveAtlas] CognitiveAtlas ConSciousness [http://cyborg.blogspot.com CybOrg] DeFault [http://ai.neocities.org/untertan.html DeKiManual] DfKi DisAmbiguation EnBoot [http://ai.neocities.org GermanAi] [http://hackerspaces.org/wiki/ HackerSpaces] InFerence IntelForth KbRetro KbSearch [http://cyborg.blogspot.com/2009/11/linux.html LinuxAi] MainLoop [http://www.makerbot.com MakerBot] MasPar MfPj NumBer OpenCog ReJuvenate [http://www.rentacoder.com RentaCoder] [http://ai.neocities.org/Dushka.html RussianAi] [http://cyborg.blogspot.com/2009/09/sciencemuseum.html ScienceMuseum] 
 SensoryInput [http://www.sitesucker.us SiteSucker] SpeechAct [http://www.speechapi.com SpeechApi] SpreadAct SpreadingActivation [http://solartz.de/649/deutsche-stopwords.htm StopWords] StrongAi SubConscious SuperComputer SuperIntelligence [http://technorati.com TechnoRati] [http://cyborg.blogspot.com/2009/08/singularity.html TechnoSingularity] 
-[http://www.chatbots.org/book/ai4u/ TextBook] [http://cyborg.blogspot.com/2009/10/trustmetric.html TrustMetric] VisRecog [http://thewikireader.com WikiReader] 
+[http://www.chatbots.org/book/ai4u/ TextBook] [http://cyborg.blogspot.com/2009/10/trustmetric.html TrustMetric] UnterTan VisRecog [http://thewikireader.com WikiReader] 
 
-=== AI For You === 
+=== AI in German === 
 
-Click to run 
+Click to read  
 
-[http://www.scn.org/~mentifex/AiMind.html http://farm1.static.flickr.com/51/179758367_f283f0d6e0_s.jpg] 
+[http://www.amazon.com/dp/B00GX2B8F0 http://ecx.images-amazon.com/images/I/41IxawpIOEL._AA160_.jpg] 
 
-AI For You 
+AI in German
 
 *Table of Contents* 
 <wiki:toc max_depth="3" />

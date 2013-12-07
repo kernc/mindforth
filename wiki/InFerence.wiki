@@ -4,11 +4,11 @@
 MileStones SuperIntelligence ThInk
 === Theory === 
 
-The Mentifex AI Minds began to incorporate *inference* in December of 2012, when it became clear that the AI could use two facts to create a third fact as a logical inference by replacing the subject of a general statement ("Birds have wings") with the subject of a specific statement ("An eagle is a bird") to create a silent inference: "Eagles have wings."
+The Mentifex AI Minds began to incorporate [http://www.amazon.com/dp/B00FKJY1WY inference] in December of 2012, when it became clear that the AI could use two facts to create a third fact as a logical [http://www.amazon.com/dp/B00FKJY1WY inference] by replacing the subject of a general statement ("Birds have wings") with the subject of a specific statement ("An eagle is a bird") to create a silent [http://www.amazon.com/dp/B00FKJY1WY inference]: "Eagles have wings."
 
 === Algorithm === 
 
-MindForth uses the input of a BeVerb statement ("Boys are kids") to trigger the calling of the InFerence module, which then changes the knowledge-base idea "Kids make robots" by replacing the general subject "Kids" with the specific subject "Boys" to infer, "Boys make robots." 
+MindForth uses the input of a BeVerb statement ("Boys are kids") to trigger the calling of the [http://www.amazon.com/dp/B00FKJY1WY InFerence] module, which then changes the knowledge-base idea "Kids make robots" by replacing the general subject "Kids" with the specific subject "Boys" to infer, "Boys make robots." 
 
 === Code === 
 
@@ -81,13 +81,19 @@ MindForth uses the input of a BeVerb statement ("Boys are kids") to trigger the 
 time: psi act num jux pre pos tqv seq enx
 }}}
 
+=== AI in German === 
+
+[http://www.amazon.com/dp/B00GX2B8F0 http://ecx.images-amazon.com/images/I/41IxawpIOEL._AA160_.jpg]
+
+also uses inference. See chapter 18 in the free preview. 
+
 === Logic === 
 
-Now that the InFerence module exists, it may be expanded to incorporate logical operations such as if-then conditions.
+Now that the [http://www.amazon.com/dp/B00FKJY1WY InFerence] module exists, it may be expanded to incorporate logical operations such as if-then conditions.
 
 === Superintelligence === 
 
-Once the AI Minds like [http://www.scn.org/~mentifex/mindforth.txt MindForth] in English, [http://www.scn.org/~mentifex/DeKi.txt Wotan] in German, and [http://www.scn.org/~mentifex/Dushka.html Dushka] in Russian start to employ complex logic in the modules for inference, a speed-up and a smarten-up may begin to occur, culminating in SuperIntelligence.
+Once the AI Minds like [http://www.nlg-wiki.org/systems/Mind.Forth MindForth] in English, [http://www.nlg-wiki.org/systems/Wotan Wotan] in German, and [http://www.nlg-wiki.org/systems/Dushka Dushka] in Russian start to employ complex logic in the modules for [http://www.amazon.com/dp/B00FKJY1WY inference], a speed-up and a smarten-up may begin to occur, culminating in SuperIntelligence.
 
 === Wikipedia === 
   * http://en.wikipedia.org/wiki/Automated_reasoning 
@@ -97,10 +103,6 @@ Once the AI Minds like [http://www.scn.org/~mentifex/mindforth.txt MindForth] in
   * http://en.wikipedia.org/wiki/Reasoning 
   * http://en.wikipedia.org/wiki/Syllogism 
 
-=== AI For You === 
+=== Inference e-book -- click to read free preview === 
 
-Click to run 
-
-[http://www.scn.org/~mentifex/AiMind.html http://farm1.static.flickr.com/51/179758367_f283f0d6e0_s.jpg] 
-
-AI For You
+[http://www.amazon.com/dp/B00FKJY1WY http://ecx.images-amazon.com/images/I/419aG1Q4I9L._AA278_PIkin4,BottomRight,-51,22_AA300_SH20_OU15_.jpg]

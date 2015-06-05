@@ -1,4 +1,4 @@
-#summary English - German - Russian Strong AI
+#summary Forth JavaScript Perl variables for English German Russian
 #labels manual
 
 == Table of Variables ==
@@ -54,6 +54,11 @@ NounPhrase motjuste aud to SpeechAct module.
 === becon ===
 
 _be-conditional_ – carries a flag from the OldConcept recognition module indicating that new input includes a verb of being which may permit the InFerence module to make a general inference about the subject of the input so that the InFerence module can look for prior knowledge as the basis of an inference.
+
+=== bias === 
+
+Holds the expectation of what part-of-speech (POS) will be 
+assigned to a word being parsed or instantiated as a concept. 
 
 === dobseq ===
 

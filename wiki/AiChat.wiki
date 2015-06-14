@@ -1,5 +1,5 @@
 #summary extremely easy way to join AI chat and discuss artificial intelligence
-#labels Featured,community,help
+#labels community,help,IRC
 
 AiHasBeenSolved HelpWanted MileStones RoadMap
 
@@ -8,6 +8,8 @@ AiHasBeenSolved HelpWanted MileStones RoadMap
 The Google Code MindForth (GC/MF) project needs volunteers who will 
 go into the #ai@irc.freenode.net chat channel and answer questions 
 about the technical and theoretical details of MindForth AI. 
+
+http://instituteofgeneralintelligence.tk/chat -- another Chat site.
 
 === InstantAccess === 
 
@@ -41,6 +43,8 @@ interest you, you may use http://www.mibbit.com to jump into the discussion.
 
 
 === CyberSpace === 
+
+http://ai.neocities.org/AiSteps.html 
 
 http://en.wikipedia.org/wiki/Mibbit 
 

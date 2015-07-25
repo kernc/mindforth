@@ -1,0 +1,6 @@
+AskUser InFerence KbRetro
+
+## Introduction ##
+
+The implementation of logical InFerence in the [AI Mind](http://www.scn.org/~mentifex/AiMind.html) makes it necessary to create a RetroSet module that will permit the input of a singular or plural verb to set the grammatical NumBer of a subject-noun retroactively. When the [AI Mind](http://www.scn.org/~mentifex/AiMind.html) makes a silent InFerence, the AskUser module creates a yes-or-no question for the [human user](http://www.scn.org/~mentifex/DeKiUser.html) to confirm or refute the InFerence. To formulate the question properly, AskUser needs to use the ParaMeter of the grammatical number of the subject of the question. For example, the AI may have in its knowledge base (KB) the idea, "Women have a child". If a [human user](http://www.scn.org/~mentifex/RuAiUser.html) enters the statement, "Eva is a woman", the AI will silently make the unconfirmed InFerence that Eva, being a woman, has a child. The AskUser module
+needs the RetroSet module to help ask the English question, "Does Eva have a child?", or the German question, "Hat Eva ein Kind?" When the [human user](http://www.scn.org/~mentifex/DeKiUser.html)  answers yes or no, the KbRetro module adjusts the knowledge base in the case of a negative answer and retroactively stores the assertion, "Eva does not have a child."
